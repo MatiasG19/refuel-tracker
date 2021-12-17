@@ -15,7 +15,7 @@ import ExampleComponent from 'components/CompositionComponent.vue';
 import { defineComponent, ref } from 'vue';
 
 export default defineComponent({
-  name: 'PageIndex',
+  name: 'Graphs',
   components: { ExampleComponent },
   setup() {
     const todos = ref<Todo[]>([

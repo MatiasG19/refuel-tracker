@@ -1,7 +1,7 @@
 <template>
-  <q-layout view="lHh Lpr lFf">
+  <q-layout view="lHh Lpr lFf" class="bg-space-station">
     <q-header elevated>
-      <q-toolbar>
+      <q-toolbar class="space-station">
         <q-btn
           flat
           dense
@@ -11,11 +11,10 @@
           @click="toggleLeftDrawer"
         />
 
-        <q-toolbar-title>
-          Quasar App
+        <q-toolbar-title class="space-station">
+          Refuel Tracker
         </q-toolbar-title>
 
-        <div>Quasar v{{ $q.version }}</div>
       </q-toolbar>
     </q-header>
 
@@ -23,18 +22,21 @@
       v-model="leftDrawerOpen"
       show-if-above
       bordered
+      class="space-station"
     >
-      <q-list>
+      <q-list> 
         <q-item-label
           header
+          class="space-station"
         >
-          Essential Links
+          Refuel Tracker
         </q-item-label>
 
         <EssentialLink
           v-for="link in essentialLinks"
           :key="link.title"
           v-bind="link"
+          class="space-station"
         />
       </q-list>
     </q-drawer>
@@ -50,46 +52,34 @@ import EssentialLink from 'components/EssentialLink.vue'
 
 const linksList = [
   {
-    title: 'Docs',
-    caption: 'quasar.dev',
-    icon: 'school',
-    link: 'https://quasar.dev'
+    title: 'Graphs',
+    caption: '',
+    icon: 'bar_chart',
+    link: ''
   },
   {
-    title: 'Github',
-    caption: 'github.com/quasarframework',
-    icon: 'code',
-    link: 'https://github.com/quasarframework'
+    title: 'Vehicles',
+    caption: '',
+    icon: 'drive_eta',
+    link: ''
   },
   {
-    title: 'Discord Chat Channel',
-    caption: 'chat.quasar.dev',
-    icon: 'chat',
-    link: 'https://chat.quasar.dev'
+    title: 'Refuels',
+    caption: '',
+    icon: 'local_gas_station',
+    link: ''
   },
   {
-    title: 'Forum',
-    caption: 'forum.quasar.dev',
-    icon: 'record_voice_over',
-    link: 'https://forum.quasar.dev'
+    title: 'Settings',
+    caption: '',
+    icon: 'settings',
+    link: ''
   },
   {
-    title: 'Twitter',
-    caption: '@quasarframework',
-    icon: 'rss_feed',
-    link: 'https://twitter.quasar.dev'
-  },
-  {
-    title: 'Facebook',
-    caption: '@QuasarFramework',
-    icon: 'public',
-    link: 'https://facebook.quasar.dev'
-  },
-  {
-    title: 'Quasar Awesome',
-    caption: 'Community Quasar projects',
-    icon: 'favorite',
-    link: 'https://awesome.quasar.dev'
+    title: 'Help and Support',
+    caption: '',
+    icon: 'favorite_outline',
+    link: 'https://github.com/matiasg19/refuel-tracker'
   }
 ];
 
