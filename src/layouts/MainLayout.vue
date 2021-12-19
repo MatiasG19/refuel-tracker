@@ -24,7 +24,7 @@
       bordered
       class="space-station"
     >
-      <q-list> 
+      <q-list>
         <q-item-label
           header
           class="space-station"
@@ -44,6 +44,20 @@
     <q-page-container>
       <router-view />
     </q-page-container>
+
+    <q-footer elevated>
+      <q-toolbar class="q-gutter-xs text-center">
+        <div class="col">
+          <q-btn round flat dense icon="bar_chart" class="col"/>
+        </div>
+        <div class="col">
+          <q-btn round flat dense icon="add" class="col"/>
+        </div>
+        <div class="col">
+          <q-btn round flat dense icon="drive_eta" class="col"/>
+        </div>
+      </q-toolbar>
+    </q-footer>
   </q-layout>
 </template>
 

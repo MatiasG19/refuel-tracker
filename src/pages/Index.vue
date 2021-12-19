@@ -1,49 +1,55 @@
 <template>
-  <q-page class="row items-center justify-evenly">
-    <example-component
-      title="Example component"
-      active
-      :todos="todos"
-      :meta="meta"
-    ></example-component>
+  <q-page class="items-center justify-evenly">
+    <graph-card
+      v-for="(card, i) in cards"
+      :key="i"
+      :data="card"
+      :periods="periods"
+      class="q-pt-md q-pl-md q-pr-md"
+      ></graph-card>
   </q-page>
 </template>
 
 <script lang="ts">
-import { Todo, Meta } from 'components/models';
-import ExampleComponent from 'components/CompositionComponent.vue';
+import GraphCard from 'src/components/GraphCard.vue';
+import { GraphData } from 'src/components/models'
 import { defineComponent, ref } from 'vue';
+
+const cards: GraphData[] = [
+  {
+    title: 'Fuel Consumption',
+    value: 5.1,
+    unit: 'L/100km',
+    period: 0
+  },
+  {
+    title: 'Fuel Pricing',
+    value: 7,
+    unit: '€/100km',
+    period: 0
+  },
+  {
+    title: 'Range',
+    value: 1900,
+    unit: 'km',
+    period: 0
+  }
+]
+
+const periods: string[] = [
+  "Week",
+  "3 Months",
+  "6 Months",
+  "Year",
+  "Max"
+]
 
 export default defineComponent({
   name: 'Graphs',
-  components: { ExampleComponent },
+  components: { GraphCard },
   setup() {
-    const todos = ref<Todo[]>([
-      {
-        id: 1,
-        content: 'ct1'
-      },
-      {
-        id: 2,
-        content: 'ct2'
-      },
-      {
-        id: 3,
-        content: 'ct3'
-      },
-      {
-        id: 4,
-        content: 'ct4'
-      },
-      {
-        id: 5,
-        content: 'ct5'
-      }
-    ]);
-    const meta = ref<Meta>({
-      totalCount: 1200
-    });
-    return { todos, meta };
+
+    return { cards, periods };
   }
 });
 </script>

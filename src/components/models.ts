@@ -1,8 +1,7 @@
-export interface Todo {
-  id: number;
-  content: string;
+export class GraphData {
+  title!: string
+  value!: number
+  unit!: string
+  period!: number
 }
 
-export interface Meta {
-  totalCount: number;
-}
