@@ -42,31 +42,20 @@
   </div>
 </template>
 
-<script lang="ts">
-import {
-  defineComponent,
-  PropType,
-  computed,
-  ref,
-  toRef,
-  Ref,
-} from 'vue';
+<script setup lang="ts">
 import { GraphData } from 'src/components/models'
+import { defineProps } from 'vue'
 
-export default defineComponent({
-  name: 'GraphCard',
-  props: {
-    data: {
-      type: GraphData,
-      required: true
-    },
-    periods: {
-      type: Array,
-      required: true
-    }
+
+defineProps({
+  data: {
+    type: GraphData,
+    required: true
   },
-  setup(props) {
-    return { props };
-  },
-});
+  periods: {
+    type: Array,
+    required: true
+  }
+})
+
 </script>

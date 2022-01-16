@@ -33,7 +33,7 @@
         </q-item-label>
 
         <EssentialLink
-          v-for="link in essentialLinks"
+          v-for="link in linkList"
           :key="link.title"
           v-bind="link"
           class="space-station"
@@ -48,10 +48,10 @@
     <q-footer elevated>
       <q-toolbar class="q-gutter-xs text-center">
         <div class="col">
-          <q-btn round flat dense icon="bar_chart" class="col"/>
+          <q-btn round flat dense icon="bar_chart" class="col" :to="'/'" />
         </div>
         <div class="col">
-          <q-btn round flat dense icon="add" class="col"/>
+          <q-btn round flat dense icon="add" class="col" @click="add()"/>
         </div>
         <div class="col">
           <q-btn round flat dense icon="drive_eta" class="col"/>
@@ -61,61 +61,52 @@
   </q-layout>
 </template>
 
-<script lang="ts">
+<script setup lang="ts">
 import EssentialLink from 'components/EssentialLink.vue'
 
-const linksList = [
+const linkList = [
   {
     title: 'Graphs',
     caption: '',
     icon: 'bar_chart',
-    link: ''
+    link: '/'
   },
   {
     title: 'Vehicles',
     caption: '',
     icon: 'drive_eta',
-    link: ''
+    link: 'vehicle-entries'
   },
   {
     title: 'Refuels',
     caption: '',
     icon: 'local_gas_station',
-    link: ''
+    link: 'refuel-entries'
   },
   {
     title: 'Settings',
     caption: '',
     icon: 'settings',
-    link: ''
+    link: 'settings'
   },
   {
     title: 'Help and Support',
     caption: '',
     icon: 'favorite_outline',
-    link: 'https://github.com/matiasg19/refuel-tracker'
+    link: ''
   }
 ];
 
-import { defineComponent, ref } from 'vue'
+import { ref } from 'vue'
 
-export default defineComponent({
-  name: 'MainLayout',
+const leftDrawerOpen = ref(false)
 
-  components: {
-    EssentialLink
-  },
+function toggleLeftDrawer() {
+  leftDrawerOpen.value = !leftDrawerOpen.value
+}  
 
-  setup () {
-    const leftDrawerOpen = ref(false)
+function add() {
+  //this.$router.push('add-refuel-form')
+}
 
-    return {
-      essentialLinks: linksList,
-      leftDrawerOpen,
-      toggleLeftDrawer () {
-        leftDrawerOpen.value = !leftDrawerOpen.value
-      }
-    }
-  }
-})
 </script>

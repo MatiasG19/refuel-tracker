@@ -10,10 +10,9 @@
   </q-page>
 </template>
 
-<script lang="ts">
+<script setup lang="ts">
 import GraphCard from 'src/components/GraphCard.vue';
 import { GraphData } from 'src/components/models'
-import { defineComponent, ref } from 'vue';
 
 const cards: GraphData[] = [
   {
@@ -37,19 +36,11 @@ const cards: GraphData[] = [
 ]
 
 const periods: string[] = [
-  "Week",
-  "3 Months",
-  "6 Months",
-  "Year",
-  "Max"
+  'Week',
+  '3 Months',
+  '6 Months',
+  'Year',
+  'Max'
 ]
 
-export default defineComponent({
-  name: 'Graphs',
-  components: { GraphCard },
-  setup() {
-
-    return { cards, periods };
-  }
-});
 </script>
