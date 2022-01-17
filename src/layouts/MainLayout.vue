@@ -15,6 +15,14 @@
           Refuel Tracker
         </q-toolbar-title>
 
+        <q-btn
+          v-if="routePath == '/refuel-entries'"
+          :to="'filter-refuel-entries-form'"
+          icon="filter_list"
+          round
+          flat
+          dense
+        />
       </q-toolbar>
     </q-header>
 
@@ -54,7 +62,7 @@
           <q-btn round flat dense icon="add" class="col" @click="add()"/>
         </div>
         <div class="col">
-          <q-btn round flat dense icon="drive_eta" class="col"/>
+          <q-btn round flat dense icon="drive_eta" class="col" :to="'vehicle-entries'"/>
         </div>
       </q-toolbar>
     </q-footer>
@@ -97,7 +105,11 @@ const linkList = [
   }
 ];
 
-import { ref } from 'vue'
+import { ref, computed } from 'vue'
+import { useRouter } from 'vue-router'
+
+const router = useRouter()
+const routePath = computed(() => router.currentRoute.value.path)
 
 const leftDrawerOpen = ref(false)
 
@@ -106,7 +118,12 @@ function toggleLeftDrawer() {
 }  
 
 function add() {
-  //this.$router.push('add-refuel-form')
+  if(routePath.value == '/vehicle-entries')
+    void router.push('vehicle-form')
+  else if(routePath.value.includes('form'))
+    return
+  else
+    void router.push('refuel-form')
 }
 
 </script>

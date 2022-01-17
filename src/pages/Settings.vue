@@ -2,16 +2,17 @@
   <div class="q-pa-md q-gutter-md">
     <q-list>
       <q-item-label header>Themes</q-item-label>
-      <q-select class="q-pb-md" standout="bg-teal text-white" v-model="colorTheme" :options="colorThemeOptions" 
-      label="Color theme" map-options emit-value/>
+      <q-select class="q-pb-md" standout="bg-teal text-white" v-model="colorTheme" 
+      :options="colorThemeOptions" label="Color theme" map-options emit-value/>
 
       <q-separator spaced />
 
       <q-item-label header>Units</q-item-label>
       <div >
-        <q-select class="q-pb-md" standout="bg-teal text-white" v-model="fuelUnit" :options="fuelUnitOptions" 
-        label="Fuel unit" map-options emit-value/>
-        <q-input class="q-pb-md" standout="bg-teal text-white" v-model="currencyUnit" label="Currency unit" />
+        <q-input class="q-pb-md" standout="bg-teal text-white" v-model="fuelUnit" 
+          label="Fuel unit" />
+        <q-input class="q-pb-md" standout="bg-teal text-white" v-model="currencyUnit" 
+          label="Currency unit" />
       </div>
 
       <q-separator spaced />
@@ -34,17 +35,6 @@
 <script setup lang="ts">
 import { ref } from 'vue'
 
-const fuelUnitOptions = [
-  {
-    label: 'L/100km',
-    value: 0
-  },
-  {
-    label: 'MPG',
-    value: 1
-  }
-]
-
 const colorThemeOptions = [
   {
     label: 'Space Station',
@@ -64,11 +54,11 @@ const colorThemeOptions = [
   },
   {
     label: 'Red Green Weakness',
-    value: 1
+    value: 4
   }
 ]
 
-let fuelUnit = ref(0)
+let fuelUnit = ref('L/100km')
 let currencyUnit = ref('€')
 let colorTheme = ref(0)
 let showPlateNumber = ref(false)
