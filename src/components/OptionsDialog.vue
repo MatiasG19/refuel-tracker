@@ -1,15 +1,21 @@
 <template>
   <div>
-    <q-dialog v-model="dialog">
-      <q-card class="my-card">
-        <q-card-actions>
+    <q-dialog :model-value="dialogVisible" @hide="$emit('update:dialogVisible')" 
+      position="bottom" full-width>
+      <q-card class="q-ma-md">
+        <q-card-actions             
+          v-for="(option, i) in options as OptionInDialog[]" 
+          :key="i"
+          >
           <q-btn 
-            v-for="(option, i) in options as OptionInDialog[]" 
-            :key="i"
-            v-close-popup 
-            flat 
+            @click="option.action"
+            class="row"
+            style="width: 90%;"
+            v-close-popup
+            flat align="left"
             color="primary" 
-            label="{{ option.name }}" />
+            label=" ">{{ option.text }}</q-btn>
+          <q-icon :name="option.icon" class="row" style="width: 10%;"/>
         </q-card-actions>
       </q-card>
     </q-dialog>
@@ -17,16 +23,20 @@
 </template>
 
 <script setup lang="ts">
-import { defineProps, ref } from 'vue';
+import { defineProps, defineEmits } from 'vue';
 import { OptionInDialog } from 'src/components/models'
 
 defineProps({
   options: {
     type: Array,
     required: true
+  },
+  dialogVisible: {
+    type: Boolean
   }
 })
-
-let dialog = ref(false)
+defineEmits([
+  'update:dialogVisible'
+])
 
 </script>

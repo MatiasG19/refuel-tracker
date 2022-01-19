@@ -23,7 +23,7 @@
       </q-input>
 
     <div class="q-gutter-sm">
-      <q-btn color="negative" label="Cancel" no-caps  />
+      <q-btn color="negative" label="Cancel" no-caps @click="$router.push('/refuel-entries')" />
       <q-btn color="positive" label="Confirm" type="submit" no-caps />
     </div>
     </q-form>

@@ -5,7 +5,7 @@
       <q-input standout="bg-teal text-white" v-model="plateNumber" label="Plate number" />
 
     <div class="q-gutter-sm">
-      <q-btn color="negative" label="Cancel" no-caps  />
+      <q-btn color="negative" label="Cancel" no-caps @click="$router.push('/vehicle-entries')" />
       <q-btn color="positive" label="Confirm" type="submit" no-caps />
     </div>
     </q-form>

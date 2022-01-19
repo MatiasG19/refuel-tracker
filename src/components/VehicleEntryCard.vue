@@ -8,17 +8,7 @@
           </div>
 
           <div class="col-auto space-station">
-            <q-btn dense round flat icon="more_vert">
-              <q-menu cover auto-close>
-                <q-list class="el-space-station">
-                  <q-item>
-                    <q-item-section>Edit</q-item-section>
-                  </q-item>
-                  <q-item clickable>
-                    <q-item-section>Delete</q-item-section>
-                  </q-item>
-                </q-list>
-              </q-menu>
+            <q-btn dense round flat icon="more_vert" @click="dialogVisible = true">
             </q-btn>
           </div>
         </div>
@@ -27,19 +17,30 @@
         <div class="text-subtitle1">{{ data.plateNumber }}</div>
       </q-card-section>
     </q-card>
+    <options-dialog 
+      v-model:dialogVisible="dialogVisible"
+      :options="optionsInDialog as OptionInDialog[]"
+    />
   </div>
 </template>
 
 <script setup lang="ts">
-import { VehicleEntry } from 'src/components/models'
-import { defineProps } from 'vue';
+import { VehicleEntry, OptionInDialog } from 'src/components/models'
+import { defineProps, ref } from 'vue'
+import OptionsDialog from 'src/components/OptionsDialog.vue'
 
 const mileage = '5.6 L/100km'
-defineProps({
+const props = defineProps({
   data: {
     type: VehicleEntry,
     required: true
+  },
+  optionsInDialog: {
+    type: Array
   }
 })
+
+let options = props.optionsInDialog as OptionInDialog[]
+let dialogVisible = ref(false)
 
 </script>

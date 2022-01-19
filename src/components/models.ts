@@ -22,5 +22,6 @@ export class VehicleEntry {
 export class OptionInDialog {
   text!: string
   icon!: string
+  action!: () => void
 }
 

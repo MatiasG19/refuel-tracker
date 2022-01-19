@@ -9,11 +9,11 @@
           </div>
         </q-popup-proxy>
       </q-input>
-      <q-select standout="bg-teal text-white" v-model="timeInterval" :options="options" label="Filter interval" 
-        map-options emit-value/>
+      <q-select standout="bg-teal text-white" v-model="timeInterval" :options="options" 
+        label="Filter interval" map-options emit-value/>
 
     <div class="q-gutter-sm">
-      <q-btn color="negative" label="Cancel" no-caps />
+      <q-btn color="negative" label="Cancel" no-caps @click="$router.push('/refuel-entries')" />
       <q-btn color="positive" label="Filter" type="submit" no-caps />
     </div>
     </q-form>

@@ -11,7 +11,7 @@
             <q-btn dense round flat icon="more_vert">
               <q-menu cover auto-close>
                 <q-list class="el-space-station">
-                  <q-item>
+                  <q-item clickable>
                     <q-item-section>Edit</q-item-section>
                   </q-item>
                   <q-item clickable>
