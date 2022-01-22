@@ -8,8 +8,7 @@
           </div>
 
           <div class="col-auto space-station">
-            <q-btn dense round flat icon="more_vert" @click="dialogVisible = true">
-            </q-btn>
+            <q-btn dense round flat icon="more_vert" @click="dialogVisible = true" />
           </div>
         </div>
 
@@ -17,7 +16,7 @@
         <div class="text-subtitle1">{{ data.plateNumber }}</div>
       </q-card-section>
     </q-card>
-    <options-dialog 
+    <options-dialog
       v-model:dialogVisible="dialogVisible"
       :options="optionsInDialog as OptionInDialog[]"
     />
@@ -40,7 +39,6 @@ const props = defineProps({
   }
 })
 
-let options = props.optionsInDialog as OptionInDialog[]
 let dialogVisible = ref(false)
 
 </script>

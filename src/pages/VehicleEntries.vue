@@ -13,7 +13,6 @@
 <script setup lang="ts">
 import VehicleEntryCard from 'src/components/VehicleEntryCard.vue'
 import { VehicleEntry, OptionInDialog } from 'src/components/models'
-import { ref } from 'vue'
 import { useRouter } from 'vue-router'
 
 const router = useRouter()
@@ -40,7 +39,7 @@ const optionsInDialog: OptionInDialog[] = [
   {
     text: 'Edit',
     icon: 'edit',
-    action: () => router.push('/vehicle-form')
+    action: () => router.push('/vehicles/edit')
   },
   {
     text: 'Delete',

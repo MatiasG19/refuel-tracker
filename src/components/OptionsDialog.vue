@@ -1,21 +1,26 @@
 <template>
   <div>
-    <q-dialog :model-value="dialogVisible" @hide="$emit('update:dialogVisible')" 
+    <q-dialog :model-value="dialogVisible" @hide="$emit('update:dialogVisible')"
       position="bottom" full-width>
-      <q-card class="q-ma-md">
-        <q-card-actions             
-          v-for="(option, i) in options as OptionInDialog[]" 
+      <q-card class="q-ma-md el-space-station">
+        <q-card-actions
+          v-for="(option, i) in options as OptionInDialog[]"
           :key="i"
-          >
-          <q-btn 
+        >
+          <q-btn
             @click="option.action"
-            class="row"
-            style="width: 90%;"
+            class="row full-width"
             v-close-popup
-            flat align="left"
-            color="primary" 
-            label=" ">{{ option.text }}</q-btn>
-          <q-icon :name="option.icon" class="row" style="width: 10%;"/>
+            flat
+            no-caps
+            color="primary"
+          >
+            <template v-slot:default>
+              <label>{{ option.text }}</label>
+              <q-space/>
+              <q-icon :name="option.icon" />
+            </template>
+          </q-btn>
         </q-card-actions>
       </q-card>
     </q-dialog>

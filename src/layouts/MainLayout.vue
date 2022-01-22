@@ -1,7 +1,7 @@
 <template>
   <q-layout view="lHh Lpr lFf" class="bg-space-station">
-    <q-header elevated>
-      <q-toolbar class="space-station">
+    <q-header>
+      <q-toolbar class="bg-space-station">
         <q-btn
           flat
           dense
@@ -11,13 +11,13 @@
           @click="toggleLeftDrawer"
         />
 
-        <q-toolbar-title class="space-station">
+        <q-toolbar-title>
           Refuel Tracker
         </q-toolbar-title>
 
         <q-btn
-          v-if="routePath == '/refuel-entries'"
-          :to="'filter-refuel-entries-form'"
+          v-if="routePath == '/refuels'"
+          :to="'filter'"
           icon="filter_list"
           round
           flat
@@ -53,7 +53,7 @@
       <router-view />
     </q-page-container>
 
-    <q-footer elevated>
+    <q-footer class="bg-space-station">
       <q-toolbar class="q-gutter-xs text-center">
         <div class="col">
           <q-btn round flat dense icon="bar_chart" class="col" :to="'/'" />
@@ -62,7 +62,7 @@
           <q-btn round flat dense icon="add" class="col" @click="add()"/>
         </div>
         <div class="col">
-          <q-btn round flat dense icon="drive_eta" class="col" :to="'vehicle-entries'"/>
+          <q-btn round flat dense icon="drive_eta" class="col" :to="'/vehicles'"/>
         </div>
       </q-toolbar>
     </q-footer>
@@ -83,25 +83,25 @@ const linkList = [
     title: 'Vehicles',
     caption: '',
     icon: 'drive_eta',
-    link: 'vehicle-entries'
+    link: '/vehicles'
   },
   {
     title: 'Refuels',
     caption: '',
     icon: 'local_gas_station',
-    link: 'refuel-entries'
+    link: '/refuels'
   },
   {
     title: 'Settings',
     caption: '',
     icon: 'settings',
-    link: 'settings'
+    link: '/settings'
   },
   {
     title: 'Help and Support',
     caption: '',
     icon: 'favorite_outline',
-    link: ''
+    link: '/support'
   }
 ];
 
@@ -115,15 +115,15 @@ const leftDrawerOpen = ref(false)
 
 function toggleLeftDrawer() {
   leftDrawerOpen.value = !leftDrawerOpen.value
-}  
+}
 
 function add() {
-  if(routePath.value == '/vehicle-entries')
-    void router.push('vehicle-form')
+  if(routePath.value == '/vehicles')
+    void router.push('/vehicles/add')
   else if(routePath.value.includes('form'))
     return
   else
-    void router.push('refuel-form')
+    void router.push('/refuels/add')
 }
 
 </script>

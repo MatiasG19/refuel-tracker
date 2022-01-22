@@ -5,7 +5,7 @@
       <q-input standout="bg-teal text-white" v-model="plateNumber" label="Plate number" />
 
     <div class="q-gutter-sm">
-      <q-btn color="negative" label="Cancel" no-caps @click="$router.push('/vehicle-entries')" />
+      <q-btn color="negative" label="Cancel" no-caps @click="$router.push('/vehicles')" />
       <q-btn color="positive" label="Confirm" type="submit" no-caps />
     </div>
     </q-form>
@@ -14,12 +14,16 @@
 
 <script setup lang="ts">
 import { ref } from 'vue'
+import { useRouter } from 'vue-router'
+
+const router = useRouter()
 
 let vehicleName = ref<string>('')
 let plateNumber = ref<string>('')
 
 function onSubmit(evt?: SubmitEvent) {
-  ;
+
+  void router.push('/vehicles')
 }
 
 </script>

@@ -8,18 +8,7 @@
           </div>
 
           <div class="col-auto space-station">
-            <q-btn dense round flat icon="more_vert">
-              <q-menu cover auto-close>
-                <q-list class="el-space-station">
-                  <q-item>
-                    <q-item-section>Move up</q-item-section>
-                  </q-item>
-                  <q-item clickable>
-                    <q-item-section>Move down</q-item-section>
-                  </q-item>
-                </q-list>
-              </q-menu>
-            </q-btn>
+            <q-btn dense round flat icon="more_vert" @click="dialogVisible = true" />
           </div>
         </div>
         <div>
@@ -34,20 +23,24 @@
 
       <q-card-actions>
         <div v-for="(period, i) in periods" :key="i" class="col text-center">
-          <q-btn :ripple="false" dense flat class="space-station">{{ periods[i] }}</q-btn>
+          <q-btn :ripple="false" dense flat no-caps class="space-station">{{ periods[i] }}</q-btn>
           <q-separator vertical/>
         </div>
       </q-card-actions>
     </q-card>
+    <options-dialog
+      v-model:dialogVisible="dialogVisible"
+      :options="optionsInDialog as OptionInDialog[]"
+    />
   </div>
 </template>
 
 <script setup lang="ts">
-import { GraphData } from 'src/components/models'
-import { defineProps } from 'vue'
+import { GraphData, OptionInDialog } from 'src/components/models'
+import { defineProps, ref } from 'vue'
+import OptionsDialog from 'src/components/OptionsDialog.vue'
 
-
-defineProps({
+const props = defineProps({
   data: {
     type: GraphData,
     required: true
@@ -55,7 +48,12 @@ defineProps({
   periods: {
     type: Array,
     required: true
+  },
+  optionsInDialog: {
+    type: Array
   }
 })
+
+let dialogVisible = ref(false)
 
 </script>

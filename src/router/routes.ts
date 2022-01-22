@@ -5,33 +5,49 @@ const routes: RouteRecordRaw[] = [
     path: '/',
     component: () => import('layouts/MainLayout.vue'),
     children: [
-      { 
-        path: '', 
-        component: () => import('pages/Index.vue') 
+      {
+        path: '',
+        component: () => import('pages/Index.vue')
       },
-      { 
-        path: 'refuel-form', 
-        component: () => import('src/pages/RefuelForm.vue') 
+      {
+        path: 'refuels',
+        component: () => import('src/pages/RefuelEntries.vue'),
+        children: [
+          {
+            path: 'add',
+            component: () => import('src/pages/RefuelForm.vue')
+          },
+          {
+            path: 'edit',
+            component: () => import('src/pages/RefuelForm.vue')
+          },
+          {
+            path: 'filter',
+            component: () => import('src/pages/FilterRefuelEntriesForm.vue')
+          }
+        ]
       },
-      { 
-        path: 'filter-refuel-entries-form', 
-        component: () => import('src/pages/FilterRefuelEntriesForm.vue') 
+      {
+        path: 'vehicles',
+        component: () => import('src/pages/VehicleEntries.vue'),
+        children: [
+          {
+            path: 'add',
+            component: () => import('src/pages/VehicleForm.vue')
+          },
+          {
+            path: 'edit',
+            component: () => import('src/pages/VehicleForm.vue')
+          }
+        ]
       },
-      { 
-        path: 'refuel-entries', 
-        component: () => import('src/pages/RefuelEntries.vue') 
+      {
+        path: 'settings',
+        component: () => import('src/pages/Settings.vue')
       },
-      { 
-        path: 'vehicle-entries', 
-        component: () => import('src/pages/VehicleEntries.vue') 
-      },
-      { 
-        path: 'vehicle-form', 
-        component: () => import('src/pages/VehicleForm.vue') 
-      },
-      { 
-        path: 'settings', 
-        component: () => import('src/pages/Settings.vue') 
+      {
+        path: 'support',
+        component: () => import('src/pages/Support.vue')
       }
     ],
   },

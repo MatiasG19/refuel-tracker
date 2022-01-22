@@ -9,11 +9,11 @@
           </div>
         </q-popup-proxy>
       </q-input>
-      <q-select standout="bg-teal text-white" v-model="timeInterval" :options="options" 
+      <q-select standout="bg-teal text-white" v-model="timeInterval" :options="options"
         label="Filter interval" map-options emit-value/>
 
     <div class="q-gutter-sm">
-      <q-btn color="negative" label="Cancel" no-caps @click="$router.push('/refuel-entries')" />
+      <q-btn color="negative" label="Cancel" no-caps @click="$router.push('/refuels')" />
       <q-btn color="positive" label="Filter" type="submit" no-caps />
     </div>
     </q-form>
@@ -23,6 +23,9 @@
 <script setup lang="ts">
 import { ref } from 'vue'
 import { date } from 'quasar'
+import { useRouter } from 'vue-router'
+
+const router = useRouter()
 
 const options = [
   {
@@ -55,7 +58,8 @@ let filterDate = ref<string>(date.formatDate(Date.now(), 'YYYY/MM/DD'))
 let timeInterval = ref<number>(2)
 
 function onSubmit(evt?: SubmitEvent) {
-  ;
+
+  void router.push('/refuels')
 }
 
 </script>

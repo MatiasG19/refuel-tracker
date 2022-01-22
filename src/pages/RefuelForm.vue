@@ -11,7 +11,7 @@
             <q-btn v-close-popup label="Close" color="primary" flat />
           </div>
         </q-popup-proxy>
-      </q-input> 
+      </q-input>
 
       <q-input standout="bg-teal text-white" v-model="refuelTime" label="Refuel time" >
         <q-popup-proxy transition-show="scale" transition-hide="scale">
@@ -19,11 +19,11 @@
           <div class="row items-center justify-end">
             <q-btn v-close-popup label="Close" color="primary" flat />
           </div>
-        </q-popup-proxy>      
+        </q-popup-proxy>
       </q-input>
 
     <div class="q-gutter-sm">
-      <q-btn color="negative" label="Cancel" no-caps @click="$router.push('/refuel-entries')" />
+      <q-btn color="negative" label="Cancel" no-caps @click="$router.push('/refuels')" />
       <q-btn color="positive" label="Confirm" type="submit" no-caps />
     </div>
     </q-form>
@@ -33,6 +33,9 @@
 <script setup lang="ts">
 import { ref } from 'vue'
 import { date } from 'quasar'
+import { useRouter } from 'vue-router'
+
+const router = useRouter()
 
 let payedAmount = ref<number>(0.0)
 let refueledAmount = ref<number>(0.0)
@@ -40,7 +43,8 @@ let refuelDate = ref<string>(date.formatDate(Date.now(), 'YYYY/MM/DD'))
 let refuelTime = ref<string>(date.formatDate(Date.now(), 'HH:mm:ss'))
 
 function onSubmit(evt?: SubmitEvent) {
-  ;
+
+  void router.push('/')
 }
 
 </script>

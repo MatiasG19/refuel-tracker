@@ -8,18 +8,7 @@
           </div>
 
           <div class="col-auto space-station">
-            <q-btn dense round flat icon="more_vert">
-              <q-menu cover auto-close>
-                <q-list class="el-space-station">
-                  <q-item clickable>
-                    <q-item-section>Edit</q-item-section>
-                  </q-item>
-                  <q-item clickable>
-                    <q-item-section>Delete</q-item-section>
-                  </q-item>
-                </q-list>
-              </q-menu>
-            </q-btn>
+            <q-btn dense round flat icon="more_vert" @click="dialogVisible = true" />
           </div>
         </div>
         <div class="row">
@@ -34,20 +23,30 @@
         </div>
       </q-card-section>
     </q-card>
+    <options-dialog
+      v-model:dialogVisible="dialogVisible"
+      :options="optionsInDialog as OptionInDialog[]"
+    />
   </div>
 </template>
 
 <script setup lang="ts">
-import { RefuelEntry } from 'src/components/models'
-import { defineProps } from 'vue'
+import { RefuelEntry, OptionInDialog } from 'src/components/models'
+import { defineProps, ref } from 'vue'
 import { date } from 'quasar'
+import OptionsDialog from 'src/components/OptionsDialog.vue'
 
 const props = defineProps({
   data: {
     type: RefuelEntry,
     required: true
+  },
+    optionsInDialog: {
+    type: Array
   }
 })
+
+let dialogVisible = ref(false)
 
 const refuelDate = date.formatDate(props.data.date, 'YYYY-MMM-DD HH:mm')
 
