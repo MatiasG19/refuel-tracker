@@ -1,16 +1,16 @@
 <template>
   <div>
     <q-form @submit="onSubmit" class="q-pa-md q-gutter-md">
-      <q-input standout="bg-teal text-white" v-model="filterDate" label="Start date">
+      <q-input standout="bg-teal text-white" v-model="filterDate" label="Filter until date">
         <q-popup-proxy transition-show="scale" transition-hide="scale">
           <q-date v-model="filterDate" />
-          <div class="row items-center justify-end">
+          <div class="row items-center">
             <q-btn v-close-popup label="Close" color="primary" flat />
           </div>
         </q-popup-proxy>
       </q-input>
       <q-select standout="bg-teal text-white" v-model="timeInterval" :options="options"
-        label="Filter interval" map-options emit-value/>
+        label="Filter last" map-options emit-value/>
 
     <div class="q-gutter-sm">
       <q-btn color="negative" label="Cancel" no-caps @click="$router.push('/refuels')" />

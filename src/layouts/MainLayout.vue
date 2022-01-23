@@ -17,7 +17,7 @@
 
         <q-btn
           v-if="routePath == '/refuels'"
-          :to="'filter'"
+          :to="'/refuels/filter'"
           icon="filter_list"
           round
           flat

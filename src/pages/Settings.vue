@@ -2,16 +2,14 @@
   <div class="q-pa-md q-gutter-md">
     <q-list>
       <q-item-label header>Themes</q-item-label>
-      <q-select class="q-pb-md" standout="bg-teal text-white" v-model="colorTheme" 
+      <q-select class="q-pb-md" standout="bg-teal text-white" v-model="colorTheme"
       :options="colorThemeOptions" label="Color theme" map-options emit-value/>
 
       <q-separator spaced />
 
       <q-item-label header>Units</q-item-label>
-      <div >
-        <q-input class="q-pb-md" standout="bg-teal text-white" v-model="fuelUnit" 
-          label="Fuel unit" />
-        <q-input class="q-pb-md" standout="bg-teal text-white" v-model="currencyUnit" 
+      <div>
+        <q-input class="q-pb-md" standout="bg-teal text-white" v-model="currencyUnit"
           label="Currency unit" />
       </div>
 
@@ -58,7 +56,6 @@ const colorThemeOptions = [
   }
 ]
 
-let fuelUnit = ref('L/100km')
 let currencyUnit = ref('€')
 let colorTheme = ref(0)
 let showPlateNumber = ref(false)

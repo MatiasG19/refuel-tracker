@@ -40,7 +40,7 @@ import { GraphData, OptionInDialog } from 'src/components/models'
 import { defineProps, ref } from 'vue'
 import OptionsDialog from 'src/components/OptionsDialog.vue'
 
-const props = defineProps({
+defineProps({
   data: {
     type: GraphData,
     required: true

@@ -11,41 +11,41 @@ const routes: RouteRecordRaw[] = [
       },
       {
         path: '/refuels',
-        component: () => import('src/pages/RefuelIndex.vue'),
+        component: () => import('layouts/RefuelLayout.vue'),
         children: [
           {
             path: '',
-            component: () => import('src/pages/RefuelEntries.vue')
+            component: () => import('pages/RefuelEntries.vue')
           },
           {
             path: 'add',
-            component: () => import('src/pages/RefuelForm.vue')
+            component: () => import('pages/RefuelForm.vue')
           },
           {
             path: 'edit',
-            component: () => import('src/pages/RefuelForm.vue')
+            component: () => import('pages/RefuelForm.vue')
           },
           {
             path: 'filter',
-            component: () => import('src/pages/FilterRefuelEntriesForm.vue')
+            component: () => import('pages/FilterRefuelEntriesForm.vue')
           }
         ]
       },
       {
         path: '/vehicles',
-        component: () => import('src/pages/VehicleIndex.vue'),
+        component: () => import('layouts/VehicleLayout.vue'),
         children: [
           {
             path: '',
-            component: () => import('src/pages/VehicleEntries.vue')
+            component: () => import('pages/VehicleEntries.vue')
           },
           {
-            path: '/vehicles/add',
-            component: () => import('src/pages/VehicleForm.vue')
+            path: 'add',
+            component: () => import('pages/VehicleForm.vue')
           },
           {
             path: 'edit',
-            component: () => import('src/pages/VehicleForm.vue')
+            component: () => import('pages/VehicleForm.vue')
           }
         ]
       },

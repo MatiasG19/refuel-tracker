@@ -29,7 +29,7 @@ import { defineProps, ref } from 'vue'
 import OptionsDialog from 'src/components/OptionsDialog.vue'
 
 const mileage = '5.6 L/100km'
-const props = defineProps({
+defineProps({
   data: {
     type: VehicleEntry,
     required: true

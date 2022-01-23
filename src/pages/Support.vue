@@ -1,16 +1,88 @@
 <template>
-  <div class="q-pa-md q-gutter-md">
+  <q-page class="q-pa-md">
+    <h5 class="q-mt-md text-center">
+      <span style="color: #EF60CB;">Thank you</span> for choosing
+      <span style="color: #60EFB3;">{{ productName }}</span>! I hope you have been enjoying the app so far <q-icon name="rocket_launch"></q-icon>
+    </h5>
 
-  </div>
+    <q-carousel
+      v-model="slide"
+      transition-prev="jump-right"
+      transition-next="jump-left"
+      swipeable
+      animated
+      control-color="white"
+      prev-icon="arrow_left"
+      next-icon="arrow_right"
+      navigation-icon="radio_button_unchecked"
+      navigation
+      padding
+      arrows
+      height="300px"
+      class="space-station text-white shadow-1 rounded-borders"
+    >
+      <q-carousel-slide name="rate" class="column no-wrap flex-center">
+        <div class="q-mt-md text-center">
+          <div class="column items-center">
+            <div class="q-mb-md text-center">Rate this app if you like it or leave feedback to improve your experience!</div>
+              <q-rating
+                v-model="ratingModel"
+                size="3.5em"
+                icon="star_border"
+                icon-selected="star"
+                class="accent-space-station"
+              />
+          </div>
+        </div>
+      </q-carousel-slide>
+      <q-carousel-slide name="feedback" class="column no-wrap flex-center">
+        <div class="q-mt-md">
+          <div class="q-mb-md text-center">Having some trouble?</div>
+          <q-btn color="accent" icon-right="mail" class="column" label="Send Feedback" no-caps outline/>
+        </div>
+      </q-carousel-slide>
+      <q-carousel-slide name="layers" class="column no-wrap flex-center">
+        <div class="q-mt-md">
+          <div class="q-pb-md text-center">Tell your friends about this app!</div>
+          <div class="row justify-evenly q-pt-md q-gutter-md">
+            <q-btn round color="accent" icon="send" class="column" outline/>
+            <q-btn round color="accent" icon="send" class="column" outline/>
+            <q-btn round color="accent" icon="send" class="column" outline/>
+            <q-btn round color="accent" icon="send" class="column" outline/>
+          </div>
+        </div>
+      </q-carousel-slide>
+      <q-carousel-slide name="coffee" class="column no-wrap flex-center">
+        <div class="q-mt-md">
+          <div class="q-mb-md text-center">Show your appreciation!</div>
+          <q-btn color="accent" icon-right="local_cafe" class="row" label="Buy me a coffee!" :href="coffeLink" no-caps outline/>
+        </div>
+      </q-carousel-slide>
+      <q-carousel-slide name="code" class="column no-wrap flex-center">
+        <div class="q-mt-md">
+          <div class="q-mb-md text-center">{{ productName }}'s code is open source! Check it out!</div>
+          <q-btn color="accent" icon-right="code" class="row" label="GitHub" :href="repositoryLink" no-caps outline/>
+        </div>
+      </q-carousel-slide>
+    </q-carousel>
+
+    <div class="q-mt-md full-width text-center">{{ productName }} version {{ version }}</div>
+    <div class="q-mt-md full-width text-center">View lisence on <a :href="licenseLink">Github</a></div>
+  </q-page>
 </template>
 
 <script setup lang="ts">
-import { emit } from 'process'
-import { onMounted, computed, defineEmits } from 'vue'
+import { onMounted, computed, defineEmits, ref } from 'vue'
 import { useRouter } from 'vue-router'
+import { version, productName } from '../../package.json'
 
 const router = useRouter()
 const routePath = computed(() => router.currentRoute.value.path)
+const ratingModel = ref(3)
+const slide = ref('rate')
+const repositoryLink = 'https://github.com/MatiasG19/refuel-tracker'
+const licenseLink = 'https://github.com/MatiasG19/refuel-tracker/license'
+const coffeLink = 'https://github.com/MatiasG19/refuel-tracker'
 
 const emits = defineEmits([
   'update:title'
