@@ -23,7 +23,7 @@
       </q-input>
 
     <div class="q-gutter-sm">
-      <q-btn color="negative" label="Cancel" no-caps @click="$router.push('/refuels')" />
+      <q-btn color="negative" label="Cancel" no-caps @click="$router.go(-1)" />
       <q-btn color="positive" label="Confirm" type="submit" no-caps />
     </div>
     </q-form>
@@ -44,7 +44,7 @@ let refuelTime = ref<string>(date.formatDate(Date.now(), 'HH:mm:ss'))
 
 function onSubmit(evt?: SubmitEvent) {
 
-  void router.push('/')
+  void router.go(-1)
 }
 
 </script>

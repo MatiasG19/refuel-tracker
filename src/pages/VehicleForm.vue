@@ -5,7 +5,7 @@
       <q-input standout="bg-teal text-white" v-model="plateNumber" label="Plate number" />
 
     <div class="q-gutter-sm">
-      <q-btn color="negative" label="Cancel" no-caps @click="$router.push('/vehicles')" />
+      <q-btn color="negative" label="Cancel" no-caps @click="$router.go(-1)" />
       <q-btn color="positive" label="Confirm" type="submit" no-caps />
     </div>
     </q-form>
@@ -23,7 +23,7 @@ let plateNumber = ref<string>('')
 
 function onSubmit(evt?: SubmitEvent) {
 
-  void router.push('/vehicles')
+  void router.go(-1)
 }
 
 </script>
