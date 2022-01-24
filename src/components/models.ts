@@ -11,6 +11,7 @@ export class RefuelEntry {
   date!: Date
   refuelAmount!: number
   payedAmount!: number
+  distanceDriven!: number
 }
 
 export class Vehicle {

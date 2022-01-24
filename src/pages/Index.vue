@@ -20,25 +20,37 @@ import { productName } from '../../package.json'
 
 const cards: GraphData[] = [
   {
-    title: 'Fuel Consumption',
+    title: 'Fuel consumption',
     value: 5.1,
     unit: 'L/100km',
     period: 0
   },
   {
-    title: 'Fuel Pricing',
+    title: 'Dinstance driven',
+    value: 1900,
+    unit: 'km',
+    period: 0
+  },
+  {
+    title: 'Money spent',
+    value: 450,
+    unit: '€',
+    period: 0
+  },
+  {
+    title: 'Fuel pricing',
     value: 7,
     unit: '€/100km',
     period: 0
   },
   {
-    title: 'Range',
-    value: 1900,
-    unit: 'km',
+    title: 'Fuel burnt',
+    value: 350,
+    unit: 'Litre',
     period: 0
   },
-    {
-    title: 'Refuels',
+  {
+    title: 'Refuels made',
     value: 20,
     unit: '',
     period: 0

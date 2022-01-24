@@ -9,6 +9,7 @@
       <q-item-label header>Units</q-item-label>
       <div>
         <c-input class="q-pb-md" v-model="currencyUnit" label="Currency unit"/>
+        <c-select class="q-pb-md" v-model="distanceUnit" :options="distanceUnitOptions" label="Distance unit"/>
       </div>
 
       <q-separator spaced />
@@ -57,7 +58,19 @@ const colorThemeOptions = [
   }
 ]
 
+const distanceUnitOptions = [
+  {
+    label: 'km',
+    value: 0
+  },
+  {
+    label: 'miles',
+    value: 1
+  }
+]
+
 let currencyUnit = ref('€')
+let distanceUnit = ref(1)
 let colorTheme = ref(0)
 let showPlateNumber = ref(false)
 

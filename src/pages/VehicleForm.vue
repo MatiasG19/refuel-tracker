@@ -47,6 +47,10 @@ const fuelUnits = [
   {
     label: 'Wh/km',
     value: 5
+  },
+  {
+    label: 'Wh/mile',
+    value: 6
   }
 ]
 

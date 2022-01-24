@@ -3,7 +3,7 @@
     <h5 class="q-mt-md text-center">
       <span style="color: #EF60CB;">Thank you</span> for choosing
       <span style="color: #60EFB3;">{{ productName }}</span>! I hope you have been enjoying the app so far
-      <q-icon name="rocket_launch"></q-icon>
+      <q-icon name="rocket_launch" color="accent"></q-icon>
     </h5>
 
     <q-carousel

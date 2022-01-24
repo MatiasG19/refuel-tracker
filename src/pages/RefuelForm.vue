@@ -2,6 +2,7 @@
   <div>
     <q-form @submit="onSubmit" class="q-pa-md q-gutter-md">
       <c-input v-model="payedAmount" label="Payed amount"/>
+      <c-input v-model="distanceDriven" label="Distance driven"/>
       <c-input v-model="refueledAmount" label="Refuled amount"/>
 
       <c-input v-model="refuelDate" label="Refuel date">
@@ -41,6 +42,7 @@ const router = useRouter()
 
 let payedAmount = ref(0.0)
 let refueledAmount = ref(0.0)
+let distanceDriven = ref(0.0)
 let refuelDate = ref(date.formatDate(Date.now(), 'YYYY/MM/DD'))
 let refuelTime = ref(date.formatDate(Date.now(), 'HH:mm:ss'))
 
