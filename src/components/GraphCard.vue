@@ -17,11 +17,11 @@
         </div>
       </q-card-section>
 
-      <q-card-section class="accent-space-station">
+      <q-card-section class="accent-space-station" v-if="false">
         Graph-Graph-Graph-Graph-Graph-Graph-Graph
       </q-card-section>
 
-      <q-card-actions>
+      <q-card-actions v-if="false">
         <div v-for="(period, i) in periods" :key="i" class="col text-center">
           <q-btn :ripple="false" dense flat no-caps class="space-station">{{ periods[i] }}</q-btn>
           <q-separator vertical/>

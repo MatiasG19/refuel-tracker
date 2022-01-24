@@ -8,7 +8,7 @@
           </div>
 
           <div class="col-auto space-station">
-            <q-btn dense round flat icon="more_vert" @click="dialogVisible = true" />
+            <q-btn dense round flat icon="more_vert" @click.stop="dialogVisible = true" />
           </div>
         </div>
 

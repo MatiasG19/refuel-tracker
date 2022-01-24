@@ -6,6 +6,7 @@
         :data="card"
         :optionsInDialog="optionsInDialog"
         class="q-pt-md q-pl-md q-pr-md"
+        @click="router.push('/')"
       />
     </q-page>
 </template>
