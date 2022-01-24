@@ -1,5 +1,5 @@
 <template>
-    <q-page class="items-center justify-evenly">
+    <q-page>
       <vehicle-entry-card
         v-for="(card, i) in cards"
         :key="i"
@@ -12,26 +12,29 @@
 
 <script setup lang="ts">
 import VehicleEntryCard from 'src/components/VehicleEntryCard.vue'
-import { VehicleEntry, OptionInDialog } from 'src/components/models'
+import { Vehicle, OptionInDialog } from 'src/components/models'
 import { useRouter } from 'vue-router'
 
 const router = useRouter()
 
-const cards: VehicleEntry[] = [
+const cards: Vehicle[] = [
   {
-    id: 0,
+    id: 1,
     name: 'Seat',
-    plateNumber: 'HL:MG1908'
+    plateNumber: 'HL:MG1908',
+    fuelUnit: { id: 1, Unit: 'L/100km' }
   },
   {
     id: 1,
     name: 'Seat',
-    plateNumber: 'HL:MG1908'
+    plateNumber: 'HL:MG1908',
+    fuelUnit: { id: 1, Unit: 'L/100km' }
   },
   {
-    id: 2,
+    id: 1,
     name: 'Seat',
-    plateNumber: 'HL:MG1908'
+    plateNumber: 'HL:MG1908',
+    fuelUnit: { id: 1, Unit: 'L/100km' }
   }
 ]
 

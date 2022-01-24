@@ -1,5 +1,5 @@
 <template>
-    <q-page class="items-center justify-evenly">
+    <q-page>
       <div v-if="filterActive" class="q-pt-md text-center">
         <q-btn class="q-pa-xs" style="color:pink;" flat no-caps label=" " @click="removeFilter"
         icon-right="delete_outline">{{ filterHint }}</q-btn>
@@ -21,7 +21,7 @@ import { ref } from 'vue'
 import { useRouter } from 'vue-router'
 
 const router = useRouter()
-let filterActive = ref<boolean>(true)
+let filterActive = ref(true)
 const filterHint = 'Filter 1 Month from 2021.12.19'
 
 const cards: RefuelEntry[] = [

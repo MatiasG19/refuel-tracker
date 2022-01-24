@@ -1,7 +1,7 @@
 <template>
   <div>
     <q-form @submit="onSubmit" class="q-pa-md q-gutter-md">
-      <q-input standout="bg-teal text-white" v-model="filterDate" label="Filter until date">
+      <q-input outlined color="accent" v-model="filterDate" label="Filter until date">
         <q-popup-proxy transition-show="scale" transition-hide="scale">
           <q-date v-model="filterDate" />
           <div class="row items-center">
@@ -9,7 +9,7 @@
           </div>
         </q-popup-proxy>
       </q-input>
-      <q-select standout="bg-teal text-white" v-model="timeInterval" :options="options"
+      <q-select outlined color="accent" v-model="timeInterval" :options="options"
         label="Filter last" map-options emit-value/>
 
     <div class="q-gutter-sm">

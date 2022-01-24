@@ -2,7 +2,8 @@
   <q-page class="q-pa-md">
     <h5 class="q-mt-md text-center">
       <span style="color: #EF60CB;">Thank you</span> for choosing
-      <span style="color: #60EFB3;">{{ productName }}</span>! I hope you have been enjoying the app so far <q-icon name="rocket_launch"></q-icon>
+      <span style="color: #60EFB3;">{{ productName }}</span>! I hope you have been enjoying the app so far
+      <q-icon name="rocket_launch"></q-icon>
     </h5>
 
     <q-carousel
@@ -24,7 +25,8 @@
       <q-carousel-slide name="rate" class="column no-wrap flex-center">
         <div class="q-mt-md text-center">
           <div class="column items-center">
-            <div class="q-mb-md text-center">Rate this app if you like it or leave feedback to improve your experience!</div>
+            <div class="q-mb-md text-center">Rate this app if you like it or leave feedback
+              to improve your experience!</div>
               <q-rating
                 v-model="ratingModel"
                 size="3.5em"
@@ -45,48 +47,57 @@
         <div class="q-mt-md">
           <div class="q-pb-md text-center">Tell your friends about this app!</div>
           <div class="row justify-evenly q-pt-md q-gutter-md">
-            <q-btn round color="accent" icon="send" class="column" outline/>
-            <q-btn round color="accent" icon="send" class="column" outline/>
-            <q-btn round color="accent" icon="send" class="column" outline/>
-            <q-btn round color="accent" icon="send" class="column" outline/>
+            <q-btn round color="accent" icon="flutter_dash" class="column" outline @click="openURL(twitterLink)"/>
+            <q-btn round color="accent" icon="face" class="column" outline @click="openURL(facebookLink)"/>
+            <q-btn round color="accent" icon="share" class="column" outline @click="share"/>
           </div>
         </div>
       </q-carousel-slide>
       <q-carousel-slide name="coffee" class="column no-wrap flex-center">
         <div class="q-mt-md">
           <div class="q-mb-md text-center">Show your appreciation!</div>
-          <q-btn color="accent" icon-right="local_cafe" class="row" label="Buy me a coffee!" :href="coffeLink" no-caps outline/>
+          <q-btn color="accent" icon-right="local_cafe" class="row" label="Buy me a coffee!"
+            @click="openURL(coffeLink)" no-caps outline/>
         </div>
       </q-carousel-slide>
       <q-carousel-slide name="code" class="column no-wrap flex-center">
         <div class="q-mt-md">
           <div class="q-mb-md text-center">{{ productName }}'s code is open source! Check it out!</div>
-          <q-btn color="accent" icon-right="code" class="row" label="GitHub" :href="repositoryLink" no-caps outline/>
+          <q-btn color="accent" icon-right="code" class="row" label="GitHub" @click="openURL(repositoryLink)"
+            no-caps outline/>
         </div>
       </q-carousel-slide>
     </q-carousel>
 
     <div class="q-mt-md full-width text-center">{{ productName }} version {{ version }}</div>
-    <div class="q-mt-md full-width text-center">View lisence on <a :href="licenseLink">Github</a></div>
+    <div class="q-mt-md full-width text-center">View license on <a :href="licenseLink">Github</a></div>
   </q-page>
 </template>
 
 <script setup lang="ts">
 import { onMounted, computed, defineEmits, ref } from 'vue'
 import { useRouter } from 'vue-router'
-import { version, productName } from '../../package.json'
+import { productName, version } from '../../package.json'
+import { openURL } from 'quasar'
 
 const router = useRouter()
 const routePath = computed(() => router.currentRoute.value.path)
 const ratingModel = ref(3)
 const slide = ref('rate')
 const repositoryLink = 'https://github.com/MatiasG19/refuel-tracker'
-const licenseLink = 'https://github.com/MatiasG19/refuel-tracker/license'
-const coffeLink = 'https://github.com/MatiasG19/refuel-tracker'
+// TODO Add missing links
+const licenseLink = ''
+const coffeLink = ''
+const twitterLink = ''
+const facebookLink = ''
 
 const emits = defineEmits([
   'update:title'
 ])
+
+function share() {
+  ;
+}
 
 onMounted(() => {
   console.log('Test')

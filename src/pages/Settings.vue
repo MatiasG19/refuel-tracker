@@ -2,15 +2,13 @@
   <div class="q-pa-md q-gutter-md">
     <q-list>
       <q-item-label header>Themes</q-item-label>
-      <q-select class="q-pb-md" standout="bg-teal text-white" v-model="colorTheme"
-      :options="colorThemeOptions" label="Color theme" map-options emit-value/>
+      <c-select class="q-pb-md" v-model="colorTheme" :options="colorThemeOptions" label="Color theme"/>
 
       <q-separator spaced />
 
       <q-item-label header>Units</q-item-label>
       <div>
-        <q-input class="q-pb-md" standout="bg-teal text-white" v-model="currencyUnit"
-          label="Currency unit" />
+        <c-input class="q-pb-md" v-model="currencyUnit" label="Currency unit"/>
       </div>
 
       <q-separator spaced />
@@ -32,6 +30,8 @@
 
 <script setup lang="ts">
 import { ref } from 'vue'
+import CInput from 'components/inputs/CInput.vue'
+import CSelect from 'components/inputs/CSelect.vue'
 
 const colorThemeOptions = [
   {

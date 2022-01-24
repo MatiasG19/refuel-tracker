@@ -13,10 +13,16 @@ export class RefuelEntry {
   payedAmount!: number
 }
 
-export class VehicleEntry {
+export class Vehicle {
   id!: number
   name!: string
   plateNumber!: string
+  fuelUnit!: FuelUnit
+}
+
+export class FuelUnit {
+  id!: number
+  Unit!: string
 }
 
 export class OptionInDialog {
@@ -24,4 +30,5 @@ export class OptionInDialog {
   icon!: string
   action!: () => void
 }
+
 

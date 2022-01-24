@@ -24,14 +24,14 @@
 </template>
 
 <script setup lang="ts">
-import { VehicleEntry, OptionInDialog } from 'src/components/models'
+import { Vehicle, OptionInDialog } from 'src/components/models'
 import { defineProps, ref } from 'vue'
 import OptionsDialog from 'src/components/OptionsDialog.vue'
 
 const mileage = '5.6 L/100km'
 defineProps({
   data: {
-    type: VehicleEntry,
+    type: Vehicle,
     required: true
   },
   optionsInDialog: {

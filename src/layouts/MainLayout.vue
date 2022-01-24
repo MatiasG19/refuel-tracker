@@ -12,7 +12,7 @@
         />
 
         <q-toolbar-title>
-          Refuel Tracker
+          {{ title }}
         </q-toolbar-title>
 
         <q-btn
@@ -105,13 +105,16 @@ const linkList = [
   }
 ];
 
-import { ref, computed } from 'vue'
+import { ref, computed, watchEffect } from 'vue'
 import { useRouter } from 'vue-router'
+import { productName } from '../../package.json'
 
 const router = useRouter()
 const routePath = computed(() => router.currentRoute.value.path)
 
 const leftDrawerOpen = ref(false)
+const title = ref(productName)
+let showPlateNumber = false
 
 function toggleLeftDrawer() {
   leftDrawerOpen.value = !leftDrawerOpen.value
@@ -125,5 +128,32 @@ function add() {
   else
     void router.push('/refuels/add')
 }
+
+watchEffect(() => {
+  if(routePath.value == '/' && !showPlateNumber)
+    title.value = 'My Car Name'
+  else if(routePath.value == '/' && !showPlateNumber)
+    title.value = 'HH:TT2022'
+  else if(routePath.value == '/vehicles')
+    title.value = 'Vehicles'
+  else if(routePath.value == '/vehicles/add')
+    title.value = 'Add vehicle'
+  else if(routePath.value == '/vehicles/edit')
+    title.value = 'Edit vehicle'
+  else if(routePath.value == '/refuels')
+    title.value = 'Refuels'
+  else if(routePath.value == '/refuels/add')
+    title.value = 'Add refuel'
+  else if(routePath.value == '/refuels/edit')
+    title.value = 'Add refuel'
+  else if(routePath.value == '/refuels/filter')
+    title.value = 'Filter refuels'
+  else if(routePath.value == '/settings')
+    title.value = 'Settings'
+  else if(routePath.value == '/support')
+    title.value = 'Support'
+  else
+    title.value = productName
+})
 
 </script>
