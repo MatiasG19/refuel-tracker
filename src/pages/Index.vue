@@ -14,6 +14,9 @@
 <script setup lang="ts">
 import GraphCard from 'src/components/GraphCard.vue'
 import { GraphData, OptionInDialog } from 'src/components/models'
+import { onMounted } from 'vue'
+import { emitter } from 'src/boot/mitt'
+import { productName } from '../../package.json'
 
 const cards: GraphData[] = [
   {
@@ -32,6 +35,12 @@ const cards: GraphData[] = [
     title: 'Range',
     value: 1900,
     unit: 'km',
+    period: 0
+  },
+    {
+    title: 'Refuels',
+    value: 20,
+    unit: '',
     period: 0
   }
 ]
@@ -67,8 +76,16 @@ const optionsInDialog: OptionInDialog[] = [
   }
 ]
 
+let showPlateNumber = false
+let carName = 'My car name'
+
 function action() {
   ;
 }
+
+onMounted(() => {
+  emitter.emit('updateTitle', showPlateNumber == false ?
+    (carName.trim() != '' ? carName : productName) : 'HH:XX2022')
+})
 
 </script>

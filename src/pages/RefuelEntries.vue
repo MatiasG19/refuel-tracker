@@ -17,8 +17,9 @@
 <script setup lang="ts">
 import RefuelEntryCard from 'src/components/RefuelEntryCard.vue';
 import { RefuelEntry, OptionInDialog } from 'src/components/models'
-import { ref } from 'vue'
+import { ref, onMounted } from 'vue'
 import { useRouter } from 'vue-router'
+import { emitter } from 'src/boot/mitt'
 
 const router = useRouter()
 let filterActive = ref(true)
@@ -68,5 +69,9 @@ function action() {
 function removeFilter() {
   filterActive.value = false
 }
+
+onMounted(() => {
+  emitter.emit('updateTitle', 'Refuels')
+})
 
 </script>

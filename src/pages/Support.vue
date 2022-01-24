@@ -79,6 +79,7 @@ import { onMounted, computed, defineEmits, ref } from 'vue'
 import { useRouter } from 'vue-router'
 import { productName, version } from '../../package.json'
 import { openURL } from 'quasar'
+import { emitter } from 'src/boot/mitt'
 
 const router = useRouter()
 const routePath = computed(() => router.currentRoute.value.path)
@@ -102,5 +103,7 @@ function share() {
 onMounted(() => {
   console.log('Test')
   emits('update:title', routePath.value)
+  emitter.emit('updateTitle', 'Support')
 })
+
 </script>

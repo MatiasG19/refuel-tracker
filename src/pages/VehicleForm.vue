@@ -15,11 +15,11 @@
 </template>
 
 <script setup lang="ts">
-import { ref } from 'vue'
+import { ref, onMounted } from 'vue'
 import { useRouter } from 'vue-router'
 import CInput from 'components/inputs/CInput.vue'
 import CSelect from 'components/inputs/CSelect.vue'
-import { cwd } from 'process'
+import { emitter } from 'src/boot/mitt'
 
 const router = useRouter()
 
@@ -54,5 +54,13 @@ function onSubmit(evt?: SubmitEvent) {
 
   void router.go(-1)
 }
+
+onMounted(() => {
+  const routePath = router.currentRoute.value.path.toLocaleLowerCase()
+  if(routePath.includes('add'))
+    emitter.emit('updateTitle', 'Add vehicle')
+  else if(routePath.includes('edit'))
+    emitter.emit('updateTitle', 'Edit vehicle')
+})
 
 </script>

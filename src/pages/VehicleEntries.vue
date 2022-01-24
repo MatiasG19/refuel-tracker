@@ -14,6 +14,8 @@
 import VehicleEntryCard from 'src/components/VehicleEntryCard.vue'
 import { Vehicle, OptionInDialog } from 'src/components/models'
 import { useRouter } from 'vue-router'
+import { onMounted } from 'vue'
+import { emitter } from 'src/boot/mitt'
 
 const router = useRouter()
 
@@ -50,5 +52,9 @@ const optionsInDialog: OptionInDialog[] = [
     action: () => console.log('delete')
   }
 ]
+
+onMounted(() => {
+    emitter.emit('updateTitle', 'Vehicles')
+})
 
 </script>

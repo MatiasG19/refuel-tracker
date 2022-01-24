@@ -21,9 +21,10 @@
 </template>
 
 <script setup lang="ts">
-import { ref } from 'vue'
+import { ref, onMounted } from 'vue'
 import { date } from 'quasar'
 import { useRouter } from 'vue-router'
+import { emitter } from 'src/boot/mitt'
 
 const router = useRouter()
 
@@ -61,5 +62,9 @@ function onSubmit(evt?: SubmitEvent) {
 
   void router.push('/refuels')
 }
+
+onMounted(() => {
+  emitter.emit('updateTitle', 'Filter refuels')
+})
 
 </script>

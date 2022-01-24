@@ -56,7 +56,7 @@
     <q-footer class="bg-space-station">
       <q-toolbar class="q-gutter-xs text-center">
         <div class="col">
-          <q-btn round flat dense icon="bar_chart" class="col" :to="'/'" />
+          <q-btn round flat dense icon="bar_chart" class="col" :to="'/'"/>
         </div>
         <div class="col">
           <q-btn round flat dense icon="add" class="col" @click="add()"/>
@@ -105,16 +105,16 @@ const linkList = [
   }
 ];
 
-import { ref, computed, watchEffect } from 'vue'
+import { ref, computed } from 'vue'
 import { useRouter } from 'vue-router'
-import { productName } from '../../package.json'
+import { emitter } from 'src/boot/mitt'
 
 const router = useRouter()
 const routePath = computed(() => router.currentRoute.value.path)
+emitter.on('updateTitle', (e) => title.value = e)
 
 const leftDrawerOpen = ref(false)
-const title = ref(productName)
-let showPlateNumber = false
+const title = ref('')
 
 function toggleLeftDrawer() {
   leftDrawerOpen.value = !leftDrawerOpen.value
@@ -128,32 +128,5 @@ function add() {
   else
     void router.push('/refuels/add')
 }
-
-watchEffect(() => {
-  if(routePath.value == '/' && !showPlateNumber)
-    title.value = 'My Car Name'
-  else if(routePath.value == '/' && !showPlateNumber)
-    title.value = 'HH:TT2022'
-  else if(routePath.value == '/vehicles')
-    title.value = 'Vehicles'
-  else if(routePath.value == '/vehicles/add')
-    title.value = 'Add vehicle'
-  else if(routePath.value == '/vehicles/edit')
-    title.value = 'Edit vehicle'
-  else if(routePath.value == '/refuels')
-    title.value = 'Refuels'
-  else if(routePath.value == '/refuels/add')
-    title.value = 'Add refuel'
-  else if(routePath.value == '/refuels/edit')
-    title.value = 'Add refuel'
-  else if(routePath.value == '/refuels/filter')
-    title.value = 'Filter refuels'
-  else if(routePath.value == '/settings')
-    title.value = 'Settings'
-  else if(routePath.value == '/support')
-    title.value = 'Support'
-  else
-    title.value = productName
-})
 
 </script>

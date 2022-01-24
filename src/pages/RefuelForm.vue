@@ -35,6 +35,7 @@ import { ref, onMounted } from 'vue'
 import { date } from 'quasar'
 import { useRouter } from 'vue-router'
 import CInput from 'components/inputs/CInput.vue'
+import { emitter } from 'src/boot/mitt'
 
 const router = useRouter()
 
@@ -51,9 +52,9 @@ function onSubmit(evt?: SubmitEvent) {
 onMounted(() => {
   const routePath = router.currentRoute.value.path.toLocaleLowerCase()
   if(routePath.includes('add'))
-    return
+    emitter.emit('updateTitle', 'Add refuel')
   else if(routePath.includes('edit'))
-    return
+    emitter.emit('updateTitle', 'Edit refuel')
 })
 
 </script>

@@ -29,9 +29,10 @@
 </template>
 
 <script setup lang="ts">
-import { ref } from 'vue'
+import { ref, onMounted } from 'vue'
 import CInput from 'components/inputs/CInput.vue'
 import CSelect from 'components/inputs/CSelect.vue'
+import { emitter } from 'src/boot/mitt'
 
 const colorThemeOptions = [
   {
@@ -59,5 +60,9 @@ const colorThemeOptions = [
 let currencyUnit = ref('€')
 let colorTheme = ref(0)
 let showPlateNumber = ref(false)
+
+onMounted(() => {
+  emitter.emit('updateTitle', 'Settings')
+})
 
 </script>
