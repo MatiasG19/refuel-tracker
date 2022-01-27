@@ -36,7 +36,7 @@
 </template>
 
 <script setup lang="ts">
-import { GraphData, OptionInDialog } from 'src/components/models'
+import { GraphData, OptionInDialog } from 'src/scripts/models'
 import { defineProps, ref } from 'vue'
 import OptionsDialog from 'src/components/OptionsDialog.vue'
 

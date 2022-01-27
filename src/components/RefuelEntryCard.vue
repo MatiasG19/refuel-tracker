@@ -35,7 +35,7 @@
 </template>
 
 <script setup lang="ts">
-import { RefuelEntry, OptionInDialog } from 'src/components/models'
+import { RefuelEntry, OptionInDialog } from 'src/scripts/models'
 import { defineProps, ref } from 'vue'
 import { date } from 'quasar'
 import OptionsDialog from 'src/components/OptionsDialog.vue'

@@ -16,7 +16,7 @@
 
 <script setup lang="ts">
 import RefuelEntryCard from 'src/components/RefuelEntryCard.vue';
-import { RefuelEntry, OptionInDialog } from 'src/components/models'
+import { RefuelEntry, OptionInDialog } from 'src/scripts/models'
 import { ref, onMounted } from 'vue'
 import { useRouter } from 'vue-router'
 import { emitter } from 'src/boot/mitt'

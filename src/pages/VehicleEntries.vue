@@ -13,7 +13,7 @@
 
 <script setup lang="ts">
 import VehicleEntryCard from 'src/components/VehicleEntryCard.vue'
-import { Vehicle, OptionInDialog } from 'src/components/models'
+import { Vehicle, OptionInDialog } from 'src/scripts/models'
 import { useRouter } from 'vue-router'
 import { onMounted } from 'vue'
 import { emitter } from 'src/boot/mitt'
@@ -25,20 +25,26 @@ const cards: Vehicle[] = [
     id: 1,
     name: 'Seat',
     plateNumber: 'HL:MG1908',
-    fuelUnit: { id: 1, Unit: 'L/100km' }
+    currencyUnit: '',
+    fuelUnitId: 0,
+    fuelUnit: { id: 1, fuelConsumptionUnit: 'L/100km', distanceUnit: '', fuelUnit: '' }
   },
   {
     id: 1,
     name: 'Seat',
     plateNumber: 'HL:MG1908',
-    fuelUnit: { id: 1, Unit: 'L/100km' }
+    currencyUnit: '',
+    fuelUnitId: 0,
+    fuelUnit: { id: 1, fuelConsumptionUnit: 'L/100km', distanceUnit: '', fuelUnit: '' }
   },
   {
     id: 1,
     name: 'Seat',
     plateNumber: 'HL:MG1908',
-    fuelUnit: { id: 1, Unit: 'L/100km' }
-  }
+    currencyUnit: '',
+    fuelUnitId: 0,
+    fuelUnit: { id: 1, fuelConsumptionUnit: 'L/100km', distanceUnit: '', fuelUnit: '' }
+  },
 ]
 
 const optionsInDialog: OptionInDialog[] = [

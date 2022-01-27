@@ -24,7 +24,7 @@
 </template>
 
 <script setup lang="ts">
-import { Vehicle, OptionInDialog } from 'src/components/models'
+import { Vehicle, OptionInDialog } from 'src/scripts/models'
 import { defineProps, ref } from 'vue'
 import OptionsDialog from 'src/components/OptionsDialog.vue'
 
