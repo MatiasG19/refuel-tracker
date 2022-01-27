@@ -17,8 +17,8 @@
 <script setup lang="ts">
 import { ref, onMounted } from 'vue'
 import { useRouter } from 'vue-router'
-import CInput from 'components/inputs/CInput.vue'
-import CSelect from 'components/inputs/CSelect.vue'
+import CInput from 'src/components/inputs/CInput.vue'
+import CSelect from 'src/components/inputs/CSelect.vue'
 import { emitter } from 'src/boot/mitt'
 
 const router = useRouter()

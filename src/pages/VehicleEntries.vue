@@ -8,11 +8,16 @@
         class="q-pt-md q-pl-md q-pr-md"
         @click="router.push('/')"
       />
+      <confirm-dialog
+        label="Delete?"
+        :dialogVisible="true"
+      />
     </q-page>
 </template>
 
 <script setup lang="ts">
 import VehicleEntryCard from 'src/components/VehicleEntryCard.vue'
+import ConfirmDialog from 'src/components/ConfirmDialog.vue'
 import { Vehicle, OptionInDialog } from 'src/scripts/models'
 import { useRouter } from 'vue-router'
 import { onMounted } from 'vue'

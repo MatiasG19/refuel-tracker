@@ -35,7 +35,7 @@
 import { ref, onMounted } from 'vue'
 import { date } from 'quasar'
 import { useRouter } from 'vue-router'
-import CInput from 'components/inputs/CInput.vue'
+import CInput from 'src/components/inputs/CInput.vue'
 import { emitter } from 'src/boot/mitt'
 
 const router = useRouter()
