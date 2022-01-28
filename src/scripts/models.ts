@@ -2,6 +2,7 @@ export class GraphData {
   title!: string
   value!: number
   unit!: string
+  sequence!: number
   periodId!: number
   perdiod?: Period
 }
