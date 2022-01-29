@@ -40,10 +40,8 @@
 
 <script setup lang="ts">
 import { ref, onMounted } from 'vue'
-import CInput from 'src/components/inputs/CInput.vue'
 import CSelect from 'src/components/inputs/CSelect.vue'
 import { emitter } from 'src/boot/mitt'
-import { requiredFieldRule } from 'src/scripts/validationRules'
 
 const colorThemeOptions = [
   {
@@ -79,10 +77,9 @@ const distanceUnitOptions = [
   }
 ]
 
-let currencyUnit = ref('€')
-let distanceUnit = ref(1)
-let colorTheme = ref(0)
-let showPlateNumber = ref(false)
+const distanceUnit = ref(1)
+const colorTheme = ref(0)
+const showPlateNumber = ref(false)
 
 onMounted(() => {
   emitter.emit('updateTitle', 'Settings')

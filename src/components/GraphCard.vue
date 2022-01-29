@@ -41,7 +41,7 @@
 
 <script setup lang="ts">
 import { GraphData } from 'src/scripts/models'
-import { defineProps, ref } from 'vue'
+import { defineProps } from 'vue'
 import { emitter } from 'src/boot/mitt'
 
 defineProps({
