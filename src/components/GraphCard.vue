@@ -8,7 +8,13 @@
           </div>
 
           <div class="col-auto space-station">
-            <q-btn dense round flat icon="more_vert" @click="dialogVisible = true" />
+            <q-btn
+              dense
+              round
+              flat
+              icon="more_vert"
+              @click="emitter.emit('showGraphOptionsDialog', true)"
+            />
           </div>
         </div>
         <div>
@@ -23,22 +29,20 @@
 
       <q-card-actions v-if="false">
         <div v-for="(period, i) in periods" :key="i" class="col text-center">
-          <q-btn :ripple="false" dense flat no-caps class="space-station">{{ periods[i] }}</q-btn>
-          <q-separator vertical/>
+          <q-btn :ripple="false" dense flat no-caps class="space-station">{{
+            periods[i]
+          }}</q-btn>
+          <q-separator vertical />
         </div>
       </q-card-actions>
     </q-card>
-    <options-dialog
-      v-model:dialogVisible="dialogVisible"
-      :options="optionsInDialog as OptionInDialog[]"
-    />
   </div>
 </template>
 
 <script setup lang="ts">
-import { GraphData, OptionInDialog } from 'src/scripts/models'
+import { GraphData } from 'src/scripts/models'
 import { defineProps, ref } from 'vue'
-import OptionsDialog from 'src/components/OptionsDialog.vue'
+import { emitter } from 'src/boot/mitt'
 
 defineProps({
   data: {
@@ -48,12 +52,6 @@ defineProps({
   periods: {
     type: Array,
     required: true
-  },
-  optionsInDialog: {
-    type: Array
   }
 })
-
-let dialogVisible = ref(false)
-
 </script>

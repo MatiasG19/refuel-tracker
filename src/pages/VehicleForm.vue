@@ -13,11 +13,16 @@
       />
       <c-select
         outlined
-        color="accent"
         class="q-pb-md"
         v-model="fuelUnit"
         :options="fuelUnits"
         label="Fuel unit"
+      />
+      <c-input
+        class="q-pb-md"
+        v-model="currencyUnit"
+        label="Currency unit"
+        :rules="[requiredFieldRule]"
       />
 
       <div class="q-gutter-sm">
@@ -46,6 +51,7 @@ const router = useRouter()
 const vehicleName = ref('')
 const plateNumber = ref('')
 const fuelUnit = ref(1)
+const currencyUnit = ref('€')
 
 const fuelUnits = [
   {

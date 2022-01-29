@@ -14,9 +14,10 @@
 <script setup lang="ts">
 import GraphCard from 'src/components/GraphCard.vue'
 import { GraphData, OptionInDialog } from 'src/scripts/models'
-import { onMounted } from 'vue'
+import { onMounted, onUnmounted } from 'vue'
 import { emitter } from 'src/boot/mitt'
 import { productName } from '../../package.json'
+import { optionsDialog } from 'src/scripts/dialogs'
 
 const cards: GraphData[] = [
   {
@@ -63,47 +64,48 @@ const cards: GraphData[] = [
   }
 ]
 
-const periods: string[] = [
-  'Week',
-  '3 Months',
-  '6 Months',
-  'Year',
-  'Max'
-]
+const periods: string[] = ['Week', '3 Months', '6 Months', 'Year', 'Max']
+
+let showPlateNumber = false
+let carName = 'My car name'
 
 const optionsInDialog: OptionInDialog[] = [
   {
     text: 'Move top',
     icon: 'keyboard_double_arrow_up',
-    action: action
+    action: () => console.log('move graph card')
   },
   {
     text: 'Move up',
     icon: 'keyboard_arrow_up',
-    action: action
+    action: () => console.log('move graph card')
   },
   {
     text: 'Move down',
     icon: 'keyboard_arrow_down',
-    action: action
+    action: () => console.log('move graph card')
   },
   {
     text: 'Move bottom',
     icon: 'keyboard_double_arrow_down',
-    action: action
+    action: () => console.log('move graph card')
   }
 ]
 
-let showPlateNumber = false
-let carName = 'My car name'
-
-function action() {
-  ;
-}
+emitter.on('showGraphOptionsDialog', () => optionsDialog(optionsInDialog))
 
 onMounted(() => {
-  emitter.emit('updateTitle', showPlateNumber == false ?
-    (carName.trim() != '' ? carName : productName) : 'HH:XX2022')
+  emitter.emit(
+    'updateTitle',
+    showPlateNumber == false
+      ? carName.trim() != ''
+        ? carName
+        : productName
+      : 'HH:XX2022'
+  )
 })
 
+onUnmounted(() => {
+  emitter.off('showGraphOptionsDialog')
+})
 </script>

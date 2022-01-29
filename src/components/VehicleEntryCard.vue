@@ -8,7 +8,13 @@
           </div>
 
           <div class="col-auto space-station">
-            <q-btn dense round flat icon="more_vert" @click.stop="dialogVisible = true" />
+            <q-btn
+              dense
+              round
+              flat
+              icon="more_vert"
+              @click.stop="emitter.emit('showVehicleOptionsDialog', true)"
+            />
           </div>
         </div>
 
@@ -16,29 +22,19 @@
         <div class="text-subtitle1">{{ data.plateNumber }}</div>
       </q-card-section>
     </q-card>
-    <options-dialog
-      v-model:dialogVisible="dialogVisible"
-      :options="optionsInDialog as OptionInDialog[]"
-    />
   </div>
 </template>
 
 <script setup lang="ts">
-import { Vehicle, OptionInDialog } from 'src/scripts/models'
-import { defineProps, ref } from 'vue'
-import OptionsDialog from 'src/components/OptionsDialog.vue'
+import { Vehicle } from 'src/scripts/models'
+import { defineProps } from 'vue'
+import { emitter } from 'src/boot/mitt'
 
 const mileage = '5.6 L/100km'
 defineProps({
   data: {
     type: Vehicle,
     required: true
-  },
-  optionsInDialog: {
-    type: Array
   }
 })
-
-let dialogVisible = ref(false)
-
 </script>

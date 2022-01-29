@@ -35,14 +35,17 @@
         </q-popup-proxy>
       </q-input>
 
-      <div class="q-gutter-sm">
+      <div class="row">
+        <q-space />
         <q-btn
           color="negative"
           label="Cancel"
           no-caps
           @click="$router.go(-1)"
         />
+        <q-space />
         <q-btn color="positive" label="Confirm" type="submit" no-caps />
+        <q-space />
       </div>
     </q-form>
   </div>

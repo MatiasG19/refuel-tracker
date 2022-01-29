@@ -33,10 +33,7 @@
       class="space-station"
     >
       <q-list>
-        <q-item-label
-          header
-          class="space-station"
-        >
+        <q-item-label header class="space-station">
           Refuel Tracker
         </q-item-label>
 
@@ -56,13 +53,20 @@
     <q-footer class="bg-space-station">
       <q-toolbar class="q-gutter-xs text-center">
         <div class="col">
-          <q-btn round flat dense icon="bar_chart" class="col" :to="'/'"/>
+          <q-btn round flat dense icon="bar_chart" class="col" :to="'/'" />
         </div>
         <div class="col">
-          <q-btn round flat dense icon="add" class="col" @click="add()"/>
+          <q-btn round flat dense icon="add" class="col" @click="add()" />
         </div>
         <div class="col">
-          <q-btn round flat dense icon="drive_eta" class="col" :to="'/vehicles'"/>
+          <q-btn
+            round
+            flat
+            dense
+            icon="drive_eta"
+            class="col"
+            :to="'/vehicles'"
+          />
         </div>
       </q-toolbar>
     </q-footer>
@@ -103,15 +107,15 @@ const linkList = [
     icon: 'favorite_outline',
     link: '/support'
   }
-];
+]
 
-import { ref, computed } from 'vue'
+import { ref, computed, onUnmounted } from 'vue'
 import { useRouter } from 'vue-router'
 import { emitter } from 'src/boot/mitt'
 
 const router = useRouter()
 const routePath = computed(() => router.currentRoute.value.path)
-emitter.on('updateTitle', (e) => title.value = e)
+emitter.on('updateTitle', e => (title.value = e))
 
 const leftDrawerOpen = ref(false)
 const title = ref('')
@@ -121,12 +125,13 @@ function toggleLeftDrawer() {
 }
 
 function add() {
-  if(routePath.value.includes('add') || routePath.value.includes('edit'))
+  if (routePath.value.includes('add') || routePath.value.includes('edit'))
     return
-  else if(routePath.value == '/vehicles')
-    void router.push('/vehicles/add')
-  else
-    void router.push('/refuels/add')
+  else if (routePath.value == '/vehicles') void router.push('/vehicles/add')
+  else void router.push('/refuels/add')
 }
 
+onUnmounted(() => {
+  emitter.off('updateTitle')
+})
 </script>

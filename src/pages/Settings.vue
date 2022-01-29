@@ -13,12 +13,6 @@
 
       <q-item-label header>Units</q-item-label>
       <div>
-        <c-input
-          class="q-pb-md"
-          v-model="currencyUnit"
-          label="Currency unit"
-          :rules="[requiredFieldRule]"
-        />
         <c-select
           class="q-pt-md q-pb-md"
           v-model="distanceUnit"
