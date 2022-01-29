@@ -2,14 +2,29 @@
   <div class="q-pa-md q-gutter-md">
     <q-list>
       <q-item-label header>Themes</q-item-label>
-      <c-select class="q-pb-md" v-model="colorTheme" :options="colorThemeOptions" label="Color theme"/>
+      <c-select
+        class="q-pb-md"
+        v-model="colorTheme"
+        :options="colorThemeOptions"
+        label="Color theme"
+      />
 
       <q-separator spaced />
 
       <q-item-label header>Units</q-item-label>
       <div>
-        <c-input class="q-pb-md" v-model="currencyUnit" label="Currency unit"/>
-        <c-select class="q-pb-md" v-model="distanceUnit" :options="distanceUnitOptions" label="Distance unit"/>
+        <c-input
+          class="q-pb-md"
+          v-model="currencyUnit"
+          label="Currency unit"
+          :rules="[requiredFieldRule]"
+        />
+        <c-select
+          class="q-pt-md q-pb-md"
+          v-model="distanceUnit"
+          :options="distanceUnitOptions"
+          label="Distance unit"
+        />
       </div>
 
       <q-separator spaced />
@@ -26,7 +41,7 @@
         </q-item>
       </q-list>
     </q-list>
-    </div>
+  </div>
 </template>
 
 <script setup lang="ts">
@@ -34,6 +49,7 @@ import { ref, onMounted } from 'vue'
 import CInput from 'src/components/inputs/CInput.vue'
 import CSelect from 'src/components/inputs/CSelect.vue'
 import { emitter } from 'src/boot/mitt'
+import { requiredFieldRule } from 'src/scripts/validationRules'
 
 const colorThemeOptions = [
   {
@@ -77,5 +93,4 @@ let showPlateNumber = ref(false)
 onMounted(() => {
   emitter.emit('updateTitle', 'Settings')
 })
-
 </script>
