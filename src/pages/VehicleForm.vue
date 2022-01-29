@@ -25,14 +25,22 @@
         :rules="[requiredFieldRule]"
       />
 
-      <div class="q-gutter-sm">
+      <div class="row">
         <q-btn
           color="negative"
           label="Cancel"
           no-caps
+          class="btn"
           @click="$router.go(-1)"
         />
-        <q-btn color="positive" label="Confirm" type="submit" no-caps />
+        <q-space />
+        <q-btn
+          color="positive"
+          label="Confirm"
+          type="submit"
+          no-caps
+          class="btn"
+        />
       </div>
     </q-form>
   </div>
@@ -91,3 +99,9 @@ onMounted(() => {
     emitter.emit('updateTitle', 'Edit vehicle')
 })
 </script>
+
+<style scoped>
+.btn {
+  width: 40%;
+}
+</style>

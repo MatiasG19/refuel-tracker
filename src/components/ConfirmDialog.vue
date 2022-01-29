@@ -49,10 +49,4 @@ function onOkClick() {
 .btn {
   width: 40%;
 }
-
-.test {
-  position: absolute;
-  left: 100px;
-  top: 150px;
-}
 </style>
