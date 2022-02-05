@@ -5,6 +5,7 @@
       <c-select
         class="q-pb-md"
         v-model="colorTheme"
+        @update:model-value="changeColorTheme"
         :options="colorThemeOptions"
         label="Color theme"
       />
@@ -16,6 +17,7 @@
         <c-select
           class="q-pb-md"
           v-model="distanceUnit"
+          @update:model-value="changeDistanceUnit"
           :options="distanceUnitOptions"
           label="Distance unit"
         />
@@ -30,7 +32,10 @@
             <q-item-label>Show plate number in car title</q-item-label>
           </q-item-section>
           <q-item-section avatar>
-            <q-toggle v-model="showPlateNumber" />
+            <q-toggle
+              v-model="plateNumberInTitle"
+              @update:model-value="togglePlateNumberInTitle"
+            />
           </q-item-section>
         </q-item>
       </q-list>
@@ -42,44 +47,59 @@
 import { ref, onMounted } from 'vue'
 import CSelect from 'src/components/inputs/CSelect.vue'
 import { emitter } from 'src/boot/mitt'
+import { useMainStore } from 'src/stores/mainStore'
+
+const mainStore = useMainStore()
 
 const colorThemeOptions = [
   {
     label: 'Space Station',
-    value: 0
-  },
-  {
-    label: 'Dark',
     value: 1
   },
   {
-    label: 'Light',
+    label: 'Dark',
     value: 2
   },
   {
-    label: 'High Contrast',
+    label: 'Light',
     value: 3
   },
   {
-    label: 'Red Green Weakness',
+    label: 'High Contrast',
     value: 4
+  },
+  {
+    label: 'Red Green Weakness',
+    value: 5
   }
 ]
 
 const distanceUnitOptions = [
   {
     label: 'km',
-    value: 0
+    value: 1
   },
   {
     label: 'miles',
-    value: 1
+    value: 2
   }
 ]
 
-const distanceUnit = ref(1)
-const colorTheme = ref(0)
-const showPlateNumber = ref(false)
+const colorTheme = ref(mainStore.$state.selectedColorThemeId)
+const distanceUnit = ref(mainStore.$state.selectedDistanceUnitId)
+const plateNumberInTitle = ref(mainStore.$state.plateNumberInTitleActive)
+
+function changeColorTheme(value: number) {
+  mainStore.changeColorTheme(value)
+}
+
+function changeDistanceUnit(value: number) {
+  mainStore.changeDistanceUnit(value)
+}
+
+function togglePlateNumberInTitle(value: boolean) {
+  mainStore.togglePlateNumberInTitle(value)
+}
 
 onMounted(() => {
   emitter.emit('updateTitle', 'Settings')
