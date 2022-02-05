@@ -14,7 +14,7 @@
       <q-item-label header>Units</q-item-label>
       <div>
         <c-select
-          class="q-pt-md q-pb-md"
+          class="q-pb-md"
           v-model="distanceUnit"
           :options="distanceUnitOptions"
           label="Distance unit"

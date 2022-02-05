@@ -17,7 +17,11 @@
         :rules="[requiredFieldRule, numbersOnlyRule]"
       />
 
-      <c-input v-model="refuelDate" label="Refuel date">
+      <c-input
+        v-model="refuelDate"
+        label="Refuel date"
+        :rules="[requiredFieldRule]"
+      >
         <q-popup-proxy transition-show="scale" transition-hide="scale">
           <q-date v-model="refuelDate" />
           <div class="row items-center justify-end">
@@ -26,7 +30,13 @@
         </q-popup-proxy>
       </c-input>
 
-      <q-input outlined color="accent" v-model="refuelTime" label="Refuel time">
+      <q-input
+        outlined
+        color="accent"
+        v-model="refuelTime"
+        label="Refuel time"
+        :rules="[requiredFieldRule]"
+      >
         <q-popup-proxy transition-show="scale" transition-hide="scale">
           <q-time v-model="refuelTime" format24h />
           <div class="row items-center justify-end">
@@ -70,7 +80,7 @@ let payedAmount = ref(0.0)
 let refueledAmount = ref(0.0)
 let distanceDriven = ref(0.0)
 let refuelDate = ref(date.formatDate(Date.now(), 'YYYY/MM/DD'))
-let refuelTime = ref(date.formatDate(Date.now(), 'HH:mm:ss'))
+let refuelTime = ref(date.formatDate(Date.now(), 'HH:mm'))
 
 function onSubmit(evt?: SubmitEvent) {
   void router.go(-1)
