@@ -12,7 +12,7 @@
 </template>
 
 <script setup lang="ts">
-import VehicleCard from 'src/components/VehicleEntryCard.vue'
+import VehicleCard from 'src/components/VehicleCard.vue'
 import { optionsDialog, confirmDialog } from 'src/scripts/dialogs'
 import { OptionInDialog } from 'src/scripts/models'
 import { useRouter } from 'vue-router'
