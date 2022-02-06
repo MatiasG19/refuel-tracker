@@ -18,8 +18,8 @@
           </div>
         </div>
 
-        <div class="text-h4 accent-space-station">{{ data.name }}</div>
-        <div class="text-subtitle1">{{ data.plateNumber }}</div>
+        <div class="text-h4 accent-space-station">{{ vehicle.name }}</div>
+        <div class="text-subtitle1">{{ vehicle.plateNumber }}</div>
       </q-card-section>
     </q-card>
   </div>
@@ -32,7 +32,7 @@ import { emitter } from 'src/boot/mitt'
 
 const mileage = '5.6 L/100km'
 defineProps({
-  data: {
+  vehicle: {
     type: Vehicle,
     required: true
   }

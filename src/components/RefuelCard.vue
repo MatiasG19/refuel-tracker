@@ -20,19 +20,19 @@
         <div class="row">
           <div class="col">
             <div class="text-h4 accent-space-station">
-              {{ data.distanceDriven }}
+              {{ refuel.distanceDriven }}
             </div>
             <div class="text-subtitle1">{{ distanceUnit }}</div>
           </div>
           <div class="col">
             <div class="text-h4 accent-space-station">
-              {{ data.payedAmount }}
+              {{ refuel.payedAmount }}
             </div>
             <div class="text-subtitle1">{{ currencyUnit }}</div>
           </div>
           <div class="col">
             <div class="text-h4 accent-space-station">
-              {{ data.refuelAmount }}
+              {{ refuel.refuelAmount }}
             </div>
             <div class="text-subtitle1">{{ fuelUnit }}</div>
           </div>
@@ -49,16 +49,13 @@ import { date } from 'quasar'
 import { emitter } from 'src/boot/mitt'
 
 const props = defineProps({
-  data: {
+  refuel: {
     type: Refuel,
     required: true
-  },
-  optionsInDialog: {
-    type: Array
   }
 })
 
-const refuelDate = date.formatDate(props.data.date, 'YYYY-MMM-DD HH:mm')
+const refuelDate = date.formatDate(props.refuel.date, 'YYYY-MMM-DD HH:mm')
 
 const fuelUnit = 'Liter'
 const currencyUnit = '€'

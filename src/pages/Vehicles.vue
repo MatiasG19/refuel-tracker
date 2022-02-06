@@ -3,8 +3,7 @@
     <vehicle-card
       v-for="(vehicle, i) in vehicles"
       :key="i"
-      :data="vehicle"
-      :optionsInDialog="optionsInDialog"
+      :vehicle="vehicle"
       class="q-pt-md q-pl-md q-pr-md"
       @click="router.push('/')"
     />

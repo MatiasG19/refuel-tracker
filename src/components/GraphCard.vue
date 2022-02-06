@@ -4,7 +4,7 @@
       <q-card-section>
         <div class="row items-center no-wrap">
           <div class="col">
-            <div class="text-subtitle2">{{ data.title }}</div>
+            <div class="text-subtitle2">{{ graphData.title }}</div>
           </div>
 
           <div class="col-auto space-station">
@@ -18,8 +18,8 @@
           </div>
         </div>
         <div>
-          <div class="text-h4 accent-space-station">{{ data.value }}</div>
-          <div class="text-subtitle1">{{ data.unit }}</div>
+          <div class="text-h4 accent-space-station">{{ graphData.value }}</div>
+          <div class="text-subtitle1">{{ graphData.unit }}</div>
         </div>
       </q-card-section>
 
@@ -45,7 +45,7 @@ import { defineProps } from 'vue'
 import { emitter } from 'src/boot/mitt'
 
 defineProps({
-  data: {
+  graphData: {
     type: GraphData,
     required: true
   },

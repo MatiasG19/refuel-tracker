@@ -3,9 +3,8 @@
     <graph-card
       v-for="(data, i) in graphData"
       :key="i"
-      :data="data"
+      :graphData="data"
       :periods="periods"
-      :optionsInDialog="optionsInDialog"
       class="q-pt-md q-pl-md q-pr-md"
     />
   </q-page>

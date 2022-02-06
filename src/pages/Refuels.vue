@@ -15,8 +15,7 @@
     <refuel-card
       v-for="(refuel, i) in refuels"
       :key="i"
-      :data="refuel"
-      :optionsInDialog="optionsInDialog"
+      :refuel="refuel"
       class="q-pt-md q-pl-md q-pr-md"
     />
   </q-page>
