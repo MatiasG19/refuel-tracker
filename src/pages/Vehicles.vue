@@ -1,7 +1,7 @@
 <template>
   <q-page>
-    <vehicle-entry-card
-      v-for="(vehicle, i) in vehicleEntries"
+    <vehicle-card
+      v-for="(vehicle, i) in vehicles"
       :key="i"
       :data="vehicle"
       :optionsInDialog="optionsInDialog"
@@ -12,18 +12,18 @@
 </template>
 
 <script setup lang="ts">
-import VehicleEntryCard from 'src/components/VehicleEntryCard.vue'
+import VehicleCard from 'src/components/VehicleEntryCard.vue'
 import { optionsDialog, confirmDialog } from 'src/scripts/dialogs'
-import { Vehicle, OptionInDialog } from 'src/scripts/models'
+import { OptionInDialog } from 'src/scripts/models'
 import { useRouter } from 'vue-router'
-import { onMounted, onUnmounted } from 'vue'
+import { computed, onMounted, onUnmounted } from 'vue'
 import { emitter } from 'src/boot/mitt'
 import { useRefuelStore } from 'src/stores'
 
 const router = useRouter()
 const refuelStore = useRefuelStore()
 
-const vehicleEntries: Vehicle[] = refuelStore.vehicles
+const vehicles = computed(() => refuelStore.vehicles)
 
 const optionsInDialog: OptionInDialog[] = [
   {

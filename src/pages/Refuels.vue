@@ -12,10 +12,10 @@
         >{{ filterHint }}</q-btn
       >
     </div>
-    <refuel-entry-card
-      v-for="(card, i) in cards"
+    <refuel-card
+      v-for="(refuel, i) in refuels"
       :key="i"
-      :data="card"
+      :data="refuel"
       :optionsInDialog="optionsInDialog"
       class="q-pt-md q-pl-md q-pr-md"
     />
@@ -23,9 +23,9 @@
 </template>
 
 <script setup lang="ts">
-import RefuelEntryCard from 'src/components/RefuelEntryCard.vue'
-import { Refuel, OptionInDialog } from 'src/scripts/models'
-import { ref, onMounted, onUnmounted } from 'vue'
+import RefuelCard from 'src/components/RefuelEntryCard.vue'
+import { OptionInDialog } from 'src/scripts/models'
+import { computed, ref, onMounted, onUnmounted } from 'vue'
 import { useRouter } from 'vue-router'
 import { emitter } from 'src/boot/mitt'
 import { optionsDialog } from 'src/scripts/dialogs'
@@ -39,7 +39,7 @@ const refuelStore = useRefuelStore()
 const filterActive = ref(mainStore.refuelFilterActive)
 const filterHint = 'Filter 1 Month from 2021.12.19'
 
-const cards: Refuel[] = refuelStore.refuels
+let refuels = computed(() => refuelStore.refuels)
 
 const optionsInDialog: OptionInDialog[] = [
   {

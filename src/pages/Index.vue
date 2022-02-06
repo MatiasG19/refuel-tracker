@@ -1,9 +1,9 @@
 <template>
   <q-page class="items-center justify-evenly">
     <graph-card
-      v-for="(card, i) in cards"
+      v-for="(data, i) in graphData"
       :key="i"
-      :data="card"
+      :data="data"
       :periods="periods"
       :optionsInDialog="optionsInDialog"
       class="q-pt-md q-pl-md q-pr-md"
@@ -13,8 +13,8 @@
 
 <script setup lang="ts">
 import GraphCard from 'src/components/GraphCard.vue'
-import { GraphData, OptionInDialog } from 'src/scripts/models'
-import { onMounted, onUnmounted } from 'vue'
+import { OptionInDialog } from 'src/scripts/models'
+import { computed, onMounted, onUnmounted } from 'vue'
 import { emitter } from 'src/boot/mitt'
 import { productName } from '../../package.json'
 import { optionsDialog } from 'src/scripts/dialogs'
@@ -22,7 +22,7 @@ import { useRefuelStore } from 'src/stores'
 
 const refuelStore = useRefuelStore()
 
-const cards: GraphData[] = refuelStore.graphData
+let graphData = computed(() => refuelStore.graphData)
 
 const periods: string[] = ['Week', '3 Months', '6 Months', 'Year', 'Max']
 
@@ -64,6 +64,7 @@ onMounted(() => {
       : 'HH:XX2022'
   )
   refuelStore.readGraphData()
+  graphData = refuelStore.graphData
 })
 
 onUnmounted(() => {
