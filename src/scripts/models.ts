@@ -14,10 +14,10 @@ export class Vehicle {
   currencyUnit!: string
   fuelUnitId!: number
   fuelUnit?: FuelUnit
-  refuelEntries?: RefuelEntry[]
+  refuels?: Refuel[]
 }
 
-export class RefuelEntry {
+export class Refuel {
   id!: number
   date!: Date
   refuelAmount!: number
@@ -45,5 +45,3 @@ export class Period {
   name!: string
   periodInDays!: number
 }
-
-

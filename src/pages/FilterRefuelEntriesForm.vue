@@ -1,7 +1,13 @@
 <template>
   <div>
     <q-form @submit="onSubmit" class="q-pa-md q-gutter-md">
-      <q-input outlined color="accent" v-model="filterDate" label="Filter until date">
+      <q-input
+        outlined
+        color="accent"
+        v-model="filterDate"
+        label="Filter until date"
+        :rules="[requiredFieldRule]"
+      >
         <q-popup-proxy transition-show="scale" transition-hide="scale">
           <q-date v-model="filterDate" />
           <div class="row items-center">
@@ -9,13 +15,25 @@
           </div>
         </q-popup-proxy>
       </q-input>
-      <q-select outlined color="accent" v-model="timeInterval" :options="options"
-        label="Filter last" map-options emit-value/>
+      <q-select
+        outlined
+        color="accent"
+        v-model="timeInterval"
+        :options="options"
+        label="Filter last"
+        map-options
+        emit-value
+      />
 
-    <div class="q-gutter-sm">
-      <q-btn color="negative" label="Cancel" no-caps @click="$router.push('/refuels')" />
-      <q-btn color="positive" label="Filter" type="submit" no-caps />
-    </div>
+      <div class="q-gutter-sm">
+        <q-btn
+          color="negative"
+          label="Cancel"
+          no-caps
+          @click="$router.push('/refuels')"
+        />
+        <q-btn color="positive" label="Filter" type="submit" no-caps />
+      </div>
     </q-form>
   </div>
 </template>
@@ -25,8 +43,11 @@ import { ref, onMounted } from 'vue'
 import { date } from 'quasar'
 import { useRouter } from 'vue-router'
 import { emitter } from 'src/boot/mitt'
+import { useMainStore } from 'src/stores'
+import { requiredFieldRule } from 'src/scripts/validationRules'
 
 const router = useRouter()
+const mainStore = useMainStore()
 
 const options = [
   {
@@ -55,16 +76,15 @@ const options = [
   }
 ]
 
-let filterDate = ref<string>(date.formatDate(Date.now(), 'YYYY/MM/DD'))
-let timeInterval = ref<number>(2)
+const filterDate = ref<string>(date.formatDate(Date.now(), 'YYYY/MM/DD'))
+const timeInterval = ref<number>(2)
 
 function onSubmit(evt?: SubmitEvent) {
-
+  mainStore.toggleRefuelFilter(true)
   void router.push('/refuels')
 }
 
 onMounted(() => {
   emitter.emit('updateTitle', 'Filter refuels')
 })
-
 </script>

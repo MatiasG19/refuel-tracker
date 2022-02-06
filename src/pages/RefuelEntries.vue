@@ -24,43 +24,22 @@
 
 <script setup lang="ts">
 import RefuelEntryCard from 'src/components/RefuelEntryCard.vue'
-import { RefuelEntry, OptionInDialog } from 'src/scripts/models'
+import { Refuel, OptionInDialog } from 'src/scripts/models'
 import { ref, onMounted, onUnmounted } from 'vue'
 import { useRouter } from 'vue-router'
 import { emitter } from 'src/boot/mitt'
 import { optionsDialog } from 'src/scripts/dialogs'
 import { confirmDialog } from 'src/scripts/dialogs'
+import { useMainStore, useRefuelStore } from 'src/stores'
 
 const router = useRouter()
-const filterActive = ref(true)
+const mainStore = useMainStore()
+const refuelStore = useRefuelStore()
+
+const filterActive = ref(mainStore.refuelFilterActive)
 const filterHint = 'Filter 1 Month from 2021.12.19'
 
-const cards: RefuelEntry[] = [
-  {
-    id: 0,
-    vehicleId: 0,
-    date: new Date(),
-    refuelAmount: 46.3,
-    payedAmount: 75.34,
-    distanceDriven: 720.0
-  },
-  {
-    id: 1,
-    vehicleId: 0,
-    date: new Date(),
-    refuelAmount: 46.3,
-    payedAmount: 75.34,
-    distanceDriven: 720.0
-  },
-  {
-    id: 2,
-    vehicleId: 0,
-    date: new Date(),
-    refuelAmount: 46.3,
-    payedAmount: 75.34,
-    distanceDriven: 720.0
-  }
-]
+const cards: Refuel[] = refuelStore.refuels
 
 const optionsInDialog: OptionInDialog[] = [
   {
@@ -76,6 +55,7 @@ const optionsInDialog: OptionInDialog[] = [
 ]
 
 function removeFilter() {
+  mainStore.toggleRefuelFilter(false)
   filterActive.value = false
 }
 
@@ -83,6 +63,7 @@ emitter.on('showRefuelOptionsDialog', () => optionsDialog(optionsInDialog))
 
 onMounted(() => {
   emitter.emit('updateTitle', 'Refuels')
+  refuelStore.readRefuels()
 })
 
 onUnmounted(() => {

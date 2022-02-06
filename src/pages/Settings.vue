@@ -47,7 +47,7 @@
 import { ref, onMounted } from 'vue'
 import CSelect from 'src/components/inputs/CSelect.vue'
 import { emitter } from 'src/boot/mitt'
-import { useMainStore } from 'src/stores/mainStore'
+import { useMainStore } from 'src/stores'
 
 const mainStore = useMainStore()
 

@@ -1,9 +1,9 @@
 <template>
   <q-page>
     <vehicle-entry-card
-      v-for="(card, i) in cards"
+      v-for="(vehicle, i) in vehicleEntries"
       :key="i"
-      :data="card"
+      :data="vehicle"
       :optionsInDialog="optionsInDialog"
       class="q-pt-md q-pl-md q-pr-md"
       @click="router.push('/')"
@@ -18,50 +18,12 @@ import { Vehicle, OptionInDialog } from 'src/scripts/models'
 import { useRouter } from 'vue-router'
 import { onMounted, onUnmounted } from 'vue'
 import { emitter } from 'src/boot/mitt'
+import { useRefuelStore } from 'src/stores'
 
 const router = useRouter()
+const refuelStore = useRefuelStore()
 
-const cards: Vehicle[] = [
-  {
-    id: 1,
-    name: 'Seat',
-    plateNumber: 'HL:MG1908',
-    currencyUnit: '',
-    fuelUnitId: 0,
-    fuelUnit: {
-      id: 1,
-      fuelConsumptionUnit: 'L/100km',
-      distanceUnit: '',
-      fuelUnit: ''
-    }
-  },
-  {
-    id: 1,
-    name: 'Seat',
-    plateNumber: 'HL:MG1908',
-    currencyUnit: '',
-    fuelUnitId: 0,
-    fuelUnit: {
-      id: 1,
-      fuelConsumptionUnit: 'L/100km',
-      distanceUnit: '',
-      fuelUnit: ''
-    }
-  },
-  {
-    id: 1,
-    name: 'Seat',
-    plateNumber: 'HL:MG1908',
-    currencyUnit: '',
-    fuelUnitId: 0,
-    fuelUnit: {
-      id: 1,
-      fuelConsumptionUnit: 'L/100km',
-      distanceUnit: '',
-      fuelUnit: ''
-    }
-  }
-]
+const vehicleEntries: Vehicle[] = refuelStore.vehicles
 
 const optionsInDialog: OptionInDialog[] = [
   {
@@ -80,6 +42,7 @@ emitter.on('showVehicleOptionsDialog', () => optionsDialog(optionsInDialog))
 
 onMounted(() => {
   emitter.emit('updateTitle', 'Vehicles')
+  refuelStore.readVehicles()
 })
 
 onUnmounted(() => {
