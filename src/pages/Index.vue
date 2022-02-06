@@ -64,7 +64,6 @@ onMounted(() => {
       : 'HH:XX2022'
   )
   refuelStore.readGraphData()
-  graphData = refuelStore.graphData
 })
 
 onUnmounted(() => {
