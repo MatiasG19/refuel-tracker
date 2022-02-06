@@ -43,14 +43,14 @@
 </template>
 
 <script setup lang="ts">
-import { RefuelEntry } from 'src/scripts/models'
+import { Refuel } from 'src/scripts/models'
 import { defineProps } from 'vue'
 import { date } from 'quasar'
 import { emitter } from 'src/boot/mitt'
 
 const props = defineProps({
   data: {
-    type: RefuelEntry,
+    type: Refuel,
     required: true
   },
   optionsInDialog: {

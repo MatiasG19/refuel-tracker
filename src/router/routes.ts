@@ -1,4 +1,4 @@
-import { RouteRecordRaw } from 'vue-router';
+import { RouteRecordRaw } from 'vue-router'
 
 const routes: RouteRecordRaw[] = [
   {
@@ -15,7 +15,7 @@ const routes: RouteRecordRaw[] = [
         children: [
           {
             path: '',
-            component: () => import('pages/RefuelEntries.vue')
+            component: () => import('src/pages/Refuels.vue')
           },
           {
             path: 'add',
@@ -27,7 +27,7 @@ const routes: RouteRecordRaw[] = [
           },
           {
             path: 'filter',
-            component: () => import('pages/FilterRefuelEntriesForm.vue')
+            component: () => import('src/pages/FilterRefuelsForm.vue')
           }
         ]
       },
@@ -37,7 +37,7 @@ const routes: RouteRecordRaw[] = [
         children: [
           {
             path: '',
-            component: () => import('pages/VehicleEntries.vue')
+            component: () => import('src/pages/Vehicles.vue')
           },
           {
             path: 'add',
@@ -57,15 +57,15 @@ const routes: RouteRecordRaw[] = [
         path: 'support',
         component: () => import('pages/Support.vue')
       }
-    ],
+    ]
   },
 
   // Always leave this as last one,
   // but you can also remove it
   {
     path: '/:catchAll(.*)*',
-    component: () => import('pages/Error404.vue'),
-  },
-];
+    component: () => import('pages/Error404.vue')
+  }
+]
 
-export default routes;
+export default routes
