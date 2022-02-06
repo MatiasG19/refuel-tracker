@@ -9,7 +9,8 @@ export function MoneySpent(vehicle: Vehicle, graphCard: GraphData): GraphData {
         .reduce((total, current) => total + current) ?? -1,
     unit: vehicle.currencyUnit,
     sequence: graphCard.sequence,
-    periodId: graphCard.periodId
+    periodId: graphCard.periodId,
+    visible: graphCard.visible
   }
 }
 
@@ -25,7 +26,8 @@ export function DistanceDriven(
         .reduce((total, current) => total + current) ?? -1,
     unit: vehicle.fuelUnit?.distanceUnit ?? 'Unit not set!',
     sequence: graphCard.sequence,
-    periodId: graphCard.periodId
+    periodId: graphCard.periodId,
+    visible: graphCard.visible
   }
 }
 
@@ -38,7 +40,8 @@ export function FuelBurnt(vehicle: Vehicle, graphCard: GraphData): GraphData {
         .reduce((total, current) => total + current) ?? -1,
     unit: vehicle.fuelUnit?.fuelUnit ?? 'Unit not set!',
     sequence: graphCard.sequence,
-    periodId: graphCard.periodId
+    periodId: graphCard.periodId,
+    visible: graphCard.visible
   }
 }
 
@@ -48,7 +51,8 @@ export function RefuelsMade(vehicle: Vehicle, graphCard: GraphData): GraphData {
     value: vehicle.refuels?.length ?? -1,
     unit: 'Refuels',
     sequence: graphCard.sequence,
-    periodId: graphCard.periodId
+    periodId: graphCard.periodId,
+    visible: graphCard.visible
   }
 }
 

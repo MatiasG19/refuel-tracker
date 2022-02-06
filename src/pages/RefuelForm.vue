@@ -5,6 +5,7 @@
         v-model="payedAmount"
         label="Payed amount"
         :rules="[requiredFieldRule, numbersOnlyRule]"
+        autofocus
       />
       <c-input
         v-model="distanceDriven"
@@ -76,9 +77,9 @@ import { requiredFieldRule, numbersOnlyRule } from 'src/scripts/validationRules'
 
 const router = useRouter()
 
-let payedAmount = ref(0.0)
-let refueledAmount = ref(0.0)
-let distanceDriven = ref(0.0)
+let payedAmount = ref('')
+let refueledAmount = ref('')
+let distanceDriven = ref('')
 let refuelDate = ref(date.formatDate(Date.now(), 'YYYY/MM/DD'))
 let refuelTime = ref(date.formatDate(Date.now(), 'HH:mm'))
 

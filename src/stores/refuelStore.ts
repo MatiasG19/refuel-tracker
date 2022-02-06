@@ -14,45 +14,52 @@ export const useRefuelStore = defineStore('refuelStore', () => {
         value: 5.1,
         unit: 'L/100km',
         sequence: 1,
-        periodId: 0
+        periodId: 0,
+        visible: true
       },
       {
         title: 'Dinstance driven',
         value: 1900,
         unit: 'km',
         sequence: 2,
-        periodId: 0
+        periodId: 0,
+        visible: true
       },
       {
         title: 'Money spent',
         value: 450,
         unit: '€',
         sequence: 3,
-        periodId: 0
+        periodId: 0,
+        visible: true
       },
       {
         title: 'Fuel pricing',
         value: 7,
         unit: '€/100km',
         sequence: 4,
-        periodId: 0
+        periodId: 0,
+        visible: true
       },
       {
         title: 'Fuel burnt',
         value: 350,
         unit: 'Litre',
         sequence: 5,
-        periodId: 0
+        periodId: 0,
+        visible: true
       },
       {
         title: 'Refuels made',
         value: 20,
         unit: 'Refuels',
         sequence: 6,
-        periodId: 0
+        periodId: 0,
+        visible: true
       }
     ]
   }
+
   function readRefuels() {
     refuels.value = [
       {
@@ -81,6 +88,7 @@ export const useRefuelStore = defineStore('refuelStore', () => {
       }
     ]
   }
+
   function readVehicles() {
     vehicles.value = [
       {

@@ -5,6 +5,7 @@
         v-model="vehicleName"
         label="Vehicle name"
         :rules="[requiredFieldRule]"
+        autofocus
       />
       <c-input
         v-model="plateNumber"

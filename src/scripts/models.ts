@@ -5,6 +5,7 @@ export class GraphData {
   sequence!: number
   periodId!: number
   perdiod?: Period
+  visible!: boolean
 }
 
 export class Vehicle {
