@@ -66,7 +66,7 @@ export const useRefuelStore = defineStore('refuelStore', () => {
         id: 0,
         vehicleId: 0,
         date: new Date(),
-        refuelAmount: 46.3,
+        refueledAmount: 46.3,
         payedAmount: 75.34,
         distanceDriven: 720.0
       },
@@ -74,7 +74,7 @@ export const useRefuelStore = defineStore('refuelStore', () => {
         id: 1,
         vehicleId: 0,
         date: new Date(),
-        refuelAmount: 46.3,
+        refueledAmount: 46.3,
         payedAmount: 75.34,
         distanceDriven: 720.0
       },
@@ -82,7 +82,7 @@ export const useRefuelStore = defineStore('refuelStore', () => {
         id: 2,
         vehicleId: 0,
         date: new Date(),
-        refuelAmount: 46.3,
+        refueledAmount: 46.3,
         payedAmount: 75.34,
         distanceDriven: 720.0
       }
@@ -113,12 +113,12 @@ export const useRefuelStore = defineStore('refuelStore', () => {
         name: 'Seat',
         plateNumber: 'HL:MG1908',
         currencyUnit: '€',
-        fuelUnitId: 0,
+        fuelUnitId: 1,
         fuelUnit: {
           id: 1,
           fuelConsumptionUnit: 'L/100km',
-          distanceUnit: '',
-          fuelUnit: ''
+          distanceUnit: 'km',
+          fuelUnit: 'Litre'
         }
       },
       {
@@ -126,12 +126,12 @@ export const useRefuelStore = defineStore('refuelStore', () => {
         name: 'Seat',
         plateNumber: 'HL:MG1908',
         currencyUnit: '$',
-        fuelUnitId: 0,
+        fuelUnitId: 1,
         fuelUnit: {
           id: 1,
           fuelConsumptionUnit: 'L/100km',
-          distanceUnit: '',
-          fuelUnit: ''
+          distanceUnit: 'miles',
+          fuelUnit: 'Litre'
         }
       },
       {
@@ -139,12 +139,12 @@ export const useRefuelStore = defineStore('refuelStore', () => {
         name: 'Seat',
         plateNumber: 'HL:MG1908',
         currencyUnit: '€',
-        fuelUnitId: 0,
+        fuelUnitId: 1,
         fuelUnit: {
           id: 1,
           fuelConsumptionUnit: 'L/100km',
-          distanceUnit: '',
-          fuelUnit: ''
+          distanceUnit: 'km',
+          fuelUnit: 'Litre'
         }
       }
     ]

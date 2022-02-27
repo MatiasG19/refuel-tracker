@@ -2,26 +2,26 @@
   <div>
     <q-form @submit="onSubmit" class="q-pa-md q-gutter-md">
       <c-input
-        v-model="vehicleName"
+        v-model="vehicle.name"
         label="Vehicle name"
         :rules="[requiredFieldRule]"
         autofocus
       />
       <c-input
-        v-model="plateNumber"
+        v-model="vehicle.plateNumber"
         label="Plate number"
         :rules="[requiredFieldRule]"
       />
       <c-select
         outlined
         class="q-pb-md"
-        v-model="fuelUnit"
+        v-model="vehicle.fuelUnitId"
         :options="fuelUnits"
         label="Fuel unit"
       />
       <c-input
         class="q-pb-md"
-        v-model="currencyUnit"
+        v-model="vehicle.currencyUnit"
         label="Currency unit"
         :rules="[requiredFieldRule]"
       />
@@ -60,10 +60,8 @@ import { useRefuelStore } from 'src/stores'
 const router = useRouter()
 const refuelStore = useRefuelStore()
 
-const vehicleName = ref('')
-const plateNumber = ref('')
-const fuelUnit = ref(1)
-const currencyUnit = ref('€') // TODO Load currency unit from settings
+const vehicle = ref<Vehicle>(new Vehicle()) // TODO Load currency unit from settings
+let routePath = ''
 
 const props = defineProps({
   id: {
@@ -98,22 +96,24 @@ const fuelUnits = [
   }
 ]
 
-function onSubmit(evt?: SubmitEvent) {
+function onSubmit() {
+  if (routePath.includes('add')) refuelStore.addVehicle(vehicle.value)
+  else if (routePath.includes('edit')) refuelStore.updateVehicle(vehicle.value)
   void router.go(-1)
 }
 
 onMounted(() => {
   if (props.id) {
-    const vehicle = refuelStore.getVehicle(props.id)
-    if (vehicle) {
-      vehicleName.value = vehicle.name
-      plateNumber.value = vehicle.plateNumber
-      fuelUnit.value = vehicle.fuelUnit?.id ?? -1
-      currencyUnit.value = vehicle.currencyUnit
+    const vehicleToEdit = refuelStore.getVehicle(props.id)
+    if (vehicleToEdit) {
+      vehicle.value.name = vehicleToEdit.name
+      vehicle.value.plateNumber = vehicleToEdit.plateNumber
+      vehicle.value.fuelUnitId = vehicleToEdit.fuelUnitId
+      vehicle.value.currencyUnit = vehicleToEdit.currencyUnit
     } else console.error('Vehicle not found!')
   }
 
-  const routePath = router.currentRoute.value.path.toLocaleLowerCase()
+  routePath = router.currentRoute.value.path.toLocaleLowerCase()
   if (routePath.includes('add')) emitter.emit('updateTitle', 'Add vehicle')
   else if (routePath.includes('edit'))
     emitter.emit('updateTitle', 'Edit vehicle')

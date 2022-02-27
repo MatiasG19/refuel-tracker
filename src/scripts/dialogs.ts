@@ -3,12 +3,17 @@ import ConfirmDialog from 'src/components/ConfirmDialog.vue'
 import OptionsDialog from 'src/components/OptionsDialog.vue'
 import { OptionInDialog } from './models'
 
-export function confirmDialog(promptMessage: string) {
+export function confirmDialog(
+  promptMessage: string,
+  action: (id: number) => void,
+  actionArgument: unknown
+) {
   Dialog.create({
     component: ConfirmDialog,
     componentProps: {
       promptMessage,
-      action: () => console.log('Dialog action!')
+      action,
+      actionArgument
     }
   })
 }

@@ -2,49 +2,58 @@
   <div>
     <q-form @submit="onSubmit" class="q-pa-md q-gutter-md">
       <c-input
-        v-model="payedAmount"
+        v-model="refuel.payedAmount"
         label="Payed amount"
         :rules="[requiredFieldRule, numbersOnlyRule]"
         autofocus
       />
       <c-input
-        v-model="distanceDriven"
+        v-model="refuel.distanceDriven"
         label="Distance driven"
         :rules="[requiredFieldRule, numbersOnlyRule]"
       />
       <c-input
-        v-model="refueledAmount"
+        v-model="refuel.refueledAmount"
         label="Refuled amount"
         :rules="[requiredFieldRule, numbersOnlyRule]"
       />
 
       <c-input
-        v-model="refuelDate"
+        :value="refuelDate"
+        @update:value="(evt: string) => refuelDate = evt"
         label="Refuel date"
         :rules="[requiredFieldRule]"
       >
         <q-popup-proxy transition-show="scale" transition-hide="scale">
-          <q-date v-model="refuelDate" />
+          <q-date
+            :modelValue="refuelDate"
+            @update:modelValue="evt => (refuelDate = evt)"
+          />
           <div class="row items-center justify-end">
             <q-btn v-close-popup label="Close" color="primary" flat />
           </div>
         </q-popup-proxy>
       </c-input>
 
-      <q-input
+      <c-input
+        :value="refuelTime"
+        @update:value="(evt: string) => refuelTime = evt"
         outlined
         color="accent"
-        v-model="refuelTime"
         label="Refuel time"
         :rules="[requiredFieldRule]"
       >
         <q-popup-proxy transition-show="scale" transition-hide="scale">
-          <q-time v-model="refuelTime" format24h />
+          <q-time
+            :modelValue="refuelTime"
+            @update:modelValue="evt => (refuelTime = evt?.toString() ?? '')"
+            format24h
+          />
           <div class="row items-center justify-end">
             <q-btn v-close-popup label="Close" color="primary" flat />
           </div>
         </q-popup-proxy>
-      </q-input>
+      </c-input>
 
       <div class="row">
         <q-btn
@@ -75,15 +84,15 @@ import CInput from 'src/components/inputs/CInput.vue'
 import { emitter } from 'src/boot/mitt'
 import { requiredFieldRule, numbersOnlyRule } from 'src/scripts/validationRules'
 import { useRefuelStore } from 'src/stores'
+import { Refuel } from 'src/scripts/models'
 
 const router = useRouter()
 const refuelStore = useRefuelStore()
 
-let payedAmount = ref('')
-let refueledAmount = ref('')
-let distanceDriven = ref('')
-let refuelDate = ref(date.formatDate(Date.now(), 'YYYY/MM/DD'))
-let refuelTime = ref(date.formatDate(Date.now(), 'HH:mm'))
+const refuel = ref<Refuel>(new Refuel())
+const refuelDate = ref(date.formatDate(Date.now(), 'YYYY/MM/DD'))
+const refuelTime = ref(date.formatDate(Date.now(), 'HH:mm'))
+let routePath = ''
 
 const props = defineProps({
   id: {
@@ -91,23 +100,25 @@ const props = defineProps({
   }
 })
 
-function onSubmit(evt?: SubmitEvent) {
+function onSubmit() {
+  if (routePath.includes('add')) refuelStore.addRefuel(refuel.value)
+  else if (routePath.includes('edit')) refuelStore.updateRefuel(refuel.value)
   void router.go(-1)
 }
 
 onMounted(() => {
   if (props.id) {
-    const refuel = refuelStore.getRefuel(props.id)
-    if (refuel) {
-      payedAmount.value = refuel.payedAmount.toString()
-      refueledAmount.value = refuel.refuelAmount.toString()
-      distanceDriven.value = refuel.distanceDriven.toString()
-      refuelDate.value = refuel.date.toDateString()
-      refuelTime.value = refuel.date.toDateString()
+    const refuelToEdit = refuelStore.getRefuel(props.id)
+    if (refuelToEdit) {
+      refuel.value.payedAmount = refuelToEdit.payedAmount
+      refuel.value.refueledAmount = refuelToEdit.refueledAmount
+      refuel.value.distanceDriven = refuelToEdit.distanceDriven
+      refuelDate.value = refuelToEdit.date.toDateString()
+      refuelTime.value = date.formatDate(refuelToEdit.date, 'HH:mm')
     } else console.error('Refuel not found!')
   }
 
-  const routePath = router.currentRoute.value.path.toLocaleLowerCase()
+  routePath = router.currentRoute.value.path.toLocaleLowerCase()
   if (routePath.includes('add')) emitter.emit('updateTitle', 'Add refuel')
   else if (routePath.includes('edit'))
     emitter.emit('updateTitle', 'Edit refuel')

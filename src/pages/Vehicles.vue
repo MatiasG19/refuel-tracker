@@ -34,7 +34,8 @@ emitter.on('showVehicleOptionsDialog', id =>
     {
       text: 'Delete',
       icon: 'delete',
-      action: () => confirmDialog('Delete vehicle?')
+      action: () =>
+        confirmDialog('Delete vehicle?', refuelStore.deleteVehicle, id)
     }
   ])
 )

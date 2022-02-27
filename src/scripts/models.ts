@@ -21,7 +21,7 @@ export class Vehicle {
 export class Refuel {
   id!: number
   date!: Date
-  refuelAmount!: number
+  refueledAmount!: number
   payedAmount!: number
   distanceDriven!: number
   vehicleId!: number

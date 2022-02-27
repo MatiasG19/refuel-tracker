@@ -36,7 +36,7 @@ export function FuelBurnt(vehicle: Vehicle, graphCard: GraphData): GraphData {
     title: graphCard.title,
     value:
       vehicle.refuels
-        ?.map(re => re.refuelAmount)
+        ?.map(re => re.refueledAmount)
         .reduce((total, current) => total + current) ?? -1,
     unit: vehicle.fuelUnit?.fuelUnit ?? 'Unit not set!',
     sequence: graphCard.sequence,

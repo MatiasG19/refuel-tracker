@@ -36,11 +36,12 @@ const props = defineProps({
   },
   action: {
     type: Function
-  }
+  },
+  actionArgument: {}
 })
 
 function onOkClick() {
-  if (props.action) props.action()
+  if (props.action) props.action(props.actionArgument)
   onDialogOK()
 }
 </script>
