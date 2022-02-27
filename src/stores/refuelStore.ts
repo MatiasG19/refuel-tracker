@@ -63,25 +63,25 @@ export const useRefuelStore = defineStore('refuelStore', () => {
   function readRefuels() {
     refuels.value = [
       {
-        id: 0,
-        vehicleId: 0,
-        date: new Date(),
-        refueledAmount: 46.3,
-        payedAmount: 75.34,
-        distanceDriven: 720.0
-      },
-      {
         id: 1,
-        vehicleId: 0,
-        date: new Date(),
+        vehicleId: 1,
+        date: new Date(Date.now()),
         refueledAmount: 46.3,
         payedAmount: 75.34,
         distanceDriven: 720.0
       },
       {
         id: 2,
-        vehicleId: 0,
-        date: new Date(),
+        vehicleId: 1,
+        date: new Date(Date.now()),
+        refueledAmount: 46.3,
+        payedAmount: 75.34,
+        distanceDriven: 720.0
+      },
+      {
+        id: 3,
+        vehicleId: 1,
+        date: new Date(Date.now()),
         refueledAmount: 46.3,
         payedAmount: 75.34,
         distanceDriven: 720.0

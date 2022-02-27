@@ -106,6 +106,7 @@ onMounted(() => {
   if (props.id) {
     const vehicleToEdit = refuelStore.getVehicle(props.id)
     if (vehicleToEdit) {
+      vehicle.value.id = vehicleToEdit.id
       vehicle.value.name = vehicleToEdit.name
       vehicle.value.plateNumber = vehicleToEdit.plateNumber
       vehicle.value.fuelUnitId = vehicleToEdit.fuelUnitId

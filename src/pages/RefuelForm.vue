@@ -110,6 +110,7 @@ onMounted(() => {
   if (props.id) {
     const refuelToEdit = refuelStore.getRefuel(props.id)
     if (refuelToEdit) {
+      refuel.value.id = refuelToEdit.id
       refuel.value.payedAmount = refuelToEdit.payedAmount
       refuel.value.refueledAmount = refuelToEdit.refueledAmount
       refuel.value.distanceDriven = refuelToEdit.distanceDriven
