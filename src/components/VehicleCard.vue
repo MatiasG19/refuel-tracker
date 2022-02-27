@@ -13,7 +13,7 @@
               round
               flat
               icon="more_vert"
-              @click.stop="emitter.emit('showVehicleOptionsDialog', true)"
+              @click.stop="emitter.emit('showVehicleOptionsDialog', vehicle.id)"
             />
           </div>
         </div>

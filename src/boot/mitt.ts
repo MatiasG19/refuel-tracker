@@ -3,8 +3,8 @@ import mitt from 'mitt'
 type Events = {
   updateTitle: string
   showGraphOptionsDialog: boolean
-  showVehicleOptionsDialog: boolean
-  showRefuelOptionsDialog: boolean
+  showVehicleOptionsDialog: number
+  showRefuelOptionsDialog: number
 }
 
 export const emitter = mitt<Events>()

@@ -48,19 +48,28 @@
 </template>
 
 <script setup lang="ts">
-import { ref, onMounted } from 'vue'
+import { ref, onMounted, defineProps } from 'vue'
 import { useRouter } from 'vue-router'
 import CInput from 'src/components/inputs/CInput.vue'
 import CSelect from 'src/components/inputs/CSelect.vue'
 import { emitter } from 'src/boot/mitt'
 import { requiredFieldRule } from 'src/scripts/validationRules'
+import { Vehicle } from 'src/scripts/models'
+import { useRefuelStore } from 'src/stores'
 
 const router = useRouter()
+const refuelStore = useRefuelStore()
 
 const vehicleName = ref('')
 const plateNumber = ref('')
 const fuelUnit = ref(1)
-const currencyUnit = ref('€')
+const currencyUnit = ref('€') // TODO Load currency unit from settings
+
+const props = defineProps({
+  id: {
+    type: Number
+  }
+})
 
 const fuelUnits = [
   {
@@ -94,6 +103,16 @@ function onSubmit(evt?: SubmitEvent) {
 }
 
 onMounted(() => {
+  if (props.id) {
+    const vehicle = refuelStore.getVehicle(props.id)
+    if (vehicle) {
+      vehicleName.value = vehicle.name
+      plateNumber.value = vehicle.plateNumber
+      fuelUnit.value = vehicle.fuelUnit?.id ?? -1
+      currencyUnit.value = vehicle.currencyUnit
+    } else console.error('Vehicle not found!')
+  }
+
   const routePath = router.currentRoute.value.path.toLocaleLowerCase()
   if (routePath.includes('add')) emitter.emit('updateTitle', 'Add vehicle')
   else if (routePath.includes('edit'))

@@ -13,7 +13,6 @@
 <script setup lang="ts">
 import VehicleCard from 'src/components/VehicleCard.vue'
 import { optionsDialog, confirmDialog } from 'src/scripts/dialogs'
-import { OptionInDialog } from 'src/scripts/models'
 import { useRouter } from 'vue-router'
 import { computed, onMounted, onUnmounted } from 'vue'
 import { emitter } from 'src/boot/mitt'
@@ -24,20 +23,21 @@ const refuelStore = useRefuelStore()
 
 const vehicles = computed(() => refuelStore.vehicles)
 
-const optionsInDialog: OptionInDialog[] = [
-  {
-    text: 'Edit',
-    icon: 'edit',
-    action: () => router.push('/vehicles/edit')
-  },
-  {
-    text: 'Delete',
-    icon: 'delete',
-    action: () => confirmDialog('Delete vehicle?')
-  }
-]
-
-emitter.on('showVehicleOptionsDialog', () => optionsDialog(optionsInDialog))
+emitter.on('showVehicleOptionsDialog', id =>
+  optionsDialog([
+    {
+      text: 'Edit',
+      icon: 'edit',
+      action: () =>
+        router.push({ path: `/vehicles/edit/${id}`, params: { id } })
+    },
+    {
+      text: 'Delete',
+      icon: 'delete',
+      action: () => confirmDialog('Delete vehicle?')
+    }
+  ])
+)
 
 onMounted(() => {
   emitter.emit('updateTitle', 'Vehicles')

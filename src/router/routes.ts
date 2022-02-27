@@ -22,8 +22,9 @@ const routes: RouteRecordRaw[] = [
             component: () => import('pages/RefuelForm.vue')
           },
           {
-            path: 'edit',
-            component: () => import('pages/RefuelForm.vue')
+            path: 'edit/:id',
+            component: () => import('pages/RefuelForm.vue'),
+            props: true
           },
           {
             path: 'filter',
@@ -44,8 +45,9 @@ const routes: RouteRecordRaw[] = [
             component: () => import('pages/VehicleForm.vue')
           },
           {
-            path: 'edit',
-            component: () => import('pages/VehicleForm.vue')
+            path: 'edit/:id',
+            component: () => import('pages/VehicleForm.vue'),
+            props: true
           }
         ]
       },

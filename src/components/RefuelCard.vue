@@ -12,7 +12,7 @@
               round
               flat
               icon="more_vert"
-              @click="emitter.emit('showRefuelOptionsDialog', true)"
+              @click="emitter.emit('showRefuelOptionsDialog', refuel.id)"
             />
           </div>
         </div>

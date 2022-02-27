@@ -89,13 +89,30 @@ export const useRefuelStore = defineStore('refuelStore', () => {
     ]
   }
 
+  function getRefuel(id: number): Refuel | null {
+    return refuels.value.find(v => v.id == id) ?? null
+  }
+
+  function addRefuel(refuel: Refuel) {
+    refuels.value.push(refuel)
+  }
+
+  function updateRefuel(refuel: Refuel) {
+    deleteRefuel(refuel.id)
+    addRefuel(refuel)
+  }
+
+  function deleteRefuel(id: number) {
+    refuels.value = refuels.value.filter(refuel => refuel.id != id)
+  }
+
   function readVehicles() {
     vehicles.value = [
       {
         id: 1,
-        name: 'Seat1',
+        name: 'Seat',
         plateNumber: 'HL:MG1908',
-        currencyUnit: '',
+        currencyUnit: '€',
         fuelUnitId: 0,
         fuelUnit: {
           id: 1,
@@ -108,7 +125,7 @@ export const useRefuelStore = defineStore('refuelStore', () => {
         id: 2,
         name: 'Seat',
         plateNumber: 'HL:MG1908',
-        currencyUnit: '',
+        currencyUnit: '$',
         fuelUnitId: 0,
         fuelUnit: {
           id: 1,
@@ -121,7 +138,7 @@ export const useRefuelStore = defineStore('refuelStore', () => {
         id: 3,
         name: 'Seat',
         plateNumber: 'HL:MG1908',
-        currencyUnit: '',
+        currencyUnit: '€',
         fuelUnitId: 0,
         fuelUnit: {
           id: 1,
@@ -133,12 +150,37 @@ export const useRefuelStore = defineStore('refuelStore', () => {
     ]
   }
 
+  function getVehicle(id: number): Vehicle | null {
+    return vehicles.value.find(v => v.id == id) ?? null
+  }
+
+  function addVehicle(vehicle: Vehicle) {
+    vehicles.value.push(vehicle)
+  }
+
+  function updateVehicle(vehicle: Vehicle) {
+    deleteVehicle(vehicle.id)
+    addVehicle(vehicle)
+  }
+
+  function deleteVehicle(id: number) {
+    vehicles.value = vehicles.value.filter(vehicle => vehicle.id != id)
+  }
+
   return {
     graphData,
     refuels,
     vehicles,
     readGraphData,
     readRefuels,
-    readVehicles
+    getRefuel,
+    addRefuel,
+    updateRefuel,
+    deleteRefuel,
+    readVehicles,
+    getVehicle,
+    addVehicle,
+    updateVehicle,
+    deleteVehicle
   }
 })

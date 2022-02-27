@@ -23,7 +23,6 @@
 
 <script setup lang="ts">
 import RefuelCard from 'src/components/RefuelCard.vue'
-import { OptionInDialog } from 'src/scripts/models'
 import { computed, ref, onMounted, onUnmounted } from 'vue'
 import { useRouter } from 'vue-router'
 import { emitter } from 'src/boot/mitt'
@@ -40,25 +39,25 @@ const filterHint = 'Filter 1 Month from 2021.12.19'
 
 let refuels = computed(() => refuelStore.refuels)
 
-const optionsInDialog: OptionInDialog[] = [
-  {
-    text: 'Edit',
-    icon: 'edit',
-    action: () => router.push('/refuels/edit')
-  },
-  {
-    text: 'Remove',
-    icon: 'delete',
-    action: () => confirmDialog('Delete refuel entry?')
-  }
-]
-
 function removeFilter() {
   mainStore.toggleRefuelFilter(false)
   filterActive.value = false
 }
 
-emitter.on('showRefuelOptionsDialog', () => optionsDialog(optionsInDialog))
+emitter.on('showRefuelOptionsDialog', id =>
+  optionsDialog([
+    {
+      text: 'Edit',
+      icon: 'edit',
+      action: () => router.push({ path: `/refuels/edit/${id}`, params: { id } })
+    },
+    {
+      text: 'Remove',
+      icon: 'delete',
+      action: () => confirmDialog('Delete refuel entry?')
+    }
+  ])
+)
 
 onMounted(() => {
   emitter.emit('updateTitle', 'Refuels')

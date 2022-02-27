@@ -68,14 +68,16 @@
 </template>
 
 <script setup lang="ts">
-import { ref, onMounted } from 'vue'
+import { ref, onMounted, defineProps } from 'vue'
 import { date } from 'quasar'
 import { useRouter } from 'vue-router'
 import CInput from 'src/components/inputs/CInput.vue'
 import { emitter } from 'src/boot/mitt'
 import { requiredFieldRule, numbersOnlyRule } from 'src/scripts/validationRules'
+import { useRefuelStore } from 'src/stores'
 
 const router = useRouter()
+const refuelStore = useRefuelStore()
 
 let payedAmount = ref('')
 let refueledAmount = ref('')
@@ -83,11 +85,28 @@ let distanceDriven = ref('')
 let refuelDate = ref(date.formatDate(Date.now(), 'YYYY/MM/DD'))
 let refuelTime = ref(date.formatDate(Date.now(), 'HH:mm'))
 
+const props = defineProps({
+  id: {
+    type: Number
+  }
+})
+
 function onSubmit(evt?: SubmitEvent) {
   void router.go(-1)
 }
 
 onMounted(() => {
+  if (props.id) {
+    const refuel = refuelStore.getRefuel(props.id)
+    if (refuel) {
+      payedAmount.value = refuel.payedAmount.toString()
+      refueledAmount.value = refuel.refuelAmount.toString()
+      distanceDriven.value = refuel.distanceDriven.toString()
+      refuelDate.value = refuel.date.toDateString()
+      refuelTime.value = refuel.date.toDateString()
+    } else console.error('Refuel not found!')
+  }
+
   const routePath = router.currentRoute.value.path.toLocaleLowerCase()
   if (routePath.includes('add')) emitter.emit('updateTitle', 'Add refuel')
   else if (routePath.includes('edit'))
