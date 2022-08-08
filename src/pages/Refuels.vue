@@ -55,14 +55,21 @@ emitter.on('showRefuelOptionsDialog', id =>
       text: 'Remove',
       icon: 'delete',
       action: () =>
-        confirmDialog('Delete refuel entry?', refuelStore.deleteRefuel, id)
+        confirmDialog(
+          'Delete refuel entry?',
+          async (id: number): void =>
+            await refuelStore
+              .deleteRefuel(id)
+              .then(async () => await refuelStore.readRefuels()),
+          id
+        )
     }
   ])
 )
 
-onMounted(() => {
+onMounted(async () => {
   emitter.emit('updateTitle', 'Refuels')
-  refuelStore.readRefuels()
+  await refuelStore.readRefuels()
 })
 
 onUnmounted(() => {

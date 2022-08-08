@@ -32,7 +32,7 @@
           </div>
           <div class="col">
             <div class="text-h4 accent-space-station">
-              {{ refuel.refuelAmount }}
+              {{ refuel.refueledAmount }}
             </div>
             <div class="text-subtitle1">{{ fuelUnit }}</div>
           </div>

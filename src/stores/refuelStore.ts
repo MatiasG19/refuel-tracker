@@ -61,50 +61,55 @@ export const useRefuelStore = defineStore('refuelStore', () => {
     ]
   }
 
-  function readRefuels() {
-    refuels.value = [
-      {
-        id: 1,
-        vehicleId: 1,
-        date: new Date(Date.now()),
-        refueledAmount: 46.3,
-        payedAmount: 75.34,
-        distanceDriven: 720.0
-      },
-      {
-        id: 2,
-        vehicleId: 1,
-        date: new Date(Date.now()),
-        refueledAmount: 46.3,
-        payedAmount: 75.34,
-        distanceDriven: 720.0
-      },
-      {
-        id: 3,
-        vehicleId: 1,
-        date: new Date(Date.now()),
-        refueledAmount: 46.3,
-        payedAmount: 75.34,
-        distanceDriven: 720.0
-      }
-    ]
+  async function readRefuels() {
+    await db.refuels
+      .toArray()
+      .then(r =>
+        r.length > 0 ? (refuels.value = r) : (refuels.value.length = 0)
+      )
+    //   refuels.value = [
+    //     {
+    //       id: 1,
+    //       vehicleId: 1,
+    //       date: new Date(Date.now()),
+    //       refueledAmount: 46.3,
+    //       payedAmount: 75.34,
+    //       distanceDriven: 720.0
+    //     },
+    //     {
+    //       id: 2,
+    //       vehicleId: 1,
+    //       date: new Date(Date.now()),
+    //       refueledAmount: 46.3,
+    //       payedAmount: 75.34,
+    //       distanceDriven: 720.0
+    //     },
+    //     {
+    //       id: 3,
+    //       vehicleId: 1,
+    //       date: new Date(Date.now()),
+    //       refueledAmount: 46.3,
+    //       payedAmount: 75.34,
+    //       distanceDriven: 720.0
+    //     }
+    //   ]
   }
 
-  function getRefuel(id: number): Refuel | null {
+  async function getRefuel(id: number): Promise<Refuel | null> {
+    await readRefuels()
     return refuels.value.find(v => v.id == id) ?? null
   }
 
-  function addRefuel(refuel: Refuel) {
-    refuels.value.push(refuel)
+  async function addRefuel(refuel: Refuel) {
+    await db.refuels.add(refuel)
   }
 
-  function updateRefuel(refuel: Refuel) {
-    deleteRefuel(refuel.id)
-    addRefuel(refuel)
+  async function updateRefuel(refuel: Refuel) {
+    await db.refuels.put(refuel)
   }
 
-  function deleteRefuel(id: number) {
-    refuels.value = refuels.value.filter(refuel => refuel.id != id)
+  async function deleteRefuel(id: number) {
+    await db.refuels.delete(id)
   }
 
   async function readVehicles() {
@@ -116,7 +121,6 @@ export const useRefuelStore = defineStore('refuelStore', () => {
   }
 
   async function getVehicle(id: number): Promise<Vehicle | null> {
-    // return await db.vehicles.where('id').equals(id).first()
     await readVehicles()
     return vehicles.value.find(v => v.id == id) ?? null
   }

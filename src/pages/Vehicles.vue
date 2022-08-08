@@ -40,7 +40,7 @@ emitter.on('showVehicleOptionsDialog', id =>
           async (id: number): void =>
             await refuelStore
               .deleteVehicle(id)
-              .then(() => refuelStore.readVehicles()),
+              .then(async () => await refuelStore.readVehicles()),
           id
         )
     }
