@@ -113,28 +113,32 @@ function updateDate(event: string) {
 
 function updateTime(event: string) {
   console.log(event)
-  console.log(new Date(event))
-  console.log(new Date(event).getHours())
-  console.log(new Date(event).getMinutes())
-  const date = new Date(event)
+  const date = new Date(Date.now())
+  const d = event.split(':')
+  const hours = parseInt(d[0])
+  const minutes = parseInt(d[1])
   if (!refuel.value.date) refuel.value.date = date
+  date.setHours(hours)
+  date.setHours(minutes)
   refuelTime.value = QuasarDate.formatDate(date, 'HH:mm')
-  refuel.value.date.setHours(date.getHours())
-  refuel.value.date.setMinutes(date.getMinutes())
+  refuel.value.date.setHours(hours)
+  refuel.value.date.setMinutes(minutes)
+  console.log(refuel.value.date)
 }
 
 async function onSubmit() {
-  if (routePath.includes('add'))
+  if (routePath.includes('/add'))
     await refuelStore.addRefuel({ ...refuel.value })
-  else if (routePath.includes('edit'))
+  else if (routePath.includes('/edit'))
     await refuelStore.updateRefuel({ ...refuel.value })
+  console.log(refuel.value)
   void router.go(-1)
 }
 
 onMounted(async () => {
   routePath = router.currentRoute.value.path.toLocaleLowerCase()
-  if (routePath.includes('add')) emitter.emit('updateTitle', 'Add refuel')
-  else if (routePath.includes('edit'))
+  if (routePath.includes('/add')) emitter.emit('updateTitle', 'Add refuel')
+  else if (routePath.includes('/edit'))
     emitter.emit('updateTitle', 'Edit refuel')
 
   if (props.id) {
@@ -144,14 +148,16 @@ onMounted(async () => {
       refuel.value.payedAmount = refuelToEdit.payedAmount
       refuel.value.refueledAmount = refuelToEdit.refueledAmount
       refuel.value.distanceDriven = refuelToEdit.distanceDriven
-      if (routePath.includes('edit')) {
+      if (routePath.includes('/edit')) {
         refuelDate.value = QuasarDate.formatDate(
           refuelToEdit.date,
           'YYYY/MM/DD'
         )
         refuelTime.value = QuasarDate.formatDate(refuelToEdit.date, 'HH:mm')
-      } else console.error('Refuel not found!')
-    }
+      }
+    } else console.error('Refuel not found!')
+  } else {
+    refuel.value.date = new Date(Date.now())
   }
 })
 </script>
