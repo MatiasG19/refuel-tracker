@@ -1,6 +1,7 @@
 import { defineStore } from 'pinia'
 import { ref } from 'vue'
 import { GraphData, Refuel, Vehicle } from 'src/scripts/models'
+import { db } from '../boot/dexie'
 
 export const useRefuelStore = defineStore('refuelStore', () => {
   const graphData = ref<GraphData[]>([])
@@ -106,65 +107,30 @@ export const useRefuelStore = defineStore('refuelStore', () => {
     refuels.value = refuels.value.filter(refuel => refuel.id != id)
   }
 
-  function readVehicles() {
-    vehicles.value = [
-      {
-        id: 1,
-        name: 'Seat',
-        plateNumber: 'HL:MG1908',
-        currencyUnit: '€',
-        fuelUnitId: 1,
-        fuelUnit: {
-          id: 1,
-          fuelConsumptionUnit: 'L/100km',
-          distanceUnit: 'km',
-          fuelUnit: 'Litre'
-        }
-      },
-      {
-        id: 2,
-        name: 'Seat',
-        plateNumber: 'HL:MG1908',
-        currencyUnit: '$',
-        fuelUnitId: 1,
-        fuelUnit: {
-          id: 1,
-          fuelConsumptionUnit: 'L/100km',
-          distanceUnit: 'miles',
-          fuelUnit: 'Litre'
-        }
-      },
-      {
-        id: 3,
-        name: 'Seat',
-        plateNumber: 'HL:MG1908',
-        currencyUnit: '€',
-        fuelUnitId: 1,
-        fuelUnit: {
-          id: 1,
-          fuelConsumptionUnit: 'L/100km',
-          distanceUnit: 'km',
-          fuelUnit: 'Litre'
-        }
-      }
-    ]
+  async function readVehicles() {
+    await db.vehicles
+      .toArray()
+      .then(v =>
+        v.length > 0 ? (vehicles.value = v) : (vehicles.value.length = 0)
+      )
   }
 
-  function getVehicle(id: number): Vehicle | null {
+  async function getVehicle(id: number): Promise<Vehicle | null> {
+    // return await db.vehicles.where('id').equals(id).first()
+    await readVehicles()
     return vehicles.value.find(v => v.id == id) ?? null
   }
 
-  function addVehicle(vehicle: Vehicle) {
-    vehicles.value.push(vehicle)
+  async function addVehicle(vehicle: Vehicle) {
+    await db.vehicles.add(vehicle)
   }
 
-  function updateVehicle(vehicle: Vehicle) {
-    deleteVehicle(vehicle.id)
-    addVehicle(vehicle)
+  async function updateVehicle(vehicle: Vehicle) {
+    await db.vehicles.put(vehicle)
   }
 
-  function deleteVehicle(id: number) {
-    vehicles.value = vehicles.value.filter(vehicle => vehicle.id != id)
+  async function deleteVehicle(id: number) {
+    await db.vehicles.delete(id)
   }
 
   return {

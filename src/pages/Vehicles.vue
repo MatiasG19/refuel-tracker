@@ -35,14 +35,21 @@ emitter.on('showVehicleOptionsDialog', id =>
       text: 'Delete',
       icon: 'delete',
       action: () =>
-        confirmDialog('Delete vehicle?', refuelStore.deleteVehicle, id)
+        confirmDialog(
+          'Delete vehicle?',
+          async (id: number): void =>
+            await refuelStore
+              .deleteVehicle(id)
+              .then(() => refuelStore.readVehicles()),
+          id
+        )
     }
   ])
 )
 
-onMounted(() => {
+onMounted(async () => {
   emitter.emit('updateTitle', 'Vehicles')
-  refuelStore.readVehicles()
+  await refuelStore.readVehicles()
 })
 
 onUnmounted(() => {

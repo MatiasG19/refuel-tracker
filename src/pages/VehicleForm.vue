@@ -48,7 +48,7 @@
 </template>
 
 <script setup lang="ts">
-import { ref, onMounted, defineProps } from 'vue'
+import { ref, unref, onMounted, defineProps } from 'vue'
 import { useRouter } from 'vue-router'
 import CInput from 'src/components/inputs/CInput.vue'
 import CSelect from 'src/components/inputs/CSelect.vue'
@@ -96,15 +96,23 @@ const fuelUnits = [
   }
 ]
 
-function onSubmit() {
-  if (routePath.includes('add')) refuelStore.addVehicle(vehicle.value)
-  else if (routePath.includes('edit')) refuelStore.updateVehicle(vehicle.value)
+async function onSubmit() {
+  const v = new Vehicle()
+  v.name = 'seat'
+  v.fuelUnitId = 1
+  v.plateNumber = 'HL:XX0000'
+  // console.log(`Proxy ${vehicle.value}`)
+  console.log({ ...vehicle.value })
+  if (routePath.includes('add'))
+    await refuelStore.addVehicle({ ...vehicle.value })
+  else if (routePath.includes('edit'))
+    await refuelStore.updateVehicle({ ...vehicle.value })
   void router.go(-1)
 }
 
-onMounted(() => {
+onMounted(async () => {
   if (props.id) {
-    const vehicleToEdit = refuelStore.getVehicle(props.id)
+    const vehicleToEdit = await refuelStore.getVehicle(props.id)
     if (vehicleToEdit) {
       vehicle.value.id = vehicleToEdit.id
       vehicle.value.name = vehicleToEdit.name
