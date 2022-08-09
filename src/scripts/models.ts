@@ -46,3 +46,12 @@ export class Period {
   name!: string
   periodInDays!: number
 }
+
+export class Settings {
+  id!: number
+  colorThemeId!: number
+  distanceUnitId!: number
+  vehicleId!: number
+  plateNumberInTitleActive!: boolean
+  refuelFilterActive!: boolean
+}

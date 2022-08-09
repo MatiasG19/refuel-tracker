@@ -5,7 +5,7 @@
       :key="i"
       :vehicle="vehicle"
       class="q-pt-md q-pl-md q-pr-md"
-      @click="router.push('/')"
+      @click="selectVehicle(vehicle)"
     />
   </q-page>
 </template>
@@ -16,9 +16,11 @@ import { optionsDialog, confirmDialog } from 'src/scripts/dialogs'
 import { useRouter } from 'vue-router'
 import { computed, onMounted, onUnmounted } from 'vue'
 import { emitter } from 'src/boot/mitt'
-import { useRefuelStore } from 'src/stores'
+import { useMainStore, useRefuelStore } from 'src/stores'
+import { Vehicle } from 'src/scripts/models'
 
 const router = useRouter()
+const mainStore = useMainStore()
 const refuelStore = useRefuelStore()
 
 const vehicles = computed(() => refuelStore.vehicles)
@@ -46,6 +48,12 @@ emitter.on('showVehicleOptionsDialog', id =>
     }
   ])
 )
+
+async function selectVehicle(vehicle: Vehicle) {
+  emitter.emit('updateTitle', vehicle.name)
+  mainStore.changeSelectedVehicle({ ...vehicle })
+  await router.push('/')
+}
 
 onMounted(async () => {
   emitter.emit('updateTitle', 'Vehicles')

@@ -2,6 +2,9 @@ import { defineStore } from 'pinia'
 import { ref } from 'vue'
 import { GraphData, Refuel, Vehicle } from 'src/scripts/models'
 import { db } from '../boot/dexie'
+import { useMainStore } from 'src/stores'
+
+const mainStore = useMainStore()
 
 export const useRefuelStore = defineStore('refuelStore', () => {
   const graphData = ref<GraphData[]>([])
@@ -61,42 +64,18 @@ export const useRefuelStore = defineStore('refuelStore', () => {
     ]
   }
 
-  async function readRefuels() {
+  async function readRefuels(vehicleId: number) {
     await db.refuels
+      .where('vehicleId')
+      .equals(vehicleId)
       .toArray()
       .then(r =>
         r.length > 0 ? (refuels.value = r) : (refuels.value.length = 0)
       )
-    //   refuels.value = [
-    //     {
-    //       id: 1,
-    //       vehicleId: 1,
-    //       date: new Date(Date.now()),
-    //       refueledAmount: 46.3,
-    //       payedAmount: 75.34,
-    //       distanceDriven: 720.0
-    //     },
-    //     {
-    //       id: 2,
-    //       vehicleId: 1,
-    //       date: new Date(Date.now()),
-    //       refueledAmount: 46.3,
-    //       payedAmount: 75.34,
-    //       distanceDriven: 720.0
-    //     },
-    //     {
-    //       id: 3,
-    //       vehicleId: 1,
-    //       date: new Date(Date.now()),
-    //       refueledAmount: 46.3,
-    //       payedAmount: 75.34,
-    //       distanceDriven: 720.0
-    //     }
-    //   ]
   }
 
   async function getRefuel(id: number): Promise<Refuel | null> {
-    await readRefuels()
+    await readRefuels(mainStore.selectedVehicleId)
     return refuels.value.find(v => v.id == id) ?? null
   }
 

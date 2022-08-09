@@ -1,18 +1,25 @@
 import Dexie, { Table } from 'dexie'
-import { Vehicle, Refuel, FuelUnit, GraphData } from '../scripts/models'
+import {
+  Vehicle,
+  Refuel,
+  FuelUnit,
+  GraphData,
+  Settings
+} from '../scripts/models'
 
 export class RefuelTrackerDexie extends Dexie {
-  // 'friends' is added by dexie when declaring the stores()
-  // We just tell the typing system this is the case
   vehicles!: Table<Vehicle>
   refuels!: Table<Refuel>
+  settings!: Table<Settings>
 
   constructor() {
     super('RefuelTrackerDb')
     this.version(1).stores({
-      vehicles: '++id, name, plateNumber, fuelUnitId', // Primary key and indexed props
+      vehicles: '++id, name, plateNumber, fuelUnitId',
       refuels:
-        '++id, date, refuelAmount, payedAmount, distanceDriven, vehicleId'
+        '++id, date, refuelAmount, payedAmount, distanceDriven, vehicleId',
+      settings:
+        '++id, colorThemeId, distanceUnitId, vehicleId, plateNumberInTitleActive, refuelFilterActive'
     })
   }
 }

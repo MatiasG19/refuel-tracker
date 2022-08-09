@@ -125,7 +125,7 @@ function toggleLeftDrawer() {
 }
 
 function add() {
-  if (routePath.value.includes('add') || routePath.value.includes('edit'))
+  if (routePath.value.includes('/add') || routePath.value.includes('/edit'))
     return
   else if (routePath.value == '/vehicles') void router.push('/vehicles/add')
   else void router.push('/refuels/add')

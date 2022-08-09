@@ -67,7 +67,10 @@ emitter.on('showRefuelOptionsDialog', id =>
           async (id: number): void =>
             await refuelStore
               .deleteRefuel(id)
-              .then(async () => await refuelStore.readRefuels()),
+              .then(
+                async () =>
+                  await refuelStore.readRefuels(mainStore.selectedVehicleId)
+              ),
           id
         )
     }
@@ -76,7 +79,7 @@ emitter.on('showRefuelOptionsDialog', id =>
 
 onMounted(async () => {
   emitter.emit('updateTitle', 'Refuels')
-  await refuelStore.readRefuels()
+  await refuelStore.readRefuels(mainStore.selectedVehicleId)
 })
 
 onUnmounted(() => {

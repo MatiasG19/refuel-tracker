@@ -17,16 +17,14 @@ import { computed, onMounted, onUnmounted } from 'vue'
 import { emitter } from 'src/boot/mitt'
 import { productName } from '../../package.json'
 import { optionsDialog } from 'src/scripts/dialogs'
-import { useRefuelStore } from 'src/stores'
+import { useMainStore, useRefuelStore } from 'src/stores'
 
+const mainStore = useMainStore()
 const refuelStore = useRefuelStore()
 
 let graphData = computed(() => refuelStore.graphData)
 
 const periods: string[] = ['Week', '3 Months', '6 Months', 'Year', 'Max']
-
-let showPlateNumber = false
-let carName = 'My car name'
 
 const optionsInDialog: OptionInDialog[] = [
   {
@@ -56,11 +54,11 @@ emitter.on('showGraphOptionsDialog', () => optionsDialog(optionsInDialog))
 onMounted(() => {
   emitter.emit(
     'updateTitle',
-    showPlateNumber == false
-      ? carName.trim() != ''
-        ? carName
+    mainStore.plateNumberInTitleActive === false
+      ? mainStore.selectedVehicleName.trim() !== ''
+        ? mainStore.selectedVehicleName
         : productName
-      : 'HH:XX2022'
+      : mainStore.selectedVehiclePlateNumber
   )
   refuelStore.readGraphData()
 })

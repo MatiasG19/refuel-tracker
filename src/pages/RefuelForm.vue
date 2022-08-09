@@ -80,10 +80,11 @@ import { useRouter } from 'vue-router'
 import CInput from 'src/components/inputs/CInput.vue'
 import { emitter } from 'src/boot/mitt'
 import { requiredFieldRule, numbersOnlyRule } from 'src/scripts/validationRules'
-import { useRefuelStore } from 'src/stores'
+import { useMainStore, useRefuelStore } from 'src/stores'
 import { Refuel } from 'src/scripts/models'
 
 const router = useRouter()
+const mainStore = useMainStore()
 const refuelStore = useRefuelStore()
 
 const refuel = ref<Refuel>(new Refuel())
@@ -134,6 +135,7 @@ onMounted(async () => {
   else if (routePath.includes('/edit'))
     emitter.emit('updateTitle', 'Edit refuel')
 
+  refuel.value.vehicleId = mainStore.selectedVehicleId
   if (props.id) {
     const refuelToEdit = await refuelStore.getRefuel(props.id)
     if (refuelToEdit) {

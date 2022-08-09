@@ -48,16 +48,17 @@
 </template>
 
 <script setup lang="ts">
-import { ref, onMounted, defineProps } from 'vue'
+import { unref, ref, onMounted, defineProps } from 'vue'
 import { useRouter } from 'vue-router'
 import CInput from 'src/components/inputs/CInput.vue'
 import CSelect from 'src/components/inputs/CSelect.vue'
 import { emitter } from 'src/boot/mitt'
 import { requiredFieldRule } from 'src/scripts/validationRules'
 import { Vehicle } from 'src/scripts/models'
-import { useRefuelStore } from 'src/stores'
+import { useMainStore, useRefuelStore } from 'src/stores'
 
 const router = useRouter()
+const mainStore = useMainStore()
 const refuelStore = useRefuelStore()
 
 const vehicle = ref<Vehicle>(new Vehicle()) // TODO Load currency unit from settings
@@ -99,9 +100,12 @@ const fuelUnits = [
 async function onSubmit() {
   if (routePath.includes('/add'))
     await refuelStore.addVehicle({ ...vehicle.value })
-  else if (routePath.includes('/edit'))
+  else if (routePath.includes('/edit')) {
+    if (vehicle.value.id === mainStore.selectedVehicleId)
+      mainStore.changeSelectedVehicle({ ...vehicle.value })
     await refuelStore.updateVehicle({ ...vehicle.value })
-  void router.go(-1)
+  }
+  void router.push('/vehicles')
 }
 
 onMounted(async () => {
