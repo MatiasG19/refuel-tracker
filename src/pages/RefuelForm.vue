@@ -90,9 +90,6 @@ const refuel = ref<Refuel>(new Refuel())
 const refuelDate = ref(QuasarDate.formatDate(Date.now(), 'YYYY/MM/DD'))
 const refuelTime = ref(QuasarDate.formatDate(Date.now(), 'HH:mm'))
 
-// const refuelDate = computed(() =>
-//   date.formatDate(refuel.value.date, 'YYYY/MM/DD')
-// )
 let routePath = ''
 
 const props = defineProps({
@@ -108,22 +105,19 @@ function updateDate(event: string) {
   refuel.value.date.setFullYear(date.getFullYear())
   refuel.value.date.setMonth(date.getMonth())
   refuel.value.date.setDate(date.getDate())
-  console.log(refuel.value)
 }
 
 function updateTime(event: string) {
-  console.log(event)
-  const date = new Date(Date.now())
   const d = event.split(':')
   const hours = parseInt(d[0])
   const minutes = parseInt(d[1])
+  const date = new Date(Date.now())
   if (!refuel.value.date) refuel.value.date = date
   date.setHours(hours)
-  date.setHours(minutes)
+  date.setMinutes(minutes)
   refuelTime.value = QuasarDate.formatDate(date, 'HH:mm')
   refuel.value.date.setHours(hours)
   refuel.value.date.setMinutes(minutes)
-  console.log(refuel.value.date)
 }
 
 async function onSubmit() {
@@ -131,7 +125,6 @@ async function onSubmit() {
     await refuelStore.addRefuel({ ...refuel.value })
   else if (routePath.includes('/edit'))
     await refuelStore.updateRefuel({ ...refuel.value })
-  console.log(refuel.value)
   void router.go(-1)
 }
 
@@ -144,11 +137,13 @@ onMounted(async () => {
   if (props.id) {
     const refuelToEdit = await refuelStore.getRefuel(props.id)
     if (refuelToEdit) {
+      console.log(refuelToEdit)
       refuel.value.id = refuelToEdit.id
       refuel.value.payedAmount = refuelToEdit.payedAmount
       refuel.value.refueledAmount = refuelToEdit.refueledAmount
       refuel.value.distanceDriven = refuelToEdit.distanceDriven
       if (routePath.includes('/edit')) {
+        refuel.value.date = refuelToEdit.date
         refuelDate.value = QuasarDate.formatDate(
           refuelToEdit.date,
           'YYYY/MM/DD'

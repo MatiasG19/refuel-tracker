@@ -97,15 +97,9 @@ const fuelUnits = [
 ]
 
 async function onSubmit() {
-  const v = new Vehicle()
-  v.name = 'seat'
-  v.fuelUnitId = 1
-  v.plateNumber = 'HL:XX0000'
-  // console.log(`Proxy ${vehicle.value}`)
-  console.log({ ...vehicle.value })
-  if (routePath.includes('add'))
+  if (routePath.includes('/add'))
     await refuelStore.addVehicle({ ...vehicle.value })
-  else if (routePath.includes('edit'))
+  else if (routePath.includes('/edit'))
     await refuelStore.updateVehicle({ ...vehicle.value })
   void router.go(-1)
 }
@@ -123,8 +117,8 @@ onMounted(async () => {
   }
 
   routePath = router.currentRoute.value.path.toLocaleLowerCase()
-  if (routePath.includes('add')) emitter.emit('updateTitle', 'Add vehicle')
-  else if (routePath.includes('edit'))
+  if (routePath.includes('/add')) emitter.emit('updateTitle', 'Add vehicle')
+  else if (routePath.includes('/edit'))
     emitter.emit('updateTitle', 'Edit vehicle')
 })
 </script>
