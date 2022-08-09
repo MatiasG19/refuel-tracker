@@ -125,7 +125,7 @@ async function onSubmit() {
     await refuelStore.addRefuel({ ...refuel.value })
   else if (routePath.includes('/edit'))
     await refuelStore.updateRefuel({ ...refuel.value })
-  void router.go(-1)
+  void router.push('/refuels')
 }
 
 onMounted(async () => {
