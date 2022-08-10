@@ -1,6 +1,6 @@
 export class GraphData {
   id?: number
-  // cardId!: number
+  // uid: string
   title!: string
   value!: number
   unit!: string
@@ -31,10 +31,12 @@ export class Refuel {
 }
 
 export class FuelUnit {
-  id!: number
+  id?: number
+  uid!: string
   distanceUnit!: string
   fuelUnit!: string
   fuelConsumptionUnit!: string
+  conversion!: number
 }
 
 export class OptionInDialog {
@@ -56,4 +58,9 @@ export class Settings {
   vehicleId: number | null = null
   plateNumberInTitleActive!: boolean
   refuelFilterActive!: boolean
+}
+
+export class SelectOption {
+  label!: string
+  value!: number
 }

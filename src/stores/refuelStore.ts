@@ -139,6 +139,10 @@ export const useRefuelStore = defineStore('refuelStore', () => {
     return await db.periods.toArray()
   }
 
+  async function getFuelUnits() {
+    return await db.fuelUnits.toArray()
+  }
+
   return {
     graphData,
     refuels,
@@ -154,6 +158,7 @@ export const useRefuelStore = defineStore('refuelStore', () => {
     addVehicle,
     updateVehicle,
     deleteVehicle,
-    getPeriods
+    getPeriods,
+    getFuelUnits
   }
 })

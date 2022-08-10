@@ -1,10 +1,11 @@
 import Dexie, { Table } from 'dexie'
-import { Vehicle, Refuel, Period, Settings } from '../scripts/models'
+import { Vehicle, Refuel, Period, Settings, FuelUnit } from '../scripts/models'
 
 export class RefuelTrackerDexie extends Dexie {
   vehicles!: Table<Vehicle>
   refuels!: Table<Refuel>
   periods!: Table<Period>
+  fuelUnits!: Table<FuelUnit>
   settings!: Table<Settings>
 
   constructor() {
@@ -14,38 +15,38 @@ export class RefuelTrackerDexie extends Dexie {
       refuels:
         '++id, date, refuelAmount, payedAmount, distanceDriven, vehicleId',
       periods: '++id, name, periodInDays',
+      fuelUnits: '++id, uid, distanceUnit, fuelUnit, fuelConsumptionUnit',
       settings:
         '++id, colorThemeId, distanceUnitId, vehicleId, plateNumberInTitleActive, refuelFilterActive'
     })
 
-    // Create static tables
-    this.createPeriods()
-    this.createSettings()
+    // Insert static data
+    this.insertPeriods()
+    this.insertFuelUnits()
+    this.insertSettings()
   }
 
-  createPeriods() {
-    ;(() => {
-      const periods: Period[] = [
-        { name: 'Week', periodInDays: 7 },
-        { name: '3 Months', periodInDays: 90 },
-        { name: '6 Months', periodInDays: 180 },
-        { name: 'Year', periodInDays: 365 },
-        { name: 'Max', periodInDays: 0 }
-      ]
+  insertPeriods() {
+    const periods: Period[] = [
+      { name: 'Week', periodInDays: 7 },
+      { name: '3 Months', periodInDays: 90 },
+      { name: '6 Months', periodInDays: 180 },
+      { name: 'Year', periodInDays: 365 },
+      { name: 'Max', periodInDays: 0 }
+    ]
 
-      periods.forEach(p => {
-        ;(async (p: Period) => {
-          const periods = await this.periods
-            .where('periodInDays')
-            .equals(p.periodInDays)
-            .toArray()
-          if (periods.length === 0) await this.periods.put(p)
-        })(p)
-      })
-    })()
+    periods.forEach(p => {
+      ;(async () => {
+        const periods = await this.periods
+          .where('periodInDays')
+          .equals(p.periodInDays)
+          .toArray()
+        if (periods.length === 0) await this.periods.put(p)
+      })()
+    })
   }
 
-  createSettings() {
+  insertSettings() {
     ;(async () => {
       if ((await this.settings.count()) === 0) {
         const settings = new Settings()
@@ -58,6 +59,63 @@ export class RefuelTrackerDexie extends Dexie {
         }
       }
     })()
+  }
+
+  insertFuelUnits() {
+    const fuelUnits: FuelUnit[] = [
+      {
+        uid: '1',
+        distanceUnit: 'km',
+        fuelUnit: 'Litres',
+        fuelConsumptionUnit: 'L/100km',
+        conversion: 1.0
+      },
+      {
+        uid: '2',
+        distanceUnit: 'Miles',
+        fuelUnit: 'Gallons',
+        fuelConsumptionUnit: 'MPG US',
+        conversion: 1.0
+      },
+      {
+        uid: '3',
+        distanceUnit: 'Miles',
+        fuelUnit: 'Gallons',
+        fuelConsumptionUnit: 'MPG Imperial',
+        conversion: 1.0
+      },
+      {
+        uid: '4',
+        distanceUnit: 'km',
+        fuelUnit: 'kWh',
+        fuelConsumptionUnit: 'kWh/100km',
+        conversion: 1.0
+      },
+      {
+        uid: '5',
+        distanceUnit: 'km',
+        fuelUnit: 'Wh',
+        fuelConsumptionUnit: 'Wh/km',
+        conversion: 1.0
+      },
+      {
+        uid: '6',
+        distanceUnit: 'Miles',
+        fuelUnit: 'Wh',
+        fuelConsumptionUnit: 'Wh/mile',
+        conversion: 1.0
+      }
+    ]
+
+    fuelUnits.forEach(fu => {
+      ;(async () => {
+        const fuelUnits = await this.fuelUnits
+          .where('uid')
+          .equals(fu.uid)
+          .toArray()
+        if (fuelUnits.length === 0) await this.fuelUnits.put(fu)
+      })()
+    })
   }
 }
 

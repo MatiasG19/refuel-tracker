@@ -54,14 +54,15 @@ import CInput from 'src/components/inputs/CInput.vue'
 import CSelect from 'src/components/inputs/CSelect.vue'
 import { emitter } from 'src/boot/mitt'
 import { requiredFieldRule } from 'src/scripts/validationRules'
-import { Vehicle } from 'src/scripts/models'
+import { FuelUnit, SelectOption, Vehicle } from 'src/scripts/models'
 import { useMainStore, useRefuelStore } from 'src/stores'
 
 const router = useRouter()
 const mainStore = useMainStore()
 const refuelStore = useRefuelStore()
 
-const vehicle = ref<Vehicle>(new Vehicle()) // TODO Load currency unit from settings
+const vehicle = ref<Vehicle>(new Vehicle())
+const fuelUnits = ref<SelectOption[]>([])
 let routePath = ''
 
 const props = defineProps({
@@ -69,33 +70,6 @@ const props = defineProps({
     type: Number
   }
 })
-
-const fuelUnits = [
-  {
-    label: 'L/100km',
-    value: 1
-  },
-  {
-    label: 'MPG US',
-    value: 2
-  },
-  {
-    label: 'MPG Imperial',
-    value: 3
-  },
-  {
-    label: 'kWh/100km',
-    value: 4
-  },
-  {
-    label: 'Wh/km',
-    value: 5
-  },
-  {
-    label: 'Wh/mile',
-    value: 6
-  }
-]
 
 async function onSubmit() {
   if (routePath.includes('/add'))
@@ -109,6 +83,7 @@ async function onSubmit() {
 }
 
 onMounted(async () => {
+  // Get vehicle to edit
   if (props.id) {
     const vehicleToEdit = await refuelStore.getVehicle(props.id)
     if (vehicleToEdit) {
@@ -120,6 +95,16 @@ onMounted(async () => {
     } else console.error('Vehicle not found!')
   }
 
+  // Get fuel units
+  const units = await refuelStore.getFuelUnits()
+  units.forEach(u =>
+    fuelUnits.value.push({
+      label: u.fuelConsumptionUnit,
+      value: u.id as number
+    })
+  )
+
+  // Update title
   routePath = router.currentRoute.value.path.toLocaleLowerCase()
   if (routePath.includes('/add')) emitter.emit('updateTitle', 'Add vehicle')
   else if (routePath.includes('/edit'))
