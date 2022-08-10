@@ -1,45 +1,84 @@
 import { defineStore } from 'pinia'
-import { Vehicle, Settings } from 'src/scripts/models'
+import { ref } from 'vue'
+import { Vehicle } from 'src/scripts/models'
 import { db } from '../boot/dexie'
 
-export const useMainStore = defineStore('mainStore', {
-  state: () => {
-    return {
-      selectedColorThemeId: 1,
-      selectedDistanceUnitId: 1,
-      selectedVehicleId: 0,
-      selectedVehicleName: 'My car',
-      selectedVehiclePlateNumber: 'XX:YY0000',
-      plateNumberInTitleActive: false,
-      refuelFilterActive: false
-    }
-  },
-  actions: {
-    async changeColorTheme(themeId: number) {
+export const useMainStore = defineStore('mainStore', () => {
+  const selectedColorThemeId = ref<number>(1)
+  const selectedDistanceUnitId = ref<number>(1)
+  const selectedVehicleId = ref<number | null>(null)
+  const selectedVehicleName = ref<string>('My car')
+  const selectedVehiclePlateNumber = ref<string>('')
+  const plateNumberInTitleActive = ref<boolean>(false)
+  const refuelFilterActive = ref<boolean>(false)
+
+  function changeColorTheme(themeId: number) {
+    ;(async () => {
       const settings = await db.settings.toArray()
       settings[0].colorThemeId = themeId
       await db.settings.put(settings[0])
-      this.selectedColorThemeId = themeId
-    },
-    async changeDistanceUnit(distanceUnitId: number) {
+      selectedColorThemeId.value = themeId
+    })()
+  }
+
+  function changeDistanceUnit(distanceUnitId: number) {
+    ;(async () => {
       const settings = await db.settings.toArray()
       settings[0].distanceUnitId = distanceUnitId
       await db.settings.put(settings[0])
-      this.selectedDistanceUnitId = distanceUnitId
-    },
-    async changeSelectedVehicle(vehicle: Vehicle) {
+      selectedDistanceUnitId.value = distanceUnitId
+    })()
+  }
+
+  function changeSelectedVehicle(vehicle: Vehicle | null) {
+    ;(async () => {
       const settings = await db.settings.toArray()
-      settings[0].vehicleId = vehicle.id
+      if (vehicle) {
+        settings[0].vehicleId = vehicle.id
+        await db.settings.put(settings[0])
+        selectedVehicleId.value = vehicle.id
+        selectedVehicleName.value = vehicle.name
+        selectedVehiclePlateNumber.value = vehicle.plateNumber
+        return
+      }
+      settings[0].vehicleId = null
+      db.settings.put(settings[0])
+      selectedVehicleId.value = null
+      selectedVehicleName.value = 'My Car'
+      selectedVehiclePlateNumber.value = ''
+    })()
+  }
+
+  function togglePlateNumberInTitle(state: boolean) {
+    ;(async () => {
+      const settings = await db.settings.toArray()
+      settings[0].plateNumberInTitleActive = state
       await db.settings.put(settings[0])
-      this.selectedVehicleId = vehicle.id
-      this.selectedVehicleName = vehicle.name
-      this.selectedVehiclePlateNumber = vehicle.plateNumber
-    },
-    togglePlateNumberInTitle(state: boolean) {
-      this.plateNumberInTitleActive = state
-    },
-    toggleRefuelFilter(state: boolean) {
-      this.refuelFilterActive = state
-    }
+      plateNumberInTitleActive.value = state
+    })()
+  }
+
+  function toggleRefuelFilter(state: boolean) {
+    ;(async () => {
+      const settings = await db.settings.toArray()
+      settings[0].refuelFilterActive = state
+      await db.settings.put(settings[0])
+      refuelFilterActive.value = state
+    })()
+  }
+
+  return {
+    selectedColorThemeId,
+    selectedDistanceUnitId,
+    selectedVehicleId,
+    selectedVehicleName,
+    selectedVehiclePlateNumber,
+    plateNumberInTitleActive,
+    refuelFilterActive,
+    changeColorTheme,
+    changeDistanceUnit,
+    changeSelectedVehicle,
+    togglePlateNumberInTitle,
+    toggleRefuelFilter
   }
 })

@@ -12,8 +12,8 @@
 
 <script setup lang="ts">
 import GraphCard from 'src/components/GraphCard.vue'
-import { OptionInDialog } from 'src/scripts/models'
-import { computed, onMounted, onUnmounted } from 'vue'
+import { OptionInDialog, Period } from 'src/scripts/models'
+import { ref, computed, onMounted, onUnmounted } from 'vue'
 import { emitter } from 'src/boot/mitt'
 import { productName } from '../../package.json'
 import { optionsDialog } from 'src/scripts/dialogs'
@@ -22,9 +22,9 @@ import { useMainStore, useRefuelStore } from 'src/stores'
 const mainStore = useMainStore()
 const refuelStore = useRefuelStore()
 
-let graphData = computed(() => refuelStore.graphData)
+const graphData = computed(() => refuelStore.graphData)
 
-const periods: string[] = ['Week', '3 Months', '6 Months', 'Year', 'Max']
+const periods = ref<Period[]>([])
 
 const optionsInDialog: OptionInDialog[] = [
   {
@@ -51,16 +51,18 @@ const optionsInDialog: OptionInDialog[] = [
 
 emitter.on('showGraphOptionsDialog', () => optionsDialog(optionsInDialog))
 
-onMounted(() => {
+onMounted(async () => {
   emitter.emit(
     'updateTitle',
-    mainStore.plateNumberInTitleActive === false
-      ? mainStore.selectedVehicleName.trim() !== ''
-        ? mainStore.selectedVehicleName
-        : productName
-      : mainStore.selectedVehiclePlateNumber
+    (() => {
+      if (mainStore.selectedVehicleId === null) return productName
+      else if (mainStore.plateNumberInTitleActive)
+        return mainStore.selectedVehiclePlateNumber
+      return mainStore.selectedVehicleName
+    })()
   )
   refuelStore.readGraphData()
+  periods.value = await refuelStore.getPeriods()
 })
 
 onUnmounted(() => {

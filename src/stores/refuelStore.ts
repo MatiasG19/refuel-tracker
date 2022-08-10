@@ -74,7 +74,8 @@ export const useRefuelStore = defineStore('refuelStore', () => {
       )
   }
 
-  async function getRefuel(id: number): Promise<Refuel | null> {
+  async function getRefuel(id: number) {
+    if (!mainStore.selectedVehicleId) return
     await readRefuels(mainStore.selectedVehicleId)
     return refuels.value.find(v => v.id == id) ?? null
   }
@@ -106,6 +107,10 @@ export const useRefuelStore = defineStore('refuelStore', () => {
 
   async function addVehicle(vehicle: Vehicle) {
     await db.vehicles.add(vehicle)
+
+    // Update settings
+    if ((await db.vehicles.count()) === 1)
+      mainStore.changeSelectedVehicle(vehicle)
   }
 
   async function updateVehicle(vehicle: Vehicle) {
@@ -113,7 +118,25 @@ export const useRefuelStore = defineStore('refuelStore', () => {
   }
 
   async function deleteVehicle(id: number) {
+    const refuels = await db.refuels.where('vehicleId').equals(id).toArray()
+    refuels.forEach(r => {
+      ;(async () => {
+        await db.refuels.delete(r.id)
+      })()
+    })
     await db.vehicles.delete(id)
+
+    // Update settings
+    if ((await db.vehicles.count()) > 0) {
+      const vehicles = await db.vehicles.toArray()
+      mainStore.changeSelectedVehicle(vehicles[0])
+      return
+    }
+    mainStore.changeSelectedVehicle(null)
+  }
+
+  async function getPeriods() {
+    return await db.periods.toArray()
   }
 
   return {
@@ -130,6 +153,7 @@ export const useRefuelStore = defineStore('refuelStore', () => {
     getVehicle,
     addVehicle,
     updateVehicle,
-    deleteVehicle
+    deleteVehicle,
+    getPeriods
   }
 })

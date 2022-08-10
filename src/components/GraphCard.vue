@@ -30,7 +30,7 @@
       <q-card-actions v-if="false">
         <div v-for="(period, i) in periods" :key="i" class="col text-center">
           <q-btn :ripple="false" dense flat no-caps class="space-station">{{
-            periods[i]
+            periods[i].name
           }}</q-btn>
           <q-separator vertical />
         </div>

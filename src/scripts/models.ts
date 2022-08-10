@@ -1,4 +1,6 @@
 export class GraphData {
+  id?: number
+  // cardId!: number
   title!: string
   value!: number
   unit!: string
@@ -42,16 +44,16 @@ export class OptionInDialog {
 }
 
 export class Period {
-  id!: number
+  id?: number
   name!: string
   periodInDays!: number
 }
 
 export class Settings {
-  id!: number
+  id?: number
   colorThemeId!: number
   distanceUnitId!: number
-  vehicleId!: number
+  vehicleId: number | null = null
   plateNumberInTitleActive!: boolean
   refuelFilterActive!: boolean
 }

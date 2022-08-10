@@ -56,7 +56,17 @@
           <q-btn round flat dense icon="bar_chart" class="col" :to="'/'" />
         </div>
         <div class="col">
-          <q-btn round flat dense icon="add" class="col" @click="add()" />
+          <q-btn
+            round
+            flat
+            dense
+            icon="add"
+            class="col"
+            @click="add()"
+            :disable="
+              !mainStore.selectedVehicleId && !routePath.includes('/vehicles')
+            "
+          />
         </div>
         <div class="col">
           <q-btn
@@ -109,11 +119,14 @@ const linkList = [
   }
 ]
 
-import { ref, computed, onUnmounted } from 'vue'
+import { ref, computed, onBeforeMount, onUnmounted } from 'vue'
 import { useRouter } from 'vue-router'
 import { emitter } from 'src/boot/mitt'
+import { useMainStore } from 'src/stores'
+import initSettings from 'src/scripts/initSettings'
 
 const router = useRouter()
+const mainStore = useMainStore()
 const routePath = computed(() => router.currentRoute.value.path)
 emitter.on('updateTitle', e => (title.value = e))
 
@@ -130,6 +143,10 @@ function add() {
   else if (routePath.value == '/vehicles') void router.push('/vehicles/add')
   else void router.push('/refuels/add')
 }
+
+onBeforeMount(() => {
+  initSettings()
+})
 
 onUnmounted(() => {
   emitter.off('updateTitle')
