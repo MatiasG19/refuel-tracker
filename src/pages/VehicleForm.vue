@@ -54,7 +54,7 @@ import CInput from 'src/components/inputs/CInput.vue'
 import CSelect from 'src/components/inputs/CSelect.vue'
 import { emitter } from 'src/boot/mitt'
 import { requiredFieldRule } from 'src/scripts/validationRules'
-import { FuelUnit, SelectOption, Vehicle } from 'src/scripts/models'
+import { SelectOption, Vehicle } from 'src/scripts/models'
 import { useMainStore, useRefuelStore } from 'src/stores'
 
 const router = useRouter()

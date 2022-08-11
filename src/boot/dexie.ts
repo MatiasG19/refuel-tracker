@@ -1,4 +1,4 @@
-import Dexie, { Table } from 'dexie'
+import { Dexie, Table } from 'dexie'
 import { Vehicle, Refuel, Period, Settings, FuelUnit } from '../scripts/models'
 
 export class RefuelTrackerDexie extends Dexie {
