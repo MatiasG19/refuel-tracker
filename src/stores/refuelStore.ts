@@ -118,23 +118,27 @@ export const useRefuelStore = defineStore('refuelStore', () => {
   }
 
   async function deleteVehicle(id: number) {
-    await db.transaction('rw', [db.vehicles, db.refuels], async () => {
-      const refuels = await db.refuels.where('vehicleId').equals(id).toArray()
-      refuels.forEach(r => {
-        ;(async () => {
-          await db.refuels.delete(r.id)
-        })()
-      })
-      await db.vehicles.delete(id)
+    await db.transaction(
+      'rw',
+      [db.vehicles, db.refuels, db.settings],
+      async () => {
+        const refuels = await db.refuels.where('vehicleId').equals(id).toArray()
+        refuels.forEach(r => {
+          ;(async () => {
+            await db.refuels.delete(r.id)
+          })()
+        })
+        await db.vehicles.delete(id)
 
-      // Update settings
-      if ((await db.vehicles.count()) > 0) {
-        const vehicles = await db.vehicles.toArray()
-        mainStore.changeSelectedVehicle(vehicles[0])
-        return
+        // Update settings
+        if ((await db.vehicles.count()) > 0) {
+          const vehicles = await db.vehicles.toArray()
+          mainStore.changeSelectedVehicle(vehicles[0])
+          return
+        }
+        mainStore.changeSelectedVehicle(null)
       }
-      mainStore.changeSelectedVehicle(null)
-    })
+    )
   }
 
   async function getPeriods() {
