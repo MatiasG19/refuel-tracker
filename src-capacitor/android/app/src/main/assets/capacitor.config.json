@@ -1,0 +1,10 @@
+{
+  "appId": "capacitor.quasar.refueltracker",
+  "appName": "Refuel Tracker",
+  "bundledWebRuntime": false,
+  "npmClient": "yarn",
+  "webDir": "www",
+  "server": {
+    "url": "http://192.168.2.103:8080"
+  }
+}
