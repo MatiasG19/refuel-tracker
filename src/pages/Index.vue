@@ -55,7 +55,7 @@ onMounted(async () => {
   emitter.emit(
     'updateTitle',
     (() => {
-      if (mainStore.selectedVehicleId === null) return productName
+      if (!mainStore.selectedVehicleId) return productName
       else if (mainStore.plateNumberInTitleActive)
         return mainStore.selectedVehiclePlateNumber
       return mainStore.selectedVehicleName
