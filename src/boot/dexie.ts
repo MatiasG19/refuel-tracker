@@ -1,7 +1,15 @@
 import { Dexie, Table } from 'dexie'
-import { Vehicle, Refuel, Period, Settings, FuelUnit } from '../scripts/models'
+import {
+  Vehicle,
+  Refuel,
+  Period,
+  Settings,
+  FuelUnit,
+  GraphSettings
+} from '../scripts/models'
 
 export class RefuelTrackerDexie extends Dexie {
+  graphSettings!: Table<GraphSettings>
   vehicles!: Table<Vehicle>
   refuels!: Table<Refuel>
   periods!: Table<Period>
@@ -11,6 +19,7 @@ export class RefuelTrackerDexie extends Dexie {
   constructor() {
     super('RefuelTrackerDb')
     this.version(1).stores({
+      graphSettings: '++id, uid, sequence, periodId, visible',
       vehicles: '++id, name, plateNumber, fuelUnitId',
       refuels:
         '++id, date, refuelAmount, payedAmount, distanceDriven, vehicleId',

@@ -2,6 +2,7 @@ import { GraphData, Vehicle } from 'src/scripts/models'
 
 export function MoneySpent(vehicle: Vehicle, graphCard: GraphData): GraphData {
   return {
+    uid: '0',
     title: graphCard.title,
     value:
       vehicle.refuels
@@ -19,6 +20,7 @@ export function DistanceDriven(
   graphCard: GraphData
 ): GraphData {
   return {
+    uid: '0',
     title: graphCard.title,
     value:
       vehicle.refuels
@@ -33,6 +35,7 @@ export function DistanceDriven(
 
 export function FuelBurnt(vehicle: Vehicle, graphCard: GraphData): GraphData {
   return {
+    uid: '0',
     title: graphCard.title,
     value:
       vehicle.refuels
@@ -47,6 +50,7 @@ export function FuelBurnt(vehicle: Vehicle, graphCard: GraphData): GraphData {
 
 export function RefuelsMade(vehicle: Vehicle, graphCard: GraphData): GraphData {
   return {
+    uid: '0',
     title: graphCard.title,
     value: vehicle.refuels?.length ?? -1,
     unit: 'Refuels',

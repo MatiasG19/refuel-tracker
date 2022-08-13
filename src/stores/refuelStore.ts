@@ -11,9 +11,10 @@ export const useRefuelStore = defineStore('refuelStore', () => {
   const refuels = ref<Refuel[]>([])
   const vehicles = ref<Vehicle[]>([])
 
-  function readGraphData() {
+  function readGraphSettings() {
     graphData.value = [
       {
+        uid: '1',
         title: 'Fuel consumption',
         value: 5.1,
         unit: 'L/100km',
@@ -22,6 +23,7 @@ export const useRefuelStore = defineStore('refuelStore', () => {
         visible: true
       },
       {
+        uid: '2',
         title: 'Dinstance driven',
         value: 1900,
         unit: 'km',
@@ -30,6 +32,7 @@ export const useRefuelStore = defineStore('refuelStore', () => {
         visible: true
       },
       {
+        uid: '3',
         title: 'Money spent',
         value: 450,
         unit: '€',
@@ -38,6 +41,7 @@ export const useRefuelStore = defineStore('refuelStore', () => {
         visible: true
       },
       {
+        uid: '4',
         title: 'Fuel pricing',
         value: 7,
         unit: '€/100km',
@@ -46,6 +50,7 @@ export const useRefuelStore = defineStore('refuelStore', () => {
         visible: true
       },
       {
+        uid: '5',
         title: 'Fuel burnt',
         value: 350,
         unit: 'Litre',
@@ -54,6 +59,7 @@ export const useRefuelStore = defineStore('refuelStore', () => {
         visible: true
       },
       {
+        uid: '6',
         title: 'Refuels made',
         value: 20,
         unit: 'Refuels',
@@ -63,6 +69,16 @@ export const useRefuelStore = defineStore('refuelStore', () => {
       }
     ]
   }
+
+  async function moveGraphTop() {}
+
+  async function moveGraphUp() {}
+
+  async function moveGraphDown() {}
+
+  async function moveGraphBottom() {}
+
+  async function changeGraphVisibility(state: boolean) {}
 
   async function readRefuels(vehicleId: number) {
     await db.refuels
@@ -103,6 +119,15 @@ export const useRefuelStore = defineStore('refuelStore', () => {
   async function getVehicle(id: number): Promise<Vehicle | null> {
     await readVehicles()
     return vehicles.value.find(v => v.id == id) ?? null
+  }
+
+  async function getAllVehicleData(id: number): Promise<Vehicle | null> {
+    const v = await getVehicle(id)
+    if (!v) return null
+    await readRefuels(v.id)
+    v.refuels = []
+    refuels.value.forEach(r => v.refuels?.push(r))
+    return v
   }
 
   async function addVehicle(vehicle: Vehicle) {
@@ -153,7 +178,12 @@ export const useRefuelStore = defineStore('refuelStore', () => {
     graphData,
     refuels,
     vehicles,
-    readGraphData,
+    readGraphSettings,
+    moveGraphTop,
+    moveGraphUp,
+    moveGraphDown,
+    moveGraphBottom,
+    changeGraphVisibility,
     readRefuels,
     getRefuel,
     addRefuel,
@@ -161,6 +191,7 @@ export const useRefuelStore = defineStore('refuelStore', () => {
     deleteRefuel,
     readVehicles,
     getVehicle,
+    getAllVehicleData,
     addVehicle,
     updateVehicle,
     deleteVehicle,
