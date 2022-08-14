@@ -43,7 +43,8 @@ export class RefuelTrackerDexie extends Dexie {
       { uid: '2', sequence: 2, visible: true },
       { uid: '3', sequence: 3, visible: true },
       { uid: '4', sequence: 4, visible: true },
-      { uid: '5', sequence: 5, visible: true }
+      { uid: '5', sequence: 5, visible: true },
+      { uid: '6', sequence: 6, visible: true }
     ]
 
     settings.forEach(s => {

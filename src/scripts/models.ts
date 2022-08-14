@@ -1,7 +1,7 @@
 export class GraphData {
   uid!: string
   title!: string
-  value!: number
+  value!: string
   unit!: string
   sequence!: number
   periodId!: number

@@ -11,11 +11,12 @@ export class DistanceDriven extends GraphData implements IGraphData {
     this.unit = this.getUnit(this.vehicle)
   }
 
-  calculateValue(vehicle: Vehicle): number {
+  calculateValue(vehicle: Vehicle): string {
     return (
       vehicle.refuels
         ?.map(re => re.distanceDriven)
-        .reduce((total, current) => +total + +current) ?? -1
+        .reduce((total, current) => +total + +current)
+        .toString() ?? ''
     )
   }
 
