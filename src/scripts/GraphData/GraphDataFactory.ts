@@ -1,9 +1,11 @@
 import * as GraphDataClasses from '.'
-import { GraphData, GraphSettings } from '../models'
+import { GraphData, GraphSettings, Vehicle } from '../models'
 import { GraphDataDecorator } from './Decorators'
 
 export class GraphDataFactory {
   private graphData: GraphData[] = []
+
+  constructor(private vehicle: Vehicle) {}
 
   public getGraphData(graphSettings: GraphSettings[]): GraphData[] {
     this.getClasses(graphSettings)
@@ -23,15 +25,10 @@ export class GraphDataFactory {
   }
 
   private createGraphData(class_: keyof GraphData, settings: GraphSettings) {
-    const graphData = new class_()
+    const graphData = new class_(this.vehicle)
     graphData.uid = settings.uid
     graphData.sequence = settings.sequence
     graphData.visible = settings.visible
-
-    // TODO calculate graph data value and get units
-    graphData.title = 'Title'
-    graphData.value = settings.uid
-    graphData.unit = 'unit'
 
     this.graphData.push(graphData)
   }

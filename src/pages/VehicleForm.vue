@@ -4,7 +4,7 @@
       <c-input
         v-model="vehicle.name"
         label="Vehicle name"
-        :rules="[requiredFieldRule]"
+        :rules="[requiredFieldRule, max50Characters]"
         autofocus
       />
       <c-input
@@ -53,7 +53,7 @@ import { useRouter } from 'vue-router'
 import CInput from 'src/components/inputs/CInput.vue'
 import CSelect from 'src/components/inputs/CSelect.vue'
 import { emitter } from 'src/boot/mitt'
-import { requiredFieldRule } from 'src/scripts/validationRules'
+import { requiredFieldRule, max50Characters } from 'src/scripts/validationRules'
 import { SelectOption, Vehicle } from 'src/scripts/models'
 import { useMainStore, useRefuelStore } from 'src/stores'
 

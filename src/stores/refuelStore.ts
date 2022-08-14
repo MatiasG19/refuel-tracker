@@ -130,6 +130,7 @@ export const useRefuelStore = defineStore('refuelStore', () => {
     await readRefuels(v.id)
     v.refuels = []
     refuels.value.forEach(r => v.refuels?.push(r))
+    v.fuelUnit = await getFuelUnit(v.fuelUnitId)
     return v
   }
 
@@ -177,6 +178,10 @@ export const useRefuelStore = defineStore('refuelStore', () => {
     return await db.fuelUnits.toArray()
   }
 
+  async function getFuelUnit(id: number) {
+    return (await db.fuelUnits.where('id').equals(id).toArray())[0]
+  }
+
   return {
     graphData,
     refuels,
@@ -200,6 +205,7 @@ export const useRefuelStore = defineStore('refuelStore', () => {
     updateVehicle,
     deleteVehicle,
     getPeriods,
-    getFuelUnits
+    getFuelUnits,
+    getFuelUnit
   }
 })

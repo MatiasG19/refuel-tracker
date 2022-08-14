@@ -4,25 +4,39 @@
       <c-input
         v-model="refuel.payedAmount"
         label="Payed amount"
-        :rules="[requiredFieldRule, numbersOnlyRule]"
+        :rules="[
+          requiredFieldRule,
+          numbersOnlyRule,
+          positiveNumbersRule,
+          max50Characters
+        ]"
         autofocus
       />
       <c-input
         v-model="refuel.distanceDriven"
         label="Distance driven"
-        :rules="[requiredFieldRule, numbersOnlyRule]"
+        :rules="[
+          requiredFieldRule,
+          numbersOnlyRule,
+          positiveNumbersRule,
+          max50Characters
+        ]"
       />
       <c-input
         v-model="refuel.refueledAmount"
         label="Refuled amount"
-        :rules="[requiredFieldRule, numbersOnlyRule]"
+        :rules="[
+          requiredFieldRule,
+          numbersOnlyRule,
+          positiveNumbersRule,
+          max50Characters
+        ]"
       />
 
       <c-input
         :value="refuelDate"
         label="Refuel date"
         :rules="[requiredFieldRule]"
-        mask="date"
       >
         <q-popup-proxy transition-show="scale" transition-hide="scale">
           <q-date
@@ -79,7 +93,12 @@ import { date as QuasarDate } from 'quasar'
 import { useRouter } from 'vue-router'
 import CInput from 'src/components/inputs/CInput.vue'
 import { emitter } from 'src/boot/mitt'
-import { requiredFieldRule, numbersOnlyRule } from 'src/scripts/validationRules'
+import {
+  requiredFieldRule,
+  numbersOnlyRule,
+  positiveNumbersRule,
+  max50Characters
+} from 'src/scripts/validationRules'
 import { useMainStore, useRefuelStore } from 'src/stores'
 import { Refuel } from 'src/scripts/models'
 
@@ -135,7 +154,7 @@ onMounted(async () => {
   else if (routePath.includes('/edit'))
     emitter.emit('updateTitle', 'Edit refuel')
 
-  refuel.value.vehicleId = mainStore.selectedVehicleId
+  refuel.value.vehicleId = mainStore.selectedVehicleId ?? 0
   if (props.id) {
     const refuelToEdit = await refuelStore.getRefuel(props.id)
     if (refuelToEdit) {

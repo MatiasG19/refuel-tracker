@@ -12,7 +12,7 @@
 
 <script setup lang="ts">
 import GraphCard from 'src/components/GraphCard.vue'
-import { GraphData, OptionInDialog, Period } from 'src/scripts/models'
+import { GraphData, OptionInDialog, Period, Vehicle } from 'src/scripts/models'
 import { ref, onMounted, onUnmounted } from 'vue'
 import { emitter } from 'src/boot/mitt'
 import { productName } from '../../package.json'
@@ -64,8 +64,13 @@ onMounted(async () => {
   refuelStore.readGraphSettings()
   periods.value = await refuelStore.getPeriods()
 
-  const factory = new GraphDataFactory()
-  graphData.value = factory.getGraphData(await refuelStore.getGraphSettings())
+  if (mainStore.selectedVehicleId) {
+    const vehicle = await refuelStore.getAllVehicleData(
+      mainStore.selectedVehicleId
+    )
+    const factory = new GraphDataFactory(vehicle as Vehicle)
+    graphData.value = factory.getGraphData(await refuelStore.getGraphSettings())
+  }
 })
 
 onUnmounted(() => {

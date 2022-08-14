@@ -1,24 +1,25 @@
 import { GraphData, Vehicle } from '../models'
 import { GraphDataDecorator } from './Decorators'
+import { IGraphData } from './IGraphData'
 
 @GraphDataDecorator('2')
-export class DistanceDriven extends GraphData {
-  constructor() {
+export class DistanceDriven extends GraphData implements IGraphData {
+  constructor(private vehicle: Vehicle) {
     super()
+    this.title = 'Distance driven'
+    this.value = this.calculateValue(this.vehicle)
+    this.unit = this.getUnit(this.vehicle)
   }
 
-  private calculateValue(vehicle: Vehicle, graphCard: GraphData): GraphData {
-    return {
-      uid: '0',
-      title: graphCard.title,
-      value:
-        vehicle.refuels
-          ?.map(re => re.distanceDriven)
-          .reduce((total, current) => total + current) ?? -1,
-      unit: vehicle.fuelUnit?.distanceUnit ?? 'Unit not set!',
-      sequence: graphCard.sequence,
-      periodId: graphCard.periodId,
-      visible: graphCard.visible
-    }
+  calculateValue(vehicle: Vehicle): number {
+    return (
+      vehicle.refuels
+        ?.map(re => re.distanceDriven)
+        .reduce((total, current) => +total + +current) ?? -1
+    )
+  }
+
+  getUnit(vehicle: Vehicle): string {
+    return vehicle.fuelUnit?.distanceUnit ?? ''
   }
 }
