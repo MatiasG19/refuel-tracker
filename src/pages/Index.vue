@@ -13,12 +13,13 @@
 <script setup lang="ts">
 import GraphCard from 'src/components/GraphCard.vue'
 import { GraphData, OptionInDialog, Period, Vehicle } from 'src/scripts/models'
-import { ref, onMounted, onUnmounted } from 'vue'
+import { ref, watchEffect, onMounted, onUnmounted } from 'vue'
 import { emitter } from 'src/boot/mitt'
 import { productName } from '../../package.json'
 import { optionsDialog } from 'src/scripts/dialogs'
 import { useMainStore, useRefuelStore } from 'src/stores'
 import { GraphDataFactory } from 'src/scripts/GraphData/GraphDataFactory'
+import { initSettings } from 'src/scripts/initSettings'
 
 const mainStore = useMainStore()
 const refuelStore = useRefuelStore()
@@ -51,26 +52,35 @@ const optionsInDialog: OptionInDialog[] = [
 
 emitter.on('showGraphOptionsDialog', () => optionsDialog(optionsInDialog))
 
+watchEffect(() => {
+  ;(async () => {
+    // Load graph data
+    if (mainStore.selectedVehicleId) {
+      const vehicle = await refuelStore.getAllVehicleData(
+        mainStore.selectedVehicleId
+      )
+      const factory = new GraphDataFactory(vehicle as Vehicle)
+      graphData.value = factory.getGraphData(
+        await refuelStore.getGraphSettings()
+      )
+
+      // Emit title
+      emitter.emit(
+        'updateTitle',
+        (() => {
+          if (!mainStore.selectedVehicleId) return productName
+          else if (mainStore.plateNumberInTitleActive)
+            return mainStore.selectedVehiclePlateNumber
+          return mainStore.selectedVehicleName
+        })()
+      )
+    }
+  })()
+})
+
 onMounted(async () => {
-  emitter.emit(
-    'updateTitle',
-    (() => {
-      if (!mainStore.selectedVehicleId) return productName
-      else if (mainStore.plateNumberInTitleActive)
-        return mainStore.selectedVehiclePlateNumber
-      return mainStore.selectedVehicleName
-    })()
-  )
-
+  initSettings()
   periods.value = await refuelStore.getPeriods()
-
-  if (mainStore.selectedVehicleId) {
-    const vehicle = await refuelStore.getAllVehicleData(
-      mainStore.selectedVehicleId
-    )
-    const factory = new GraphDataFactory(vehicle as Vehicle)
-    graphData.value = factory.getGraphData(await refuelStore.getGraphSettings())
-  }
 })
 
 onUnmounted(() => {

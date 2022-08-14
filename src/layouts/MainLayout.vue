@@ -119,11 +119,10 @@ const linkList = [
   }
 ]
 
-import { ref, computed, onBeforeMount, onUnmounted } from 'vue'
+import { ref, computed, onBeforeMount, onMounted, onUnmounted } from 'vue'
 import { useRouter } from 'vue-router'
 import { emitter } from 'src/boot/mitt'
 import { useMainStore } from 'src/stores'
-import initSettings from 'src/scripts/initSettings'
 
 const router = useRouter()
 const mainStore = useMainStore()
@@ -143,10 +142,6 @@ function add() {
   else if (routePath.value == '/vehicles') void router.push('/vehicles/add')
   else void router.push('/refuels/add')
 }
-
-onBeforeMount(() => {
-  initSettings()
-})
 
 onUnmounted(() => {
   emitter.off('updateTitle')

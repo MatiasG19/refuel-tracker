@@ -38,7 +38,7 @@ export const useMainStore = defineStore('mainStore', () => {
       selectedVehicleId.value = vehicle.id
       selectedVehicleName.value = vehicle.name
       selectedVehiclePlateNumber.value = vehicle.plateNumber
-      return
+      return Promise.resolve()
     }
     settings[0].vehicleId = null
     db.settings.put(settings[0])

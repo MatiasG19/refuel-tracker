@@ -1,11 +1,10 @@
 import { useMainStore } from 'src/stores'
 import { db } from '../boot/dexie'
 
-export default function initSettings() {
+export function initSettings() {
   const mainStore = useMainStore()
   ;(async () => {
     const settings = await db.settings.toArray()
-
     mainStore.changeColorTheme(settings[0].colorThemeId)
     mainStore.changeDistanceUnit(settings[0].distanceUnitId)
     if (settings[0].vehicleId) {
