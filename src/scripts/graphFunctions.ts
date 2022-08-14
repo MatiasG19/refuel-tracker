@@ -15,24 +15,6 @@ export function MoneySpent(vehicle: Vehicle, graphCard: GraphData): GraphData {
   }
 }
 
-export function DistanceDriven(
-  vehicle: Vehicle,
-  graphCard: GraphData
-): GraphData {
-  return {
-    uid: '0',
-    title: graphCard.title,
-    value:
-      vehicle.refuels
-        ?.map(re => re.distanceDriven)
-        .reduce((total, current) => total + current) ?? -1,
-    unit: vehicle.fuelUnit?.distanceUnit ?? 'Unit not set!',
-    sequence: graphCard.sequence,
-    periodId: graphCard.periodId,
-    visible: graphCard.visible
-  }
-}
-
 export function FuelBurnt(vehicle: Vehicle, graphCard: GraphData): GraphData {
   return {
     uid: '0',
@@ -61,4 +43,3 @@ export function RefuelsMade(vehicle: Vehicle, graphCard: GraphData): GraphData {
 }
 
 // TODO function fuelPricing()
-// TODO Fuel function fuelConsumption()

@@ -1,4 +1,5 @@
 import { Dexie, Table } from 'dexie'
+
 import {
   Vehicle,
   Refuel,
@@ -30,9 +31,30 @@ export class RefuelTrackerDexie extends Dexie {
     })
 
     // Insert static data
+    this.insertGraphSettings()
     this.insertPeriods()
     this.insertFuelUnits()
     this.insertSettings()
+  }
+
+  insertGraphSettings() {
+    const settings: GraphSettings[] = [
+      { uid: '1', sequence: 1, visible: true },
+      { uid: '2', sequence: 2, visible: true },
+      { uid: '3', sequence: 3, visible: true },
+      { uid: '4', sequence: 4, visible: true },
+      { uid: '5', sequence: 5, visible: true }
+    ]
+
+    settings.forEach(s => {
+      ;(async () => {
+        const settings = await this.graphSettings
+          .where('uid')
+          .equals(s.uid)
+          .toArray()
+        if (settings.length === 0) await this.graphSettings.put(s)
+      })()
+    })
   }
 
   insertPeriods() {

@@ -13,7 +13,6 @@
     "mode": "quasar mode add capacitor",
     "appdev": "quasar dev -m capacitor -T android",
     "appbuild": "quasar build -m capacitor -T android"
-    
   },
   "dependencies": {
     "@quasar/extras": "^1.0.0",
@@ -22,6 +21,7 @@
     "mitt": "^3.0.0",
     "pinia": "^2.0.11",
     "quasar": "^2.4.10",
+    "reflect-metadata": "^0.1.13",
     "vue-i18n": "^9.0.0"
   },
   "devDependencies": {

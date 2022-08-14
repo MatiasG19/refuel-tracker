@@ -1,5 +1,4 @@
 export class GraphData {
-  id?: number
   uid!: string
   title!: string
   value!: number
@@ -11,10 +10,10 @@ export class GraphData {
 }
 
 export class GraphSettings {
-  id!: number
+  id?: number
   uid!: string
   sequence!: number
-  periodId!: number
+  periodId?: number
   perdiod?: Period
   visible!: boolean
 }

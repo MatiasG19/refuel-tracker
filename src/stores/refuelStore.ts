@@ -69,16 +69,19 @@ export const useRefuelStore = defineStore('refuelStore', () => {
       }
     ]
   }
+  async function getGraphSettings() {
+    return await db.graphSettings.toArray()
+  }
 
-  async function moveGraphTop() {}
+  // async function moveGraphTop() {}
 
-  async function moveGraphUp() {}
+  // async function moveGraphUp() {}
 
-  async function moveGraphDown() {}
+  // async function moveGraphDown() {}
 
-  async function moveGraphBottom() {}
+  // async function moveGraphBottom() {}
 
-  async function changeGraphVisibility(state: boolean) {}
+  // async function changeGraphVisibility(state: boolean) {}
 
   async function readRefuels(vehicleId: number) {
     await db.refuels
@@ -179,11 +182,12 @@ export const useRefuelStore = defineStore('refuelStore', () => {
     refuels,
     vehicles,
     readGraphSettings,
-    moveGraphTop,
-    moveGraphUp,
-    moveGraphDown,
-    moveGraphBottom,
-    changeGraphVisibility,
+    getGraphSettings,
+    // moveGraphTop,
+    // moveGraphUp,
+    // moveGraphDown,
+    // moveGraphBottom,
+    // changeGraphVisibility,
     readRefuels,
     getRefuel,
     addRefuel,
