@@ -7,68 +7,9 @@ import { useMainStore } from 'src/stores'
 const mainStore = useMainStore()
 
 export const useRefuelStore = defineStore('refuelStore', () => {
-  const graphData = ref<GraphData[]>([])
   const refuels = ref<Refuel[]>([])
   const vehicles = ref<Vehicle[]>([])
 
-  function readGraphSettings() {
-    graphData.value = [
-      {
-        uid: '1',
-        title: 'Fuel consumption',
-        value: 5.1,
-        unit: 'L/100km',
-        sequence: 1,
-        periodId: 0,
-        visible: true
-      },
-      {
-        uid: '2',
-        title: 'Dinstance driven',
-        value: 1900,
-        unit: 'km',
-        sequence: 2,
-        periodId: 0,
-        visible: true
-      },
-      {
-        uid: '3',
-        title: 'Money spent',
-        value: 450,
-        unit: '€',
-        sequence: 3,
-        periodId: 0,
-        visible: true
-      },
-      {
-        uid: '4',
-        title: 'Fuel pricing',
-        value: 7,
-        unit: '€/100km',
-        sequence: 4,
-        periodId: 0,
-        visible: true
-      },
-      {
-        uid: '5',
-        title: 'Fuel burnt',
-        value: 350,
-        unit: 'Litre',
-        sequence: 5,
-        periodId: 0,
-        visible: true
-      },
-      {
-        uid: '6',
-        title: 'Refuels made',
-        value: 20,
-        unit: 'Refuels',
-        sequence: 6,
-        periodId: 0,
-        visible: true
-      }
-    ]
-  }
   async function getGraphSettings() {
     return await db.graphSettings.toArray()
   }
@@ -183,10 +124,8 @@ export const useRefuelStore = defineStore('refuelStore', () => {
   }
 
   return {
-    graphData,
     refuels,
     vehicles,
-    readGraphSettings,
     getGraphSettings,
     // moveGraphTop,
     // moveGraphUp,
