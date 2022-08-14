@@ -62,7 +62,6 @@ onMounted(async () => {
     })()
   )
 
-  refuelStore.readGraphSettings()
   periods.value = await refuelStore.getPeriods()
 
   if (mainStore.selectedVehicleId) {
