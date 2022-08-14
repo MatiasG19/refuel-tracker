@@ -24,7 +24,7 @@ export class GraphDataFactory {
     }
   }
 
-  private createGraphData(class_: keyof GraphData, settings: GraphSettings) {
+  private createGraphData(class_: any, settings: GraphSettings) {
     const graphData = new class_(this.vehicle)
     graphData.uid = settings.uid
     graphData.sequence = settings.sequence
