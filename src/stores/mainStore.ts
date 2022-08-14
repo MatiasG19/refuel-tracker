@@ -30,23 +30,21 @@ export const useMainStore = defineStore('mainStore', () => {
     })()
   }
 
-  function changeSelectedVehicle(vehicle: Vehicle | null) {
-    ;(async () => {
-      const settings = await db.settings.toArray()
-      if (vehicle) {
-        settings[0].vehicleId = vehicle.id
-        await db.settings.put(settings[0])
-        selectedVehicleId.value = vehicle.id
-        selectedVehicleName.value = vehicle.name
-        selectedVehiclePlateNumber.value = vehicle.plateNumber
-        return
-      }
-      settings[0].vehicleId = null
-      db.settings.put(settings[0])
-      selectedVehicleId.value = null
-      selectedVehicleName.value = 'My Car'
-      selectedVehiclePlateNumber.value = ''
-    })()
+  async function changeSelectedVehicle(vehicle: Vehicle | null) {
+    const settings = await db.settings.toArray()
+    if (vehicle) {
+      settings[0].vehicleId = vehicle.id
+      await db.settings.put(settings[0])
+      selectedVehicleId.value = vehicle.id
+      selectedVehicleName.value = vehicle.name
+      selectedVehiclePlateNumber.value = vehicle.plateNumber
+      return
+    }
+    settings[0].vehicleId = null
+    db.settings.put(settings[0])
+    selectedVehicleId.value = null
+    selectedVehicleName.value = 'My Car'
+    selectedVehiclePlateNumber.value = ''
   }
 
   function togglePlateNumberInTitle(state: boolean) {

@@ -51,7 +51,7 @@ emitter.on('showVehicleOptionsDialog', id =>
 
 async function selectVehicle(vehicle: Vehicle) {
   emitter.emit('updateTitle', vehicle.name)
-  mainStore.changeSelectedVehicle({ ...vehicle })
+  await mainStore.changeSelectedVehicle({ ...vehicle })
   await router.push('/')
 }
 
