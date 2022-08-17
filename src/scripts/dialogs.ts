@@ -18,11 +18,12 @@ export function confirmDialog(
   })
 }
 
-export function optionsDialog(options: OptionInDialog[]) {
+export function optionsDialog(options: OptionInDialog[], data?: unknown) {
   Dialog.create({
     component: OptionsDialog,
     componentProps: {
-      options
+      options,
+      data
     }
   })
 }

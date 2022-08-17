@@ -13,7 +13,7 @@
               round
               flat
               icon="more_vert"
-              @click="emitter.emit('showGraphOptionsDialog', true)"
+              @click="emitter.emit('showGraphOptionsDialog', graphData)"
             />
           </div>
         </div>

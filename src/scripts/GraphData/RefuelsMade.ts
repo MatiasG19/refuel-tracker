@@ -8,13 +8,14 @@ export class RefuelsMade extends GraphData implements IGraphData {
     super()
     this.title = 'Refuels made'
     this.value = this.calculateValue(this.vehicle)
-    this.unit = this.getUnit(this.vehicle)
+    this.unit = this.getUnit()
   }
 
   calculateValue(vehicle: Vehicle): string {
     return vehicle.refuels?.length.toString() ?? ''
   }
-  getUnit(vehicle: Vehicle): string {
+
+  getUnit(): string {
     return ''
   }
 }

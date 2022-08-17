@@ -2,7 +2,7 @@ import mitt from 'mitt'
 
 type Events = {
   updateTitle: string
-  showGraphOptionsDialog: boolean
+  showGraphOptionsDialog: unknown
   showVehicleOptionsDialog: number
   showRefuelOptionsDialog: number
 }

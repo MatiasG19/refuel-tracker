@@ -31,7 +31,7 @@ const optionsInDialog: OptionInDialog[] = [
   {
     text: 'Move top',
     icon: 'keyboard_double_arrow_up',
-    action: () => console.log('move graph card')
+    action: (graphData: GraphData) => refuelStore.moveGraphTop(graphData.uid)
   },
   {
     text: 'Move up',
@@ -50,7 +50,9 @@ const optionsInDialog: OptionInDialog[] = [
   }
 ]
 
-emitter.on('showGraphOptionsDialog', () => optionsDialog(optionsInDialog))
+emitter.on('showGraphOptionsDialog', payload =>
+  optionsDialog(optionsInDialog, payload)
+)
 
 watchEffect(() => {
   ;(async () => {
@@ -60,9 +62,9 @@ watchEffect(() => {
         mainStore.selectedVehicleId
       )
       const factory = new GraphDataFactory(vehicle as Vehicle)
-      graphData.value = factory.getGraphData(
-        await refuelStore.getGraphSettings()
-      )
+      graphData.value = factory
+        .getGraphData(await refuelStore.getGraphSettings())
+        .sort((a, b) => a.sequence - b.sequence)
 
       // Emit title
       emitter.emit(

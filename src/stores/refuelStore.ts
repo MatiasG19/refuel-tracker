@@ -1,6 +1,6 @@
 import { defineStore } from 'pinia'
 import { ref } from 'vue'
-import { GraphData, Refuel, Vehicle } from 'src/scripts/models'
+import { Refuel, Vehicle } from 'src/scripts/models'
 import { db } from '../boot/dexie'
 import { useMainStore } from 'src/stores'
 
@@ -14,7 +14,30 @@ export const useRefuelStore = defineStore('refuelStore', () => {
     return await db.graphSettings.toArray()
   }
 
-  // async function moveGraphTop() {}
+  function moveGraphTop(uid: string) {
+    ;(async () => {
+      const currentTop = (
+        await db.graphSettings.orderBy('sequence').toArray()
+      )[0]
+
+      const topSequence = currentTop.sequence
+
+      const selected = (
+        await db.graphSettings.where('uid').equals(uid).toArray()
+      )[0]
+
+      currentTop.sequence = selected.sequence
+      selected.sequence = topSequence
+      await db.transaction('rw', [db.graphSettings], async () => {
+        await db.graphSettings.update(currentTop.id ? currentTop.id : 0, {
+          sequence: currentTop.sequence
+        })
+        await db.graphSettings.update(selected.id ? selected.id : 0, {
+          sequence: selected.sequence
+        })
+      })
+    })()
+  }
 
   // async function moveGraphUp() {}
 
@@ -127,7 +150,7 @@ export const useRefuelStore = defineStore('refuelStore', () => {
     refuels,
     vehicles,
     getGraphSettings,
-    // moveGraphTop,
+    moveGraphTop,
     // moveGraphUp,
     // moveGraphDown,
     // moveGraphBottom,

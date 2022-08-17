@@ -33,15 +33,18 @@ import { useDialogPluginComponent } from 'quasar'
 
 const { dialogRef, onDialogOK } = useDialogPluginComponent()
 
-defineProps({
+const props = defineProps({
   options: {
     type: Array,
     required: true
+  },
+  data: {
+    type: undefined
   }
 })
 
 function onOkClick(option: OptionInDialog) {
-  option.action()
+  option.action(props.data)
   onDialogOK()
 }
 </script>
