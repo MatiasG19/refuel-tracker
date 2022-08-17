@@ -13,8 +13,22 @@ export class FuelConsumption extends GraphData implements IGraphData {
 
   calculateValue(vehicle: Vehicle): string {
     // TODO Calculate fuel consumption
+    if (vehicle.fuelUnit?.uid === '1') {
+      let fuel = vehicle.refuels
+        ?.map(re => re.refueledAmount)
+        .reduce((total, current) => +total + +current)
+      fuel = fuel ? +fuel : 0
+
+      let distance = vehicle.refuels
+        ?.map(re => re.distanceDriven)
+        .reduce((total, current) => +total + +current)
+      distance = distance ? +distance : 0
+
+      return ((fuel * 100) / distance).toFixed(2).toString()
+    }
     return '0'
   }
+
   getUnit(vehicle: Vehicle): string {
     return vehicle.fuelUnit?.fuelConsumptionUnit ?? ''
   }

@@ -12,9 +12,21 @@ export class FuelPricing extends GraphData implements IGraphData {
   }
 
   calculateValue(vehicle: Vehicle): string {
-    // TODO Calculate fuel pricing
+    if (vehicle.fuelUnit?.uid === '1') {
+      let index = 1
+      let price = vehicle.refuels
+        ?.map(re => +re.payedAmount / +re.refueledAmount)
+        .reduce((total, current, i) => {
+          index += i
+          return +total + +current
+        })
+      price = price ? +price / index : 0
+
+      return price.toFixed(2).toString()
+    }
     return '0'
   }
+
   getUnit(vehicle: Vehicle): string {
     return vehicle.currencyUnit
   }
