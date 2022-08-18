@@ -24,27 +24,34 @@ export const useRefuelStore = defineStore('refuelStore', () => {
     ;(async () => {
       let data = await db.graphSettings.toArray()
       const selected = data.filter(s => s.uid === uid)[0]
+      const storeSelected = graphData.value.filter(d => d.uid === uid)[0]
+      storeSelected.sequence = 1
       selected.sequence = 1
       data = data
         .filter(s => s.uid !== uid)
         .sort((a, b) => a.sequence - b.sequence)
+      const storeData = graphData.value
+        .filter(d => d.uid !== uid)
+        .sort((a, b) => a.sequence - b.sequence)
 
       await db.transaction('rw', [db.graphSettings], async () => {
-        let i = selected.sequence
-        for (const d of data) {
-          i++
-          d.sequence = i
-          await db.graphSettings.update(d.id ? d.id : 0, {
-            sequence: d.sequence
-          })
-        }
+        const index = selected.sequence
+        const length = graphData.value.length
 
-        await db.graphSettings.update(selected.id ? selected.id : 0, {
+        await db.graphSettings.update(selected.id as number, {
           sequence: selected.sequence
         })
-      })
+        graphData.value.length = 0
+        graphData.value.push(storeSelected)
 
-      await getAllVehicleData(selectedVehicleId.value as number)
+        for (let i = 0; i < length - 1; i++) {
+          await db.graphSettings.update(data[i].id as number, {
+            sequence: i + index + 1
+          })
+          storeData[i].sequence = i + index + 1
+          graphData.value.push(storeData[i])
+        }
+      })
     })()
   }
 
