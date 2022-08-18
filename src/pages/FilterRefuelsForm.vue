@@ -43,11 +43,11 @@ import { ref, onMounted } from 'vue'
 import { date } from 'quasar'
 import { useRouter } from 'vue-router'
 import { emitter } from 'src/boot/mitt'
-import { useMainStore } from 'src/stores'
+import { useRefuelStore } from 'src/stores'
 import { requiredFieldRule } from 'src/scripts/validationRules'
 
 const router = useRouter()
-const mainStore = useMainStore()
+const refuelStore = useRefuelStore()
 
 const options = [
   {
@@ -80,7 +80,7 @@ const filterDate = ref<string>(date.formatDate(Date.now(), 'YYYY/MM/DD'))
 const timeInterval = ref<number>(2)
 
 function onSubmit() {
-  mainStore.toggleRefuelFilter(true)
+  refuelStore.toggleRefuelFilter(true)
   void router.push('/refuels')
 }
 

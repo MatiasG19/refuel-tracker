@@ -58,7 +58,6 @@ import { SelectOption, Vehicle } from 'src/scripts/models'
 import { useMainStore, useRefuelStore } from 'src/stores'
 
 const router = useRouter()
-const mainStore = useMainStore()
 const refuelStore = useRefuelStore()
 
 const vehicle = ref<Vehicle>(new Vehicle())
@@ -75,8 +74,8 @@ async function onSubmit() {
   if (routePath.includes('/add'))
     await refuelStore.addVehicle({ ...vehicle.value })
   else if (routePath.includes('/edit')) {
-    if (vehicle.value.id === mainStore.selectedVehicleId)
-      mainStore.changeSelectedVehicle({ ...vehicle.value })
+    if (vehicle.value.id === refuelStore.selectedVehicleId)
+      refuelStore.changeSelectedVehicle({ ...vehicle.value })
     await refuelStore.updateVehicle({ ...vehicle.value })
   }
   void router.push('/vehicles')

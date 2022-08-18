@@ -16,11 +16,10 @@ import { optionsDialog, confirmDialog } from 'src/scripts/dialogs'
 import { useRouter } from 'vue-router'
 import { computed, onMounted, onUnmounted } from 'vue'
 import { emitter } from 'src/boot/mitt'
-import { useMainStore, useRefuelStore } from 'src/stores'
+import { useRefuelStore } from 'src/stores'
 import { Vehicle } from 'src/scripts/models'
 
 const router = useRouter()
-const mainStore = useMainStore()
 const refuelStore = useRefuelStore()
 
 const vehicles = computed(() => refuelStore.vehicles)
@@ -51,7 +50,7 @@ emitter.on('showVehicleOptionsDialog', id =>
 
 async function selectVehicle(vehicle: Vehicle) {
   emitter.emit('updateTitle', vehicle.name)
-  await mainStore.changeSelectedVehicle({ ...vehicle })
+  await refuelStore.changeSelectedVehicle({ ...vehicle })
   await router.push('/')
 }
 

@@ -99,11 +99,10 @@ import {
   positiveNumbersRule,
   max50Characters
 } from 'src/scripts/validationRules'
-import { useMainStore, useRefuelStore } from 'src/stores'
+import { useRefuelStore } from 'src/stores'
 import { Refuel } from 'src/scripts/models'
 
 const router = useRouter()
-const mainStore = useMainStore()
 const refuelStore = useRefuelStore()
 
 const refuel = ref<Refuel>(new Refuel())
@@ -154,7 +153,7 @@ onMounted(async () => {
   else if (routePath.includes('/edit'))
     emitter.emit('updateTitle', 'Edit refuel')
 
-  refuel.value.vehicleId = mainStore.selectedVehicleId ?? 0
+  refuel.value.vehicleId = refuelStore.selectedVehicleId ?? 0
   if (props.id) {
     const refuelToEdit = await refuelStore.getRefuel(props.id)
     if (refuelToEdit) {

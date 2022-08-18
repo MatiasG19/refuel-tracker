@@ -1,14 +1,20 @@
 import { defineStore } from 'pinia'
 import { ref } from 'vue'
-import { Refuel, Vehicle } from 'src/scripts/models'
+import { GraphData, Refuel, Vehicle } from 'src/scripts/models'
 import { db } from '../boot/dexie'
-import { useMainStore } from 'src/stores'
-
-const mainStore = useMainStore()
+import { GraphDataFactory } from 'src/scripts/GraphData/GraphDataFactory'
 
 export const useRefuelStore = defineStore('refuelStore', () => {
+  const graphData = ref<GraphData[]>([])
   const refuels = ref<Refuel[]>([])
   const vehicles = ref<Vehicle[]>([])
+
+  const selectedDistanceUnitId = ref<number>(1)
+  const selectedVehicleId = ref<number | null>(null)
+  const selectedVehicleName = ref<string>('My car')
+  const selectedVehiclePlateNumber = ref<string>('')
+  const plateNumberInTitleActive = ref<boolean>(false)
+  const refuelFilterActive = ref<boolean>(false)
 
   async function getGraphSettings() {
     return await db.graphSettings.toArray()
@@ -16,26 +22,29 @@ export const useRefuelStore = defineStore('refuelStore', () => {
 
   function moveGraphTop(uid: string) {
     ;(async () => {
-      const currentTop = (
-        await db.graphSettings.orderBy('sequence').toArray()
-      )[0]
+      let data = await db.graphSettings.toArray()
+      const selected = data.filter(s => s.uid === uid)[0]
+      selected.sequence = 1
+      data = data
+        .filter(s => s.uid !== uid)
+        .sort((a, b) => a.sequence - b.sequence)
 
-      const topSequence = currentTop.sequence
-
-      const selected = (
-        await db.graphSettings.where('uid').equals(uid).toArray()
-      )[0]
-
-      currentTop.sequence = selected.sequence
-      selected.sequence = topSequence
       await db.transaction('rw', [db.graphSettings], async () => {
-        await db.graphSettings.update(currentTop.id ? currentTop.id : 0, {
-          sequence: currentTop.sequence
-        })
+        let i = selected.sequence
+        for (const d of data) {
+          i++
+          d.sequence = i
+          await db.graphSettings.update(d.id ? d.id : 0, {
+            sequence: d.sequence
+          })
+        }
+
         await db.graphSettings.update(selected.id ? selected.id : 0, {
           sequence: selected.sequence
         })
       })
+
+      await getAllVehicleData(selectedVehicleId.value as number)
     })()
   }
 
@@ -58,8 +67,8 @@ export const useRefuelStore = defineStore('refuelStore', () => {
   }
 
   async function getRefuel(id: number) {
-    if (!mainStore.selectedVehicleId) return
-    await readRefuels(mainStore.selectedVehicleId)
+    if (!selectedVehicleId.value) return
+    await readRefuels(selectedVehicleId.value)
     return refuels.value.find(v => v.id == id) ?? null
   }
 
@@ -91,10 +100,19 @@ export const useRefuelStore = defineStore('refuelStore', () => {
   async function getAllVehicleData(id: number): Promise<Vehicle | null> {
     const v = await getVehicle(id)
     if (!v) return null
+
     await readRefuels(v.id)
-    v.refuels = []
-    refuels.value.forEach(r => v.refuels?.push(r))
-    v.fuelUnit = await getFuelUnit(v.fuelUnitId)
+    if (refuels.value.length > 0) {
+      v.refuels = []
+      refuels.value.forEach(r => v.refuels?.push(r))
+      v.fuelUnit = await getFuelUnit(v.fuelUnitId)
+
+      // Create graph data
+      graphData.value = new GraphDataFactory(v)
+        .getGraphData(await getGraphSettings())
+        .sort((a, b) => a.sequence - b.sequence)
+    } else graphData.value.length = 0
+
     return v
   }
 
@@ -102,8 +120,7 @@ export const useRefuelStore = defineStore('refuelStore', () => {
     await db.vehicles.add(vehicle)
 
     // Update settings
-    if ((await db.vehicles.count()) === 1)
-      mainStore.changeSelectedVehicle(vehicle)
+    if ((await db.vehicles.count()) === 1) changeSelectedVehicle(vehicle)
   }
 
   async function updateVehicle(vehicle: Vehicle) {
@@ -126,10 +143,10 @@ export const useRefuelStore = defineStore('refuelStore', () => {
         // Update settings
         if ((await db.vehicles.count()) > 0) {
           const vehicles = await db.vehicles.toArray()
-          mainStore.changeSelectedVehicle(vehicles[0])
+          changeSelectedVehicle(vehicles[0])
           return
         }
-        mainStore.changeSelectedVehicle(null)
+        changeSelectedVehicle(null)
       }
     )
   }
@@ -146,9 +163,63 @@ export const useRefuelStore = defineStore('refuelStore', () => {
     return (await db.fuelUnits.where('id').equals(id).toArray())[0]
   }
 
+  function changeDistanceUnit(distanceUnitId: number) {
+    ;(async () => {
+      const settings = await db.settings.toArray()
+      settings[0].distanceUnitId = distanceUnitId
+      await db.settings.put(settings[0])
+      selectedDistanceUnitId.value = distanceUnitId
+    })()
+  }
+
+  async function changeSelectedVehicle(vehicle: Vehicle | null) {
+    const settings = await db.settings.toArray()
+    if (vehicle) {
+      settings[0].vehicleId = vehicle.id
+      await db.settings.put(settings[0])
+      selectedVehicleId.value = vehicle.id
+      selectedVehicleName.value = vehicle.name
+      selectedVehiclePlateNumber.value = vehicle.plateNumber
+      // Read graph data
+      await getAllVehicleData(vehicle.id)
+
+      return Promise.resolve()
+    }
+    settings[0].vehicleId = null
+    db.settings.put(settings[0])
+    selectedVehicleId.value = null
+    selectedVehicleName.value = 'My Car'
+    selectedVehiclePlateNumber.value = ''
+  }
+
+  function togglePlateNumberInTitle(state: boolean) {
+    ;(async () => {
+      const settings = await db.settings.toArray()
+      settings[0].plateNumberInTitleActive = state
+      await db.settings.put(settings[0])
+      plateNumberInTitleActive.value = state
+    })()
+  }
+
+  function toggleRefuelFilter(state: boolean) {
+    ;(async () => {
+      const settings = await db.settings.toArray()
+      settings[0].refuelFilterActive = state
+      await db.settings.put(settings[0])
+      refuelFilterActive.value = state
+    })()
+  }
+
   return {
+    graphData,
     refuels,
     vehicles,
+    selectedDistanceUnitId,
+    selectedVehicleId,
+    selectedVehicleName,
+    selectedVehiclePlateNumber,
+    plateNumberInTitleActive,
+    refuelFilterActive,
     getGraphSettings,
     moveGraphTop,
     // moveGraphUp,
@@ -168,6 +239,10 @@ export const useRefuelStore = defineStore('refuelStore', () => {
     deleteVehicle,
     getPeriods,
     getFuelUnits,
-    getFuelUnit
+    getFuelUnit,
+    changeDistanceUnit,
+    changeSelectedVehicle,
+    togglePlateNumberInTitle,
+    toggleRefuelFilter
   }
 })

@@ -1,8 +1,8 @@
 <template>
   <q-page class="items-center justify-evenly">
     <graph-card
-      v-for="(data, i) in graphData"
-      :key="i"
+      v-for="data in refuelStore.graphData"
+      :key="data.uid"
       :graphData="data"
       :periods="periods"
       class="q-pt-md q-pl-md q-pr-md"
@@ -12,19 +12,16 @@
 
 <script setup lang="ts">
 import GraphCard from 'src/components/GraphCard.vue'
-import { GraphData, OptionInDialog, Period, Vehicle } from 'src/scripts/models'
+import { GraphData, OptionInDialog, Period } from 'src/scripts/models'
 import { ref, watchEffect, onMounted, onUnmounted } from 'vue'
 import { emitter } from 'src/boot/mitt'
 import { productName } from '../../package.json'
 import { optionsDialog } from 'src/scripts/dialogs'
-import { useMainStore, useRefuelStore } from 'src/stores'
-import { GraphDataFactory } from 'src/scripts/GraphData/GraphDataFactory'
+import { useRefuelStore } from 'src/stores'
 import { initSettings } from 'src/scripts/initSettings'
 
-const mainStore = useMainStore()
 const refuelStore = useRefuelStore()
 
-let graphData = ref<GraphData[]>([])
 const periods = ref<Period[]>([])
 
 const optionsInDialog: OptionInDialog[] = [
@@ -55,29 +52,16 @@ emitter.on('showGraphOptionsDialog', payload =>
 )
 
 watchEffect(() => {
-  ;(async () => {
-    // Load graph data
-    if (mainStore.selectedVehicleId) {
-      const vehicle = await refuelStore.getAllVehicleData(
-        mainStore.selectedVehicleId
-      )
-      const factory = new GraphDataFactory(vehicle as Vehicle)
-      graphData.value = factory
-        .getGraphData(await refuelStore.getGraphSettings())
-        .sort((a, b) => a.sequence - b.sequence)
-
-      // Emit title
-      emitter.emit(
-        'updateTitle',
-        (() => {
-          if (!mainStore.selectedVehicleId) return productName
-          else if (mainStore.plateNumberInTitleActive)
-            return mainStore.selectedVehiclePlateNumber
-          return mainStore.selectedVehicleName
-        })()
-      )
-    }
-  })()
+  // Emit inside watchEffect to catch site reloads
+  emitter.emit(
+    'updateTitle',
+    (() => {
+      if (!refuelStore.selectedVehicleId) return productName
+      else if (refuelStore.plateNumberInTitleActive)
+        return refuelStore.selectedVehiclePlateNumber
+      return refuelStore.selectedVehicleName
+    })()
+  )
 })
 
 onMounted(async () => {

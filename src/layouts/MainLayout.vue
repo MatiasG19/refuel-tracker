@@ -119,7 +119,7 @@ const linkList = [
   }
 ]
 
-import { ref, computed, onBeforeMount, onMounted, onUnmounted } from 'vue'
+import { ref, computed, onUnmounted } from 'vue'
 import { useRouter } from 'vue-router'
 import { emitter } from 'src/boot/mitt'
 import { useMainStore } from 'src/stores'

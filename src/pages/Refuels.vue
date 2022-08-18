@@ -28,13 +28,12 @@ import { useRouter } from 'vue-router'
 import { emitter } from 'src/boot/mitt'
 import { optionsDialog, confirmDialog } from 'src/scripts/dialogs'
 import { Refuel } from 'src/scripts/models'
-import { useMainStore, useRefuelStore } from 'src/stores'
+import { useRefuelStore } from 'src/stores'
 
 const router = useRouter()
-const mainStore = useMainStore()
 const refuelStore = useRefuelStore()
 
-const filterActive = ref(mainStore.refuelFilterActive)
+const filterActive = ref(refuelStore.refuelFilterActive)
 const filterHint = 'Filter 1 Month from 2021.12.19'
 
 let refuels = computed(() => {
@@ -47,7 +46,7 @@ function orderByDateDesc(): Refuel[] {
 }
 
 function removeFilter() {
-  mainStore.toggleRefuelFilter(false)
+  refuelStore.toggleRefuelFilter(false)
   filterActive.value = false
 }
 
@@ -69,7 +68,9 @@ emitter.on('showRefuelOptionsDialog', id =>
               .deleteRefuel(id)
               .then(
                 async () =>
-                  await refuelStore.readRefuels(mainStore.selectedVehicleId)
+                  await refuelStore.readRefuels(
+                    refuelStore.selectedVehicleId ?? 0
+                  )
               ),
           id
         )
@@ -79,7 +80,7 @@ emitter.on('showRefuelOptionsDialog', id =>
 
 onMounted(async () => {
   emitter.emit('updateTitle', 'Refuels')
-  await refuelStore.readRefuels(mainStore.selectedVehicleId)
+  await refuelStore.readRefuels(refuelStore.selectedVehicleId ?? 0)
 })
 
 onUnmounted(() => {
