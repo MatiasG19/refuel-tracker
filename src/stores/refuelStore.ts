@@ -84,6 +84,20 @@ export const useRefuelStore = defineStore('refuelStore', () => {
 
         storeCurrentUp.sequence = currentUp.sequence
         storeSelected.sequence = upSequence
+
+        const length = graphData.value.length
+        const storeData = graphData.value.filter(
+          d => d.uid !== selected.uid && d.uid !== currentUp.uid
+        )
+        // Refill array for reactivity
+        graphData.value.length = 0
+        for (let i = 1; i <= length; i++) {
+          if (storeCurrentUp.sequence === i)
+            graphData.value.push(storeCurrentUp)
+          else if (storeSelected.sequence === i)
+            graphData.value.push(storeSelected)
+          else graphData.value.push(storeData.filter(d => d.sequence === i)[0])
+        }
       })
     })()
   }
@@ -117,6 +131,20 @@ export const useRefuelStore = defineStore('refuelStore', () => {
 
         storeCurrentDown.sequence = currentDown.sequence
         storeSelected.sequence = downSequence
+
+        const length = graphData.value.length
+        const storeData = graphData.value.filter(
+          d => d.uid !== selected.uid && d.uid !== currentDown.uid
+        )
+        // Refill array for reactivity
+        graphData.value.length = 0
+        for (let i = 1; i <= length; i++) {
+          if (storeCurrentDown.sequence === i)
+            graphData.value.push(storeCurrentDown)
+          else if (storeSelected.sequence === i)
+            graphData.value.push(storeSelected)
+          else graphData.value.push(storeData.filter(d => d.sequence === i)[0])
+        }
       })
     })()
   }
