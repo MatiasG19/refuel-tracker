@@ -157,7 +157,6 @@ onMounted(async () => {
   if (props.id) {
     const refuelToEdit = await refuelStore.getRefuel(props.id)
     if (refuelToEdit) {
-      console.log(refuelToEdit)
       refuel.value.id = refuelToEdit.id
       refuel.value.payedAmount = refuelToEdit.payedAmount
       refuel.value.refueledAmount = refuelToEdit.refueledAmount

@@ -33,12 +33,12 @@ const optionsInDialog: OptionInDialog[] = [
   {
     text: 'Move up',
     icon: 'keyboard_arrow_up',
-    action: () => console.log('move graph card')
+    action: (graphData: GraphData) => refuelStore.moveGraphUp(graphData.uid)
   },
   {
     text: 'Move down',
     icon: 'keyboard_arrow_down',
-    action: () => console.log('move graph card')
+    action: (graphData: GraphData) => refuelStore.moveGraphDown(graphData.uid)
   },
   {
     text: 'Move bottom',

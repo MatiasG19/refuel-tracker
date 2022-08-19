@@ -9,7 +9,7 @@ export const useRefuelStore = defineStore('refuelStore', () => {
   const refuels = ref<Refuel[]>([])
   const vehicles = ref<Vehicle[]>([])
 
-  const selectedDistanceUnitId = ref<number>(1)
+  const selectedDistanceUnitId = ref<number>(0)
   const selectedVehicleId = ref<number | null>(null)
   const selectedVehicleName = ref<string>('My car')
   const selectedVehiclePlateNumber = ref<string>('')
@@ -55,9 +55,71 @@ export const useRefuelStore = defineStore('refuelStore', () => {
     })()
   }
 
-  // function moveGraphUp() {}
+  function moveGraphUp(uid: string) {
+    ;(async () => {
+      const data = await db.graphSettings.orderBy('sequence').toArray()
+      const selected = data.filter(d => d.uid === uid)[0]
+      const currentUp = data.filter(
+        d => d.sequence === selected.sequence - 1
+      )[0]
 
-  // function moveGraphDown() {}
+      if (!currentUp) return Promise.resolve()
+
+      const storeSelected = graphData.value.filter(d => d.uid === uid)[0]
+      const storeCurrentUp = graphData.value.filter(
+        d => d.sequence === selected.sequence - 1
+      )[0]
+      const upSequence = currentUp.sequence
+
+      currentUp.sequence = selected.sequence
+      selected.sequence = upSequence
+
+      await db.transaction('rw', [db.graphSettings], async () => {
+        await db.graphSettings.update(selected.id as number, {
+          sequence: selected.sequence
+        })
+        await db.graphSettings.update(currentUp.id as number, {
+          sequence: currentUp.sequence
+        })
+
+        storeCurrentUp.sequence = currentUp.sequence
+        storeSelected.sequence = upSequence
+      })
+    })()
+  }
+
+  function moveGraphDown(uid: string) {
+    ;(async () => {
+      const data = await db.graphSettings.orderBy('sequence').toArray()
+      const selected = data.filter(d => d.uid === uid)[0]
+      const currentDown = data.filter(
+        d => d.sequence === selected.sequence + 1
+      )[0]
+
+      if (!currentDown) return Promise.resolve()
+
+      const storeSelected = graphData.value.filter(d => d.uid === uid)[0]
+      const storeCurrentDown = graphData.value.filter(
+        d => d.sequence === selected.sequence + 1
+      )[0]
+      const downSequence = currentDown.sequence
+
+      currentDown.sequence = selected.sequence
+      selected.sequence = downSequence
+
+      await db.transaction('rw', [db.graphSettings], async () => {
+        await db.graphSettings.update(selected.id as number, {
+          sequence: selected.sequence
+        })
+        await db.graphSettings.update(currentDown.id as number, {
+          sequence: currentDown.sequence
+        })
+
+        storeCurrentDown.sequence = currentDown.sequence
+        storeSelected.sequence = downSequence
+      })
+    })()
+  }
 
   function moveGraphBottom(uid: string) {
     ;(async () => {
@@ -261,8 +323,8 @@ export const useRefuelStore = defineStore('refuelStore', () => {
     refuelFilterActive,
     getGraphSettings,
     moveGraphTop,
-    // moveGraphUp,
-    // moveGraphDown,
+    moveGraphUp,
+    moveGraphDown,
     moveGraphBottom,
     // changeGraphVisibility,
     readRefuels,
