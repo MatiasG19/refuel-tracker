@@ -55,11 +55,43 @@ export const useRefuelStore = defineStore('refuelStore', () => {
     })()
   }
 
-  // async function moveGraphUp() {}
+  // function moveGraphUp() {}
 
-  // async function moveGraphDown() {}
+  // function moveGraphDown() {}
 
-  // async function moveGraphBottom() {}
+  function moveGraphBottom(uid: string) {
+    ;(async () => {
+      let data = await db.graphSettings.toArray()
+      const selected = data.filter(s => s.uid === uid)[0]
+      const storeSelected = graphData.value.filter(d => d.uid === uid)[0]
+      storeSelected.sequence = graphData.value.length
+      selected.sequence = storeSelected.sequence
+      data = data
+        .filter(s => s.uid !== uid)
+        .sort((a, b) => a.sequence - b.sequence)
+      const storeData = graphData.value
+        .filter(d => d.uid !== uid)
+        .sort((a, b) => a.sequence - b.sequence)
+
+      await db.transaction('rw', [db.graphSettings], async () => {
+        const length = selected.sequence
+
+        graphData.value.length = 0
+        for (let i = 0; i < length - 1; i++) {
+          await db.graphSettings.update(data[i].id as number, {
+            sequence: i + 1
+          })
+          storeData[i].sequence = i + 1
+          graphData.value.push(storeData[i])
+        }
+
+        await db.graphSettings.update(selected.id as number, {
+          sequence: selected.sequence
+        })
+        graphData.value.push(storeSelected)
+      })
+    })()
+  }
 
   // async function changeGraphVisibility(state: boolean) {}
 
@@ -231,7 +263,7 @@ export const useRefuelStore = defineStore('refuelStore', () => {
     moveGraphTop,
     // moveGraphUp,
     // moveGraphDown,
-    // moveGraphBottom,
+    moveGraphBottom,
     // changeGraphVisibility,
     readRefuels,
     getRefuel,

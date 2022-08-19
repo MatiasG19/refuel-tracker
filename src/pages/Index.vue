@@ -43,7 +43,7 @@ const optionsInDialog: OptionInDialog[] = [
   {
     text: 'Move bottom',
     icon: 'keyboard_double_arrow_down',
-    action: () => console.log('move graph card')
+    action: (graphData: GraphData) => refuelStore.moveGraphBottom(graphData.uid)
   }
 ]
 
