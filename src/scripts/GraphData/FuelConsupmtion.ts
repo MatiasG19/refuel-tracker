@@ -1,18 +1,16 @@
-import { GraphData, Vehicle } from '../models'
-import { GraphDataDecorator } from './Decorators'
-import { IGraphData } from './IGraphData'
+import { Vehicle } from '../models'
+import { AbstractGraphData } from './AbstractGraphData'
 
-@GraphDataDecorator('1')
-export class FuelConsumption extends GraphData implements IGraphData {
-  constructor(private vehicle: Vehicle) {
-    super()
-    this.title = 'Fuel consumption'
-    this.value = this.calculateValue(this.vehicle)
-    this.unit = this.getUnit(this.vehicle)
+export class FuelConsumption extends AbstractGraphData {
+  constructor(protected vehicle: Vehicle) {
+    super(vehicle)
   }
 
-  calculateValue(vehicle: Vehicle): string {
-    // TODO Calculate fuel consumption
+  protected setTitle(): string {
+    return 'Fuel consumption'
+  }
+
+  protected calculateValue(vehicle: Vehicle): string {
     if (vehicle.fuelUnit?.uid === '1') {
       let fuel = vehicle.refuels
         ?.map(re => re.refueledAmount)
@@ -29,7 +27,7 @@ export class FuelConsumption extends GraphData implements IGraphData {
     return '0'
   }
 
-  getUnit(vehicle: Vehicle): string {
+  protected getUnit(vehicle: Vehicle): string {
     return vehicle.fuelUnit?.fuelConsumptionUnit ?? ''
   }
 }

@@ -1,17 +1,16 @@
-import { GraphData, Vehicle } from '../models'
-import { GraphDataDecorator } from './Decorators'
-import { IGraphData } from './IGraphData'
+import { Vehicle } from '../models'
+import { AbstractGraphData } from './AbstractGraphData'
 
-@GraphDataDecorator('2')
-export class DistanceDriven extends GraphData implements IGraphData {
-  constructor(private vehicle: Vehicle) {
-    super()
-    this.title = 'Distance driven'
-    this.value = this.calculateValue(this.vehicle)
-    this.unit = this.getUnit(this.vehicle)
+export class DistanceDriven extends AbstractGraphData {
+  constructor(protected vehicle: Vehicle) {
+    super(vehicle)
   }
 
-  calculateValue(vehicle: Vehicle): string {
+  protected setTitle(): string {
+    return 'Distance driven'
+  }
+
+  protected calculateValue(vehicle: Vehicle): string {
     return (
       vehicle.refuels
         ?.map(re => re.distanceDriven)
@@ -20,7 +19,7 @@ export class DistanceDriven extends GraphData implements IGraphData {
     )
   }
 
-  getUnit(vehicle: Vehicle): string {
+  protected getUnit(vehicle: Vehicle): string {
     return vehicle.fuelUnit?.distanceUnit ?? ''
   }
 }

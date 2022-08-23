@@ -1,11 +1,15 @@
-import * as GraphDataClasses from '.'
 import { GraphData, GraphSettings, Vehicle } from '../models'
-import { GraphDataDecorator } from './Decorators'
+import { AbstractGraphData } from './AbstractGraphData'
 
 export class GraphDataFactory {
   private graphData: GraphData[] = []
+  public static graphDataClasses = new Map<string, typeof AbstractGraphData>()
 
   constructor(private vehicle: Vehicle) {}
+
+  public static register(uid: string, graphDataType: typeof AbstractGraphData) {
+    GraphDataFactory.graphDataClasses.set(uid, graphDataType)
+  }
 
   public getGraphData(graphSettings: GraphSettings[]): GraphData[] {
     this.getClasses(graphSettings)
@@ -13,10 +17,10 @@ export class GraphDataFactory {
   }
 
   private getClasses(graphSettings: GraphSettings[]) {
-    for (let key in GraphDataClasses) {
-      // @ts-ignore
-      const graphDataClass = GraphDataClasses[key]
-      const uid = Reflect.getMetadata(GraphDataDecorator.name, graphDataClass)
+    for (const entry of GraphDataFactory.graphDataClasses.entries()) {
+      const uid = entry[0]
+      const graphDataClass = entry[1]
+
       if (!uid) continue
       const settings = graphSettings.filter(gs => gs.uid === uid)
       if (!settings) continue
@@ -24,8 +28,11 @@ export class GraphDataFactory {
     }
   }
 
-  private createGraphData(class_: any, settings: GraphSettings) {
-    const graphData = new class_(this.vehicle)
+  private createGraphData(
+    class_: typeof AbstractGraphData,
+    settings: GraphSettings
+  ) {
+    const graphData: GraphData = new class_(this.vehicle)
     graphData.uid = settings.uid
     graphData.sequence = settings.sequence
     graphData.visible = settings.visible

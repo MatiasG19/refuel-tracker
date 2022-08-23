@@ -4,8 +4,11 @@ import { db } from '../boot/dexie'
 export function initSettings() {
   const mainStore = useMainStore()
   const refuelStore = useRefuelStore()
+
   ;(async () => {
     const settings = await db.settings.toArray()
+    if (!settings[0]) return Promise.resolve()
+
     mainStore.changeColorTheme(settings[0].colorThemeId)
     refuelStore.changeDistanceUnit(settings[0].distanceUnitId)
     if (settings[0].vehicleId) {
