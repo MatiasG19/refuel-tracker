@@ -1,4 +1,4 @@
-import { GraphData, Vehicle } from '../models'
+import { GraphData, Vehicle } from '../../models'
 
 export class AbstractGraphData extends GraphData {
   constructor(protected vehicle: Vehicle) {

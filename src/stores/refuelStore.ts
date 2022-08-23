@@ -2,7 +2,7 @@ import { defineStore } from 'pinia'
 import { ref } from 'vue'
 import { GraphData, Refuel, Vehicle } from 'src/scripts/models'
 import { db } from '../boot/dexie'
-import { GraphDataFactory } from 'src/scripts/GraphData/GraphDataFactory'
+import { GraphDataFactory } from 'src/scripts/GraphDataFactory/GraphDataFactory'
 
 export const useRefuelStore = defineStore('refuelStore', () => {
   const graphData = ref<GraphData[]>([])

@@ -5,8 +5,8 @@ import {
   RefuelsMade,
   FuelPricing,
   FuelBurnt
-} from 'src/scripts/GraphData'
-import { GraphDataFactory } from 'src/scripts/GraphData/GraphDataFactory'
+} from 'src/scripts/GraphDataFactory/GraphData'
+import { GraphDataFactory } from 'src/scripts/GraphDataFactory/GraphDataFactory'
 
 GraphDataFactory.register('1', FuelConsumption)
 GraphDataFactory.register('2', DistanceDriven)

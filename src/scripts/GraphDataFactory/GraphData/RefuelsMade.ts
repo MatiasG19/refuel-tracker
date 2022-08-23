@@ -1,4 +1,4 @@
-import { Vehicle } from '../models'
+import { Vehicle } from '../../models'
 import { AbstractGraphData } from './AbstractGraphData'
 
 export class RefuelsMade extends AbstractGraphData {

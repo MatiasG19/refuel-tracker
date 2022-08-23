@@ -1,5 +1,5 @@
 import { GraphData, GraphSettings, Vehicle } from '../models'
-import { AbstractGraphData } from './AbstractGraphData'
+import { AbstractGraphData } from './GraphData/AbstractGraphData'
 
 export class GraphDataFactory {
   private graphData: GraphData[] = []
