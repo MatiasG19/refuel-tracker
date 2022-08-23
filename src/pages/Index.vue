@@ -28,22 +28,24 @@ const optionsInDialog: OptionInDialog[] = [
   {
     text: 'Move top',
     icon: 'keyboard_double_arrow_up',
-    action: (graphData: GraphData) => refuelStore.moveGraphTop(graphData.uid)
+    action: (data: unknown) => refuelStore.moveGraphTop((data as GraphData).uid)
   },
   {
     text: 'Move up',
     icon: 'keyboard_arrow_up',
-    action: (graphData: GraphData) => refuelStore.moveGraphUp(graphData.uid)
+    action: (data: unknown) => refuelStore.moveGraphUp((data as GraphData).uid)
   },
   {
     text: 'Move down',
     icon: 'keyboard_arrow_down',
-    action: (graphData: GraphData) => refuelStore.moveGraphDown(graphData.uid)
+    action: (data: unknown) =>
+      refuelStore.moveGraphDown((data as GraphData).uid)
   },
   {
     text: 'Move bottom',
     icon: 'keyboard_double_arrow_down',
-    action: (graphData: GraphData) => refuelStore.moveGraphBottom(graphData.uid)
+    action: (data: unknown) =>
+      refuelStore.moveGraphBottom((data as GraphData).uid)
   }
 ]
 
@@ -52,7 +54,7 @@ emitter.on('showGraphOptionsDialog', payload =>
 )
 
 watchEffect(() => {
-  // Emit inside watchEffect to catch site reloads
+  // Emit inside watchEffect to catch window reloads
   emitter.emit(
     'updateTitle',
     (() => {

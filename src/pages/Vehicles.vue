@@ -38,10 +38,12 @@ emitter.on('showVehicleOptionsDialog', id =>
       action: () =>
         confirmDialog(
           'Delete vehicle?',
-          async (id: number): void =>
-            await refuelStore
-              .deleteVehicle(id)
-              .then(async () => await refuelStore.readVehicles()),
+          (id: number) => {
+            ;(async () =>
+              await refuelStore
+                .deleteVehicle(id)
+                .then(async () => await refuelStore.readVehicles()))()
+          },
           id
         )
     }

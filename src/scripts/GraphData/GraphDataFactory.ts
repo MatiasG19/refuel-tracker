@@ -12,6 +12,7 @@ export class GraphDataFactory {
   }
 
   public getGraphData(graphSettings: GraphSettings[]): GraphData[] {
+    this.graphData.length = 0
     this.getClasses(graphSettings)
     return this.graphData
   }

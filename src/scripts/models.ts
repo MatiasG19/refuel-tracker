@@ -50,7 +50,7 @@ export class FuelUnit {
 export class OptionInDialog {
   text!: string
   icon!: string
-  action!: (data?: undefined) => void
+  action!: (data?: unknown) => void
 }
 
 export class Period {

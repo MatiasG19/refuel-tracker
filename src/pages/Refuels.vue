@@ -63,15 +63,17 @@ emitter.on('showRefuelOptionsDialog', id =>
       action: () =>
         confirmDialog(
           'Delete refuel entry?',
-          async (id: number): void =>
-            await refuelStore
-              .deleteRefuel(id)
-              .then(
-                async () =>
-                  await refuelStore.readRefuels(
-                    refuelStore.selectedVehicleId ?? 0
-                  )
-              ),
+          (id: number) => {
+            ;(async () =>
+              await refuelStore
+                .deleteRefuel(id)
+                .then(
+                  async () =>
+                    await refuelStore.readRefuels(
+                      refuelStore.selectedVehicleId ?? 0
+                    )
+                ))()
+          },
           id
         )
     }
