@@ -3,6 +3,8 @@ import { ref } from 'vue'
 import { GraphData, Refuel, Vehicle } from 'src/scripts/models'
 import { db } from '../boot/dexie'
 import { GraphDataFactory } from 'src/scripts/GraphDataFactory/GraphDataFactory'
+import { getFuelUnits as returnfuelUnits } from 'src/scripts/staticData/fuelUnits'
+import { getPeriods as returnPeriods } from 'src/scripts/staticData/periods'
 
 export const useRefuelStore = defineStore('refuelStore', () => {
   const graphData = ref<GraphData[]>([])
@@ -281,15 +283,15 @@ export const useRefuelStore = defineStore('refuelStore', () => {
   }
 
   async function getPeriods() {
-    return await db.periods.toArray()
+    return await Promise.resolve(returnPeriods())
   }
 
   async function getFuelUnits() {
-    return await db.fuelUnits.toArray()
+    return await Promise.resolve(returnfuelUnits())
   }
 
   async function getFuelUnit(id: number) {
-    return (await db.fuelUnits.where('id').equals(id).toArray())[0]
+    return await Promise.resolve(returnfuelUnits().filter(u => u.id === id)[0])
   }
 
   function changeDistanceUnit(distanceUnitId: number) {

@@ -1,6 +1,3 @@
-// This is just an example,
-// so you can safely delete all default props below
-
 export default {
   periods: {
     week: 'Week',
@@ -8,5 +5,23 @@ export default {
     sixMonths: '6 Months',
     year: 'Year',
     max: 'Max'
+  },
+  distanceUnits: {
+    kilometersShort: 'km',
+    milesShort: 'mi'
+  },
+  fuelUnits: {
+    litre: 'Litre',
+    gallon: 'Gallon',
+    kWh: 'kWh',
+    wh: 'Wh'
+  },
+  fuelConsumptionsUnits: {
+    litresPer100km: 'L/100km',
+    mpgUs: 'MPG US',
+    mpgImperial: 'MPG Imperial',
+    kWhPer100km: 'kWh/100km',
+    whPer100km: 'Wh/100km',
+    whPerMile: ' Wh/mile'
   }
 }

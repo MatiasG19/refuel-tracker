@@ -99,7 +99,7 @@ onMounted(async () => {
   units.forEach(u =>
     fuelUnits.value.push({
       label: u.fuelConsumptionUnit,
-      value: u.id as number
+      value: u.id
     })
   )
 

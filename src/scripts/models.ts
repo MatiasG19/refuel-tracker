@@ -39,12 +39,12 @@ export class Refuel {
 }
 
 export class FuelUnit {
-  id?: number
-  uid!: string
+  id!: number
   distanceUnit!: string
   fuelUnit!: string
   fuelConsumptionUnit!: string
-  conversion!: number
+  distanceConversion!: number
+  fuelUnitConversion!: number
 }
 
 export class OptionInDialog {

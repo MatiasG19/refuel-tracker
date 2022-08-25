@@ -12,7 +12,7 @@ export class FuelPricing extends AbstractGraphData {
 
   protected calculateValue(vehicle: Vehicle): string {
     // TODO Calculate for all fuel units
-    if (vehicle.fuelUnit?.uid === '1') {
+    if (vehicle.fuelUnit?.id === 1) {
       let index = 1
       let price = vehicle.refuels
         ?.map(re => +re.payedAmount / +re.refueledAmount)
@@ -28,6 +28,6 @@ export class FuelPricing extends AbstractGraphData {
   }
 
   protected getUnit(vehicle: Vehicle): string {
-    return vehicle.currencyUnit
+    return `${vehicle.currencyUnit}/${vehicle.fuelUnit?.fuelUnit as string}`
   }
 }

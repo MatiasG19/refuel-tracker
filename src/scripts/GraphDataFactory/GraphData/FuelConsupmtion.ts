@@ -11,7 +11,8 @@ export class FuelConsumption extends AbstractGraphData {
   }
 
   protected calculateValue(vehicle: Vehicle): string {
-    if (vehicle.fuelUnit?.uid === '1') {
+    // TODO Calculate for all fuel units
+    if (vehicle.fuelUnit?.id === 1) {
       let fuel = vehicle.refuels
         ?.map(re => re.refueledAmount)
         .reduce((total, current) => +total + +current)
