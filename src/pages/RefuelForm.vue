@@ -98,9 +98,9 @@ import {
   numbersOnlyRule,
   positiveNumbersRule,
   max50Characters
-} from 'src/scripts/validationRules'
+} from 'src/scripts/libraries/validation'
 import { useRefuelStore } from 'src/stores'
-import { Refuel } from 'src/scripts/models'
+import { Refuel } from 'src/scripts/libraries/refuel/models'
 
 const router = useRouter()
 const refuelStore = useRefuelStore()

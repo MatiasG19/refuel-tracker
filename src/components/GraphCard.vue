@@ -40,7 +40,7 @@
 </template>
 
 <script setup lang="ts">
-import { GraphData } from 'src/scripts/models'
+import { GraphData } from 'src/scripts/libraries/graphData/models'
 import { defineProps } from 'vue'
 import { emitter } from 'src/boot/mitt'
 

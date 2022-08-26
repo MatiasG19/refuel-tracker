@@ -12,13 +12,16 @@
 
 <script setup lang="ts">
 import GraphCard from 'src/components/GraphCard.vue'
-import { GraphData, OptionInDialog, Period } from 'src/scripts/models'
 import { ref, watchEffect, onMounted, onUnmounted } from 'vue'
 import { emitter } from 'src/boot/mitt'
 import { productName } from '../../package.json'
-import { optionsDialog } from 'src/scripts/dialogs'
 import { useRefuelStore } from 'src/stores'
 import { initSettings } from 'src/scripts/initSettings'
+import { GraphData, Period } from 'src/scripts/libraries/graphData/models'
+import {
+  OptionInDialog,
+  optionsDialog
+} from 'src/components/dialogs/optionsDialog'
 
 const refuelStore = useRefuelStore()
 

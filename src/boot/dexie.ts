@@ -1,6 +1,7 @@
 import { Dexie, Table } from 'dexie'
-
-import { Vehicle, Refuel, Settings, GraphSettings } from '../scripts/models'
+import { Settings } from '../scripts/models'
+import { Vehicle, Refuel } from 'src/scripts/libraries/refuel/models'
+import { GraphSettings } from 'src/scripts/libraries/graphData/models'
 
 export class RefuelTrackerDexie extends Dexie {
   graphSettings!: Table<GraphSettings>

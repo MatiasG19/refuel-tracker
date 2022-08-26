@@ -44,7 +44,7 @@ import { date } from 'quasar'
 import { useRouter } from 'vue-router'
 import { emitter } from 'src/boot/mitt'
 import { useRefuelStore } from 'src/stores'
-import { requiredFieldRule } from 'src/scripts/validationRules'
+import { requiredFieldRule } from 'src/scripts/libraries/validation'
 
 const router = useRouter()
 const refuelStore = useRefuelStore()

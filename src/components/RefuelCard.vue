@@ -43,7 +43,7 @@
 </template>
 
 <script setup lang="ts">
-import { Refuel } from 'src/scripts/models'
+import { Refuel } from 'src/scripts/libraries/refuel/models'
 import { defineProps } from 'vue'
 import { date } from 'quasar'
 import { emitter } from 'src/boot/mitt'

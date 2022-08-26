@@ -1,25 +1,25 @@
-import { Vehicle } from '../../models'
-import { AbstractGraphData } from './AbstractGraphData'
+import { Vehicle } from '../../refuel/models'
+import { AbstractGraphData } from '../abstract/AbstractGraphData'
 
-export class DistanceDriven extends AbstractGraphData {
+export class MoneySpent extends AbstractGraphData {
   constructor(protected vehicle: Vehicle) {
     super(vehicle)
   }
 
   protected setTitle(): string {
-    return 'Distance driven'
+    return 'Money spent'
   }
 
   protected calculateValue(vehicle: Vehicle): string {
     return (
       vehicle.refuels
-        ?.map(re => re.distanceDriven)
+        ?.map(re => re.payedAmount)
         .reduce((total, current) => +total + +current)
         .toString() ?? ''
     )
   }
 
   protected getUnit(vehicle: Vehicle): string {
-    return vehicle.fuelUnit?.distanceUnit ?? ''
+    return vehicle.currencyUnit
   }
 }

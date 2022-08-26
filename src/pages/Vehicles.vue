@@ -12,12 +12,13 @@
 
 <script setup lang="ts">
 import VehicleCard from 'src/components/VehicleCard.vue'
-import { optionsDialog, confirmDialog } from 'src/scripts/dialogs'
+import { optionsDialog } from 'src/components/dialogs/optionsDialog'
+import { confirmDialog } from 'src/components/dialogs/confirmDialog'
 import { useRouter } from 'vue-router'
 import { computed, onMounted, onUnmounted } from 'vue'
 import { emitter } from 'src/boot/mitt'
 import { useRefuelStore } from 'src/stores'
-import { Vehicle } from 'src/scripts/models'
+import { Vehicle } from 'src/scripts/libraries/refuel/models'
 
 const router = useRouter()
 const refuelStore = useRefuelStore()

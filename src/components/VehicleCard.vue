@@ -26,7 +26,7 @@
 </template>
 
 <script setup lang="ts">
-import { Vehicle } from 'src/scripts/models'
+import { Vehicle } from 'src/scripts/libraries/refuel/models'
 import { defineProps } from 'vue'
 import { emitter } from 'src/boot/mitt'
 

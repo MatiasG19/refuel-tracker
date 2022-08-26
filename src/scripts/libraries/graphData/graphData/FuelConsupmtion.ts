@@ -1,5 +1,5 @@
-import { Vehicle } from '../../models'
-import { AbstractGraphData } from './AbstractGraphData'
+import { Vehicle } from '../../refuel/models'
+import { AbstractGraphData } from '../abstract/AbstractGraphData'
 
 export class FuelConsumption extends AbstractGraphData {
   constructor(protected vehicle: Vehicle) {

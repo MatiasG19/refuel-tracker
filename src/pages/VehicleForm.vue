@@ -53,9 +53,13 @@ import { useRouter } from 'vue-router'
 import CInput from 'src/components/inputs/CInput.vue'
 import CSelect from 'src/components/inputs/CSelect.vue'
 import { emitter } from 'src/boot/mitt'
-import { requiredFieldRule, max50Characters } from 'src/scripts/validationRules'
-import { SelectOption, Vehicle } from 'src/scripts/models'
+import {
+  requiredFieldRule,
+  max50Characters
+} from 'src/scripts/libraries/validation'
+import { SelectOption } from 'src/scripts/models'
 import { useRefuelStore } from 'src/stores'
+import { Vehicle } from 'src/scripts/libraries/refuel/models'
 
 const router = useRouter()
 const refuelStore = useRefuelStore()

@@ -26,9 +26,10 @@ import RefuelCard from 'src/components/RefuelCard.vue'
 import { computed, ref, onMounted, onUnmounted } from 'vue'
 import { useRouter } from 'vue-router'
 import { emitter } from 'src/boot/mitt'
-import { optionsDialog, confirmDialog } from 'src/scripts/dialogs'
-import { Refuel } from 'src/scripts/models'
+import { optionsDialog } from 'src/components/dialogs/optionsDialog'
+import { confirmDialog } from 'src/components/dialogs/confirmDialog'
 import { useRefuelStore } from 'src/stores'
+import { Refuel } from 'src/scripts/libraries/refuel/models'
 
 const router = useRouter()
 const refuelStore = useRefuelStore()

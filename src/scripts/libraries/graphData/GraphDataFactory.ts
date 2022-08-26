@@ -1,5 +1,6 @@
-import { GraphData, GraphSettings, Vehicle } from '../models'
-import { AbstractGraphData } from './GraphData/AbstractGraphData'
+import { Vehicle } from '../refuel/models'
+import { AbstractGraphData } from './abstract/AbstractGraphData'
+import { GraphSettings, GraphData } from './models'
 
 export class GraphDataFactory {
   public static graphDataClasses = new Map<string, typeof AbstractGraphData>()
