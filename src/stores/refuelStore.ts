@@ -240,7 +240,7 @@ export const useRefuelStore = defineStore('refuelStore', () => {
 
       // Create graph data
       graphData.value = new GraphDataFactory(v)
-        .getGraphData(await getGraphSettings())
+        .getAll(await getGraphSettings())
         .sort((a, b) => a.sequence - b.sequence)
     } else graphData.value.length = 0
 
