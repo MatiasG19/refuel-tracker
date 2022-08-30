@@ -5,7 +5,12 @@ import { GraphDataFactory } from 'src/scripts/libraries/graphData/GraphDataFacto
 import { getFuelUnits as returnfuelUnits } from 'src/scripts/staticData/fuelUnits'
 import { getPeriods as returnPeriods } from 'src/scripts/staticData/periods'
 import { GraphData } from 'src/scripts/libraries/graphData/models'
-import { Refuel, Vehicle } from 'src/scripts/libraries/refuel/models'
+import {
+  Refuel,
+  Vehicle,
+  VehicleData
+} from 'src/scripts/libraries/refuel/models'
+import { vehicleFuelConsumption } from 'src/scripts/libraries/refuel/functions'
 
 export const useRefuelStore = defineStore('refuelStore', () => {
   const graphData = ref<GraphData[]>([])
@@ -188,6 +193,18 @@ export const useRefuelStore = defineStore('refuelStore', () => {
 
   // async function changeGraphVisibility(state: boolean) {}
 
+  async function readGraphData() {
+    graphData.value.length = 0
+    if (!selectedVehicleId.value) return
+
+    const vehicle = await getVehicle(selectedVehicleId.value)
+    if (vehicle && vehicle.refuels?.length) {
+      graphData.value = new GraphDataFactory(vehicle)
+        .getAll(await getGraphSettings())
+        .sort((a, b) => a.sequence - b.sequence)
+    }
+  }
+
   async function readRefuels(vehicleId: number) {
     await db.refuels
       .where('vehicleId')
@@ -217,35 +234,33 @@ export const useRefuelStore = defineStore('refuelStore', () => {
   }
 
   async function readVehicles() {
-    await db.vehicles
-      .toArray()
-      .then(v =>
-        v.length > 0 ? (vehicles.value = v) : (vehicles.value.length = 0)
-      )
+    vehicles.value = await db.vehicles.toArray()
+    for (const v of vehicles.value) {
+      await readRefuels(v.id)
+      if (refuels.value.length > 0) {
+        v.refuels = []
+        refuels.value.forEach(r => v.refuels?.push(r))
+        v.fuelUnit = await getFuelUnit(v.fuelUnitId)
+      }
+    }
   }
 
   async function getVehicle(id: number): Promise<Vehicle | null> {
     await readVehicles()
-    return vehicles.value.find(v => v.id == id) ?? null
+    const v = vehicles.value.find(v => v.id == id) ?? null
+    if (!v) return null
+    return v
   }
 
-  async function getAllVehicleData(id: number): Promise<Vehicle | null> {
-    const v = await getVehicle(id)
-    if (!v) return null
-
-    await readRefuels(v.id)
-    if (refuels.value.length > 0) {
-      v.refuels = []
-      refuels.value.forEach(r => v.refuels?.push(r))
-      v.fuelUnit = await getFuelUnit(v.fuelUnitId)
-
-      // Create graph data
-      graphData.value = new GraphDataFactory(v)
-        .getAll(await getGraphSettings())
-        .sort((a, b) => a.sequence - b.sequence)
-    } else graphData.value.length = 0
-
-    return v
+  function getAllVehicleData() {
+    const vehicleData = new Array<VehicleData>()
+    vehicles.value.forEach(v =>
+      vehicleData.push({
+        ...v,
+        fuelConsumption: vehicleFuelConsumption(v)
+      })
+    )
+    return vehicleData
   }
 
   async function addVehicle(vehicle: Vehicle) {
@@ -313,7 +328,7 @@ export const useRefuelStore = defineStore('refuelStore', () => {
       selectedVehicleName.value = vehicle.name
       selectedVehiclePlateNumber.value = vehicle.plateNumber
       // Read graph data
-      await getAllVehicleData(vehicle.id)
+      await readGraphData()
 
       return Promise.resolve()
     }
@@ -358,6 +373,7 @@ export const useRefuelStore = defineStore('refuelStore', () => {
     moveGraphDown,
     moveGraphBottom,
     // changeGraphVisibility,
+    readGraphData,
     readRefuels,
     getRefuel,
     addRefuel,

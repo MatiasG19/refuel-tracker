@@ -4,7 +4,10 @@
       <q-card-section>
         <div class="row items-center no-wrap">
           <div class="col">
-            <div class="text-subtitle2">{{ mileage }}</div>
+            <div class="text-subtitle2">
+              {{ vehicle.fuelConsumption }}
+              {{ vehicle.fuelUnit?.fuelConsumptionUnit }}
+            </div>
           </div>
 
           <div class="col-auto space-station">
@@ -26,14 +29,13 @@
 </template>
 
 <script setup lang="ts">
-import { Vehicle } from 'src/scripts/libraries/refuel/models'
+import { VehicleData } from 'src/scripts/libraries/refuel/models'
 import { defineProps } from 'vue'
 import { emitter } from 'src/boot/mitt'
 
-const mileage = '5.6 L/100km'
 defineProps({
   vehicle: {
-    type: Vehicle,
+    type: VehicleData,
     required: true
   }
 })

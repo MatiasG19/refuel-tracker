@@ -1,7 +1,7 @@
 <template>
   <q-page>
     <vehicle-card
-      v-for="(vehicle, i) in vehicles"
+      v-for="(vehicle, i) in vehicleData"
       :key="i"
       :vehicle="vehicle"
       class="q-pt-md q-pl-md q-pr-md"
@@ -23,7 +23,10 @@ import { Vehicle } from 'src/scripts/libraries/refuel/models'
 const router = useRouter()
 const refuelStore = useRefuelStore()
 
-const vehicles = computed(() => refuelStore.vehicles)
+const vehicleData = computed(() => {
+  if (refuelStore.vehicles) return refuelStore.getAllVehicleData()
+  return []
+})
 
 emitter.on('showVehicleOptionsDialog', id =>
   optionsDialog([

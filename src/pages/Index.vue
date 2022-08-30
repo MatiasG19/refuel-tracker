@@ -1,7 +1,7 @@
 <template>
   <q-page class="items-center justify-evenly">
     <graph-card
-      v-for="data in refuelStore.graphData"
+      v-for="data in graphData"
       :key="data.uid"
       :graphData="data"
       :periods="periods"
@@ -12,7 +12,7 @@
 
 <script setup lang="ts">
 import GraphCard from 'src/components/GraphCard.vue'
-import { ref, watchEffect, onMounted, onUnmounted } from 'vue'
+import { ref, watchEffect, computed, onBeforeMount, onUnmounted } from 'vue'
 import { emitter } from 'src/boot/mitt'
 import { productName } from '../../package.json'
 import { useRefuelStore } from 'src/stores'
@@ -26,6 +26,8 @@ import {
 const refuelStore = useRefuelStore()
 
 const periods = ref<Period[]>([])
+
+const graphData = computed(() => refuelStore.graphData)
 
 const optionsInDialog: OptionInDialog[] = [
   {
@@ -69,9 +71,10 @@ watchEffect(() => {
   )
 })
 
-onMounted(async () => {
+onBeforeMount(async () => {
   initSettings()
   periods.value = await refuelStore.getPeriods()
+  refuelStore.readGraphData()
 })
 
 onUnmounted(() => {

@@ -26,3 +26,7 @@ export class FuelUnit {
   distanceConversion!: number
   fuelUnitConversion!: number
 }
+
+export class VehicleData extends Vehicle {
+  fuelConsumption!: string
+}

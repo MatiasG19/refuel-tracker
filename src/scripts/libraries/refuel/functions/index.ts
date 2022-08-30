@@ -1,6 +1,8 @@
 import { Vehicle } from '../models'
 
 export function vehicleFuelConsumption(vehicle: Vehicle): string {
+  if (!vehicle.refuels || vehicle.refuels.length === 0) return ''
+
   let fuel = vehicle.refuels
     ?.map(re => re.refueledAmount)
     .reduce((total, current) => +total + +current)
