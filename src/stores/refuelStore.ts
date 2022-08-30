@@ -322,6 +322,7 @@ export const useRefuelStore = defineStore('refuelStore', () => {
   async function changeSelectedVehicle(vehicle: Vehicle | null) {
     const settings = await db.settings.toArray()
     if (vehicle) {
+      if (vehicle.id === selectedVehicleId.value) return Promise.resolve()
       settings[0].vehicleId = vehicle.id
       await db.settings.put(settings[0])
       selectedVehicleId.value = vehicle.id
@@ -331,12 +332,13 @@ export const useRefuelStore = defineStore('refuelStore', () => {
       await readGraphData()
 
       return Promise.resolve()
+    } else {
+      settings[0].vehicleId = null
+      db.settings.put(settings[0])
+      selectedVehicleId.value = null
+      selectedVehicleName.value = 'My Car'
+      selectedVehiclePlateNumber.value = ''
     }
-    settings[0].vehicleId = null
-    db.settings.put(settings[0])
-    selectedVehicleId.value = null
-    selectedVehicleName.value = 'My Car'
-    selectedVehiclePlateNumber.value = ''
   }
 
   function togglePlateNumberInTitle(state: boolean) {

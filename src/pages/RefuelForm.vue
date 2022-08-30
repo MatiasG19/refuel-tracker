@@ -2,7 +2,8 @@
   <div>
     <q-form @submit="onSubmit" class="q-pa-md q-gutter-md">
       <c-input
-        v-model="refuel.payedAmount"
+        :value="refuel.payedAmount?.toString()"
+        @update:modelValue="(evt: string) => (refuel.payedAmount = replaceComma(evt))"
         label="Payed amount"
         :rules="[
           requiredFieldRule,
@@ -13,7 +14,8 @@
         autofocus
       />
       <c-input
-        v-model="refuel.distanceDriven"
+        :value="refuel.distanceDriven?.toString()"
+        @update:modelValue="(evt: string) => (refuel.distanceDriven = replaceComma(evt))"
         label="Distance driven"
         :rules="[
           requiredFieldRule,
@@ -23,7 +25,8 @@
         ]"
       />
       <c-input
-        v-model="refuel.refueledAmount"
+        :value="refuel.refueledAmount?.toString()"
+        @update:modelValue="(evt: string) => (refuel.refueledAmount = replaceComma(evt))"
         label="Refuled amount"
         :rules="[
           requiredFieldRule,
@@ -101,6 +104,7 @@ import {
 } from 'src/scripts/libraries/validation'
 import { useRefuelStore } from 'src/stores'
 import { Refuel } from 'src/scripts/libraries/refuel/models'
+import { replaceComma } from 'src/scripts/libraries/string'
 
 const router = useRouter()
 const refuelStore = useRefuelStore()
