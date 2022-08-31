@@ -1,4 +1,4 @@
-# Refuel Tracker [![build status]](https://github.com/matiasg19/refuel-tracker/actions/workflows/ci.yml)
+# Refuel Tracker [![build status](https://github.com/matiasg19/refuel-tracker/actions/workflows/ci.yml/badge.svg?branch=main)](https://github.com/matiasg19/refuel-tracker/actions/workflows/ci.yml/)
 
 Tracks your refuels and displays your data in nice grahs.
 
