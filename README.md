@@ -1,26 +1,26 @@
-# Refuel Tracker
+# Refuel Tracker [![build status]](https://github.com/matiasg19/refuel-tracker/actions/workflows/ci.yml)
 
-Tracks your refuels.
+Tracks your refuels and displays your data in nice grahs.
 
-## Install the dependencies
+## Features
+
+- Display all your data in nice graphs
+- Support for multiple vehicles
+- Support for all fuel consumption units
+- See your fuel consuption for each refuel
+- View and edit your past refuels or add forgotten ones
+- View your best and worst fuel consupmtion
+- Track fuel prices
+- Customize graph order
+- Keep track of your data by choosing the right interval
+
+## Coming soon
+
+- Timed exports. Export your files for backup or further calculations.
+- Themes
+
+## Start development
+
 ```bash
-yarn
+yarn && yarn dev
 ```
-
-### Start the app in development mode (hot-code reloading, error reporting, etc.)
-```bash
-quasar dev
-```
-
-### Lint the files
-```bash
-yarn run lint
-```
-
-### Build the app for production
-```bash
-quasar build
-```
-
-### Customize the configuration
-See [Configuring quasar.conf.js](https://quasar.dev/quasar-cli/quasar-conf-js).
