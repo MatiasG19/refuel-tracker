@@ -91,7 +91,7 @@ const linkList = [
     title: 'Graphs',
     caption: '',
     icon: 'bar_chart',
-    link: '/'
+    link: '/index'
   },
   {
     title: 'Vehicles',
