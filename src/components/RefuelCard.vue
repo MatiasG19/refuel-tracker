@@ -22,19 +22,21 @@
             <div class="text-h4 accent-space-station">
               {{ refuel.distanceDriven }}
             </div>
-            <div class="text-subtitle1">{{ distanceUnit }}</div>
+            <div class="text-subtitle1">
+              {{ vehicle.fuelUnit?.distanceUnit }}
+            </div>
           </div>
           <div class="col">
             <div class="text-h4 accent-space-station">
               {{ refuel.payedAmount }}
             </div>
-            <div class="text-subtitle1">{{ currencyUnit }}</div>
+            <div class="text-subtitle1">{{ vehicle.currencyUnit }}</div>
           </div>
           <div class="col">
             <div class="text-h4 accent-space-station">
               {{ refuel.refueledAmount }}
             </div>
-            <div class="text-subtitle1">{{ fuelUnit }}</div>
+            <div class="text-subtitle1">{{ vehicle.fuelUnit?.fuelUnit }}</div>
           </div>
         </div>
       </q-card-section>
@@ -43,7 +45,7 @@
 </template>
 
 <script setup lang="ts">
-import { Refuel } from 'src/scripts/libraries/refuel/models'
+import { Refuel, Vehicle } from 'src/scripts/libraries/refuel/models'
 import { defineProps } from 'vue'
 import { date } from 'quasar'
 import { emitter } from 'src/boot/mitt'
@@ -52,12 +54,12 @@ const props = defineProps({
   refuel: {
     type: Refuel,
     required: true
+  },
+  vehicle: {
+    type: Vehicle,
+    required: true
   }
 })
 
 const refuelDate = date.formatDate(props.refuel.date, 'YYYY-MMM-DD HH:mm')
-
-const fuelUnit = 'Liter'
-const currencyUnit = '€'
-const distanceUnit = 'km'
 </script>

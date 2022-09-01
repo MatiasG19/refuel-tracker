@@ -16,6 +16,7 @@
       v-for="(refuel, i) in refuels"
       :key="i"
       :refuel="refuel"
+      :vehicle="vehicle"
       class="q-pt-md q-pl-md q-pr-md"
     />
   </q-page>
@@ -29,11 +30,12 @@ import { emitter } from 'src/boot/mitt'
 import { optionsDialog } from 'src/components/dialogs/optionsDialog'
 import { confirmDialog } from 'src/components/dialogs/confirmDialog'
 import { useRefuelStore } from 'src/stores'
-import { Refuel } from 'src/scripts/libraries/refuel/models'
+import { Refuel, Vehicle } from 'src/scripts/libraries/refuel/models'
 
 const router = useRouter()
 const refuelStore = useRefuelStore()
 
+const vehicle = ref<Vehicle>(new Vehicle())
 const filterActive = ref(refuelStore.refuelFilterActive)
 const filterHint = 'Filter 1 Month from 2021.12.19'
 
@@ -84,6 +86,9 @@ emitter.on('showRefuelOptionsDialog', id =>
 onMounted(async () => {
   emitter.emit('updateTitle', 'Refuels')
   await refuelStore.readRefuels(refuelStore.selectedVehicleId ?? 0)
+  vehicle.value =
+    (await refuelStore.getVehicle(refuelStore.selectedVehicleId ?? 0)) ??
+    vehicle.value
 })
 
 onUnmounted(() => {
