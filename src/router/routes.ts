@@ -2,11 +2,11 @@ import { RouteRecordRaw } from 'vue-router'
 
 const routes: RouteRecordRaw[] = [
   {
-    path: '',
+    path: '/index',
     component: () => import('layouts/MainLayout.vue'),
     children: [
       {
-        path: '/index',
+        path: '/',
         component: () => import('pages/Index.vue')
       },
       {
@@ -52,11 +52,11 @@ const routes: RouteRecordRaw[] = [
         ]
       },
       {
-        path: 'settings',
+        path: '/settings',
         component: () => import('pages/Settings.vue')
       },
       {
-        path: 'support',
+        path: '/support',
         component: () => import('pages/Support.vue')
       }
     ]

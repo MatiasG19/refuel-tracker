@@ -53,7 +53,7 @@
     <q-footer class="bg-space-station">
       <q-toolbar class="q-gutter-xs text-center">
         <div class="col">
-          <q-btn round flat dense icon="bar_chart" class="col" :to="'/index'" />
+          <q-btn round flat dense icon="bar_chart" class="col" :to="'/'" />
         </div>
         <div class="col">
           <q-btn
@@ -91,7 +91,7 @@ const linkList = [
     title: 'Graphs',
     caption: '',
     icon: 'bar_chart',
-    link: '/index'
+    link: '/'
   },
   {
     title: 'Vehicles',
