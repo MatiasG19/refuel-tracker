@@ -53,7 +53,7 @@
     <q-footer class="bg-space-station">
       <q-toolbar class="q-gutter-xs text-center">
         <div class="col">
-          <q-btn round flat dense icon="bar_chart" class="col" :to="'/'" />
+          <q-btn round flat dense icon="bar_chart" class="col" :to="'/index'" />
         </div>
         <div class="col">
           <q-btn
