@@ -1,3 +1,4 @@
+import { vehicleDistanceDriven } from '../../refuel/functions/vehicle'
 import { Vehicle } from '../../refuel/models'
 import { AbstractGraphData } from '../abstract/AbstractGraphData'
 
@@ -11,12 +12,7 @@ export class DistanceDriven extends AbstractGraphData {
   }
 
   protected calculateValue(vehicle: Vehicle): string {
-    return (
-      vehicle.refuels
-        ?.map(re => re.distanceDriven)
-        .reduce((total, current) => +total + +current)
-        .toString() ?? ''
-    )
+    return vehicleDistanceDriven(vehicle).toFixed(1).toString()
   }
 
   protected getUnit(vehicle: Vehicle): string {

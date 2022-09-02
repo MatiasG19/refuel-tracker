@@ -1,3 +1,4 @@
+import { vehicleRefuelsMade } from '../../refuel/functions/vehicle'
 import { Vehicle } from '../../refuel/models'
 import { AbstractGraphData } from '../abstract/AbstractGraphData'
 
@@ -11,7 +12,7 @@ export class RefuelsMade extends AbstractGraphData {
   }
 
   protected calculateValue(vehicle: Vehicle): string {
-    return vehicle.refuels?.length.toString() ?? ''
+    return vehicleRefuelsMade(vehicle).toString()
   }
 
   protected getUnit(): string {

@@ -1,3 +1,4 @@
+import { vehicleFuelBurnt } from '../../refuel/functions/vehicle'
 import { Vehicle } from '../../refuel/models'
 import { AbstractGraphData } from '../abstract/AbstractGraphData'
 
@@ -11,12 +12,7 @@ export class FuelBurnt extends AbstractGraphData {
   }
 
   protected calculateValue(vehicle: Vehicle): string {
-    return (
-      vehicle.refuels
-        ?.map(re => re.refueledAmount)
-        .reduce((total, current) => +total + +current)
-        .toString() ?? ''
-    )
+    return vehicleFuelBurnt(vehicle).toFixed(1).toString()
   }
 
   protected getUnit(vehicle: Vehicle): string {
