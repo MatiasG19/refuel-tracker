@@ -49,7 +49,7 @@ function orderByDateDesc(): Refuel[] {
 }
 
 function removeFilter() {
-  refuelStore.toggleRefuelFilter(false)
+  refuelStore.settings.toggleRefuelFilter(false)
   filterActive.value = false
 }
 

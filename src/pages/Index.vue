@@ -33,24 +33,26 @@ const optionsInDialog: OptionInDialog[] = [
   {
     text: 'Move top',
     icon: 'keyboard_double_arrow_up',
-    action: (data: unknown) => refuelStore.moveGraphTop((data as GraphData).uid)
+    action: (data: unknown) =>
+      refuelStore.moveGraphCard.moveTop((data as GraphData).uid)
   },
   {
     text: 'Move up',
     icon: 'keyboard_arrow_up',
-    action: (data: unknown) => refuelStore.moveGraphUp((data as GraphData).uid)
+    action: (data: unknown) =>
+      refuelStore.moveGraphCard.moveUp((data as GraphData).uid)
   },
   {
     text: 'Move down',
     icon: 'keyboard_arrow_down',
     action: (data: unknown) =>
-      refuelStore.moveGraphDown((data as GraphData).uid)
+      refuelStore.moveGraphCard.moveDown((data as GraphData).uid)
   },
   {
     text: 'Move bottom',
     icon: 'keyboard_double_arrow_down',
     action: (data: unknown) =>
-      refuelStore.moveGraphBottom((data as GraphData).uid)
+      refuelStore.moveGraphCard.moveBottom((data as GraphData).uid)
   }
 ]
 

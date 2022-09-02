@@ -10,14 +10,16 @@ export function initSettings() {
     if (!settings[0]) return Promise.resolve()
 
     mainStore.changeColorTheme(settings[0].colorThemeId)
-    refuelStore.changeDistanceUnit(settings[0].distanceUnitId)
+    refuelStore.settings.changeDistanceUnit(settings[0].distanceUnitId)
     if (settings[0].vehicleId) {
       const vehicles = await db.vehicles
         .where('id')
         .equals(settings[0].vehicleId)
         .toArray()
-      refuelStore.changeSelectedVehicle(vehicles[0])
+      refuelStore.settings.changeSelectedVehicle(vehicles[0])
     }
-    refuelStore.togglePlateNumberInTitle(settings[0].plateNumberInTitleActive)
+    refuelStore.settings.togglePlateNumberInTitle(
+      settings[0].plateNumberInTitleActive
+    )
   })()
 }
