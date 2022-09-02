@@ -12,7 +12,7 @@ export class MoneySpent extends AbstractGraphData {
   }
 
   protected calculateValue(vehicle: Vehicle): string {
-    return vehicleMoneySpent(vehicle).toFixed(2).toString()
+    return vehicleMoneySpent(vehicle).toFixedIfNotZero(2)
   }
 
   protected getUnit(vehicle: Vehicle): string {

@@ -104,7 +104,7 @@ import {
 } from 'src/scripts/libraries/validation'
 import { useRefuelStore } from 'src/stores'
 import { Refuel } from 'src/scripts/libraries/refuel/models'
-import { replaceComma } from 'src/scripts/libraries/string'
+import { replaceComma } from 'src/scripts/libraries/utils'
 
 const router = useRouter()
 const refuelStore = useRefuelStore()

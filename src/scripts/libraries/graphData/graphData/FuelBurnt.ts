@@ -12,7 +12,7 @@ export class FuelBurnt extends AbstractGraphData {
   }
 
   protected calculateValue(vehicle: Vehicle): string {
-    return vehicleFuelBurnt(vehicle).toFixed(1).toString()
+    return vehicleFuelBurnt(vehicle).toFixedIfNotZero(1)
   }
 
   protected getUnit(vehicle: Vehicle): string {

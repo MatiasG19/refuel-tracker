@@ -12,7 +12,7 @@ export class DistanceDriven extends AbstractGraphData {
   }
 
   protected calculateValue(vehicle: Vehicle): string {
-    return vehicleDistanceDriven(vehicle).toFixed(1).toString()
+    return vehicleDistanceDriven(vehicle).toFixedIfNotZero(1)
   }
 
   protected getUnit(vehicle: Vehicle): string {
