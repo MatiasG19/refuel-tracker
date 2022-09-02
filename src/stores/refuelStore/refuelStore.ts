@@ -10,7 +10,7 @@ import {
   Vehicle,
   VehicleData
 } from 'src/scripts/libraries/refuel/models'
-import { vehicleFuelConsumption } from 'src/scripts/libraries/refuel/functions'
+import { vehicleFuelConsumption } from 'src/scripts/libraries/refuel/functions/vehicle'
 import { useMoveGraphCardStore } from './moveGraphCardStore'
 import { useSettingsStore } from './settingsStore'
 

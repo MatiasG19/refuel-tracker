@@ -45,7 +45,7 @@ export function getFuelUnits(): FuelUnit[] {
       fuelUnitConversion: 1.0
     },
     {
-      id: 5,
+      id: 6,
       distanceUnit: t('distanceUnits.milesShort'),
       fuelUnit: t('fuelUnits.wh'),
       fuelConsumptionUnit: t('fuelConsumptionsUnits.whPerMile'),

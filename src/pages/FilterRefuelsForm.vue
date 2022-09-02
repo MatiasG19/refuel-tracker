@@ -80,7 +80,7 @@ const filterDate = ref<string>(date.formatDate(Date.now(), 'YYYY/MM/DD'))
 const timeInterval = ref<number>(2)
 
 function onSubmit() {
-  refuelStore.toggleRefuelFilter(true)
+  refuelStore.settings.toggleRefuelFilter(true)
   void router.push('/refuels')
 }
 

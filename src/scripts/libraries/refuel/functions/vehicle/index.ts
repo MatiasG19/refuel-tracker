@@ -1,4 +1,5 @@
-import { Vehicle } from '../models'
+import { Vehicle } from '../../models'
+import { FuelConsumptionFactory } from '../fuelConsumption/FuelConsumptionFactory'
 
 export function vehicleFuelConsumption(vehicle: Vehicle): string {
   if (!vehicle.refuels || vehicle.refuels.length === 0) return ''
@@ -13,9 +14,7 @@ export function vehicleFuelConsumption(vehicle: Vehicle): string {
     .reduce((total, current) => +total + +current)
   distance = distance ? +distance : 0
 
-  return fuelConsumption(fuel, distance).toFixed(2).toString()
-}
-
-export function fuelConsumption(fuelAmount: number, distance: number) {
-  return (fuelAmount * 100) / distance
+  const func = FuelConsumptionFactory.get(vehicle.fuelUnitId.toString())
+  if (func) return func(fuel, distance).toFixed(2).toString()
+  return ''
 }

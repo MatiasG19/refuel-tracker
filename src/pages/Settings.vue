@@ -95,11 +95,11 @@ function changeColorTheme(value: number) {
 }
 
 function changeDistanceUnit(value: number) {
-  refuelStore.changeDistanceUnit(value)
+  refuelStore.settings.changeDistanceUnit(value)
 }
 
 function togglePlateNumberInTitle(value: boolean) {
-  refuelStore.togglePlateNumberInTitle(value)
+  refuelStore.settings.togglePlateNumberInTitle(value)
 }
 
 onMounted(() => {
