@@ -18,7 +18,6 @@ export const useSettingsStore = defineStore('settingsStore', () => {
   async function changeSelectedVehicle(vehicle: Vehicle | null) {
     const settings = await db.settings.toArray()
     if (vehicle) {
-      if (vehicle.id === store.selectedVehicleId) return Promise.resolve()
       settings[0].vehicleId = vehicle.id
       await db.settings.put(settings[0])
       store.selectedVehicleId = vehicle.id

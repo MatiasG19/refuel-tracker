@@ -78,8 +78,7 @@ async function onSubmit() {
   if (routePath.includes('/add'))
     await refuelStore.addVehicle({ ...vehicle.value })
   else if (routePath.includes('/edit')) {
-    if (vehicle.value.id === refuelStore.selectedVehicleId)
-      refuelStore.settings.changeSelectedVehicle({ ...vehicle.value })
+    await refuelStore.settings.changeSelectedVehicle({ ...vehicle.value })
     await refuelStore.updateVehicle({ ...vehicle.value })
   }
   void router.push('/vehicles')
