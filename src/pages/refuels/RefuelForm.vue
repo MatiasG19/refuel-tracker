@@ -102,12 +102,13 @@ import {
   positiveNumbersRule,
   max50Characters
 } from 'src/scripts/libraries/validation'
-import { useRefuelStore } from 'src/stores'
+import { useRefuelStore, useSettingsStore } from 'src/stores'
 import { Refuel } from 'src/scripts/libraries/refuel/models'
 import { replaceComma } from 'src/scripts/libraries/utils'
 
 const router = useRouter()
 const refuelStore = useRefuelStore()
+const settingsStore = useSettingsStore()
 
 const refuel = ref<Refuel>(new Refuel())
 const refuelDate = ref(QuasarDate.formatDate(Date.now(), 'YYYY/MM/DD'))
@@ -157,7 +158,7 @@ onMounted(async () => {
   else if (routePath.includes('/edit'))
     emitter.emit('updateTitle', 'Edit refuel')
 
-  refuel.value.vehicleId = refuelStore.selectedVehicleId ?? 0
+  refuel.value.vehicleId = settingsStore.selectedVehicleId ?? 0
   if (props.id) {
     const refuelToEdit = await refuelStore.getRefuel(props.id)
     if (refuelToEdit) {

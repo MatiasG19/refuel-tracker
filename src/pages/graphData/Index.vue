@@ -1,12 +1,22 @@
 <template>
   <q-page class="items-center justify-evenly">
-    <graph-card
-      v-for="data in graphData"
-      :key="data.uid"
-      :graphData="data"
-      :periods="periods"
-      class="q-pt-md q-pl-md q-pr-md"
-    />
+    <template v-if="loading">
+      <q-spinner
+        class="absolute-center"
+        color="primary"
+        size="3em"
+        :thickness="10"
+      />
+    </template>
+    <template v-else>
+      <graph-card
+        v-for="data in graphData"
+        :key="data.uid"
+        :graphData="data"
+        :periods="periods"
+        class="q-pt-md q-pl-md q-pr-md"
+      />
+    </template>
   </q-page>
 </template>
 
@@ -28,6 +38,7 @@ const refuelStore = useRefuelStore()
 const graphDataStore = useGraphDataStore()
 const settingsStore = useSettingsStore()
 
+const loading = ref(true)
 const periods = ref<Period[]>([])
 
 const graphData = computed(() => graphDataStore.graphData)
@@ -63,6 +74,14 @@ emitter.on('showGraphOptionsDialog', payload =>
   optionsDialog(optionsInDialog, payload)
 )
 
+emitter.on('selectedVehicleChanged', () =>
+  (() => {
+    graphDataStore
+      .readGraphData()
+      .then(() => setTimeout(() => (loading.value = false), 100))
+  })()
+)
+
 watchEffect(() => {
   // Emit inside watchEffect to catch window reloads
   emitter.emit(
@@ -79,10 +98,19 @@ watchEffect(() => {
 onBeforeMount(async () => {
   initSettings()
   periods.value = await refuelStore.getPeriods()
-  graphDataStore.readGraphData()
 })
 
 onUnmounted(() => {
   emitter.off('showGraphOptionsDialog')
+  emitter.off('selectedVehicleChanged')
 })
 </script>
+
+<style scoped>
+.innerLogo {
+  display: table-cell;
+  margin: 0 auto;
+  border: 1px dashed blue;
+  vertical-align: middle;
+}
+</style>

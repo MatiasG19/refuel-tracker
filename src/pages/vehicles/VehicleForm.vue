@@ -58,11 +58,12 @@ import {
   max50Characters
 } from 'src/scripts/libraries/validation'
 import { SelectOption } from 'src/scripts/models'
-import { useRefuelStore } from 'src/stores'
+import { useRefuelStore, useSettingsStore } from 'src/stores'
 import { Vehicle } from 'src/scripts/libraries/refuel/models'
 
 const router = useRouter()
 const refuelStore = useRefuelStore()
+const settingsStore = useSettingsStore()
 
 const vehicle = ref<Vehicle>(new Vehicle())
 const fuelUnits = ref<SelectOption[]>([])
@@ -78,7 +79,7 @@ async function onSubmit() {
   if (routePath.includes('/add'))
     await refuelStore.addVehicle({ ...vehicle.value })
   else if (routePath.includes('/edit')) {
-    await refuelStore.settings.changeSelectedVehicle({ ...vehicle.value })
+    await settingsStore.changeSelectedVehicle({ ...vehicle.value })
     await refuelStore.updateVehicle({ ...vehicle.value })
   }
   void router.push('/vehicles')

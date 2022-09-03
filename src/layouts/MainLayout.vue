@@ -64,7 +64,8 @@
             class="col"
             @click="add()"
             :disable="
-              !refuelStore.selectedVehicleId && !routePath.includes('/vehicles')
+              !settingsStore.selectedVehicleId &&
+              !routePath.includes('/vehicles')
             "
           />
         </div>
@@ -122,10 +123,10 @@ const linkList = [
 import { ref, computed, onUnmounted } from 'vue'
 import { useRouter } from 'vue-router'
 import { emitter } from 'src/boot/mitt'
-import { useRefuelStore } from 'src/stores'
+import { useSettingsStore } from 'src/stores'
 
 const router = useRouter()
-const refuelStore = useRefuelStore()
+const settingsStore = useSettingsStore()
 const routePath = computed(() => router.currentRoute.value.path)
 emitter.on('updateTitle', e => (title.value = e))
 

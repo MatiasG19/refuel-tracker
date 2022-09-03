@@ -1,12 +1,10 @@
 import { defineStore } from 'pinia'
-import { useGraphDataStore } from 'src/pages/graphData/stores/graphDataStore'
 import { Vehicle } from 'src/scripts/libraries/refuel/models'
 import { db } from 'src/boot/dexie'
 import { ref } from 'vue'
+import { emitter } from 'src/boot/mitt'
 
 export const useSettingsStore = defineStore('settingsStore', () => {
-  const graphDataStore = useGraphDataStore()
-
   const selectedDistanceUnitId = ref<number>(0)
   const selectedVehicleId = ref<number | null>(null)
   const selectedVehicleName = ref<string>('My car')
@@ -32,10 +30,8 @@ export const useSettingsStore = defineStore('settingsStore', () => {
       selectedVehicleId.value = vehicle.id
       selectedVehicleName.value = vehicle.name
       selectedVehiclePlateNumber.value = vehicle.plateNumber
-      // TODO Read graph data: Find other solution
-      // Read graph data
-      await graphDataStore.readGraphData()
 
+      emitter.emit('selectedVehicleChanged', true)
       return Promise.resolve()
     } else {
       settings[0].vehicleId = null

@@ -47,10 +47,9 @@
 import { ref, onMounted } from 'vue'
 import CSelect from 'src/components/inputs/CSelect.vue'
 import { emitter } from 'src/boot/mitt'
-import { useMainStore, useRefuelStore } from 'src/stores'
+import { useSettingsStore } from 'src/stores'
 
-const mainStore = useMainStore()
-const refuelStore = useRefuelStore()
+const settingsStore = useSettingsStore()
 
 const colorThemeOptions = [
   {
@@ -86,20 +85,20 @@ const distanceUnitOptions = [
   }
 ]
 
-const colorTheme = ref(mainStore.$state.selectedColorThemeId)
-const distanceUnit = ref(refuelStore.$state.selectedDistanceUnitId)
-const plateNumberInTitle = ref(refuelStore.$state.plateNumberInTitleActive)
+const colorTheme = ref(settingsStore.selectedColorThemeId)
+const distanceUnit = ref(settingsStore.selectedDistanceUnitId)
+const plateNumberInTitle = ref(settingsStore.plateNumberInTitleActive)
 
 function changeColorTheme(value: number) {
-  mainStore.changeColorTheme(value)
+  settingsStore.changeColorTheme(value)
 }
 
 function changeDistanceUnit(value: number) {
-  refuelStore.settings.changeDistanceUnit(value)
+  settingsStore.changeDistanceUnit(value)
 }
 
 function togglePlateNumberInTitle(value: boolean) {
-  refuelStore.settings.togglePlateNumberInTitle(value)
+  settingsStore.togglePlateNumberInTitle(value)
 }
 
 onMounted(() => {

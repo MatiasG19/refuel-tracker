@@ -5,6 +5,7 @@ type Events = {
   showGraphOptionsDialog: unknown
   showVehicleOptionsDialog: number
   showRefuelOptionsDialog: number
+  selectedVehicleChanged: boolean
 }
 
 export const emitter = mitt<Events>()

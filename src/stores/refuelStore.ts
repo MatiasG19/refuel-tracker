@@ -69,7 +69,7 @@ export const useRefuelStore = defineStore('refuelStore', () => {
     vehicles.value.forEach(v =>
       vehicleData.push({
         ...v,
-        fuelConsumption: (vehicleFuelConsumption(v) || '').toString()
+        fuelConsumption: (vehicleFuelConsumption(v).toFixed(2) || '').toString()
       })
     )
     return vehicleData

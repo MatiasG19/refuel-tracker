@@ -18,7 +18,6 @@ export const useGraphDataStore = defineStore('graphDataStore', () => {
   }
 
   async function readGraphData() {
-    graphData.value.length = 0
     if (!settings.selectedVehicleId) return
 
     const vehicle = await refuelStore.getVehicle(settings.selectedVehicleId)
