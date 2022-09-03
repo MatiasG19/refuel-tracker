@@ -33,6 +33,10 @@ import {
   OptionInDialog,
   optionsDialog
 } from 'src/components/dialogs/optionsDialog'
+import { useQuasar } from 'quasar'
+
+const $q = useQuasar()
+$q.dark.set('auto')
 
 const refuelStore = useRefuelStore()
 const graphDataStore = useGraphDataStore()
@@ -105,12 +109,3 @@ onUnmounted(() => {
   emitter.off('selectedVehicleChanged')
 })
 </script>
-
-<style scoped>
-.innerLogo {
-  display: table-cell;
-  margin: 0 auto;
-  border: 1px dashed blue;
-  vertical-align: middle;
-}
-</style>
