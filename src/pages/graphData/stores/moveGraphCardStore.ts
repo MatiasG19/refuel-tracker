@@ -9,7 +9,7 @@ export const useGraphCardStore = defineStore('graphCardStore', () => {
 
   function moveTop(uid: string) {
     ;(async () => {
-      let data = await db.graphSettings.toArray()
+      let data = await store.getGraphSettings()
       const selected = data.filter(s => s.uid === uid)[0]
       const stateSelected = store.graphData.filter(d => d.uid === uid)[0]
       stateSelected.sequence = 1
@@ -44,7 +44,9 @@ export const useGraphCardStore = defineStore('graphCardStore', () => {
 
   function moveUp(uid: string) {
     ;(async () => {
-      const data = await db.graphSettings.orderBy('sequence').toArray()
+      const data = (await store.getGraphSettings()).sort(
+        (a, b) => a.sequence - b.sequence
+      )
       const selected = data.filter(d => d.uid === uid)[0]
       const currentUp = data.filter(
         d => d.sequence === selected.sequence - 1
@@ -72,26 +74,18 @@ export const useGraphCardStore = defineStore('graphCardStore', () => {
         stateCurrentUp.sequence = currentUp.sequence
         stateSelected.sequence = upSequence
 
-        const length = store.graphData.length
-        const stateData = store.graphData.filter(
-          d => d.uid !== selected.uid && d.uid !== currentUp.uid
+        store.graphData = store.graphData.sort(
+          (a, b) => a.sequence - b.sequence
         )
-        // Refill array for reactivity
-        store.graphData.length = 0
-        for (let i = 1; i <= length; i++) {
-          if (stateCurrentUp.sequence === i)
-            store.graphData.push(stateCurrentUp)
-          else if (stateSelected.sequence === i)
-            store.graphData.push(stateSelected)
-          else store.graphData.push(stateData.filter(d => d.sequence === i)[0])
-        }
       })
     })()
   }
 
   function moveDown(uid: string) {
     ;(async () => {
-      const data = await db.graphSettings.orderBy('sequence').toArray()
+      const data = (await store.getGraphSettings()).sort(
+        (a, b) => a.sequence - b.sequence
+      )
       const selected = data.filter(d => d.uid === uid)[0]
       const currentDown = data.filter(
         d => d.sequence === selected.sequence + 1
@@ -119,26 +113,16 @@ export const useGraphCardStore = defineStore('graphCardStore', () => {
         stateCurrentDown.sequence = currentDown.sequence
         stateSelected.sequence = downSequence
 
-        const length = store.graphData.length
-        const stateData = store.graphData.filter(
-          d => d.uid !== selected.uid && d.uid !== currentDown.uid
+        store.graphData = store.graphData.sort(
+          (a, b) => a.sequence - b.sequence
         )
-        // Refill array for reactivity
-        store.graphData.length = 0
-        for (let i = 1; i <= length; i++) {
-          if (stateCurrentDown.sequence === i)
-            store.graphData.push(stateCurrentDown)
-          else if (stateSelected.sequence === i)
-            store.graphData.push(stateSelected)
-          else store.graphData.push(stateData.filter(d => d.sequence === i)[0])
-        }
       })
     })()
   }
 
   function moveBottom(uid: string) {
     ;(async () => {
-      let data = await db.graphSettings.toArray()
+      let data = await store.getGraphSettings()
       const selected = data.filter(s => s.uid === uid)[0]
       const stateSelected = store.graphData.filter(d => d.uid === uid)[0]
       stateSelected.sequence = store.graphData.length
