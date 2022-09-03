@@ -1,5 +1,5 @@
 import { i18n } from 'src/boot/i18n'
-import { Period } from '../libraries/graphData/models'
+import { Period } from 'src/pages/graphData/scripts/models'
 
 export function getPeriods(): Period[] {
   const { t } = i18n.global

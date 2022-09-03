@@ -1,5 +1,5 @@
-import { vehicleRefuelsMade } from '../../refuel/functions/vehicle'
-import { Vehicle } from '../../refuel/models'
+import { vehicleRefuelsMade } from 'src/scripts/libraries/refuel/functions/vehicle'
+import { Vehicle } from 'src/scripts/libraries/refuel/models'
 import { AbstractGraphData } from '../abstract/AbstractGraphData'
 
 export class RefuelsMade extends AbstractGraphData {

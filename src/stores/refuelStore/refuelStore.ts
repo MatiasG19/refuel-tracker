@@ -1,17 +1,17 @@
 import { defineStore } from 'pinia'
 import { ref } from 'vue'
 import { db } from '../../boot/dexie'
-import { GraphDataFactory } from 'src/scripts/libraries/graphData/GraphDataFactory'
+import { GraphDataFactory } from 'src/pages/graphData/scripts/GraphDataFactory'
 import { getFuelUnits as returnfuelUnits } from 'src/scripts/staticData/fuelUnits'
 import { getPeriods as returnPeriods } from 'src/scripts/staticData/periods'
-import { GraphData } from 'src/scripts/libraries/graphData/models'
+import { GraphData } from 'src/pages/graphData/scripts/models'
 import {
   Refuel,
   Vehicle,
   VehicleData
 } from 'src/scripts/libraries/refuel/models'
 import { vehicleFuelConsumption } from 'src/scripts/libraries/refuel/functions/vehicle'
-import { useMoveGraphCardStore } from './moveGraphCardStore'
+import { useMoveGraphCardStore } from '../../pages/graphData/stores/moveGraphCardStore'
 import { useSettingsStore } from './settingsStore'
 
 export const useRefuelStore = defineStore('refuelStore', () => {

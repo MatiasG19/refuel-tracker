@@ -11,7 +11,7 @@
 </template>
 
 <script setup lang="ts">
-import VehicleCard from 'src/components/VehicleCard.vue'
+import VehicleCard from 'src/pages/vehicles/components/VehicleCard.vue'
 import { optionsDialog } from 'src/components/dialogs/optionsDialog'
 import { confirmDialog } from 'src/components/dialogs/confirmDialog'
 import { useRouter } from 'vue-router'

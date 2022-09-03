@@ -1,5 +1,5 @@
-import { vehicleMoneySpent } from '../../refuel/functions/vehicle'
-import { Vehicle } from '../../refuel/models'
+import { vehicleMoneySpent } from 'src/scripts/libraries/refuel/functions/vehicle'
+import { Vehicle } from 'src/scripts/libraries/refuel/models'
 import { AbstractGraphData } from '../abstract/AbstractGraphData'
 
 export class MoneySpent extends AbstractGraphData {

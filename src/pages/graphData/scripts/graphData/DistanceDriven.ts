@@ -1,5 +1,5 @@
-import { vehicleDistanceDriven } from '../../refuel/functions/vehicle'
-import { Vehicle } from '../../refuel/models'
+import { vehicleDistanceDriven } from 'src/scripts/libraries/refuel/functions/vehicle'
+import { Vehicle } from 'src/scripts/libraries/refuel/models'
 import { AbstractGraphData } from '../abstract/AbstractGraphData'
 
 export class DistanceDriven extends AbstractGraphData {

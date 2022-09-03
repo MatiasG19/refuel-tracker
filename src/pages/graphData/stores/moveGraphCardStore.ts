@@ -1,6 +1,6 @@
 import { defineStore } from 'pinia'
-import { db } from '../../boot/dexie'
-import { useRefuelStore } from './refuelStore'
+import { db } from '../../../boot/dexie'
+import { useRefuelStore } from '../../../stores/refuelStore/refuelStore'
 
 export const useMoveGraphCardStore = defineStore('moveGraphCardStore', () => {
   const store = useRefuelStore()

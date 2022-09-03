@@ -23,7 +23,7 @@
 </template>
 
 <script setup lang="ts">
-import RefuelCard from 'src/components/RefuelCard.vue'
+import RefuelCard from 'src/pages/refuels/components/RefuelCard.vue'
 import { computed, ref, onMounted, onUnmounted } from 'vue'
 import { useRouter } from 'vue-router'
 import { emitter } from 'src/boot/mitt'

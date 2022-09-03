@@ -11,13 +11,13 @@
 </template>
 
 <script setup lang="ts">
-import GraphCard from 'src/components/GraphCard.vue'
+import GraphCard from 'src/pages/graphData/components/GraphCard.vue'
 import { ref, watchEffect, computed, onBeforeMount, onUnmounted } from 'vue'
 import { emitter } from 'src/boot/mitt'
-import { productName } from '../../package.json'
+import { productName } from '../../../package.json'
 import { useRefuelStore } from 'src/stores'
 import { initSettings } from 'src/scripts/initSettings'
-import { GraphData, Period } from 'src/scripts/libraries/graphData/models'
+import { GraphData, Period } from 'src/pages/graphData/scripts/models'
 import {
   OptionInDialog,
   optionsDialog

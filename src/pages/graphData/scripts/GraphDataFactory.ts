@@ -1,4 +1,4 @@
-import { Vehicle } from '../refuel/models'
+import { Vehicle } from 'src/scripts/libraries/refuel/models'
 import { AbstractGraphData } from './abstract/AbstractGraphData'
 import { GraphSettings, GraphData } from './models'
 
