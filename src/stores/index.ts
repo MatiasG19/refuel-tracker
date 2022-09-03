@@ -1,4 +1,4 @@
-import { useMainStore } from 'src/stores/mainStore'
-import { useRefuelStore } from 'src/stores/refuelStore/refuelStore'
+import { useRefuelStore } from 'src/stores/refuelStore'
+import { useSettingsStore } from 'src/stores/settingsStore'
 
-export { useMainStore, useRefuelStore }
+export { useSettingsStore, useRefuelStore }

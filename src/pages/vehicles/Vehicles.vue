@@ -17,11 +17,12 @@ import { confirmDialog } from 'src/components/dialogs/confirmDialog'
 import { useRouter } from 'vue-router'
 import { computed, onMounted, onUnmounted } from 'vue'
 import { emitter } from 'src/boot/mitt'
-import { useRefuelStore } from 'src/stores'
+import { useRefuelStore, useSettingsStore } from 'src/stores'
 import { Vehicle } from 'src/scripts/libraries/refuel/models'
 
 const router = useRouter()
 const refuelStore = useRefuelStore()
+const settingsStore = useSettingsStore()
 
 const vehicleData = computed(() => {
   if (refuelStore.vehicles) return refuelStore.getAllVehicleData()
@@ -56,7 +57,7 @@ emitter.on('showVehicleOptionsDialog', id =>
 
 async function selectVehicle(vehicle: Vehicle) {
   emitter.emit('updateTitle', vehicle.name)
-  await refuelStore.settings.changeSelectedVehicle({ ...vehicle })
+  await settingsStore.changeSelectedVehicle({ ...vehicle })
   await router.push('/')
 }
 

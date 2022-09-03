@@ -15,7 +15,7 @@ import GraphCard from 'src/pages/graphData/components/GraphCard.vue'
 import { ref, watchEffect, computed, onBeforeMount, onUnmounted } from 'vue'
 import { emitter } from 'src/boot/mitt'
 import { productName } from '../../../package.json'
-import { useRefuelStore } from 'src/stores'
+import { useRefuelStore, useSettingsStore } from 'src/stores'
 import { useGraphDataStore } from './stores/graphDataStore'
 import { initSettings } from 'src/scripts/initSettings'
 import { GraphData, Period } from 'src/pages/graphData/scripts/models'
@@ -26,6 +26,7 @@ import {
 
 const refuelStore = useRefuelStore()
 const graphDataStore = useGraphDataStore()
+const settingsStore = useSettingsStore()
 
 const periods = ref<Period[]>([])
 
@@ -67,10 +68,10 @@ watchEffect(() => {
   emitter.emit(
     'updateTitle',
     (() => {
-      if (!refuelStore.selectedVehicleId) return productName
-      else if (refuelStore.plateNumberInTitleActive)
-        return refuelStore.selectedVehiclePlateNumber
-      return refuelStore.selectedVehicleName
+      if (!settingsStore.selectedVehicleId) return productName
+      else if (settingsStore.plateNumberInTitleActive)
+        return settingsStore.selectedVehiclePlateNumber
+      return settingsStore.selectedVehicleName
     })()
   )
 })

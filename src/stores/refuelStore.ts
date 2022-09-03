@@ -1,6 +1,6 @@
 import { defineStore } from 'pinia'
 import { ref } from 'vue'
-import { db } from '../../boot/dexie'
+import { db } from '../boot/dexie'
 import { getFuelUnits as returnfuelUnits } from 'src/scripts/staticData/fuelUnits'
 import { getPeriods as returnPeriods } from 'src/scripts/staticData/periods'
 import {
@@ -12,17 +12,10 @@ import { vehicleFuelConsumption } from 'src/scripts/libraries/refuel/functions/v
 import { useSettingsStore } from './settingsStore'
 
 export const useRefuelStore = defineStore('refuelStore', () => {
-  const refuels = ref<Refuel[]>([])
-  const vehicles = ref<Vehicle[]>([])
-
   const settings = useSettingsStore()
 
-  const selectedDistanceUnitId = ref<number>(0)
-  const selectedVehicleId = ref<number | null>(null)
-  const selectedVehicleName = ref<string>('My car')
-  const selectedVehiclePlateNumber = ref<string>('')
-  const plateNumberInTitleActive = ref<boolean>(false)
-  const refuelFilterActive = ref<boolean>(false)
+  const refuels = ref<Refuel[]>([])
+  const vehicles = ref<Vehicle[]>([])
 
   async function readRefuels(vehicleId: number) {
     await db.refuels
@@ -35,8 +28,8 @@ export const useRefuelStore = defineStore('refuelStore', () => {
   }
 
   async function getRefuel(id: number) {
-    if (!selectedVehicleId.value) return
-    await readRefuels(selectedVehicleId.value)
+    if (!settings.selectedVehicleId) return
+    await readRefuels(settings.selectedVehicleId)
     return refuels.value.find(v => v.id == id) ?? null
   }
 
@@ -133,13 +126,6 @@ export const useRefuelStore = defineStore('refuelStore', () => {
   return {
     refuels,
     vehicles,
-    settings,
-    selectedDistanceUnitId,
-    selectedVehicleId,
-    selectedVehicleName,
-    selectedVehiclePlateNumber,
-    plateNumberInTitleActive,
-    refuelFilterActive,
     readRefuels,
     getRefuel,
     addRefuel,
