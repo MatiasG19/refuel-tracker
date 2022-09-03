@@ -42,7 +42,7 @@ const refuelStore = useRefuelStore()
 const graphDataStore = useGraphDataStore()
 const settingsStore = useSettingsStore()
 
-const loading = ref(true)
+const loading = ref(false)
 const periods = ref<Period[]>([])
 
 const graphData = computed(() => graphDataStore.graphData)
@@ -83,6 +83,7 @@ emitter.on('selectedVehicleChanged', () =>
     graphDataStore
       .readGraphData()
       .then(() => setTimeout(() => (loading.value = false), 100))
+    loading.value = false
   })()
 )
 
