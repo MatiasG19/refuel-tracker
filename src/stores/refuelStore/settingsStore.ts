@@ -1,10 +1,12 @@
 import { defineStore } from 'pinia'
+import { useGraphDataStore } from 'src/pages/graphData/stores/graphDataStore'
 import { Vehicle } from 'src/scripts/libraries/refuel/models'
 import { db } from '../../boot/dexie'
 import { useRefuelStore } from './refuelStore'
 
 export const useSettingsStore = defineStore('settingsStore', () => {
   const store = useRefuelStore()
+  const graphDataStore = useGraphDataStore()
 
   function changeDistanceUnit(distanceUnitId: number) {
     ;(async () => {
@@ -24,7 +26,7 @@ export const useSettingsStore = defineStore('settingsStore', () => {
       store.selectedVehicleName = vehicle.name
       store.selectedVehiclePlateNumber = vehicle.plateNumber
       // Read graph data
-      await store.readGraphData()
+      await graphDataStore.readGraphData()
 
       return Promise.resolve()
     } else {

@@ -1,25 +1,20 @@
 import { defineStore } from 'pinia'
 import { ref } from 'vue'
 import { db } from '../../boot/dexie'
-import { GraphDataFactory } from 'src/pages/graphData/scripts/GraphDataFactory'
 import { getFuelUnits as returnfuelUnits } from 'src/scripts/staticData/fuelUnits'
 import { getPeriods as returnPeriods } from 'src/scripts/staticData/periods'
-import { GraphData } from 'src/pages/graphData/scripts/models'
 import {
   Refuel,
   Vehicle,
   VehicleData
 } from 'src/scripts/libraries/refuel/models'
 import { vehicleFuelConsumption } from 'src/scripts/libraries/refuel/functions/vehicle'
-import { useMoveGraphCardStore } from '../../pages/graphData/stores/moveGraphCardStore'
 import { useSettingsStore } from './settingsStore'
 
 export const useRefuelStore = defineStore('refuelStore', () => {
-  const graphData = ref<GraphData[]>([])
   const refuels = ref<Refuel[]>([])
   const vehicles = ref<Vehicle[]>([])
 
-  const moveGraphCard = useMoveGraphCardStore()
   const settings = useSettingsStore()
 
   const selectedDistanceUnitId = ref<number>(0)
@@ -28,24 +23,6 @@ export const useRefuelStore = defineStore('refuelStore', () => {
   const selectedVehiclePlateNumber = ref<string>('')
   const plateNumberInTitleActive = ref<boolean>(false)
   const refuelFilterActive = ref<boolean>(false)
-
-  async function getGraphSettings() {
-    return await db.graphSettings.toArray()
-  }
-
-  // async function changeGraphVisibility(state: boolean) {}
-
-  async function readGraphData() {
-    graphData.value.length = 0
-    if (!selectedVehicleId.value) return
-
-    const vehicle = await getVehicle(selectedVehicleId.value)
-    if (vehicle && vehicle.refuels?.length) {
-      graphData.value = new GraphDataFactory(vehicle)
-        .getAll(await getGraphSettings())
-        .sort((a, b) => a.sequence - b.sequence)
-    }
-  }
 
   async function readRefuels(vehicleId: number) {
     await db.refuels
@@ -154,10 +131,8 @@ export const useRefuelStore = defineStore('refuelStore', () => {
   }
 
   return {
-    graphData,
     refuels,
     vehicles,
-    moveGraphCard,
     settings,
     selectedDistanceUnitId,
     selectedVehicleId,
@@ -165,9 +140,6 @@ export const useRefuelStore = defineStore('refuelStore', () => {
     selectedVehiclePlateNumber,
     plateNumberInTitleActive,
     refuelFilterActive,
-    getGraphSettings,
-    // changeGraphVisibility,
-    readGraphData,
     readRefuels,
     getRefuel,
     addRefuel,

@@ -1,9 +1,11 @@
 import { defineStore } from 'pinia'
 import { db } from '../../../boot/dexie'
-import { useRefuelStore } from '../../../stores/refuelStore/refuelStore'
+import { useGraphDataStore } from './graphDataStore'
 
-export const useMoveGraphCardStore = defineStore('moveGraphCardStore', () => {
-  const store = useRefuelStore()
+export const useGraphCardStore = defineStore('graphCardStore', () => {
+  const store = useGraphDataStore()
+
+  // async function changeGraphVisibility(state: boolean) {}
 
   function moveTop(uid: string) {
     ;(async () => {

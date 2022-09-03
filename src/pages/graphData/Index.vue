@@ -16,6 +16,7 @@ import { ref, watchEffect, computed, onBeforeMount, onUnmounted } from 'vue'
 import { emitter } from 'src/boot/mitt'
 import { productName } from '../../../package.json'
 import { useRefuelStore } from 'src/stores'
+import { useGraphDataStore } from './stores/graphDataStore'
 import { initSettings } from 'src/scripts/initSettings'
 import { GraphData, Period } from 'src/pages/graphData/scripts/models'
 import {
@@ -24,35 +25,36 @@ import {
 } from 'src/components/dialogs/optionsDialog'
 
 const refuelStore = useRefuelStore()
+const graphDataStore = useGraphDataStore()
 
 const periods = ref<Period[]>([])
 
-const graphData = computed(() => refuelStore.graphData)
+const graphData = computed(() => graphDataStore.graphData)
 
 const optionsInDialog: OptionInDialog[] = [
   {
     text: 'Move top',
     icon: 'keyboard_double_arrow_up',
     action: (data: unknown) =>
-      refuelStore.moveGraphCard.moveTop((data as GraphData).uid)
+      graphDataStore.moveGraphCard.moveTop((data as GraphData).uid)
   },
   {
     text: 'Move up',
     icon: 'keyboard_arrow_up',
     action: (data: unknown) =>
-      refuelStore.moveGraphCard.moveUp((data as GraphData).uid)
+      graphDataStore.moveGraphCard.moveUp((data as GraphData).uid)
   },
   {
     text: 'Move down',
     icon: 'keyboard_arrow_down',
     action: (data: unknown) =>
-      refuelStore.moveGraphCard.moveDown((data as GraphData).uid)
+      graphDataStore.moveGraphCard.moveDown((data as GraphData).uid)
   },
   {
     text: 'Move bottom',
     icon: 'keyboard_double_arrow_down',
     action: (data: unknown) =>
-      refuelStore.moveGraphCard.moveBottom((data as GraphData).uid)
+      graphDataStore.moveGraphCard.moveBottom((data as GraphData).uid)
   }
 ]
 
@@ -76,7 +78,7 @@ watchEffect(() => {
 onBeforeMount(async () => {
   initSettings()
   periods.value = await refuelStore.getPeriods()
-  refuelStore.readGraphData()
+  graphDataStore.readGraphData()
 })
 
 onUnmounted(() => {
