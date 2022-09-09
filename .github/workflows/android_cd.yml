@@ -30,8 +30,8 @@ jobs:
       - run: yarn appbuild
 
       - name: Upload artifact
-          uses: actions/upload-artifact@v3
-          with:
-            name: artifacts
-            path: 
-              /home/runner/work/refuel-tracker/refuel-tracker/dist/capacitor/android
+        uses: actions/upload-artifact@v3
+        with:
+          name: artifacts
+          path: 
+            /home/runner/work/refuel-tracker/refuel-tracker/dist/capacitor/android
