@@ -49,7 +49,7 @@ jobs:
       - run: yarn appbuild
       
       - name: Sign APK
-        uses: Tlaster/android-sign@v1
+        uses: Tlaster/android-sign@v1.2.2
         with:
           releaseDirectory: 
             /home/runner/work/refuel-tracker/refuel-tracker/dist/capacitor/android
