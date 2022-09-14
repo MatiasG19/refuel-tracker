@@ -52,7 +52,7 @@ jobs:
         uses: Tlaster/android-sign@v1.2.2
         with:
           releaseDirectory: 
-            /home/runner/work/refuel-tracker/refuel-tracker/dist/capacitor/android/apk/released
+            /home/runner/work/refuel-tracker/refuel-tracker/dist/capacitor/android/apk/release
           signingKeyBase64: ${{ secrets.MY_KEY }}
           output: build/release/signed
           alias: ${{ secrets.KEY_ALIAS }}
