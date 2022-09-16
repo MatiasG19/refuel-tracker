@@ -65,17 +65,13 @@ jobs:
       - name: Rename Apk
         run: mv /home/runner/work/refuel-tracker/refuel-tracker/dist/capacitor/android/apk/release/app-release-unsigned.apk /home/runner/work/refuel-tracker/refuel-tracker/dist/capacitor/android/apk/release/refuel-tracker.apk
 
-      # - name: Auth GitHub
-      #   run: gh auth login --with-token < ${{ secrets.GITHUB_TOKEN }}
-      #   env:
-      #     GH_TOKEN: $
+      - name: Auth GitHub
+        run: gh auth login
+        env:
+          GH_TOKEN: $
 
       - name: Create Release
         run: gh release create ${{ github.event.inputs.appendix }} --generate-notes --draft
-        env:
-          GH_TOKEN: $
 
       - name: Upload Apk
         run: gh release upload /home/runner/work/refuel-tracker/refuel-tracker/dist/capacitor/android/apk/release/*.apk
-        env:
-          GH_TOKEN: $
