@@ -63,7 +63,7 @@ jobs:
           BUILD_TOOLS_VERSION: '30.0.2'
 
       - name: Rename Apk
-        run: mv /home/runner/work/refuel-tracker/refuel-tracker/dist/capacitor/android/apk/release/*.apk /home/runner/work/refuel-tracker/refuel-tracker/dist/capacitor/android/apk/release/RefuelTracker_${{ github.event.inputs.appendix }}
+        run: mv /home/runner/work/refuel-tracker/refuel-tracker/dist/capacitor/android/apk/release/*.apk /home/runner/work/refuel-tracker/refuel-tracker/dist/capacitor/android/apk/release/RefuelTracker_${{ github.event.inputs.appendix }}.apk
 
       # - name: Auth GitHub
       #   run: gh auth login --with-token < ${{ secrets.GITHUB_TOKEN }}
