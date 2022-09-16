@@ -14,9 +14,6 @@ on:
         default: 'V0.0.0'
         required: true
 
-env:
-  GH_TOKEN: $
-
 jobs:
   build:
     runs-on: ubuntu-latest
