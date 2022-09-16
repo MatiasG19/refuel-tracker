@@ -14,6 +14,9 @@ on:
         default: 'V0.0.0'
         required: true
 
+env:
+  GH_TOKEN: $
+
 jobs:
   build:
     runs-on: ubuntu-latest
@@ -66,7 +69,7 @@ jobs:
         run: mv /home/runner/work/refuel-tracker/refuel-tracker/dist/capacitor/android/apk/release/app-release-unsigned.apk /home/runner/work/refuel-tracker/refuel-tracker/dist/capacitor/android/apk/release/refuel-tracker.apk
 
       - name: Auth GitHub
-        run: gh auth login --wtih-token < ${{ secrets.GITHUB_TOKEN }}
+        run: gh auth login
 
       - name: Create Release
         run: gh release create ${{ github.event.inputs.appendix }} --generate-notes --draft
