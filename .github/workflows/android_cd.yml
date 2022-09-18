@@ -77,10 +77,11 @@ jobs:
           cd /home/runner/work/refuel-tracker/refuel-tracker/dist/capacitor/android/apk/release &&
           mv app-release-unsigned-signed.apk $(
           if [ ${{ contains(fromJson('["release", "prerelease"]'), inputs.release-type) }} ]; then
-          echo refuel-tracker-${{ inputs.tag }}.apk
+          echo refuel-tracker-${{ inputs.tag }}.apk;
           elif [ ${{ inputs.release-type == 'artifact' }} ]; then
           echo refuel-tracker-artifact.apk;
-          else echo refuel-tracker.apk; fi)
+          else echo refuel-tracker.apk;
+          fi)
 
       - name: Create release
         if: ${{ contains(fromJson('["release", "prerelease"]'), inputs.release-type) }}
