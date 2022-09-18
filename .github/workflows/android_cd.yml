@@ -19,6 +19,7 @@ on:
         required: true
 
 env:
+  REPO_NAME: ${{ github.event.repository.name }}
   RELEASE_PATH: /home/runner/work/refuel-tracker/refuel-tracker/dist/capacitor/android/apk/release
   RELEASE_PATH_SIGNED: $/home/runner/work/refuel-tracker/refuel-tracker/dist/capacitor/android/apk/release/signed
 
@@ -80,11 +81,11 @@ jobs:
       - name: Rename apk
         run: cd ${{ env.RELEASE_PATH_SIGNED }} &&
           mv *.apk $(
-          if [ ${{ contains(fromJson('["release", "prerelease"]'), inputs.release-type) }} ]; then
-          echo refuel-tracker-${{ inputs.tag }}.apk;
-          elif [ ${{ inputs.release-type == 'artifact' }} ]; then
-          echo refuel-tracker-artifact.apk;
-          else echo refuel-tracker.apk;
+          if ${{ contains(fromJson('["release", "prerelease"]'), inputs.release-type) }}; then
+          echo ${{ REPO_NAME }}-${{ inputs.tag }}.apk;
+          elif ${{ inputs.release-type == 'artifact' }}; then
+          echo ${{ REPO_NAME }}-artifact-$(date +”%Y%d%b-%H%M”).apk;
+          else echo ${{ REPO_NAME }}-$(date +”%Y%d%b-%H%M”).apk;
           fi)
 
       - name: Create release
@@ -103,5 +104,5 @@ jobs:
         if: ${{ inputs.release-type == 'artifact' }}
         uses: actions/upload-artifact@v3
         with:
-          name: refuel-tracker-artifact
+          name: ${{ REPO_NAME }}-artifact
           path: ${{ env.RELEASE_PATH_SIGNED }}
