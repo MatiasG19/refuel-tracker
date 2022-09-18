@@ -1,4 +1,4 @@
-# Refuel Tracker [![Android CI](https://github.com/MatiasG19/refuel-tracker/actions/workflows/android_ci.yml/badge.svg)](https://github.com/MatiasG19/refuel-tracker/actions/workflows/android_ci.yml)
+# Refuel Tracker [![Android CI][ci-img]][ci-url]
 
 Tracks your refuels and displays your data in nice grahs.
 
@@ -24,3 +24,6 @@ Tracks your refuels and displays your data in nice grahs.
 ```bash
 yarn && yarn dev
 ```
+
+[ci-img]: https://github.com/MatiasG19/refuel-tracker/actions/workflows/android_ci.yml/badge.svg?branch=main
+[ci-url]: https://github.com/MatiasG19/refuel-tracker/actions/workflows/android_ci.yml
