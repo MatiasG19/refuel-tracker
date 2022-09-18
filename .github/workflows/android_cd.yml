@@ -48,9 +48,9 @@ jobs:
         id: yarn-cache-dir-path
         run: echo "::set-output name=dir::$(yarn cache dir)"
 
-      - name: Cache yarn
+      - name: Cache yarn dependecies
         uses: actions/cache@v3
-        id: yarn-cache # use this to check for `cache-hit` (`steps.yarn-cache.outputs.cache-hit != 'true'`)
+        id: yarn-cache
         with:
           path: ${{ steps.yarn-cache-dir-path.outputs.dir }}
           key: ${{ runner.os }}-yarn-${{ hashFiles('**/yarn.lock') }}
@@ -58,6 +58,7 @@ jobs:
             ${{ runner.os }}-yarn-
 
       - name: Install app dependecies
+        if: steps.yarn-cache.outputs.cache-hit != 'true'
         run: yarn
 
       - name: Run tests
