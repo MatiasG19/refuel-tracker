@@ -69,7 +69,7 @@ jobs:
       #   run: gh auth login
 
       - name: Create Release
-        run: gh release create ${{ github.event.inputs.appendix }} --generate-notes --draft
+        run: gh release create ${{ github.event.inputs.appendix }} --generate-notes
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
