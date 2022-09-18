@@ -80,7 +80,7 @@ jobs:
       - name: Rename apk
         run: cd ${{ env.RELEASE_PATH_SIGNED }} &&
           mv *.apk $(
-          if [ $(echo ${{ contains(fromJson('["release", "prerelease"]'), inputs.release-type) }}) ]; then
+          if [ ${{ contains(fromJson('["release", "prerelease"]'), inputs.release-type) }} ]; then
           echo refuel-tracker-${{ inputs.tag }}.apk;
           elif [ ${{ inputs.release-type == 'artifact' }} ]; then
           echo refuel-tracker-artifact.apk;
