@@ -82,10 +82,10 @@ jobs:
         run: cd ${{ env.RELEASE_PATH_SIGNED }} &&
           mv *.apk $(
           if ${{ contains(fromJson('["release", "prerelease"]'), inputs.release-type) }}; then
-          echo ${{ REPO_NAME }}-${{ inputs.tag }}.apk;
+          echo ${{ env.REPO_NAME }}-${{ inputs.tag }}.apk;
           elif ${{ inputs.release-type == 'artifact' }}; then
-          echo ${{ REPO_NAME }}-artifact-$(date +”%Y%d%b-%H%M”).apk;
-          else echo ${{ REPO_NAME }}-$(date +”%Y%d%b-%H%M”).apk;
+          echo ${{ env.REPO_NAME }}-artifact-$(date +”%Y%d%b-%H%M”).apk;
+          else echo ${{ env.REPO_NAME }}-$(date +”%Y%d%b-%H%M”).apk;
           fi)
 
       - name: Create release
@@ -104,5 +104,5 @@ jobs:
         if: ${{ inputs.release-type == 'artifact' }}
         uses: actions/upload-artifact@v3
         with:
-          name: ${{ REPO_NAME }}-artifact
+          name: ${{ env.REPO_NAME }}-artifact
           path: ${{ env.RELEASE_PATH_SIGNED }}
