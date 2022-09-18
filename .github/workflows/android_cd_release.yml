@@ -36,7 +36,8 @@ jobs:
           node-version: ${{ matrix.node-version }}
           cache: 'npm'
 
-      - run: npm install --global yarn
+      - name: Install yarn
+        run: npm install --global yarn
 
       - name: Get yarn cache directory path
         id: yarn-cache-dir-path
@@ -51,7 +52,7 @@ jobs:
             ${{ runner.os }}-yarn-
 
       - name: Install app dependecies
-      - run: yarn
+        run: yarn
 
       - name: Run tests
         run: yarn test
