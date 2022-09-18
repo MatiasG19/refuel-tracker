@@ -27,7 +27,7 @@ jobs:
         node-version: [16.x]
 
     steps:
-      - name: Checkout
+      - name: Checkout branch
         uses: actions/checkout@v3
 
       - name: Use Node.js ${{ matrix.node-version }}
@@ -43,7 +43,8 @@ jobs:
         id: yarn-cache-dir-path
         run: echo "::set-output name=dir::$(yarn cache dir)"
 
-      - uses: actions/cache@v3
+      - name: Cache yarn
+        uses: actions/cache@v3
         id: yarn-cache # use this to check for `cache-hit` (`steps.yarn-cache.outputs.cache-hit != 'true'`)
         with:
           path: ${{ steps.yarn-cache-dir-path.outputs.dir }}
@@ -66,9 +67,9 @@ jobs:
       - name: Sign apk
         uses: Tlaster/android-sign@v1.2.2
         with:
-          releaseDirectory: $RELEASE_PATH
+          releaseDirectory: ${{ $RELEASE_PATH }}
           signingKeyBase64: ${{ secrets.MY_KEY }}
-          output: $RELEASE_PATH/signed
+          output: ${{ $RELEASE_PATH/signed }}
           alias: ${{ secrets.KEY_ALIAS }}
           keyStorePassword: ${{ secrets.KEY_STORE_PASSWORD }}
           keyPassword: ${{ secrets.KEY_PASSWORD }}
@@ -102,4 +103,4 @@ jobs:
         uses: actions/upload-artifact@v3
         with:
           name: refuel-tracker-artifact
-          path: $RELEASE_PATH/signed
+          path: ${{ $RELEASE_PATH/signed }}
