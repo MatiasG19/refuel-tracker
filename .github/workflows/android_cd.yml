@@ -57,7 +57,7 @@ jobs:
             ${{ runner.os }}-yarn-
 
       - name: Install app dependecies
-        if: steps.yarn-cache.outputs.cache-hit == 'false'
+        #if: steps.yarn-cache.outputs.cache-hit == 'false'
         run: yarn
 
       - name: Run tests
