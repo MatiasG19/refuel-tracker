@@ -39,10 +39,7 @@ jobs:
         uses: actions/setup-node@v3
         with:
           node-version: ${{ matrix.node-version }}
-          cache: 'npm'
-
-      - name: Install yarn
-        run: npm install --global yarn
+          cache: 'yarn'
 
       - name: Get yarn cache directory path
         id: yarn-cache-dir-path
@@ -58,7 +55,7 @@ jobs:
             ${{ runner.os }}-yarn-
 
       - name: Install app dependecies
-        if: steps.yarn-cache.outputs.cache-hit != 'true'
+        # if: steps.yarn-cache.outputs.cache-hit != 'true'
         run: yarn
 
       - name: Run tests
