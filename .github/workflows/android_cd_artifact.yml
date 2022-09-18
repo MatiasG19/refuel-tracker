@@ -12,7 +12,7 @@ on:
         required: true
 
 jobs:
-  build:
+  create-artifact:
     runs-on: ubuntu-latest
 
     strategy:
@@ -59,8 +59,11 @@ jobs:
         env:
           BUILD_TOOLS_VERSION: '30.0.2'
 
+      - name: Rename apk
+        run: mv /home/runner/work/refuel-tracker/refuel-tracker/dist/capacitor/android/apk/release/app-release-unsigned-signed.apk /home/runner/work/refuel-tracker/refuel-tracker/dist/capacitor/android/apk/release/refuel-tracker-artifact.apk
+
       - name: Upload artifact
         uses: actions/upload-artifact@v3
         with:
-          name: RefuelTracker_${{ github.event.inputs.appendix }}
+          name: refuel-tracker-artifact
           path: build/release/signed

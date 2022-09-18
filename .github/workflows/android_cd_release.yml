@@ -1,21 +1,25 @@
 # This workflow will do a clean installation of node dependencies, cache/restore them, build the source code and run tests across different versions of node
 # For more information see: https://help.github.com/actions/language-and-framework-guides/using-nodejs-with-github-actions
 
-name: Android CD Release
+name: Android CD
 
 on:
-  push:
-    tags:
-      - 'v*'
   workflow_dispatch:
     inputs:
-      appendix:
+      choice:
+        type: choice
+        description: Create apk
+        options:
+          - release
+          - prerelease
+          - artifact
+      version:
         description: 'Version'
         default: 'V0.0.0'
         required: true
 
 jobs:
-  build:
+  create-release:
     runs-on: ubuntu-latest
 
     strategy:
@@ -62,18 +66,35 @@ jobs:
         env:
           BUILD_TOOLS_VERSION: '30.0.2'
 
-      - name: Rename Apk
-        run: mv /home/runner/work/refuel-tracker/refuel-tracker/dist/capacitor/android/apk/release/app-release-unsigned.apk /home/runner/work/refuel-tracker/refuel-tracker/dist/capacitor/android/apk/release/refuel-tracker.apk
+      - name: Rename apk
+        if: ${{ inputs.choice == 'release' || inputs.choice == 'prerelease'}}
+        run: mv /home/runner/work/refuel-tracker/refuel-tracker/dist/capacitor/android/apk/release/app-release-unsigned-signed.apk /home/runner/work/refuel-tracker/refuel-tracker/dist/capacitor/android/apk/release/refuel-tracker-${{ inputs.version }}.apk
 
-      # - name: Auth GitHub
-      #   run: gh auth login
+      - name: Rename apk
+        if: ${{ inputs.choice }} == 'artifact'
+        run: mv /home/runner/work/refuel-tracker/refuel-tracker/dist/capacitor/android/apk/release/app-release-unsigned-signed.apk /home/runner/work/refuel-tracker/refuel-tracker/dist/capacitor/android/apk/release/refuel-tracker-artifact.apk
 
-      - name: Create Release
-        run: gh release create ${{ github.event.inputs.appendix }} --generate-notes
+      - name: Create release
+        if: ${{ inputs.choice == 'release' }}
+        run: gh release create ${{ inputs.version }} --generate-notes
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Create prerelease
+        if: ${{ inputs.choice == 'prerelease' }}
+        run: gh release create ${{ inputs.version }} --generate-notes --prerelease
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Upload Apk
-        run: gh release upload ${{ github.event.inputs.appendix }} /home/runner/work/refuel-tracker/refuel-tracker/dist/capacitor/android/apk/release/*.apk
+        if: ${{ inputs.choice  == 'release' || inputs.choice == 'prerelease' }}
+        run: gh release upload ${{ inputs.version }} /home/runner/work/refuel-tracker/refuel-tracker/dist/capacitor/android/apk/release/refuel-tracker.apk
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Upload artifact
+        if: ${{ inputs.choice == 'artifact' }}
+        uses: actions/upload-artifact@v3
+        with:
+          name: refuel-tracker-artifact
+          path: build/release/signed
