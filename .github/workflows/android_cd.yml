@@ -73,12 +73,12 @@ jobs:
           BUILD_TOOLS_VERSION: '30.0.2'
 
       - name: Rename apk
-        if: contains(fromJson('["release", "prerelease"]'), inputs.release-type)
-        run: mv /home/runner/work/refuel-tracker/refuel-tracker/dist/capacitor/android/apk/release/app-release-unsigned-signed.apk /home/runner/work/refuel-tracker/refuel-tracker/dist/capacitor/android/apk/release/refuel-tracker-${{ inputs.tag }}.apk
+        if: ${{ contains(fromJson('["release", "prerelease"]'), inputs.release-type) }}
+        run: cd /home/runner/work/refuel-tracker/refuel-tracker/dist/capacitor/android/apk/release && mv app-release-unsigned-signed.apk refuel-tracker-${{ inputs.tag }}.apk
 
       - name: Rename apk
         if: ${{ inputs.release-type == 'artifact' }}
-        run: mv /home/runner/work/refuel-tracker/refuel-tracker/dist/capacitor/android/apk/release/app-release-unsigned-signed.apk /home/runner/work/refuel-tracker/refuel-tracker/dist/capacitor/android/apk/release/refuel-tracker-artifact.apk
+        run: cd /home/runner/work/refuel-tracker/refuel-tracker/dist/capacitor/android/apk/release && mv app-release-unsigned-signed.apk refuel-tracker-artifact.apk
 
       - name: Create release
         if: ${{ inputs.release-type == 'release' }}
@@ -93,8 +93,8 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Append apk to release
-        if: contains(fromJson('["release", "prerelease"]'), inputs.release-type)
-        run: gh release upload ${{ inputs.tag }} /home/runner/work/refuel-tracker/refuel-tracker/dist/capacitor/android/apk/release/refuel-tracker.apk
+        if: ${{ contains(fromJson('["release", "prerelease"]'), inputs.release-type) }}
+        run: gh release upload ${{ inputs.tag }} /home/runner/work/refuel-tracker/refuel-tracker/dist/capacitor/android/apk/release/refuel-tracker-${{ inputs.tag }}.apk
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
