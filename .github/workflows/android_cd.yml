@@ -65,7 +65,7 @@ jobs:
         with:
           releaseDirectory: /home/runner/work/refuel-tracker/refuel-tracker/dist/capacitor/android/apk/release
           signingKeyBase64: ${{ secrets.MY_KEY }}
-          output: build/release/signed
+          output: /home/runner/work/refuel-tracker/refuel-tracker/dist/capacitor/android/apk/release/signed
           alias: ${{ secrets.KEY_ALIAS }}
           keyStorePassword: ${{ secrets.KEY_STORE_PASSWORD }}
           keyPassword: ${{ secrets.KEY_PASSWORD }}
@@ -74,7 +74,7 @@ jobs:
 
       - name: Rename apk
         run:
-          cd /home/runner/work/refuel-tracker/refuel-tracker/dist/capacitor/android/apk/release &&
+          cd /home/runner/work/refuel-tracker/refuel-tracker/dist/capacitor/android/apk/release/signed &&
           mv app-release-unsigned-signed.apk $(
           if [ ${{ contains(fromJson('["release", "prerelease"]'), inputs.release-type) }} ]; then
           echo refuel-tracker-${{ inputs.tag }}.apk;
@@ -91,7 +91,7 @@ jobs:
 
       - name: Append apk to release
         if: ${{ contains(fromJson('["release", "prerelease"]'), inputs.release-type) }}
-        run: gh release upload ${{ inputs.tag }} /home/runner/work/refuel-tracker/refuel-tracker/dist/capacitor/android/apk/release/refuel-tracker-${{ inputs.tag }}.apk
+        run: gh release upload ${{ inputs.tag }} /home/runner/work/refuel-tracker/refuel-tracker/dist/capacitor/android/apk/release/signed/refuel-tracker-${{ inputs.tag }}.apk
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
