@@ -18,6 +18,10 @@ on:
         default: 'v0.0.0'
         required: true
 
+env:
+  RELEASE_PATH: /home/runner/work/refuel-tracker/refuel-tracker/dist/capacitor/android/apk/release
+  RELEASE_PATH_SIGNED: ${{ env.RELEASE_PATH }}/signed
+
 jobs:
   create-release:
     runs-on: ubuntu-latest
@@ -61,15 +65,12 @@ jobs:
       - name: Build apk
         run: yarn appbuild
 
-      - name: Set release path
-        run: export RELEASE_PATH="/home/runner/work/refuel-tracker/refuel-tracker/dist/capacitor/android/apk/release"
-
       - name: Sign apk
         uses: Tlaster/android-sign@v1.2.2
         with:
-          releaseDirectory: ${{ $RELEASE_PATH }}
+          releaseDirectory: ${{ env.RELEASE_PATH }}
           signingKeyBase64: ${{ secrets.MY_KEY }}
-          output: ${{ $RELEASE_PATH/signed }}
+          output: ${{ env.RELEASE_PATH_SIGNED }}
           alias: ${{ secrets.KEY_ALIAS }}
           keyStorePassword: ${{ secrets.KEY_STORE_PASSWORD }}
           keyPassword: ${{ secrets.KEY_PASSWORD }}
@@ -77,8 +78,8 @@ jobs:
           BUILD_TOOLS_VERSION: '30.0.2'
 
       - name: Rename apk
-        run: cd $RELEASE_PATH/signed &&
-          mv app-release-unsigned-signed.apk $(
+        run: cd ${{ env.RELEASE_PATH_SIGNED }} &&
+          mv *.apk $(
           if [ $(echo ${{ contains(fromJson('["release", "prerelease"]'), inputs.release-type) }}) ]; then
           echo refuel-tracker-${{ inputs.tag }}.apk;
           elif [ ${{ inputs.release-type == 'artifact' }} ]; then
@@ -94,7 +95,7 @@ jobs:
 
       - name: Append apk to release
         if: ${{ contains(fromJson('["release", "prerelease"]'), inputs.release-type) }}
-        run: gh release upload ${{ inputs.tag }} $RELEASE_PATH/signed/*.apk
+        run: gh release upload ${{ inputs.tag }} ${{ env.RELEASE_PATH_SIGNED }}/*.apk
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
@@ -103,4 +104,4 @@ jobs:
         uses: actions/upload-artifact@v3
         with:
           name: refuel-tracker-artifact
-          path: ${{ $RELEASE_PATH/signed }}
+          path: ${{ env.RELEASE_PATH_SIGNED }}
