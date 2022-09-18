@@ -73,22 +73,18 @@ jobs:
           BUILD_TOOLS_VERSION: '30.0.2'
 
       - name: Rename apk
-        if: ${{ contains(fromJson('["release", "prerelease"]'), inputs.release-type) }}
-        run: cd /home/runner/work/refuel-tracker/refuel-tracker/dist/capacitor/android/apk/release && mv app-release-unsigned-signed.apk refuel-tracker-${{ inputs.tag }}.apk
-
-      - name: Rename apk
-        if: ${{ inputs.release-type == 'artifact' }}
-        run: cd /home/runner/work/refuel-tracker/refuel-tracker/dist/capacitor/android/apk/release && mv app-release-unsigned-signed.apk refuel-tracker-artifact.apk
+        run:
+          cd /home/runner/work/refuel-tracker/refuel-tracker/dist/capacitor/android/apk/release &&
+          mv app-release-unsigned-signed.apk $(
+          if [ ${{ contains(fromJson('["release", "prerelease"]'), inputs.release-type) }} ]; then
+          echo refuel-tracker-${{ inputs.tag }}.apk
+          elif [ ${{ inputs.release-type == 'artifact' }} ]; then
+          echo refuel-tracker-artifact.apk;
+          else echo refuel-tracker.apk; fi)
 
       - name: Create release
-        if: ${{ inputs.release-type == 'release' }}
-        run: gh release create ${{ inputs.tag }} --generate-notes
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-
-      - name: Create prerelease
-        if: ${{ inputs.release-type == 'prerelease' }}
-        run: gh release create ${{ inputs.tag }} --generate-notes --prerelease
+        if: ${{ contains(fromJson('["release", "prerelease"]'), inputs.release-type) }}
+        run: gh release create ${{ inputs.tag }} --generate-notes $(if [ ${{ inputs.release-type == 'prerelease' }} ]; then echo --prerelease; else echo ""; fi)
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
