@@ -8,13 +8,13 @@ on:
     inputs:
       release-type:
         type: choice
-        description: Create apk
+        description: Release type
         options:
           - release
           - prerelease
           - artifact
       tag:
-        description: 'Version'
+        description: Version
         default: 'V0.0.0'
         required: true
 
@@ -60,6 +60,9 @@ jobs:
       - name: Build apk
         run: yarn appbuild
 
+      - name: Set release path
+        run: export RELEASE_PATH="/home/runner/work/refuel-tracker/refuel-tracker/dist/capacitor/android/apk/release"
+
       - name: Sign apk
         uses: Tlaster/android-sign@v1.2.2
         with:
@@ -100,4 +103,4 @@ jobs:
         uses: actions/upload-artifact@v3
         with:
           name: refuel-tracker-artifact
-          path: build/release/signed
+          path: /home/runner/work/refuel-tracker/refuel-tracker/dist/capacitor/android/apk/release/signed
