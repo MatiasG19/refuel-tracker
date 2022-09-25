@@ -9,6 +9,7 @@
       />
     </template>
     <template v-else>
+      <q-btn @click="checkForUpdate">Check for update</q-btn>
       <graph-card
         v-for="data in graphData"
         :key="data.uid"
