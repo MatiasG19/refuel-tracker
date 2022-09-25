@@ -4,7 +4,13 @@
   "bundledWebRuntime": false,
   "npmClient": "yarn",
   "webDir": "www",
+  "plugins": {
+    "LocalNotifications": {
+      "smallIcon": "ic_stat_icon_config_sample",
+      "iconColor": "#488AFF"
+    }
+  },
   "server": {
-    "url": "http://192.168.0.245:8080"
+    "url": "http://192.168.0.236:8080"
   }
 }

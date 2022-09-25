@@ -103,7 +103,7 @@
       <q-carousel-slide name="code" class="column no-wrap flex-center">
         <div class="q-mt-md">
           <div class="q-mb-md text-center">
-            {{ productName }}'s code is open source! Check it out!
+            {{ packageJson.productName }}'s code is open source! Check it out!
           </div>
           <q-btn
             color="accent"
@@ -119,7 +119,7 @@
     </q-carousel>
 
     <div class="q-mt-md full-width text-center">
-      {{ productName }} version {{ version }}
+      {{ packageJson.productName }} version {{ packageJson.version }}
     </div>
     <div class="q-mt-md full-width text-center">
       View license on <a :href="licenseLink">Github</a>
@@ -130,7 +130,7 @@
 <script setup lang="ts">
 import { onMounted, computed, defineEmits, ref } from 'vue'
 import { useRouter } from 'vue-router'
-import { productName, version } from '../../package.json'
+import packageJson from '../../package.json'
 import { openURL } from 'quasar'
 import { emitter } from 'src/boot/mitt'
 

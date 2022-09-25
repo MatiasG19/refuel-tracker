@@ -9,6 +9,7 @@
       />
     </template>
     <template v-else>
+      <q-btn @click="checkForUpdate">Check</q-btn>
       <graph-card
         v-for="data in graphData"
         :key="data.uid"
@@ -22,9 +23,16 @@
 
 <script setup lang="ts">
 import GraphCard from 'src/pages/graphData/components/GraphCard.vue'
-import { ref, watchEffect, computed, onBeforeMount, onUnmounted } from 'vue'
+import {
+  ref,
+  watchEffect,
+  computed,
+  onBeforeMount,
+  onMounted,
+  onUnmounted
+} from 'vue'
 import { emitter } from 'src/boot/mitt'
-import { productName } from '../../../package.json'
+import packageJson from '../../../package.json'
 import { useRefuelStore, useSettingsStore } from 'src/stores'
 import { useGraphDataStore } from './stores/graphDataStore'
 import { initSettings } from 'src/scripts/initSettings'
@@ -34,6 +42,7 @@ import {
   optionsDialog
 } from 'src/components/dialogs/optionsDialog'
 import { useQuasar } from 'quasar'
+import { useCheckForUpdate } from 'src/scripts/libraries/utils'
 
 const $q = useQuasar()
 $q.dark.set('auto')
@@ -41,12 +50,11 @@ $q.dark.set('auto')
 const refuelStore = useRefuelStore()
 const graphDataStore = useGraphDataStore()
 const settingsStore = useSettingsStore()
+const checkForUpdate = useCheckForUpdate()
 
 const loading = ref(false)
 const periods = ref<Period[]>([])
-
 const graphData = computed(() => graphDataStore.graphData)
-
 const optionsInDialog: OptionInDialog[] = [
   {
     text: 'Move top',
@@ -92,7 +100,7 @@ watchEffect(() => {
   emitter.emit(
     'updateTitle',
     (() => {
-      if (!settingsStore.selectedVehicleId) return productName
+      if (!settingsStore.selectedVehicleId) return packageJson.productName
       else if (settingsStore.plateNumberInTitleActive)
         return settingsStore.selectedVehiclePlateNumber
       return settingsStore.selectedVehicleName
@@ -103,6 +111,10 @@ watchEffect(() => {
 onBeforeMount(async () => {
   initSettings()
   periods.value = await refuelStore.getPeriods()
+})
+
+onMounted(() => {
+  if ($q.capacitor) checkForUpdate()
 })
 
 onUnmounted(() => {
