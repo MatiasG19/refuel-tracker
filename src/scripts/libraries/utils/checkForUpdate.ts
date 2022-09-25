@@ -11,7 +11,8 @@ export function useCheckForUpdate(): () => void {
   function checkForUpdate() {
     axios
       .get(
-        `https://api.github.com/repos/${packageJson.author}/${packageJson.name}/releases`
+        // `https://api.github.com/repos/${packageJson.author}/${packageJson.name}/releases`
+        `https://api.github.com/repos/octokit/request.js/releases`
       )
       .then(response => {
         const releases = response.data as GithubResponse[]
