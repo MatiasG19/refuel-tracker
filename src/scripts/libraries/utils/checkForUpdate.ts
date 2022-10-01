@@ -25,6 +25,7 @@ export function useCheckForUpdate(): () => void {
             // ts-ignore
             checkNewVersion(releases[0].tag_name, packageJson.version)
           ) {
+            registerDownloadActionListener(releases[0].tag_name)
             // ts-ignore
             showNotification(releases[0].tag_name)
           }
@@ -58,7 +59,7 @@ export function useCheckForUpdate(): () => void {
             title: `New version of ${packageJson.productName} available`,
             body: `Tap to download version ${version}`,
             id: 1,
-            schedule: { at: new Date(Date.now() + 1000) },
+            schedule: { at: new Date(Date.now()) },
             actionTypeId: 'NEW_VERSION'
           }
         ]
@@ -66,18 +67,22 @@ export function useCheckForUpdate(): () => void {
     }
   }
 
-  onMounted(() => {
+  function registerDownloadActionListener(version: string) {
     if ($q.capacitor) {
-      // Check for updates
       versionNotifHandle = LocalNotifications.addListener(
         'localNotificationActionPerformed',
         n => {
           if (n.actionId === 'DOWNLOAD_NEW_VERSION')
             openURL(
-              `https://github.com/${packageJson.author}/${packageJson.name}/releases`
+              `https://github.com/${packageJson.author}/${packageJson.name}/releases/download/${version}/${packageJson.name}-${version}.apk`
             )
         }
       )
+    }
+  }
+
+  onMounted(() => {
+    if ($q.capacitor) {
       LocalNotifications.registerActionTypes({
         types: [
           {
