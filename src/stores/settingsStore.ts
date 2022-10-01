@@ -12,6 +12,7 @@ export const useSettingsStore = defineStore('settingsStore', () => {
   const plateNumberInTitleActive = ref<boolean>(false)
   const refuelFilterActive = ref<boolean>(false)
   const selectedColorThemeId = ref<number>(1)
+  const checkForUpdate = ref<boolean>(true)
 
   function changeDistanceUnit(distanceUnitId: number) {
     ;(async () => {
@@ -77,6 +78,7 @@ export const useSettingsStore = defineStore('settingsStore', () => {
     plateNumberInTitleActive,
     refuelFilterActive,
     selectedColorThemeId,
+    checkForUpdate,
     changeDistanceUnit,
     changeSelectedVehicle,
     togglePlateNumberInTitle,
