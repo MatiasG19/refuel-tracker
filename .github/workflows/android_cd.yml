@@ -88,7 +88,7 @@ jobs:
 
       - name: Create release
         if: ${{ contains(fromJson('["release", "prerelease"]'), inputs.release-type) }}
-        run: gh release create ${{ inputs.tag }} --generate-notes $(if [ ${{ inputs.release-type == 'prerelease' }} ]; then echo --prerelease; else echo ""; fi)
+        run: gh release create ${{ inputs.tag }} --generate-notes $(if ${{ inputs.release-type == 'prerelease' }} ; then echo --prerelease; else echo ""; fi)
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
