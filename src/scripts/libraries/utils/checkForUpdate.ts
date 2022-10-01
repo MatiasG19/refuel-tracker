@@ -3,31 +3,35 @@ import { PluginListenerHandle, Plugins } from '@capacitor/core'
 import axios from 'axios'
 import { openURL } from 'quasar'
 import packageJson from '../../../../package.json'
-const { LocalNotifications } = Plugins
+import { useSettingsStore } from 'src/stores'
 
 export function useCheckForUpdate(): () => void {
+  const settingsStore = useSettingsStore()
+  const { LocalNotifications } = Plugins
   let versionNotifHandle: PluginListenerHandle
 
   function checkForUpdate() {
-    axios
-      .get(
-        // `https://api.github.com/repos/${packageJson.author}/${packageJson.name}/releases`
-        `https://api.github.com/repos/octokit/request.js/releases`
-      )
-      .then(response => {
-        const releases = response.data as GithubResponse[]
-        if (
-          releases &&
-          releases.length &&
-          // ts-ignore
-          checkNewVersion(releases[0].tag_name, packageJson.version)
+    if (settingsStore.checkForUpdate)
+      axios
+        .get(
+          `https://api.github.com/repos/${packageJson.author}/${packageJson.name}/releases`
         )
-          // ts-ignore
-          showNotification(releases[0].tag_name)
-      })
-      .catch(response =>
-        console.debug('Could not check for updates! Response: ', response)
-      )
+        .then(response => {
+          const releases = response.data as GithubResponse[]
+          if (
+            releases &&
+            releases.length &&
+            // ts-ignore
+            checkNewVersion(releases[0].tag_name, packageJson.version)
+          ) {
+            // ts-ignore
+            showNotification(releases[0].tag_name)
+          }
+          settingsStore.checkForUpdate = false
+        })
+        .catch(response =>
+          console.debug('Could not check for updates! Response: ', response)
+        )
   }
 
   function checkNewVersion(
@@ -49,10 +53,10 @@ export function useCheckForUpdate(): () => void {
     await LocalNotifications.schedule({
       notifications: [
         {
-          title: `New Version of ${packageJson.productName} available`,
+          title: `New version of ${packageJson.productName} available`,
           body: `Tap to download version ${version}`,
           id: 1,
-          schedule: { at: new Date(Date.now() + 1000 * 3) }, // 3s delay
+          schedule: { at: new Date(Date.now()) },
           actionTypeId: 'NEW_VERSION'
         }
       ]
@@ -74,7 +78,9 @@ export function useCheckForUpdate(): () => void {
       types: [
         {
           id: 'NEW_VERSION',
-          actions: [{ id: 'DOWNLOAD_NEW_VERSION', title: 'Download' }]
+          actions: [
+            { id: 'DOWNLOAD_NEW_VERSION', title: 'Download', foreground: true }
+          ]
         }
       ]
     })
