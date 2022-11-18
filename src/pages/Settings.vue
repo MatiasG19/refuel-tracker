@@ -1,29 +1,18 @@
 <template>
   <div class="q-pa-md q-gutter-md">
     <q-list>
-      <q-item-label header>Themes</q-item-label>
-      <c-select
-        class="q-pb-md"
-        v-model="colorTheme"
-        @update:model-value="changeColorTheme"
-        :options="colorThemeOptions"
-        label="Color theme"
-      />
-
-      <q-separator spaced />
-
-      <q-item-label header>Units</q-item-label>
-      <div>
+      <template v-if="false">
+        <q-item-label header>Themes</q-item-label>
         <c-select
           class="q-pb-md"
-          v-model="distanceUnit"
-          @update:model-value="changeDistanceUnit"
-          :options="distanceUnitOptions"
-          label="Distance unit"
+          v-model="colorTheme"
+          @update:model-value="changeColorTheme"
+          :options="colorThemeOptions"
+          label="Color theme"
         />
-      </div>
 
-      <q-separator spaced />
+        <q-separator spaced />
+      </template>
 
       <q-item-label header>Other</q-item-label>
       <q-list class="q-pb-md">
