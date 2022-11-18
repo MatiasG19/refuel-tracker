@@ -50,7 +50,7 @@
       <router-view />
     </q-page-container>
 
-    <q-footer class="bg-space-station">
+    <q-footer v-if="footerVisible" class="bg-space-station">
       <q-toolbar class="q-gutter-xs text-center">
         <div class="col">
           <q-btn round flat dense icon="bar_chart" class="col" :to="'/'" />
@@ -86,6 +86,11 @@
 
 <script setup lang="ts">
 import EssentialLink from 'components/EssentialLink.vue'
+import { ref, computed, onUnmounted } from 'vue'
+import { useRouter } from 'vue-router'
+import { emitter } from 'src/boot/mitt'
+import { useSettingsStore } from 'src/stores'
+import { Plugins } from '@capacitor/core'
 
 const linkList = [
   {
@@ -120,18 +125,23 @@ const linkList = [
   }
 ]
 
-import { ref, computed, onUnmounted } from 'vue'
-import { useRouter } from 'vue-router'
-import { emitter } from 'src/boot/mitt'
-import { useSettingsStore } from 'src/stores'
-
 const router = useRouter()
 const settingsStore = useSettingsStore()
 const routePath = computed(() => router.currentRoute.value.path)
+const { Keyboard } = Plugins
+const footerVisible = ref(true)
 emitter.on('updateTitle', e => (title.value = e))
 
 const leftDrawerOpen = ref(false)
 const title = ref('')
+
+Keyboard.addListener('keyboardDidShow', () => {
+  footerVisible.value = false
+})
+
+Keyboard.addListener('keyboardDidHide', () => {
+  footerVisible.value = true
+})
 
 function toggleLeftDrawer() {
   leftDrawerOpen.value = !leftDrawerOpen.value
