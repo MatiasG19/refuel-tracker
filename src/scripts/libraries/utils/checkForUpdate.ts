@@ -29,11 +29,11 @@ export function useCheckForUpdate(): () => void {
             // ts-ignore
             showNotification(releases[0].tag_name)
           }
-          settingsStore.checkForUpdate = false
         })
         .catch(response =>
           console.debug('Could not check for updates! Response: ', response)
         )
+    settingsStore.checkForUpdate = false
   }
 
   function checkNewVersion(
