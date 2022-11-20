@@ -1,12 +1,28 @@
 <template>
   <q-page>
-    <vehicle-card
-      v-for="(vehicle, i) in vehicleData"
-      :key="i"
-      :vehicle="vehicle"
-      class="q-pt-md q-pl-md q-pr-md"
-      @click="selectVehicle(vehicle)"
-    />
+    <div v-if="vehicleData.length === 0" class="absolute-center items-center">
+      <div class="row">
+        <q-icon class="col" name="img:directions_car.svg" size="100px" />
+      </div>
+      <q-btn
+        color="accent"
+        label="Add vehicle"
+        icon-right="add"
+        unelevated
+        no-caps
+        outline
+        @click="router.push('/vehicles/add')"
+      />
+    </div>
+    <template v-else>
+      <vehicle-card
+        v-for="(vehicle, i) in vehicleData"
+        :key="i"
+        :vehicle="vehicle"
+        class="q-pt-md q-pl-md q-pr-md"
+        @click="selectVehicle(vehicle)"
+      />
+    </template>
   </q-page>
 </template>
 

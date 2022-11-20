@@ -1,21 +1,55 @@
 <template>
-  <q-page class="items-center justify-evenly">
-    <template v-if="loading">
-      <q-spinner
-        class="absolute-center"
-        color="primary"
-        size="3em"
-        :thickness="10"
+  <q-page class="items-center">
+    <div
+      v-if="vehiclesExits && graphData.length === 0"
+      class="absolute-center items-center"
+    >
+      <div class="row">
+        <q-icon class="col" name="img:bar_chart.svg" size="100px" />
+      </div>
+      <q-btn
+        color="accent"
+        label="Add refuel"
+        icon-right="add"
+        unelevated
+        no-caps
+        outline
+        @click="router.push('/refuels/add')"
       />
-    </template>
+    </div>
+    <div v-else-if="!vehiclesExits" class="absolute-center">
+      <div class="row">
+        <q-icon class="col" name="img:bar_chart.svg" size="100px" />
+      </div>
+      <q-btn
+        class="row"
+        color="accent"
+        label="Add vehicle"
+        icon-right="add"
+        unelevated
+        no-caps
+        outline
+        @click="router.push('/vehicles/add')"
+      />
+    </div>
     <template v-else>
-      <graph-card
-        v-for="data in graphData"
-        :key="data.uid"
-        :graphData="data"
-        :periods="periods"
-        class="q-pt-md q-pl-md q-pr-md"
-      />
+      <template v-if="loading">
+        <q-spinner
+          class="absolute-center"
+          color="primary"
+          size="3em"
+          :thickness="10"
+        />
+      </template>
+      <template v-else>
+        <graph-card
+          v-for="data in graphData"
+          :key="data.uid"
+          :graphData="data"
+          :periods="periods"
+          class="q-pt-md q-pl-md q-pr-md"
+        />
+      </template>
     </template>
   </q-page>
 </template>
@@ -42,10 +76,12 @@ import {
 } from 'src/components/dialogs/optionsDialog'
 import { useQuasar } from 'quasar'
 import { useCheckForUpdate } from 'src/scripts/libraries/utils'
+import { useRouter } from 'vue-router'
 
 const $q = useQuasar()
 $q.dark.set('auto')
 
+const router = useRouter()
 const refuelStore = useRefuelStore()
 const graphDataStore = useGraphDataStore()
 const settingsStore = useSettingsStore()
@@ -54,6 +90,7 @@ const checkForUpdate = useCheckForUpdate()
 const loading = ref(false)
 const periods = ref<Period[]>([])
 const graphData = computed(() => graphDataStore.graphData)
+const vehiclesExits = settingsStore.selectedVehicleId
 const optionsInDialog: OptionInDialog[] = [
   {
     text: 'Move top',
