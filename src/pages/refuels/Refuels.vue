@@ -1,6 +1,6 @@
 <template>
   <q-page>
-    <div v-if="filterActive" class="q-pt-md text-center">
+    <div v-if="vehiclesExits && filterActive" class="q-pt-md text-center">
       <q-btn
         class="q-pa-xs"
         style="color: pink"
@@ -12,13 +12,46 @@
         >{{ filterHint }}</q-btn
       >
     </div>
-    <refuel-card
-      v-for="(refuel, i) in refuels"
-      :key="i"
-      :refuel="refuel"
-      :vehicle="vehicle"
-      class="q-pt-md q-pl-md q-pr-md"
-    />
+    <div
+      v-if="vehiclesExits && refuels.length === 0"
+      class="absolute-center items-center"
+    >
+      <div class="row">
+        <q-icon class="col" name="img:local_gas_station.svg" size="100px" />
+      </div>
+      <q-btn
+        color="accent"
+        label="Add refuel"
+        icon-right="add"
+        unelevated
+        no-caps
+        outline
+        @click="router.push('/refuels/add')"
+      />
+    </div>
+    <div v-else-if="!vehiclesExits" class="absolute-center items-center">
+      <div class="row">
+        <q-icon class="col" name="img:local_gas_station.svg" size="100px" />
+      </div>
+      <q-btn
+        color="accent"
+        label="Add vehicle"
+        icon-right="add"
+        unelevated
+        no-caps
+        outline
+        @click="router.push('/vehicles/add')"
+      />
+    </div>
+    <template v-else>
+      <refuel-card
+        v-for="(refuel, i) in refuels"
+        :key="i"
+        :refuel="refuel"
+        :vehicle="vehicle"
+        class="q-pt-md q-pl-md q-pr-md"
+      />
+    </template>
   </q-page>
 </template>
 
@@ -39,6 +72,7 @@ const settingsStore = useSettingsStore()
 const vehicle = ref<Vehicle>(new Vehicle())
 const filterActive = ref(settingsStore.refuelFilterActive)
 const filterHint = 'Filter 1 Month from 2021.12.19'
+const vehiclesExits = settingsStore.selectedVehicleId
 
 let refuels = computed(() => {
   if (!filterActive.value) return orderByDateDesc()
