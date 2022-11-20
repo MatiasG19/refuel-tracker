@@ -151,6 +151,7 @@ onBeforeMount(async () => {
 
 onMounted(() => {
   checkForUpdate()
+  graphDataStore.readGraphData()
 })
 
 onUnmounted(() => {

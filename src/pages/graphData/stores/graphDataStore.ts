@@ -18,13 +18,18 @@ export const useGraphDataStore = defineStore('graphDataStore', () => {
   }
 
   async function readGraphData() {
-    if (!settings.selectedVehicleId) return
+    if (!settings.selectedVehicleId) {
+      graphData.value.length = 0
+      return
+    }
 
     const vehicle = await refuelStore.getVehicle(settings.selectedVehicleId)
     if (vehicle && vehicle.refuels?.length) {
       graphData.value = new GraphDataFactory(vehicle)
         .getAll(await getGraphSettings())
         .sort((a, b) => a.sequence - b.sequence)
+    } else {
+      graphData.value.length = 0
     }
   }
 
