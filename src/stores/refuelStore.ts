@@ -18,19 +18,16 @@ export const useRefuelStore = defineStore('refuelStore', () => {
   const vehicles = ref<Vehicle[]>([])
 
   async function readRefuels(vehicleId: number) {
-    await db.refuels
-      .where('vehicleId')
-      .equals(vehicleId)
-      .toArray()
-      .then(r =>
-        r.length > 0 ? (refuels.value = r) : (refuels.value.length = 0)
-      )
+    refuels.value = await getRefuels(vehicleId)
+  }
+  async function getRefuels(vehicleId: number) {
+    return await db.refuels.where('vehicleId').equals(vehicleId).toArray()
   }
 
   async function getRefuel(id: number) {
     if (!settings.selectedVehicleId) return
-    await readRefuels(settings.selectedVehicleId)
-    return refuels.value.find(v => v.id == id) ?? null
+    const refuels = await getRefuels(settings.selectedVehicleId)
+    return refuels.find(v => v.id == id) ?? null
   }
 
   async function addRefuel(refuel: Refuel) {
@@ -48,10 +45,10 @@ export const useRefuelStore = defineStore('refuelStore', () => {
   async function readVehicles() {
     vehicles.value = await db.vehicles.toArray()
     for (const v of vehicles.value) {
-      await readRefuels(v.id)
-      if (refuels.value.length > 0) {
+      const refuels = await getRefuels(v.id)
+      if (refuels.length > 0) {
         v.refuels = []
-        refuels.value.forEach(r => v.refuels?.push(r))
+        refuels.forEach(r => v.refuels?.push(r))
         v.fuelUnit = await getFuelUnit(v.fuelUnitId)
       }
     }

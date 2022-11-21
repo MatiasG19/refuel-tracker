@@ -43,15 +43,14 @@
         @click="router.push('/vehicles/add')"
       />
     </div>
-    <template v-else>
-      <refuel-card
-        v-for="(refuel, i) in refuels"
-        :key="i"
-        :refuel="refuel"
-        :vehicle="vehicle"
-        class="q-pt-md q-pl-md q-pr-md"
-      />
-    </template>
+    <refuel-card
+      v-else
+      v-for="(refuel, i) in refuels"
+      :key="i"
+      :refuel="refuel"
+      :vehicle="vehicle"
+      class="q-pt-md q-pl-md q-pr-md"
+    />
   </q-page>
 </template>
 
@@ -63,7 +62,7 @@ import { emitter } from 'src/boot/mitt'
 import { optionsDialog } from 'src/components/dialogs/optionsDialog'
 import { confirmDialog } from 'src/components/dialogs/confirmDialog'
 import { useRefuelStore, useSettingsStore } from 'src/stores'
-import { Refuel, Vehicle } from 'src/scripts/libraries/refuel/models'
+import { Vehicle } from 'src/scripts/libraries/refuel/models'
 
 const router = useRouter()
 const refuelStore = useRefuelStore()
@@ -75,13 +74,12 @@ const filterHint = 'Filter 1 Month from 2021.12.19'
 const vehiclesExits = settingsStore.selectedVehicleId
 
 let refuels = computed(() => {
-  if (!filterActive.value) return orderByDateDesc()
+  if (!filterActive.value)
+    return [...refuelStore.refuels].sort(
+      (a, b) => b.date.getTime() - a.date.getTime()
+    )
   return refuelStore.refuels
 })
-
-function orderByDateDesc(): Refuel[] {
-  return refuelStore.refuels.sort((a, b) => b.date.getTime() - a.date.getTime())
-}
 
 function removeFilter() {
   settingsStore.toggleRefuelFilter(false)
