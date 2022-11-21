@@ -1,6 +1,6 @@
 <template>
   <q-page>
-    <div v-if="vehiclesExits && filterActive" class="q-pt-md text-center">
+    <div v-if="vehiclesExit && filterActive" class="q-pt-md text-center">
       <q-btn
         class="q-pa-xs"
         style="color: pink"
@@ -13,7 +13,7 @@
       >
     </div>
     <div
-      v-if="vehiclesExits && refuels.length === 0"
+      v-if="vehiclesExit && refuels.length === 0"
       class="absolute-center items-center"
     >
       <div class="row">
@@ -29,7 +29,7 @@
         @click="router.push('/refuels/add')"
       />
     </div>
-    <div v-else-if="!vehiclesExits" class="absolute-center items-center">
+    <div v-else-if="!vehiclesExit" class="absolute-center items-center">
       <div class="row">
         <q-icon class="col" name="img:local_gas_station.svg" size="100px" />
       </div>
@@ -71,7 +71,7 @@ const settingsStore = useSettingsStore()
 const vehicle = ref<Vehicle>(new Vehicle())
 const filterActive = ref(settingsStore.refuelFilterActive)
 const filterHint = 'Filter 1 Month from 2021.12.19'
-const vehiclesExits = settingsStore.selectedVehicleId
+const vehiclesExit = settingsStore.selectedVehicleId
 
 let refuels = computed(() => {
   if (!filterActive.value)

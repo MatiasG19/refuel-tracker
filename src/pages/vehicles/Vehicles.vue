@@ -48,6 +48,15 @@ const vehicleData = computed(() => {
 emitter.on('showVehicleOptionsDialog', id =>
   optionsDialog([
     {
+      text: 'Show refuels',
+      icon: 'local_gas_station',
+      action: async () => {
+        const vehicle = await refuelStore.getVehicle(id)
+        await settingsStore.changeSelectedVehicle({ ...vehicle! })
+        router.push('/refuels')
+      }
+    },
+    {
       text: 'Edit',
       icon: 'edit',
       action: () =>
@@ -72,7 +81,6 @@ emitter.on('showVehicleOptionsDialog', id =>
 )
 
 async function selectVehicle(vehicle: Vehicle) {
-  emitter.emit('updateTitle', vehicle.name)
   await settingsStore.changeSelectedVehicle({ ...vehicle })
   await router.push('/')
 }
