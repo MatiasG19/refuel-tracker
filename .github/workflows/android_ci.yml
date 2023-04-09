@@ -24,14 +24,14 @@ jobs:
 
       - name: Get yarn cache directory path
         id: yarn-cache-dir-path
-        run: echo "$(yarn cache dir)" >> $GH_YARN_CACHE_DIR
+        run: echo "::set-output name=dir::$(yarn cache dir)"
 
       - name: Cache yarn dependencies
         uses: actions/cache@v3
         id: yarn-cache
         with:
           path: |
-            ${{ $GH_YARN_CACHE_DIR }}
+            ${{ steps.yarn-cache-dir-path.outputs.dir }}
             **/node_modules
           key: ${{ runner.os }}-yarn-${{ hashFiles('**/yarn.lock') }}
           restore-keys: |
