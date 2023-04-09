@@ -90,7 +90,7 @@ const checkForUpdate = useCheckForUpdate()
 const loading = ref(false)
 const periods = ref<Period[]>([])
 const graphData = computed(() => graphDataStore.graphData)
-const vehiclesExits = settingsStore.selectedVehicleId
+const vehiclesExits = computed(() => settingsStore.selectedVehicleId)
 const optionsInDialog: OptionInDialog[] = [
   {
     text: 'Move top',
