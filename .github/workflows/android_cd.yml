@@ -65,7 +65,7 @@ jobs:
         run: yarn appbuild
 
       - name: Sign apk
-        uses: MatiasG19/android-sign@v2.0.0-rc
+        uses: MatiasG19/android-sign@2.0.0-rc
         with:
           releaseDirectory: ${{ env.RELEASE_PATH }}
           signingKeyBase64: ${{ secrets.MY_KEY }}
