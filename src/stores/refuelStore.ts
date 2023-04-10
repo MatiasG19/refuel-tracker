@@ -43,8 +43,12 @@ export const useRefuelStore = defineStore('refuelStore', () => {
   }
 
   async function readVehicles() {
-    vehicles.value = await db.vehicles.toArray()
-    for (const v of vehicles.value) {
+    vehicles.value = await getVehicles()
+  }
+
+  async function getVehicles() {
+    const vehicles = await db.vehicles.toArray()
+    for (const v of vehicles) {
       const refuels = await getRefuels(v.id)
       if (refuels.length > 0) {
         v.refuels = []
@@ -52,11 +56,12 @@ export const useRefuelStore = defineStore('refuelStore', () => {
         v.fuelUnit = await getFuelUnit(v.fuelUnitId)
       }
     }
+    return vehicles
   }
 
   async function getVehicle(id: number): Promise<Vehicle | null> {
-    await readVehicles()
-    const v = vehicles.value.find(v => v.id == id) ?? null
+    const vehicles = await getVehicles()
+    const v = vehicles.find(v => v.id == id) ?? null
     if (!v) return null
     return v
   }
