@@ -1,7 +1,7 @@
 <template>
   <q-page class="q-pa-md">
     <h5 class="q-mt-md text-center">
-      <span style="color: #ef60cb">Thank you</span> for choosing
+      <span style="color: #ef60cb">Thank you</span> for using
       <span style="color: #60efb3">{{ packageJson.productName }}</span
       >! I hope you have been enjoying the app so far
       <q-icon name="rocket_launch" color="accent"></q-icon>
