@@ -1,5 +1,9 @@
 import { onMounted, onUnmounted } from 'vue'
-import { PluginListenerHandle, Plugins } from '@capacitor/core'
+import { PluginListenerHandle } from '@capacitor/core'
+import {
+  LocalNotifications,
+  ActionPerformed
+} from '@capacitor/local-notifications'
 import axios from 'axios'
 import { useQuasar, openURL } from 'quasar'
 import packageJson from '../../../../package.json'
@@ -8,7 +12,6 @@ import { useSettingsStore } from 'src/stores'
 export function useCheckForUpdate(): () => void {
   const settingsStore = useSettingsStore()
   const $q = useQuasar()
-  const { LocalNotifications } = Plugins
   let versionNotifHandle: PluginListenerHandle
 
   function checkForUpdate() {
@@ -71,7 +74,7 @@ export function useCheckForUpdate(): () => void {
     if ($q.capacitor) {
       versionNotifHandle = LocalNotifications.addListener(
         'localNotificationActionPerformed',
-        n => {
+        (n: ActionPerformed) => {
           if (n.actionId === 'DOWNLOAD_NEW_VERSION')
             openURL(
               `https://github.com/${packageJson.author}/${packageJson.name}/releases/download/${version}/${packageJson.name}-${version}.apk`
