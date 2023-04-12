@@ -1,17 +1,17 @@
 {
-  "appId": "capacitor.quasar.refueltracker",
-  "appName": "Refuel Tracker",
-  "bundledWebRuntime": false,
-  "npmClient": "yarn",
-  "webDir": "www",
-  "plugins": {
-    "LocalNotifications": {
-      "smallIcon": "ic_stat_icon_config_sample",
-      "iconColor": "#6E6B9D",
-      "sound": ""
-    }
-  },
-  "server": {
-    "url": "http://192.168.0.245:8080"
-  }
+	"appId": "capacitor.quasar.refueltracker",
+	"appName": "Refuel Tracker",
+	"bundledWebRuntime": false,
+	"npmClient": "yarn",
+	"webDir": "www",
+	"plugins": {
+		"LocalNotifications": {
+			"smallIcon": "ic_launcher",
+			"iconColor": "#6E6B9D",
+			"sound": ""
+		}
+	},
+	"server": {
+		"url": "http://192.168.0.200:8080"
+	}
 }
