@@ -134,7 +134,7 @@ emitter.on('updateTitle', e => (title.value = e))
 const leftDrawerOpen = ref(false)
 const title = ref('')
 
-Keyboard.addListener('keyboardDidShow', info => {
+Keyboard.addListener('keyboardDidShow', () => {
   footerVisible.value = false
 })
 
