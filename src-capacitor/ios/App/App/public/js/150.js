@@ -1,0 +1,1 @@
+"use strict";(self["webpackChunkrefuel_tracker"]=self["webpackChunkrefuel_tracker"]||[]).push([[150],{3150:(e,r,u)=>{u.r(r),u.d(r,{default:()=>f});var t=u(3673);function c(e,r){const u=(0,t.up)("router-view");return(0,t.wg)(),(0,t.j4)(u)}var n=u(4260);const a={},s=(0,n.Z)(a,[["render",c]]),f=s}}]);
