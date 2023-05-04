@@ -37,7 +37,7 @@
             <q-item-label>Export</q-item-label>
           </q-item-section>
           <q-item-section avatar>
-            <q-btn label="Export" color="positive" />
+            <q-btn label="Export" color="positive" @click="exportDB" />
           </q-item-section>
         </q-item>
         <q-item tag="label">
@@ -45,7 +45,7 @@
             <q-item-label>Import</q-item-label>
           </q-item-section>
           <q-item-section avatar>
-            <q-btn label="Import" color="positive" />
+            <q-btn label="Import" color="positive" @click="importDB" />
           </q-item-section>
         </q-item>
       </q-list>
@@ -58,6 +58,7 @@ import { ref, onMounted } from 'vue'
 import CSelect from 'src/components/inputs/CSelect.vue'
 import { emitter } from 'src/boot/mitt'
 import { useSettingsStore } from 'src/stores'
+import { exportDB, importDB } from 'src/scripts/libraries/backup/backup'
 
 const settingsStore = useSettingsStore()
 
