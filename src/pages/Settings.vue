@@ -14,7 +14,7 @@
         <q-separator spaced />
       </template>
 
-      <q-item-label header>Other</q-item-label>
+      <q-item-label header>Settings</q-item-label>
       <q-list class="q-pb-md">
         <q-item tag="label">
           <q-item-section>
@@ -24,7 +24,28 @@
             <q-toggle
               v-model="plateNumberInTitle"
               @update:model-value="togglePlateNumberInTitle"
+              color="positive"
             />
+          </q-item-section>
+        </q-item>
+      </q-list>
+
+      <q-item-label header>Backup</q-item-label>
+      <q-list class="q-pb-md">
+        <q-item tag="label">
+          <q-item-section>
+            <q-item-label>Export</q-item-label>
+          </q-item-section>
+          <q-item-section avatar>
+            <q-btn label="Export" color="positive" />
+          </q-item-section>
+        </q-item>
+        <q-item tag="label">
+          <q-item-section>
+            <q-item-label>Import</q-item-label>
+          </q-item-section>
+          <q-item-section avatar>
+            <q-btn label="Import" color="positive" />
           </q-item-section>
         </q-item>
       </q-list>
