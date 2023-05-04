@@ -90,7 +90,7 @@ import { ref, computed, onUnmounted } from 'vue'
 import { useRouter } from 'vue-router'
 import { emitter } from 'src/boot/mitt'
 import { useSettingsStore } from 'src/stores'
-import { Plugins } from '@capacitor/core'
+import { Keyboard } from '@capacitor/keyboard'
 
 const linkList = [
   {
@@ -128,7 +128,6 @@ const linkList = [
 const router = useRouter()
 const settingsStore = useSettingsStore()
 const routePath = computed(() => router.currentRoute.value.path)
-const { Keyboard } = Plugins
 const footerVisible = ref(true)
 emitter.on('updateTitle', e => (title.value = e))
 
