@@ -90,8 +90,6 @@ module.exports = {
     'no-debugger': process.env.NODE_ENV === 'production' ? 'error' : 'off',
 
     // Vue
-    'vue/multi-word-component-names': ['error', {
-      'ignores': []
-    }]
+    'vue/multi-word-component-names': 'off'
   }
 }
