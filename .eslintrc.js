@@ -87,6 +87,11 @@ module.exports = {
     '@typescript-eslint/unbound-method': 'off',
 
     // allow debugger during development only
-    'no-debugger': process.env.NODE_ENV === 'production' ? 'error' : 'off'
+    'no-debugger': process.env.NODE_ENV === 'production' ? 'error' : 'off',
+
+    // Vue
+    'vue/multi-word-component-names': ['error', {
+      'ignores': []
+    }]
   }
 }
