@@ -12,7 +12,6 @@ export async function importDB() {
   await db.import(blob)
 }
 
-// @ts-ignore
 async function writeBlob(blob: Blob) {
   const dataAsString = await blob.text()
   // eslint-disable-next-line @typescript-eslint/no-unsafe-call, @typescript-eslint/no-unsafe-member-access
