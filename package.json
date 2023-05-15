@@ -19,7 +19,7 @@
   },
   "dependencies": {
     "@quasar/extras": "^1.16.3",
-    "axios": "^0.27.2",
+    "axios": "^1.4.0",
     "core-js": "^3.6.5",
     "dexie": "^3.2.2",
     "mitt": "^3.0.0",
