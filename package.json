@@ -40,7 +40,7 @@
     "eslint": "^7.14.0",
     "eslint-config-prettier": "^8.8.0",
     "eslint-plugin-vue": "^9.14.1",
-    "sass": "1.62.1"
+    "sass": "1.63.3"
   },
   "browserslist": [
     "last 10 Chrome versions",
