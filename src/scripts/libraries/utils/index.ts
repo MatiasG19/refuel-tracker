@@ -6,9 +6,17 @@ function replaceComma(value: string) {
 
 function getDateForFileName(): string {
   const d = new Date()
-  return `${d.getFullYear()}${
+  return `${d.getFullYear()}${convertToTwoDigitDate(
     d.getMonth() + 1
-  }${d.getDate()}_${d.getHours()}${d.getMinutes()}${d.getSeconds()}`
+  )}${convertToTwoDigitDate(d.getDate())}_${convertToTwoDigitDate(
+    d.getHours()
+  )}${convertToTwoDigitDate(d.getMinutes())}${convertToTwoDigitDate(
+    d.getSeconds()
+  )}`
+}
+
+function convertToTwoDigitDate(date: number): string {
+  return date.toString().length == 1 ? `0${date.toString()}` : date.toString()
 }
 
 export { replaceComma, getDateForFileName }
