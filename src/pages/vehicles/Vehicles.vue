@@ -52,6 +52,7 @@ emitter.on('showVehicleOptionsDialog', id =>
       icon: 'local_gas_station',
       action: async () => {
         const vehicle = await refuelStore.getVehicle(id)
+        // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
         await settingsStore.changeSelectedVehicle({ ...vehicle! })
         router.push('/refuels')
       }

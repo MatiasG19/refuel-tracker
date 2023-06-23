@@ -46,7 +46,6 @@
 
 <script setup lang="ts">
 import { Refuel, Vehicle } from 'src/scripts/libraries/refuel/models'
-import { defineProps } from 'vue'
 import { date } from 'quasar'
 import { emitter } from 'src/boot/mitt'
 
