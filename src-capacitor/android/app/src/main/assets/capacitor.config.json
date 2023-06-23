@@ -10,5 +10,8 @@
 			"iconColor": "#6E6B9D",
 			"sound": ""
 		}
+	},
+	"server": {
+		"url": "http://192.168.0.200:8080"
 	}
 }
