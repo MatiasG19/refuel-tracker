@@ -18,31 +18,30 @@
     "splashicons": "icongenie generate --mode capacitor --filter splashscreen --splashscreen-icon-ratio 30 --theme-color 8488ff --skip-trim --icon ./.icons/icon.png"
   },
   "dependencies": {
-    "@quasar/extras": "^1.0.0",
-    "axios": "^0.27.2",
-    "core-js": "^3.6.5",
-    "dexie": "^3.2.2",
+    "@quasar/extras": "^1.16.4",
+    "axios": "^1.4.0",
+    "core-js": "^3.31.0",
+    "dexie": "^3.2.4",
     "dexie-export-import": "^4.0.7",
     "mitt": "^3.0.0",
-    "pinia": "^2.0.11",
-    "quasar": "^2.4.10",
-    "vue-i18n": "^9.0.0"
+    "pinia": "^2.1.4",
+    "quasar": "^2.12.0",
+    "vue-i18n": "^9.2.2"
   },
   "devDependencies": {
-    "@babel/eslint-parser": "^7.13.14",
-    "@capacitor/core": "3.0.0",
-    "@capacitor/filesystem": "^1.1.0",
+    "@babel/eslint-parser": "^7.22.5",
+    "@capacitor/core": "3.9.0",
     "@capacitor/keyboard": "^1.2.3",
     "@capacitor/local-notifications": "^1.1.0",
     "@quasar/app": "^3.0.0",
     "@quasar/vite-plugin": "^1.0.4",
-    "@types/node": "^12.20.21",
+    "@types/node": "^20.3.1",
     "@typescript-eslint/eslint-plugin": "^4.16.1",
     "@typescript-eslint/parser": "^4.16.1",
     "eslint": "^7.14.0",
-    "eslint-config-prettier": "^8.1.0",
-    "eslint-plugin-vue": "^7.0.0",
-    "sass": "1.32.0"
+    "eslint-config-prettier": "^8.8.0",
+    "eslint-plugin-vue": "^9.15.0",
+    "sass": "1.63.4"
   },
   "browserslist": [
     "last 10 Chrome versions",
