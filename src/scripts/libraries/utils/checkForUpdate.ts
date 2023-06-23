@@ -55,7 +55,7 @@ export function useCheckForUpdate(): () => void {
   }
 
   async function showNotification(version: string) {
-    if ($q.capacitor) {
+    if ($q.platform.is.mobile) {
       await LocalNotifications.schedule({
         notifications: [
           {
@@ -71,7 +71,7 @@ export function useCheckForUpdate(): () => void {
   }
 
   function registerDownloadActionListener(version: string) {
-    if ($q.capacitor) {
+    if ($q.platform.is.mobile) {
       versionNotifHandle = LocalNotifications.addListener(
         'localNotificationActionPerformed',
         (n: ActionPerformed) => {
@@ -85,7 +85,7 @@ export function useCheckForUpdate(): () => void {
   }
 
   onMounted(() => {
-    if ($q.capacitor) {
+    if ($q.platform.is.mobile) {
       LocalNotifications.registerActionTypes({
         types: [
           {
