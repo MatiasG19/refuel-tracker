@@ -1,6 +1,7 @@
 import 'dexie-export-import'
 import { db } from 'src/boot/dexie'
 import { Filesystem, Directory, Encoding } from '@capacitor/filesystem'
+import { getDateForFileName } from '../utils'
 
 export async function exportDB() {
   const blob = await db.export()
@@ -16,7 +17,7 @@ async function writeBlob(blob: Blob) {
   const dataAsString = await blob.text()
   // eslint-disable-next-line @typescript-eslint/no-unsafe-call, @typescript-eslint/no-unsafe-member-access
   await Filesystem.writeFile({
-    path: 'RefuelTrackerBackup.json',
+    path: `RefuelTrackerBackup_${getDateForFileName()}.json`,
     data: dataAsString,
     // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment, @typescript-eslint/no-unsafe-member-access
     directory: Directory.Documents,
