@@ -27,7 +27,6 @@
 </template>
 
 <script setup lang="ts">
-import { defineProps } from 'vue'
 import { OptionInDialog } from 'src/components/dialogs/optionsDialog'
 import { useDialogPluginComponent } from 'quasar'
 

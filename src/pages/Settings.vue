@@ -85,28 +85,28 @@ const colorThemeOptions = [
   }
 ]
 
-const distanceUnitOptions = [
-  {
-    label: 'km',
-    value: 1
-  },
-  {
-    label: 'miles',
-    value: 2
-  }
-]
+// const distanceUnitOptions = [
+//   {
+//     label: 'km',
+//     value: 1
+//   },
+//   {
+//     label: 'miles',
+//     value: 2
+//   }
+// ]
 
 const colorTheme = ref(settingsStore.selectedColorThemeId)
-const distanceUnit = ref(settingsStore.selectedDistanceUnitId)
+// const distanceUnit = ref(settingsStore.selectedDistanceUnitId)
 const plateNumberInTitle = ref(settingsStore.plateNumberInTitleActive)
 
 function changeColorTheme(value: number) {
   settingsStore.changeColorTheme(value)
 }
 
-function changeDistanceUnit(value: number) {
-  settingsStore.changeDistanceUnit(value)
-}
+// function changeDistanceUnit(value: number) {
+//   settingsStore.changeDistanceUnit(value)
+// }
 
 function togglePlateNumberInTitle(value: boolean) {
   settingsStore.togglePlateNumberInTitle(value)

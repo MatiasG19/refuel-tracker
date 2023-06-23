@@ -84,7 +84,7 @@
 </template>
 
 <script setup lang="ts">
-import { onMounted, computed, defineEmits, ref } from 'vue'
+import { onMounted, computed, ref } from 'vue'
 import { useRouter } from 'vue-router'
 import packageJson from '../../package.json'
 import { openURL } from 'quasar'

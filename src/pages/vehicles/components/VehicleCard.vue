@@ -30,7 +30,6 @@
 
 <script setup lang="ts">
 import { VehicleData } from 'src/scripts/libraries/refuel/models'
-import { defineProps } from 'vue'
 import { emitter } from 'src/boot/mitt'
 
 defineProps({
