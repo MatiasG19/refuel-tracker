@@ -86,11 +86,12 @@
 
 <script setup lang="ts">
 import EssentialLink from 'components/EssentialLink.vue'
-import { ref, computed, onUnmounted } from 'vue'
+import { ref, computed, onMounted, onUnmounted } from 'vue'
 import { useRouter } from 'vue-router'
 import { emitter } from 'src/boot/mitt'
 import { useSettingsStore } from 'src/stores'
 import { Keyboard } from '@capacitor/keyboard'
+import { Platform } from 'quasar'
 
 const linkList = [
   {
@@ -134,13 +135,20 @@ emitter.on('updateTitle', e => (title.value = e))
 const leftDrawerOpen = ref(false)
 const title = ref('')
 
-Keyboard.addListener('keyboardDidShow', () => {
-  footerVisible.value = false
-})
+Platform.is.mobile
 
-Keyboard.addListener('keyboardDidHide', () => {
-  footerVisible.value = true
-})
+function addKeyboardListeners() {
+  if(Platform.is.mobile) {
+    Keyboard.addListener('keyboardDidShow', () => {
+      footerVisible.value = false
+    })
+
+    Keyboard.addListener('keyboardDidHide', () => {
+      footerVisible.value = true
+    })
+  }
+}
+
 
 function toggleLeftDrawer() {
   leftDrawerOpen.value = !leftDrawerOpen.value
@@ -152,6 +160,10 @@ function add() {
   else if (routePath.value == '/vehicles') void router.push('/vehicles/add')
   else void router.push('/refuels/add')
 }
+
+onMounted(() => {
+  addKeyboardListeners()
+})
 
 onUnmounted(() => {
   emitter.off('updateTitle')
