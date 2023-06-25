@@ -1,7 +1,5 @@
 package capacitor.quasar.refueltracker.plugins.FilePicker;
 
-import android.util.Log;
-
 import com.getcapacitor.JSObject;
 import com.getcapacitor.Plugin;
 import com.getcapacitor.PluginCall;
