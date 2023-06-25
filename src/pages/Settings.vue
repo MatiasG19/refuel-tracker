@@ -45,20 +45,26 @@
             <q-item-label>Import</q-item-label>
           </q-item-section>
           <q-item-section avatar>
-            <q-btn label="Import" color="positive" @click="importDB" />
+            <q-btn label="File" color="positive" @click="testFile" />
+            <q-btn label="Files" color="positive" @click="testFiles" />
+            <q-btn label="Dir" color="positive" @click="testDir" />
           </q-item-section>
         </q-item>
       </q-list>
     </q-list>
+    <div>T: {{ testiFile }}</div>
+    <div>T: {{ testiFiles }}</div>
+    <div>T: {{ testiDirs }}</div>
   </div>
 </template>
 
 <script setup lang="ts">
-import { ref, onMounted } from 'vue'
+import { ref, onMounted, onUnmounted } from 'vue'
 import CSelect from 'src/components/inputs/CSelect.vue'
 import { emitter } from 'src/boot/mitt'
 import { useSettingsStore } from 'src/stores'
-import { exportDB, importDB } from 'src/scripts/libraries/backup/backup'
+import { exportDB } from 'src/scripts/libraries/backup/backup'
+import { FilePicker } from 'src/plugins/capacitor-file-picker'
 
 const settingsStore = useSettingsStore()
 
@@ -112,7 +118,33 @@ function togglePlateNumberInTitle(value: boolean) {
   settingsStore.togglePlateNumberInTitle(value)
 }
 
+const testiFile = ref<string>('Nöscht')
+const testiFiles = ref<string[]>(['Nöscht'])
+const testiDirs = ref<string>('Nöscht')
+
+async function testFile() {
+  await FilePicker.pickFile({ mimeType: '*/*' })
+}
+
+async function testFiles() {
+  await FilePicker.pickFiles({ mimeType: '*/*' })
+}
+
+async function testDir() {
+  await FilePicker.pickDir()
+}
+
 onMounted(() => {
   emitter.emit('updateTitle', 'Settings')
+  FilePicker.addListener('filePathResult', res => (testiFile.value = res.path))
+  FilePicker.addListener(
+    'filePathResults',
+    res => (testiFiles.value = res.paths.split(','))
+  )
+  FilePicker.addListener('dirPathResult', res => (testiDirs.value = res.path))
+})
+
+onUnmounted(() => {
+  FilePicker.removeAllListeners()
 })
 </script>
