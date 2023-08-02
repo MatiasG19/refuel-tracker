@@ -23,7 +23,7 @@ public class FilePicker {
       new ActivityResultCallback<Uri>() {
         @Override
         public void onActivityResult(Uri uri) {
-          FilePathResultObserver.update(uri.getPath());
+          FilePathResultObserver.update(uri.toString());
         }
       });
     // Files
@@ -35,9 +35,9 @@ public class FilePicker {
           String paths = "";
           for (int i = 0; i < uris.size(); i++) {
             if (i == 0)
-              paths += uris.get(i).getPath();
+              paths += uris.get(i).toString();
             else
-              paths += "," + uris.get(i).getPath();
+              paths += "," + uris.get(i).toString();
           }
           FilePathResultsObserver.update(paths);
         }
@@ -48,7 +48,14 @@ public class FilePicker {
       new ActivityResultCallback<Uri>() {
         @Override
         public void onActivityResult(Uri uri) {
-          DirPathResultObserver.update(uri.getPath());
+//          try {
+//            InputStream inputStream = activity.getContentResolver().openInputStream(uri);
+//            DirPathResultObserver.update(inputStream.toString());
+//          } catch (FileNotFoundException e) {
+//            throw new RuntimeException(e);
+//          }
+
+          DirPathResultObserver.update(uri.toString());
         }
       });
   }

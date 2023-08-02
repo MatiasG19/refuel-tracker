@@ -145,20 +145,23 @@ async function testDir() {
 
 onMounted(() => {
   emitter.emit('updateTitle', 'Settings')
-  FilePicker.addListener('filePathResult', result => () => {
-    // await importDB(result.path)
-    testiFile.value = result.path
-    console.log('filePathResult: ' + result.path)
+  FilePicker.addListener('filePathResult', result => {
+    ;(async () => {
+      await importDB(result.path)
+      testiFile.value = result.path
+      console.log('filePathResult: ' + result.path)
+    })()
   })
   FilePicker.addListener(
     'filePathResults',
     res => (testiFiles.value = res.paths.split(','))
   )
-  FilePicker.addListener('dirPathResult', result => async () => {
-    // "/tree/primary:Download/Backup"
-    await exportDB(result.path)
-    testiDirs.value = result.path
-    console.log('dirPathResult: ' + result.path)
+  FilePicker.addListener('dirPathResult', result => {
+    ;(async () => {
+      await exportDB(result.path)
+      testiDirs.value = result.path
+      console.log('dirPathResult: ' + result.path)
+    })()
   })
 })
 
