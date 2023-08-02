@@ -20,7 +20,7 @@
   "dependencies": {
     "@quasar/extras": "^1.16.4",
     "axios": "^1.4.0",
-    "core-js": "^3.31.0",
+    "core-js": "^3.32.0",
     "dexie": "^3.2.4",
     "dexie-export-import": "^4.0.7",
     "mitt": "^3.0.0",
@@ -36,13 +36,13 @@
     "@capacitor/local-notifications": "^1.1.0",
     "@quasar/app": "^3.0.0",
     "@quasar/vite-plugin": "^1.0.4",
-    "@types/node": "^20.3.1",
+    "@types/node": "^20.4.1",
     "@typescript-eslint/eslint-plugin": "^4.16.1",
     "@typescript-eslint/parser": "^4.16.1",
     "eslint": "^7.14.0",
-    "eslint-config-prettier": "^8.8.0",
+    "eslint-config-prettier": "^8.9.0",
     "eslint-plugin-vue": "^9.15.0",
-    "sass": "1.63.4"
+    "sass": "1.64.1"
   },
   "browserslist": [
     "last 10 Chrome versions",
