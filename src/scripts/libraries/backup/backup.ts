@@ -3,35 +3,35 @@ import { db } from 'src/boot/dexie'
 import { Filesystem, Directory, Encoding } from '@capacitor/filesystem'
 import { getDateForFileName } from '../utils'
 
-export async function exportDB() {
+export async function exportDB(path: string) {
   const blob = await db.export()
-  writeBlob(blob)
+  writeBlob(blob, path)
 }
 
-export async function importDB() {
-  const blob = await readBlob()
+export async function importDB(path: string) {
+  const blob = await readBlob(path)
   await db.import(blob)
 }
 
-async function writeBlob(blob: Blob) {
+async function writeBlob(blob: Blob, path: string) {
   const dataAsString = await blob.text()
   // eslint-disable-next-line @typescript-eslint/no-unsafe-call, @typescript-eslint/no-unsafe-member-access
   await Filesystem.writeFile({
-    path: `RefuelTrackerBackup_${getDateForFileName()}.json`,
+    path: `${path}/RefuelTrackerBackup_${getDateForFileName()}.json`,
     data: dataAsString,
     // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment, @typescript-eslint/no-unsafe-member-access
-    directory: Directory.Documents,
+    // directory: Directory.Documents,
     // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment, @typescript-eslint/no-unsafe-member-access
     encoding: Encoding.UTF8
   })
 }
 
-async function readBlob(): Promise<Blob> {
+async function readBlob(path: string): Promise<Blob> {
   // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment, @typescript-eslint/no-unsafe-member-access, @typescript-eslint/no-unsafe-call
   const result = await Filesystem.readFile({
-    path: 'RefuelTrackerBackup.json',
+    path: path,
     // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment, @typescript-eslint/no-unsafe-member-access
-    directory: Directory.Documents,
+    // directory: Directory.Documents,
     // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment, @typescript-eslint/no-unsafe-member-access
     encoding: Encoding.UTF8
   })

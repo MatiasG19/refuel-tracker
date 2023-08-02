@@ -37,7 +37,7 @@
             <q-item-label>Export</q-item-label>
           </q-item-section>
           <q-item-section avatar>
-            <q-btn label="Export" color="positive" @click="exportDB" />
+            <q-btn label="Export" color="positive" @click="exportBackup" />
           </q-item-section>
         </q-item>
         <q-item tag="label">
@@ -45,6 +45,7 @@
             <q-item-label>Import</q-item-label>
           </q-item-section>
           <q-item-section avatar>
+            <q-btn label="Import" color="positive" @click="importBackup" />
             <q-btn label="File" color="positive" @click="testFile" />
             <q-btn label="Files" color="positive" @click="testFiles" />
             <q-btn label="Dir" color="positive" @click="testDir" />
@@ -63,7 +64,7 @@ import { ref, onMounted, onUnmounted } from 'vue'
 import CSelect from 'src/components/inputs/CSelect.vue'
 import { emitter } from 'src/boot/mitt'
 import { useSettingsStore } from 'src/stores'
-import { exportDB } from 'src/scripts/libraries/backup/backup'
+import { exportDB, importDB } from 'src/scripts/libraries/backup/backup'
 import { FilePicker } from 'src/plugins/capacitor-file-picker'
 
 const settingsStore = useSettingsStore()
@@ -118,6 +119,14 @@ function togglePlateNumberInTitle(value: boolean) {
   settingsStore.togglePlateNumberInTitle(value)
 }
 
+async function exportBackup() {
+  await FilePicker.pickDir()
+}
+
+async function importBackup() {
+  await FilePicker.pickFile({ mimeType: '*/*' })
+}
+
 const testiFile = ref<string>('Nöscht')
 const testiFiles = ref<string[]>(['Nöscht'])
 const testiDirs = ref<string>('Nöscht')
@@ -136,12 +145,21 @@ async function testDir() {
 
 onMounted(() => {
   emitter.emit('updateTitle', 'Settings')
-  FilePicker.addListener('filePathResult', res => (testiFile.value = res.path))
+  FilePicker.addListener('filePathResult', result => () => {
+    // await importDB(result.path)
+    testiFile.value = result.path
+    console.log('filePathResult: ' + result.path)
+  })
   FilePicker.addListener(
     'filePathResults',
     res => (testiFiles.value = res.paths.split(','))
   )
-  FilePicker.addListener('dirPathResult', res => (testiDirs.value = res.path))
+  FilePicker.addListener('dirPathResult', result => async () => {
+    // "/tree/primary:Download/Backup"
+    await exportDB(result.path)
+    testiDirs.value = result.path
+    console.log('dirPathResult: ' + result.path)
+  })
 })
 
 onUnmounted(() => {
