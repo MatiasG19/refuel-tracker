@@ -10,6 +10,8 @@ export const useSettingsStore = defineStore('settingsStore', () => {
   const selectedVehicleName = ref<string>('My car')
   const selectedVehiclePlateNumber = ref<string>('')
   const plateNumberInTitleActive = ref<boolean>(false)
+  const autoBackupActive = ref<boolean>(false)
+  const autoBackupPath = ref<string>('')
   const refuelFilterActive = ref<boolean>(false)
   const selectedColorThemeId = ref<number>(1)
   const checkForUpdate = ref<boolean>(true)
@@ -52,6 +54,24 @@ export const useSettingsStore = defineStore('settingsStore', () => {
     })()
   }
 
+  function toggleAutoBackup(state: boolean) {
+    ;(async () => {
+      const settings = await db.settings.toArray()
+      settings[0].autoBackupActive = state
+      await db.settings.put(settings[0])
+      autoBackupActive.value = state
+    })()
+  }
+
+  function setAutoBackupPath(path: string) {
+    ;(async () => {
+      const settings = await db.settings.toArray()
+      settings[0].autoBackupPath = path
+      await db.settings.put(settings[0])
+      autoBackupPath.value = path
+    })()
+  }
+
   function toggleRefuelFilter(state: boolean) {
     ;(async () => {
       const settings = await db.settings.toArray()
@@ -76,12 +96,16 @@ export const useSettingsStore = defineStore('settingsStore', () => {
     selectedVehicleName,
     selectedVehiclePlateNumber,
     plateNumberInTitleActive,
+    autoBackupActive,
+    autoBackupPath,
     refuelFilterActive,
     selectedColorThemeId,
     checkForUpdate,
     changeDistanceUnit,
     changeSelectedVehicle,
     togglePlateNumberInTitle,
+    toggleAutoBackup,
+    setAutoBackupPath,
     toggleRefuelFilter,
     changeColorTheme
   }

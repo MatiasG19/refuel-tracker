@@ -2,44 +2,81 @@ import { PluginListenerHandle } from '@capacitor/core'
 
 export interface FilePickerPlugin {
   /**
-   * Open file explorer to pick a file path.
-   * @param options
+   * Get content
+   * @param mimeType MIME type
    */
-  pickFile(options: { mimeType: string }): Promise<void>
+  getContent(options: { mimeType: string }): Promise<void>
   /**
-   * Open file explorer to pick multiple file paths.
-   * @param options
+   * Get multiple contents
+   * @param mimeType MIME type
    */
-  pickFiles(options: { mimeType: string }): Promise<void>
+  getMultipleConents(options: { mimeType: string }): Promise<void>
   /**
-   * Open file explorer to pick directory path.
+   * Open document tree
    */
-  pickDir(): Promise<void>
+  openDocumentTree(): Promise<void>
   /**
-   * Listen for file path result from activity result.
+   * Open document
+   * @param mimeTypes MIME types comma seperated
+   */
+  openDocument(options: { mimeTypes: string }): Promise<void>
+  /**
+   * Create document
+   * @param mimeType MIME type
+   */
+  createDocument(options: { mimeType: string }): Promise<void>
+  /**
+   * Create file
+   */
+  createFile(options: {
+    path: string
+    fileName: string
+    mimeType: string
+    data: string
+  }): Promise<void>
+  /**
+   * Listen for content result from activity result.
    * @param eventName
    * @param listener
    */
   addListener(
-    eventName: 'filePathResult',
+    eventName: 'getContentResult',
     listener: (res: { path: string }) => void
   ): Promise<PluginListenerHandle> & PluginListenerHandle
   /**
-   * Listen for file path results from activity result.
+   * Listen for multiple content results from activity result.
    * @param eventName
    * @param listener
    */
   addListener(
-    eventName: 'filePathResults',
+    eventName: 'getMultipleContentsResult',
     listener: (res: { paths: string }) => void
   ): Promise<PluginListenerHandle> & PluginListenerHandle
   /**
-   * Listen for directory path result from activity result.
+   * Listen for open document tree result from activity result.
    * @param eventName
    * @param listener
    */
   addListener(
-    eventName: 'dirPathResult',
+    eventName: 'openDocumentTreeResult',
+    listener: (res: { path: string }) => void
+  ): Promise<PluginListenerHandle> & PluginListenerHandle
+  /**
+   * Listen for open document result from activity result.
+   * @param eventName
+   * @param listener
+   */
+  addListener(
+    eventName: 'openDocumentResult',
+    listener: (res: { path: string }) => void
+  ): Promise<PluginListenerHandle> & PluginListenerHandle
+  /**
+   * Listen for create document result from activity result.
+   * @param eventName
+   * @param listener
+   */
+  addListener(
+    eventName: 'createDocumentResult',
     listener: (res: { path: string }) => void
   ): Promise<PluginListenerHandle> & PluginListenerHandle
   /**

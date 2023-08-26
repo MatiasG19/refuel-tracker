@@ -13,38 +13,69 @@ public class FilePickerPlugin extends Plugin {
   @Override
   public void load() {
     implementation = new FilePicker(getActivity());
-    implementation.FilePathResultObserver = this::onGetFilePathResult;
-    implementation.FilePathResultsObserver = this::onGetFilePathResults;
-    implementation.DirPathResultObserver = this::onGetDirPathResult;
+    implementation.GetContentObserver = this::onGetContentResult;
+    implementation.GetMultipleContentsObserver = this::onGetMultipleContentsResult;
+    implementation.OpenDocumentTreeObserver = this::onOpenDocumentTreeResult;
+    implementation.OpenDocumentObserver = this::onOpenDocumentResult;
+    implementation.CreateDocumentObserver = this::onCreateDocumentResult;
   }
 
   @PluginMethod
-  public void pickFile(PluginCall call) {
+  public void getContent(PluginCall call) {
     String mimeType = call.getString("mimeType");
-    implementation.pickFile(mimeType);
+    implementation.getConent(mimeType);
   }
 
   @PluginMethod
-  public void pickFiles(PluginCall call) {
+  public void getMultipleContents(PluginCall call) {
     String mimeType = call.getString("mimeType");
-    implementation.pickFiles(mimeType);
+    implementation.getMultipleContents(mimeType);
   }
 
   @PluginMethod
-  public void pickDir(PluginCall call) {
-    implementation.pickDir();
+  public void openDocumentTree(PluginCall call) {
+    implementation.openDocumentTree();
   }
 
-  public void onGetFilePathResult(String path) {
-    onResult("path", "filePathResult", path);
+  @PluginMethod
+  public void openDocument(PluginCall call) {
+    String mimeTypes = call.getString("mimeTypes");
+    implementation.openDocument(mimeTypes.split(","));
   }
 
-  public void onGetFilePathResults(String paths) {
-    onResult("paths", "filePathResults", paths);
+  @PluginMethod
+  public void createDocument(PluginCall call) {
+    String mimeType = call.getString("mimeTypes");
+    implementation.createDocument(mimeType);
   }
 
-  public void onGetDirPathResult(String path) {
-    onResult("path", "dirPathResult", path);
+  @PluginMethod
+  public void createFile(PluginCall call) {
+    String path = call.getString("path");
+    String fileName = call.getString("fileName");
+    String mimeType = call.getString("mimeType");
+    String data = call.getString("data");
+    implementation.createFile(path, fileName, mimeType, data);
+  }
+
+  public void onGetContentResult(String path) {
+    onResult("path", "getContentResult", path);
+  }
+
+  public void onGetMultipleContentsResult(String paths) {
+    onResult("paths", "getMultipleContentsResult", paths);
+  }
+
+  public void onOpenDocumentTreeResult(String path) {
+    onResult("path", "openDocumentTreeResult", path);
+  }
+
+  public void onOpenDocumentResult(String path) {
+    onResult("path", "openDocumentResult", path);
+  }
+
+  public void onCreateDocumentResult(String path) {
+    onResult("path", "createDocumentResult", path);
   }
 
   private void onResult(String key, String eventName, String data) {

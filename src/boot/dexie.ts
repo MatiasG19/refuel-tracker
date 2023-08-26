@@ -17,7 +17,7 @@ export class RefuelTrackerDexie extends Dexie {
       refuels:
         '++id, date, refuelAmount, payedAmount, distanceDriven, vehicleId',
       settings:
-        '++id, colorThemeId, distanceUnitId, vehicleId, plateNumberInTitleActive, refuelFilterActive'
+        '++id, colorThemeId, distanceUnitId, vehicleId, plateNumberInTitleActive, autoBackupActive, autoBackupPath, refuelFilterActive'
     })
 
     // Insert static data
@@ -53,6 +53,8 @@ export class RefuelTrackerDexie extends Dexie {
         settings.colorThemeId = 1
         settings.distanceUnitId = 1
         settings.plateNumberInTitleActive = false
+        settings.autoBackupActive = false
+        settings.autoBackupPath = ''
         settings.refuelFilterActive = false
         {
           ;(async () => await this.settings.put(settings))()

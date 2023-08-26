@@ -32,6 +32,34 @@
 
       <q-item-label header>Backup</q-item-label>
       <q-list class="q-pb-md">
+        <template v-if="false">
+          <q-item tag="label">
+            <q-item-section>
+              <q-item-label>Auto backup</q-item-label>
+            </q-item-section>
+            <q-item-section avatar>
+              <q-toggle
+                v-model="autoBackup"
+                @update:model-value="toggleAutoBackup"
+                color="positive"
+              />
+            </q-item-section>
+          </q-item>
+
+          <q-item tag="label">
+            <q-item-section>
+              <q-item-label>Auto backup folder</q-item-label>
+            </q-item-section>
+            <q-item-section avatar>
+              <q-btn
+                label="Change"
+                color="positive"
+                :disable="!autoBackup"
+                @click="chooseAutoBackupFolder"
+              />
+            </q-item-section>
+          </q-item>
+        </template>
         <q-item tag="label">
           <q-item-section>
             <q-item-label>Export</q-item-label>
@@ -40,22 +68,17 @@
             <q-btn label="Export" color="positive" @click="exportBackup" />
           </q-item-section>
         </q-item>
+
         <q-item tag="label">
           <q-item-section>
             <q-item-label>Import</q-item-label>
           </q-item-section>
           <q-item-section avatar>
             <q-btn label="Import" color="positive" @click="importBackup" />
-            <q-btn label="File" color="positive" @click="testFile" />
-            <q-btn label="Files" color="positive" @click="testFiles" />
-            <q-btn label="Dir" color="positive" @click="testDir" />
           </q-item-section>
         </q-item>
       </q-list>
     </q-list>
-    <div>T: {{ testiFile }}</div>
-    <div>T: {{ testiFiles }}</div>
-    <div>T: {{ testiDirs }}</div>
   </div>
 </template>
 
@@ -66,6 +89,13 @@ import { emitter } from 'src/boot/mitt'
 import { useSettingsStore } from 'src/stores'
 import { exportDB, importDB } from 'src/scripts/libraries/backup/backup'
 import { FilePicker } from 'src/plugins/capacitor-file-picker'
+import { Notify } from 'quasar'
+
+type GetContentResultAction = (result: { path: string }) => void
+let getContentResultAction: GetContentResultAction
+
+type OpenDocumentTreeResultAction = (result: { path: string }) => void
+let openDocumentTreeResultAction: OpenDocumentTreeResultAction
 
 const settingsStore = useSettingsStore()
 
@@ -106,6 +136,7 @@ const colorThemeOptions = [
 const colorTheme = ref(settingsStore.selectedColorThemeId)
 // const distanceUnit = ref(settingsStore.selectedDistanceUnitId)
 const plateNumberInTitle = ref(settingsStore.plateNumberInTitleActive)
+const autoBackup = ref(settingsStore.autoBackupActive)
 
 function changeColorTheme(value: number) {
   settingsStore.changeColorTheme(value)
@@ -119,49 +150,44 @@ function togglePlateNumberInTitle(value: boolean) {
   settingsStore.togglePlateNumberInTitle(value)
 }
 
+async function toggleAutoBackup(value: boolean) {
+  if (value) await FilePicker.openDocumentTree() // Pick directory when activating auto backup
+  settingsStore.toggleAutoBackup(value)
+}
+
+async function chooseAutoBackupFolder() {
+  // dirPathResultAction
+  await FilePicker.openDocumentTree()
+}
+
 async function exportBackup() {
-  await FilePicker.pickDir()
+  openDocumentTreeResultAction = result => {
+    ;(async () => {
+      settingsStore.setAutoBackupPath(result.path)
+      await exportDB(result.path)
+      Notify.create('Backup exported')
+    })()
+  }
+  await FilePicker.openDocumentTree()
 }
 
 async function importBackup() {
-  await FilePicker.pickFile({ mimeType: '*/*' })
-}
-
-const testiFile = ref<string>('Nöscht')
-const testiFiles = ref<string[]>(['Nöscht'])
-const testiDirs = ref<string>('Nöscht')
-
-async function testFile() {
-  await FilePicker.pickFile({ mimeType: '*/*' })
-}
-
-async function testFiles() {
-  await FilePicker.pickFiles({ mimeType: '*/*' })
-}
-
-async function testDir() {
-  await FilePicker.pickDir()
+  getContentResultAction = result => {
+    ;(async () => {
+      await importDB(result.path)
+      Notify.create('Backup imported')
+    })()
+  }
+  await FilePicker.getContent({ mimeType: '*/*' })
 }
 
 onMounted(() => {
   emitter.emit('updateTitle', 'Settings')
-  FilePicker.addListener('filePathResult', result => {
-    ;(async () => {
-      await importDB(result.path)
-      testiFile.value = result.path
-      console.log('filePathResult: ' + result.path)
-    })()
+  FilePicker.addListener('getContentResult', res => {
+    getContentResultAction(res)
   })
-  FilePicker.addListener(
-    'filePathResults',
-    res => (testiFiles.value = res.paths.split(','))
-  )
-  FilePicker.addListener('dirPathResult', result => {
-    ;(async () => {
-      await exportDB(result.path)
-      testiDirs.value = result.path
-      console.log('dirPathResult: ' + result.path)
-    })()
+  FilePicker.addListener('openDocumentTreeResult', res => {
+    openDocumentTreeResultAction(res)
   })
 })
 
