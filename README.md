@@ -1,4 +1,4 @@
-# Refuel Tracker [![Android CI][ci-img]][ci-url]
+# Refuel Tracker [![CI/CD][ci-img]][ci-url]
 
 Tracks your refuels and displays your data in nice grahs.
 
