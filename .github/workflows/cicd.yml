@@ -14,7 +14,7 @@ env:
   RELEASE_PATH_SIGNED: ${{ github.workspace }}/dist/capacitor/android/apk/release/signed
 
 jobs:
-  Build/Test/Release:
+  Build-Test-Release:
     runs-on: ubuntu-latest
 
     steps:
