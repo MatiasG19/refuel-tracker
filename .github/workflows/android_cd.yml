@@ -1,44 +1,30 @@
-# This workflow will do a clean installation of node dependencies, cache/restore them, build the source code and run tests across different versions of node
-# For more information see: https://help.github.com/actions/language-and-framework-guides/using-nodejs-with-github-actions
-
-name: Android CD
+name: CI/CD
 
 on:
-  workflow_dispatch:
-    inputs:
-      release-type:
-        type: choice
-        description: Release type
-        options:
-          - release
-          - prerelease
-          - artifact
-      tag:
-        description: Version
-        default: 'v0.0.0'
-        required: true
+  push:
+    branches:
+      - '**'
+  pull_request:
+  release:
+    types: [released, prereleased]
 
 env:
   REPO_NAME: ${{ github.event.repository.name }}
-  RELEASE_PATH: /home/runner/work/refuel-tracker/refuel-tracker/dist/capacitor/android/apk/release
-  RELEASE_PATH_SIGNED: $/home/runner/work/refuel-tracker/refuel-tracker/dist/capacitor/android/apk/release/signed
+  RELEASE_PATH: ${{ github.workspace }}/dist/capacitor/android/apk/release
+  RELEASE_PATH_SIGNED: ${{ github.workspace }}/dist/capacitor/android/apk/release/signed
 
 jobs:
-  create-release:
+  Build/Test/Release:
     runs-on: ubuntu-latest
 
-    strategy:
-      matrix:
-        node-version: [16.x]
-
     steps:
-      - name: Checkout branch
+      - name: Checkout
         uses: actions/checkout@v3
 
-      - name: Use Node.js ${{ matrix.node-version }}
+      - name: Setup Node
         uses: actions/setup-node@v3
         with:
-          node-version: ${{ matrix.node-version }}
+          node-version: 16.x
 
       - name: Get yarn cache directory path
         id: yarn-cache-dir-path
@@ -56,16 +42,27 @@ jobs:
             ${{ runner.os }}-yarn-
 
       - name: Install app dependecies
+        if: steps.yarn-cache.outputs.cache-hit != 'true'
         run: yarn --frozen-lockfile
 
       - name: Run tests
+        if: ${{ github.event_name != 'release' }}
         run: yarn test
+
+      - name: Set version in package.json
+        if: ${{ github.event_name == 'release' }}
+        uses: maxgfr/github-change-json@v0.0.21
+        with:
+          key: 'version'
+          value: ${{ github.ref_name }}
+          path: ${{ github.workspace }}/package.json
 
       - name: Build apk
         run: yarn appbuild
 
       - name: Sign apk
-        uses: MatiasG19/android-sign@2.0.0-rc
+        if: ${{ github.event_name == 'release' }}
+        uses: MatiasG19/android-sign@2.0.0
         with:
           releaseDirectory: ${{ env.RELEASE_PATH }}
           signingKeyBase64: ${{ secrets.MY_KEY }}
@@ -77,30 +74,12 @@ jobs:
           BUILD_TOOLS_VERSION: '33.0.2'
 
       - name: Rename apk
+        if: ${{ github.event_name == 'release' }}
         run: cd ${{ env.RELEASE_PATH_SIGNED }} &&
-          mv *.apk $(
-          if ${{ contains(fromJson('["release", "prerelease"]'), inputs.release-type) }}; then
-          echo ${{ env.REPO_NAME }}-${{ inputs.tag }}.apk;
-          elif ${{ inputs.release-type == 'artifact' }}; then
-          echo ${{ env.REPO_NAME }}-artifact.apk;
-          else echo ${{ env.REPO_NAME }}.apk;
-          fi)
-
-      - name: Create release
-        if: ${{ contains(fromJson('["release", "prerelease"]'), inputs.release-type) }}
-        run: gh release create ${{ inputs.tag }} --generate-notes $(if ${{ inputs.release-type == 'prerelease' }} ; then echo --prerelease; else echo ""; fi)
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          mv *.apk $(echo ${{ env.REPO_NAME }}-${{ github.ref_name }}.apk;)
 
       - name: Append apk to release
-        if: ${{ contains(fromJson('["release", "prerelease"]'), inputs.release-type) }}
-        run: gh release upload ${{ inputs.tag }} ${{ env.RELEASE_PATH_SIGNED }}/*.apk
+        if: ${{ github.event_name == 'release' }}
+        run: gh release upload ${{ github.ref_name }} ${{ env.RELEASE_PATH_SIGNED }}/*.apk
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-
-      - name: Upload artifact
-        if: ${{ inputs.release-type == 'artifact' }}
-        uses: actions/upload-artifact@v3
-        with:
-          name: ${{ env.REPO_NAME }}-artifact
-          path: ${{ env.RELEASE_PATH_SIGNED }}
