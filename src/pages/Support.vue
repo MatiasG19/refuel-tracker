@@ -7,7 +7,26 @@
       <q-icon name="rocket_launch" color="accent"></q-icon>
     </h5>
 
+    <q-card class="space-station">
+      <q-card-section>
+        <div class="q-mt-md text-center">
+          <div class="q-mb-md text-center">
+            {{ packageJson.productName }}'s code is open source! Check it out!
+          </div>
+          <q-btn
+            color="accent"
+            icon-right="code"
+            label="GitHub"
+            @click="openURL(repositoryLink)"
+            no-caps
+            outline
+          />
+        </div>
+      </q-card-section>
+    </q-card>
+
     <q-carousel
+      v-if="false"
       v-model="slide"
       transition-prev="jump-right"
       transition-next="jump-left"
@@ -42,19 +61,6 @@
               class="accent-space-station"
             />
           </div>
-        </div>
-      </q-carousel-slide>
-      <q-carousel-slide name="feedback" class="column no-wrap flex-center">
-        <div class="q-mt-md text-center">
-          <div class="q-mb-md text-center">Having some trouble?</div>
-          <q-btn
-            color="accent"
-            icon-right="mail"
-            label="Send Feedback"
-            no-caps
-            outline
-            @click="openURL(emailLink)"
-          />
         </div>
       </q-carousel-slide>
       <q-carousel-slide name="code" class="column no-wrap flex-center">
@@ -97,7 +103,6 @@ const slide = ref('feedback')
 const repositoryLink = 'https://github.com/MatiasG19/refuel-tracker'
 const licenseLink =
   'https://github.com/MatiasG19/refuel-tracker/blob/main/LICENSE'
-const emailLink = 'mailto:matiasg19@tutanota.com'
 
 const emits = defineEmits(['update:title'])
 
