@@ -1,4 +1,4 @@
-# Refuel Tracker [![Android CI][ci-img]][ci-url]
+# Refuel Tracker [![CI/CD](https://github.com/MatiasG19/refuel-tracker/actions/workflows/cicd.yml/badge.svg)](https://github.com/MatiasG19/refuel-tracker/actions/workflows/cicd.yml)
 
 Tracks your refuels and displays your data in nice grahs.
 
