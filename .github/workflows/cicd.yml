@@ -1,0 +1,85 @@
+name: CI/CD
+
+on:
+  push:
+    branches:
+      - '**'
+  pull_request:
+  release:
+    types: [released, prereleased]
+
+env:
+  REPO_NAME: ${{ github.event.repository.name }}
+  RELEASE_PATH: ${{ github.workspace }}/dist/capacitor/android/apk/release
+  RELEASE_PATH_SIGNED: ${{ github.workspace }}/dist/capacitor/android/apk/release/signed
+
+jobs:
+  Build-Test-Release:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+
+      - name: Setup Node
+        uses: actions/setup-node@v3
+        with:
+          node-version: 16.x
+
+      - name: Get yarn cache directory path
+        id: yarn-cache-dir-path
+        run: echo "YARN_CACHE_DIR_PATH=$(yarn cache dir)" >> $GITHUB_OUTPUT
+
+      - name: Cache yarn dependencies
+        uses: actions/cache@v3
+        id: yarn-cache
+        with:
+          path: |
+            ${{ steps.yarn-cache-dir-path.outputs.YARN_CACHE_DIR_PATH }}
+            **/node_modules
+          key: ${{ runner.os }}-yarn-${{ hashFiles('**/yarn.lock') }}
+          restore-keys: |
+            ${{ runner.os }}-yarn-
+
+      - name: Install app dependecies
+        if: steps.yarn-cache.outputs.cache-hit != 'true'
+        run: yarn --frozen-lockfile
+
+      - name: Run tests
+        if: ${{ github.event_name != 'release' }}
+        run: yarn test
+
+      - name: Set version in package.json
+        if: ${{ github.event_name == 'release' }}
+        uses: maxgfr/github-change-json@v0.0.21
+        with:
+          key: 'version'
+          value: ${{ github.ref_name }}
+          path: ${{ github.workspace }}/package.json
+
+      - name: Build apk
+        run: yarn appbuild
+
+      - name: Sign apk
+        if: ${{ github.event_name == 'release' }}
+        uses: MatiasG19/android-sign@2.0.0
+        with:
+          releaseDirectory: ${{ env.RELEASE_PATH }}
+          signingKeyBase64: ${{ secrets.MY_KEY }}
+          output: ${{ env.RELEASE_PATH_SIGNED }}
+          alias: ${{ secrets.KEY_ALIAS }}
+          keyStorePassword: ${{ secrets.KEY_STORE_PASSWORD }}
+          keyPassword: ${{ secrets.KEY_PASSWORD }}
+        env:
+          BUILD_TOOLS_VERSION: '33.0.2'
+
+      - name: Rename apk
+        if: ${{ github.event_name == 'release' }}
+        run: cd ${{ env.RELEASE_PATH_SIGNED }} &&
+          mv *.apk $(echo ${{ env.REPO_NAME }}-${{ github.ref_name }}.apk;)
+
+      - name: Append apk to release
+        if: ${{ github.event_name == 'release' }}
+        run: gh release upload ${{ github.ref_name }} ${{ env.RELEASE_PATH_SIGNED }}/*.apk
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
