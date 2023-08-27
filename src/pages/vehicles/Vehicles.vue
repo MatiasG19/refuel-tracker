@@ -52,19 +52,20 @@ emitter.on('showVehicleOptionsDialog', id =>
       text: 'Show refuels',
       icon: 'local_gas_station',
       action: () => {
-        ;async () => {
+        ;(async () => {
           const vehicle = await refuelStore.getVehicle(id)
           // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
           await settingsStore.changeSelectedVehicle({ ...vehicle! })
           router.push('/refuels')
-        }
+        })()
       }
     },
     {
       text: 'Edit',
       icon: 'edit',
-      action: () => () =>
+      action: () => {
         router.push({ path: `/vehicles/edit/${id}`, params: { id } })
+      }
     },
     {
       text: 'Delete',

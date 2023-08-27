@@ -92,8 +92,9 @@ emitter.on('showRefuelOptionsDialog', id =>
     {
       text: 'Edit',
       icon: 'edit',
-      action: () => () =>
+      action: () => {
         router.push({ path: `/refuels/edit/${id}`, params: { id } })
+      }
     },
     {
       text: 'Delete',
