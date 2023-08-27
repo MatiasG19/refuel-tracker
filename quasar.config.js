@@ -10,7 +10,6 @@
 
 const { configure } = require('quasar/wrappers')
 const path = require('path')
-const { strict } = require('assert')
 
 module.exports = configure(function (/* ctx */) {
   return {
@@ -95,9 +94,7 @@ module.exports = configure(function (/* ctx */) {
     // Full list of options: https://v2.quasar.dev/quasar-cli-vite/quasar-config-js#devServer
     devServer: {
       // https: true
-      open: true, // opens browser window automatically
-      strict: true,
-      port: 9000
+      open: true // opens browser window automatically
     },
 
     // https://v2.quasar.dev/quasar-cli-vite/quasar-config-js#framework
