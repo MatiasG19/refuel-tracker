@@ -4,7 +4,8 @@ import { db } from 'src/boot/dexie'
 import { GraphDataFactory } from 'src/pages/graphData/scripts/GraphDataFactory'
 import { GraphData } from 'src/pages/graphData/scripts/models'
 import { useGraphCardStore } from './moveGraphCardStore'
-import { useSettingsStore, useRefuelStore } from 'src/stores'
+import { useSettingsStore } from 'src/stores/settingsStore'
+import { useRefuelStore } from 'src/stores/refuelStore'
 
 export const useGraphDataStore = defineStore('graphDataStore', () => {
   const graphData = ref<GraphData[]>([])

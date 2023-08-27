@@ -58,7 +58,8 @@ import {
   max50Characters
 } from 'src/scripts/libraries/validation'
 import { SelectOption } from 'src/scripts/models'
-import { useRefuelStore, useSettingsStore } from 'src/stores'
+import { useSettingsStore } from 'src/stores/settingsStore'
+import { useRefuelStore } from 'src/stores/refuelStore'
 import { Vehicle } from 'src/scripts/libraries/refuel/models'
 
 const router = useRouter()

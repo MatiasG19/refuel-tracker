@@ -86,10 +86,10 @@
 import { ref, onMounted, onUnmounted } from 'vue'
 import CSelect from 'src/components/inputs/CSelect.vue'
 import { emitter } from 'src/boot/mitt'
-import { useSettingsStore } from 'src/stores'
+import { useSettingsStore } from 'src/stores/settingsStore'
 import { exportDB, importDB } from 'src/scripts/libraries/backup/backup'
 import { FilePicker } from 'src/plugins/capacitor-file-picker'
-import { Notify } from 'quasar'
+import { Notify, Platform } from 'quasar'
 
 type GetContentResultAction = (result: { path: string }) => void
 let getContentResultAction: GetContentResultAction
@@ -151,13 +151,18 @@ function togglePlateNumberInTitle(value: boolean) {
 }
 
 async function toggleAutoBackup(value: boolean) {
-  if (value) await FilePicker.openDocumentTree() // Pick directory when activating auto backup
+  if (value) {
+    if (Platform.is.mobile) {
+      await FilePicker.openDocumentTree() // Pick directory when activating auto backup
+    }
+  }
   settingsStore.toggleAutoBackup(value)
 }
 
 async function chooseAutoBackupFolder() {
-  // dirPathResultAction
-  await FilePicker.openDocumentTree()
+  if (Platform.is.mobile) {
+    await FilePicker.openDocumentTree()
+  }
 }
 
 async function exportBackup() {
@@ -168,7 +173,9 @@ async function exportBackup() {
       Notify.create('Backup exported')
     })()
   }
-  await FilePicker.openDocumentTree()
+  if (Platform.is.mobile) {
+    await FilePicker.openDocumentTree()
+  }
 }
 
 async function importBackup() {
@@ -178,20 +185,26 @@ async function importBackup() {
       Notify.create('Backup imported')
     })()
   }
-  await FilePicker.getContent({ mimeType: '*/*' })
+  if (Platform.is.mobile) {
+    await FilePicker.getContent({ mimeType: '*/*' })
+  }
 }
 
 onMounted(() => {
   emitter.emit('updateTitle', 'Settings')
-  FilePicker.addListener('getContentResult', res => {
-    getContentResultAction(res)
-  })
-  FilePicker.addListener('openDocumentTreeResult', res => {
-    openDocumentTreeResultAction(res)
-  })
+  if (Platform.is.mobile) {
+    FilePicker.addListener('getContentResult', res => {
+      getContentResultAction(res)
+    })
+    FilePicker.addListener('openDocumentTreeResult', res => {
+      openDocumentTreeResultAction(res)
+    })
+  }
 })
 
 onUnmounted(() => {
-  FilePicker.removeAllListeners()
+  if (Platform.is.mobile) {
+    FilePicker.removeAllListeners()
+  }
 })
 </script>

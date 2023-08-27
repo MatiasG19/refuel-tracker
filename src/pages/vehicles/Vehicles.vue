@@ -33,7 +33,8 @@ import { confirmDialog } from 'src/components/dialogs/confirmDialog'
 import { useRouter } from 'vue-router'
 import { computed, onMounted, onUnmounted } from 'vue'
 import { emitter } from 'src/boot/mitt'
-import { useRefuelStore, useSettingsStore } from 'src/stores'
+import { useSettingsStore } from 'src/stores/settingsStore'
+import { useRefuelStore } from 'src/stores/refuelStore'
 import { Vehicle } from 'src/scripts/libraries/refuel/models'
 
 const router = useRouter()
@@ -50,18 +51,21 @@ emitter.on('showVehicleOptionsDialog', id =>
     {
       text: 'Show refuels',
       icon: 'local_gas_station',
-      action: async () => {
-        const vehicle = await refuelStore.getVehicle(id)
-        // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-        await settingsStore.changeSelectedVehicle({ ...vehicle! })
-        router.push('/refuels')
+      action: () => {
+        ;(async () => {
+          const vehicle = await refuelStore.getVehicle(id)
+          // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+          await settingsStore.changeSelectedVehicle({ ...vehicle! })
+          router.push('/refuels')
+        })()
       }
     },
     {
       text: 'Edit',
       icon: 'edit',
-      action: () =>
+      action: () => {
         router.push({ path: `/vehicles/edit/${id}`, params: { id } })
+      }
     },
     {
       text: 'Delete',

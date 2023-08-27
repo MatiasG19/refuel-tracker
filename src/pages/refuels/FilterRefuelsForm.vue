@@ -43,7 +43,7 @@ import { ref, onMounted } from 'vue'
 import { date } from 'quasar'
 import { useRouter } from 'vue-router'
 import { emitter } from 'src/boot/mitt'
-import { useSettingsStore } from 'src/stores'
+import { useSettingsStore } from 'src/stores/settingsStore'
 import { requiredFieldRule } from 'src/scripts/libraries/validation'
 
 const router = useRouter()

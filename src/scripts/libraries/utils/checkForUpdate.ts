@@ -7,7 +7,7 @@ import {
 import axios from 'axios'
 import { useQuasar, openURL } from 'quasar'
 import packageJson from '../../../../package.json'
-import { useSettingsStore } from 'src/stores'
+import { useSettingsStore } from 'src/stores/settingsStore'
 
 export function useCheckForUpdate(): () => void {
   const settingsStore = useSettingsStore()

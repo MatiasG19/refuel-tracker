@@ -105,7 +105,8 @@ import {
   positiveNumbersRule,
   max50Characters
 } from 'src/scripts/libraries/validation'
-import { useRefuelStore, useSettingsStore } from 'src/stores'
+import { useSettingsStore } from 'src/stores/settingsStore'
+import { useRefuelStore } from 'src/stores/refuelStore'
 import { Refuel } from 'src/scripts/libraries/refuel/models'
 import { replaceComma } from 'src/scripts/libraries/utils'
 

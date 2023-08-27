@@ -1,4 +1,4 @@
-import { useSettingsStore } from 'src/stores'
+import { useSettingsStore } from 'src/stores/settingsStore'
 import { db } from '../boot/dexie'
 
 export function initSettings() {

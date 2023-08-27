@@ -89,7 +89,7 @@ import EssentialLink from 'components/EssentialLink.vue'
 import { ref, computed, onMounted, onUnmounted } from 'vue'
 import { useRouter } from 'vue-router'
 import { emitter } from 'src/boot/mitt'
-import { useSettingsStore } from 'src/stores'
+import { useSettingsStore } from 'src/stores/settingsStore'
 import { Keyboard } from '@capacitor/keyboard'
 import { Platform } from 'quasar'
 
@@ -138,7 +138,7 @@ const title = ref('')
 Platform.is.mobile
 
 function addKeyboardListeners() {
-  if(Platform.is.mobile) {
+  if (Platform.is.mobile) {
     Keyboard.addListener('keyboardDidShow', () => {
       footerVisible.value = false
     })
@@ -148,7 +148,6 @@ function addKeyboardListeners() {
     })
   }
 }
-
 
 function toggleLeftDrawer() {
   leftDrawerOpen.value = !leftDrawerOpen.value
