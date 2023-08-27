@@ -45,6 +45,10 @@ jobs:
         if: steps.yarn-cache.outputs.cache-hit != 'true'
         run: yarn --frozen-lockfile
 
+      - name: Install capacitor dependecies
+        working-directory: src-capacitor
+        run: yarn --frozen-lockfile
+
       - name: Run tests
         if: ${{ github.event_name != 'release' }}
         run: yarn test
