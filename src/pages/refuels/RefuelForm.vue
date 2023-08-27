@@ -2,6 +2,7 @@
   <div>
     <q-form @submit="onSubmit" class="q-pa-md q-gutter-md">
       <c-input
+        type="tel"
         :value="refuel.payedAmount?.toString()"
         @update:modelValue="(evt: string) => (refuel.payedAmount = replaceComma(evt))"
         label="Payed amount"
@@ -14,6 +15,7 @@
         autofocus
       />
       <c-input
+        type="tel"
         :value="refuel.distanceDriven?.toString()"
         @update:modelValue="(evt: string) => (refuel.distanceDriven = replaceComma(evt))"
         label="Distance driven"
@@ -25,6 +27,7 @@
         ]"
       />
       <c-input
+        type="tel"
         :value="refuel.refueledAmount?.toString()"
         @update:modelValue="(evt: string) => (refuel.refueledAmount = replaceComma(evt))"
         label="Refuled amount"

@@ -6,6 +6,7 @@
     @update="$emit('value', $event)"
     :label="label"
     :rules="rules"
+    :type="type"
   >
     <slot></slot>
   </q-input>
@@ -13,6 +14,10 @@
 
 <script setup lang="ts">
 defineProps({
+  type: {
+    type: null,
+    default: 'text'
+  },
   value: {
     type: String,
     reqired: true
