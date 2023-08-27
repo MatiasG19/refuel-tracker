@@ -61,7 +61,8 @@ import { useRouter } from 'vue-router'
 import { emitter } from 'src/boot/mitt'
 import { optionsDialog } from 'src/components/dialogs/optionsDialog'
 import { confirmDialog } from 'src/components/dialogs/confirmDialog'
-import { useRefuelStore, useSettingsStore } from 'src/stores'
+import { useSettingsStore } from 'src/stores/settingsStore'
+import { useRefuelStore } from 'src/stores/refuelStore'
 import { Vehicle } from 'src/scripts/libraries/refuel/models'
 
 const router = useRouter()
@@ -91,7 +92,8 @@ emitter.on('showRefuelOptionsDialog', id =>
     {
       text: 'Edit',
       icon: 'edit',
-      action: () => router.push({ path: `/refuels/edit/${id}`, params: { id } })
+      action: () => () =>
+        router.push({ path: `/refuels/edit/${id}`, params: { id } })
     },
     {
       text: 'Delete',

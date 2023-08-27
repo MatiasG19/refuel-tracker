@@ -86,7 +86,7 @@
 import { ref, onMounted, onUnmounted } from 'vue'
 import CSelect from 'src/components/inputs/CSelect.vue'
 import { emitter } from 'src/boot/mitt'
-import { useSettingsStore } from 'src/stores'
+import { useSettingsStore } from 'src/stores/settingsStore'
 import { exportDB, importDB } from 'src/scripts/libraries/backup/backup'
 import { FilePicker } from 'src/plugins/capacitor-file-picker'
 import { Notify } from 'quasar'
