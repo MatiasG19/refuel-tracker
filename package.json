@@ -29,7 +29,7 @@
     "vue-i18n": "^9.2.2"
   },
   "devDependencies": {
-    "@babel/eslint-parser": "^7.22.5",
+    "@babel/eslint-parser": "^7.22.11",
     "@capacitor/core": "3.9.0",
     "@capacitor/filesystem": "^1.1.0",
     "@capacitor/keyboard": "^1.2.3",
