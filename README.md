@@ -1,5 +1,5 @@
 [![CI/CD][ci-img]][ci-url]
-[![CI/CD][issue-img]][issue-url]
+[![Issues][issue-img]][issue-url]
 
 <br />
 <div align="center">
@@ -13,23 +13,33 @@
     Tracks your refuels and displays your data in nice grahs.
     <br />
     <br />
-    <a href="https://github.com/MatiasG19/refuel-tracker/issues">Report Bug</a>
+    <a href="https://github.com/MatiasG19/refuel-tracker/releases">Download APK</a>
     ·
-    <a href="https://github.com/MatiasG19/refuel-tracker/issues">Request Feature</a>
+    <a href="https://github.com/MatiasG19/refuel-tracker/issues">Report bug</a>
+    ·
+    <a href="https://github.com/MatiasG19/refuel-tracker/issues">Request feature</a>
   </p>
 </div>
 
 ## Features
 
+- Easy to use
 - Display all your data in nice graphs
-- Support for multiple vehicles
+- Track multiple vehicles
 - Support for different fuel consumption units
 - See your fuel consuption for each refuel
 - View and edit your past refuels or add forgotten ones
 - View your best fuel consupmtion
 - Backup data
 
-## Start development
+## Getting started
+
+### Prerequisits
+
+- NodeJS
+- Android Studio
+
+### Start
 
 Install dependecies
 
@@ -55,7 +65,11 @@ Create apk
 yarn appbuild
 ```
 
+## Contribute
+
+Check out the [contribution guide](.docs/Contribute.md).
+
 [ci-img]: https://github.com/MatiasG19/refuel-tracker/actions/workflows/cicd.yml/badge.svg?branch=main
 [ci-url]: https://github.com/MatiasG19/refuel-tracker/actions/workflows/cicd.yml
-[issue-img]: https://img.shields.io/github/issues/MatiasG19/refuel-tracker.svg?
+[issue-img]: https://img.shields.io/github/issues/MatiasG19/refuel-tracker
 [issue-url]: https://github.com/MatiasG19/refuel-tracker/issues
