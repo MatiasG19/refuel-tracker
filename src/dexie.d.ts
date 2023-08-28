@@ -5,10 +5,10 @@ import StaticImportOptions from 'dexie'
 declare module 'dexie' {
   // Extend methods on db
   interface Dexie {
-    export(options?: ExportOptions): Promise<Blob>;
-    import(blob: Blob, options?: ImportOptions): Promise<void>;
+    export(options?: ExportOptions): Promise<Blob>
+    import(blob: Blob, options?: ImportOptions): Promise<void>
   }
   interface DexieConstructor {
-    import(blob: Blob, options?: StaticImportOptions): Promise<Dexie>;
+    import(blob: Blob, options?: StaticImportOptions): Promise<Dexie>
   }
 }

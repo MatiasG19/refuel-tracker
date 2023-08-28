@@ -1,12 +1,19 @@
 <template>
-  <q-select outlined color="accent" :model-value="value" @input="$emit('value', $event)"
-    :options="options" :label="label" map-options emit-value>
+  <q-select
+    outlined
+    color="accent"
+    :model-value="value"
+    @input="$emit('value', $event)"
+    :options="options"
+    :label="label"
+    map-options
+    emit-value
+  >
     <slot></slot>
   </q-select>
 </template>
 
 <script setup lang="ts">
-
 defineProps({
   value: {
     type: String,
@@ -22,7 +29,5 @@ defineProps({
   }
 })
 
-defineEmits([
-  'value'
-])
+defineEmits(['value'])
 </script>
