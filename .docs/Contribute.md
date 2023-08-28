@@ -48,7 +48,7 @@ Keyword(s) for affected part of code. Can be comma separated when multiple parts
 | test          | fix or add test                           |
 | chore or base | housekeeping tasks, package updates, etc. |
 | docs          | changes to documentation                  |
-| pipe or bot   | changes to CI/CD pipline or bot           |
+| pipe or bot   | changes to CI/CD pipeline or bot          |
 
 **Examples:**
 
