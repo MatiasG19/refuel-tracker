@@ -8,7 +8,7 @@
   "scripts": {
     "lint": "eslint --ext .js,.ts,.vue ./",
     "check-format": "yarn prettier --check ./src",
-    "test": "vitest",
+    "test": "vitest run",
     "dev": "quasar dev",
     "build": "quasar build",
     "mode": "quasar mode add capacitor",
