@@ -30,7 +30,7 @@
         type="tel"
         :value="refuel.refueledAmount?.toString()"
         @update:modelValue="(evt: string) => (refuel.refueledAmount = +replaceComma(evt))"
-        label="Refuled amount"
+        label="Refueled amount"
         :rules="[
           requiredFieldRule,
           numbersOnlyRule,
