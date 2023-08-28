@@ -10,7 +10,7 @@
 <h3 align="center">Refuel Tracker</h3>
 
   <p align="center">
-    Tracks your refuels and displays your data in nice grahs.
+    Tracks your refuels and displays your data in nice graphs.
     <br />
     <br />
     <a href="https://github.com/MatiasG19/refuel-tracker/releases">Download APK</a>
@@ -23,12 +23,12 @@
 
 ## Features
 
-- Easy to use
+- Easy to use interface with quick bottom navigation
 - Track multiple vehicles
 - Support for different fuel consumption units
-- See your fuel consuption for each refuel
+- See your fuel consumption for each refuel
 - Display all your data in nice graphs
-- View and edit your past refuels or add forgotten ones
+- View and edit your refuels or add past ones
 - Backup data in text format
 
 ## Getting started
@@ -40,7 +40,7 @@
 
 ### Start
 
-Install dependecies
+Install dependencies
 
 ```bash
 yarn
@@ -52,7 +52,7 @@ Start in browser
 yarn dev
 ```
 
-Start in android studio
+Start in Android Studio
 
 ```bash
 yarn appdev

@@ -1,6 +1,6 @@
-# Contribute
+# Contribution guide
 
-Contributions are welcome, whether you have dicovered a bug or have an idea to improve the app.
+Contributions are welcome, whether you have discovered a bug or have an idea to improve the app.
 
 1. Create issue
 2. Fork project
@@ -10,7 +10,7 @@ Contributions are welcome, whether you have dicovered a bug or have an idea to i
 
 ## Issues
 
-Always create an issue when contributing, whether you contribute fixes, improvments, etc. This way others can follow along. Also make sure to use the of the available labels.
+Always create an issue when contributing, whether you contribute fixes, improvements, etc. This way others can follow along. Also make sure to use the of the available labels.
 
 ### Features
 
@@ -25,7 +25,7 @@ Checklist before pullrequest:
 - [ ] Tests created
 - [ ] Changes tested on latest device API
 - [ ] Self review of code
-- [ ] Pipline ok
+- [ ] Pipeline ok
 
 ### Naming conventions
 
@@ -37,7 +37,7 @@ Breaking "label" for breaking changes to app. Must be within brackets.
 
 **(Optional) affected_code_keyword:**
 
-Keyword(s) for affected part of code. Can be comma seperated when multiple parts of code are affected. Perenthesis are optionial when no keyword is neccessary.
+Keyword(s) for affected part of code. Can be comma separated when multiple parts of code are affected. Parenthesis are optional when no keyword is necessary.
 
 **type:**
 
@@ -56,7 +56,7 @@ Keyword(s) for affected part of code. Can be comma seperated when multiple parts
 
 `[breaking] feat(database): Remove field`
 
-`fix(backup): Add new premissions to Android`
+`fix(backup): Add new permissions to Android`
 
 `docs: Update contribution guide`
 
