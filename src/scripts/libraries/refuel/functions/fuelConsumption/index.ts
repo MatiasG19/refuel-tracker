@@ -1,25 +1,33 @@
 export type fuelConsumptionFunc = typeof litresPer100km
 
 export function litresPer100km(fuelAmount: number, distance: number) {
-  return (fuelAmount * 100) / distance
+  return litresPer100DistanceUnit(fuelAmount, distance)
 }
 
 export function milesPerGallonUs(fuelAmount: number, distance: number) {
-  return distance / fuelAmount
+  return distancePerFuelAmount(fuelAmount, distance)
 }
 
 export function milesPerGallonImperial(fuelAmount: number, distance: number) {
-  return distance / fuelAmount
+  return distancePerFuelAmount(fuelAmount, distance)
 }
 
 export function kWhPer100km(fuelAmount: number, distance: number) {
-  return (fuelAmount * 100) / distance
+  return litresPer100DistanceUnit(fuelAmount, distance)
 }
 
-export function WhPer100km(fuelAmount: number, distance: number) {
-  return (fuelAmount * 100) / distance
+export function whPer100km(fuelAmount: number, distance: number) {
+  return litresPer100DistanceUnit(fuelAmount, distance)
 }
 
-export function WhPerMile(fuelAmount: number, distance: number) {
+export function whPerMile(fuelAmount: number, distance: number) {
   return fuelAmount / distance
+}
+
+function litresPer100DistanceUnit(fuelAmount: number, distance: number) {
+  return (fuelAmount * 100) / distance
+}
+
+function distancePerFuelAmount(fuelAmount: number, distance: number) {
+  return distance / fuelAmount
 }

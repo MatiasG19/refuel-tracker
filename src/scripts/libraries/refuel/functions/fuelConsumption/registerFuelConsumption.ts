@@ -4,8 +4,8 @@ import {
   litresPer100km,
   milesPerGallonImperial,
   milesPerGallonUs,
-  WhPer100km,
-  WhPerMile
+  whPer100km,
+  whPerMile
 } from 'src/scripts/libraries/refuel/functions/fuelConsumption'
 
 export function registerFuelConsumption() {
@@ -13,6 +13,6 @@ export function registerFuelConsumption() {
   FuelConsumptionFactory.register('2', milesPerGallonUs)
   FuelConsumptionFactory.register('3', milesPerGallonImperial)
   FuelConsumptionFactory.register('4', kWhPer100km)
-  FuelConsumptionFactory.register('5', WhPer100km)
-  FuelConsumptionFactory.register('6', WhPerMile)
+  FuelConsumptionFactory.register('5', whPer100km)
+  FuelConsumptionFactory.register('6', whPerMile)
 }

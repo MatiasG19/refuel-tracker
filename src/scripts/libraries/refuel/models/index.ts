@@ -11,9 +11,9 @@ export class Vehicle {
 export class Refuel {
   id!: number
   date!: Date
-  refueledAmount!: number | string
-  payedAmount!: number | string
-  distanceDriven!: number | string
+  refueledAmount!: number
+  payedAmount!: number
+  distanceDriven!: number
   vehicleId!: number
   vehicle?: Vehicle
 }
