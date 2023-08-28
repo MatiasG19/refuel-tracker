@@ -24,13 +24,12 @@
 ## Features
 
 - Easy to use
-- Display all your data in nice graphs
 - Track multiple vehicles
 - Support for different fuel consumption units
 - See your fuel consuption for each refuel
+- Display all your data in nice graphs
 - View and edit your past refuels or add forgotten ones
-- View your best fuel consupmtion
-- Backup data
+- Backup data in text format
 
 ## Getting started
 
