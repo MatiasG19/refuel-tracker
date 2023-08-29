@@ -1,65 +1,61 @@
 <template>
   <q-page>
-    <template v-if="!loading">
-      <div v-if="vehiclesExists && filterActive" class="q-pt-md text-center">
-        <q-btn
-          class="q-pa-xs"
-          style="color: pink"
-          flat
-          no-caps
-          label=" "
-          @click="removeFilter"
-          icon-right="delete_outline"
-          >{{ filterHint }}</q-btn
-        >
-      </div>
-      <div
-        v-if="vehiclesExists && refuels.length === 0"
-        class="absolute-center items-center"
+    <div v-if="vehiclesExists && filterActive" class="q-pt-md text-center">
+      <q-btn
+        class="q-pa-xs"
+        style="color: pink"
+        flat
+        no-caps
+        label=" "
+        @click="removeFilter"
+        icon-right="delete_outline"
+        >{{ filterHint }}</q-btn
       >
-        <div class="row">
-          <q-icon class="col" name="img:local_gas_station.svg" size="100px" />
-        </div>
-        <q-btn
-          color="accent"
-          label="Add refuel"
-          icon-right="add"
-          unelevated
-          no-caps
-          outline
-          @click="router.push('/refuels/add')"
-        />
+    </div>
+    <div
+      v-if="vehiclesExists && refuels.length === 0"
+      class="absolute-center items-center"
+    >
+      <div class="row">
+        <q-icon class="col" name="img:local_gas_station.svg" size="100px" />
       </div>
-      <div v-else-if="!vehiclesExists" class="absolute-center items-center">
-        <div class="row">
-          <q-icon class="col" name="img:local_gas_station.svg" size="100px" />
-        </div>
-        <q-btn
-          color="accent"
-          label="Add vehicle"
-          icon-right="add"
-          unelevated
-          no-caps
-          outline
-          @click="router.push('/vehicles/add')"
-        />
+      <q-btn
+        color="accent"
+        label="Add refuel"
+        icon-right="add"
+        unelevated
+        no-caps
+        outline
+        @click="router.push('/refuels/add')"
+      />
+    </div>
+    <div v-else-if="!vehiclesExists" class="absolute-center items-center">
+      <div class="row">
+        <q-icon class="col" name="img:local_gas_station.svg" size="100px" />
       </div>
-      <template v-else>
-        <div class="q-px-md q-gutter-md">
-          <q-badge align="top">{{ vehicleName }}</q-badge>
-        </div>
+      <q-btn
+        color="accent"
+        label="Add vehicle"
+        icon-right="add"
+        unelevated
+        no-caps
+        outline
+        @click="router.push('/vehicles/add')"
+      />
+    </div>
+    <template v-else>
+      <div class="q-px-md q-gutter-md">
+        <q-badge align="top">{{ vehicleName }}</q-badge>
+      </div>
 
-        <refuel-card
-          v-for="(refuel, i) in refuels"
-          :key="i"
-          :refuel="refuel"
-          :vehicle="vehicle"
-          :fuelConsumption="
-            vehicleFuelConsumption(vehicle, refuel.id).toFixed(2)
-          "
-          class="q-pt-md q-pl-md q-pr-md"
-        />
-      </template>
+      <refuel-card
+        v-for="(refuel, i) in refuels"
+        :key="i"
+        :refuel="refuel"
+        :vehicle="vehicle"
+        :fuelConsumption="vehicleFuelConsumption(vehicle, refuel.id).toFixed(2)"
+        class="q-pt-md q-pl-md q-pr-md"
+      />
     </template>
   </q-page>
 </template>
@@ -85,7 +81,6 @@ const filterActive = ref(settingsStore.refuelFilterActive)
 const filterHint = 'Filter 1 Month from 2021.12.19'
 const vehiclesExists = settingsStore.selectedVehicleId
 const vehicleName = ref<string>('')
-const loading = ref(true)
 
 let refuels = computed(() => {
   if (!filterActive.value)
@@ -143,8 +138,6 @@ onMounted(async () => {
   vehicle.value =
     (await refuelStore.getVehicle(settingsStore.selectedVehicleId ?? 0)) ??
     vehicle.value
-
-  loading.value = false
 })
 
 onUnmounted(() => {
