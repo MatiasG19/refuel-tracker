@@ -25,3 +25,14 @@
     color: #60EFB3;
     background-color: #6E6B9D;
 }
+
+/****************************/
+// Transitions
+/****************************/
+.routefade-enter-active {
+  transition: opacity 0.15s ease-in;
+}
+
+.routefade-enter-from {
+  opacity: 0;
+}

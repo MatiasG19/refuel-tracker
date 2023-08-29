@@ -47,7 +47,11 @@
     </q-drawer>
 
     <q-page-container>
-      <router-view />
+      <router-view v-slot="{ Component }">
+        <transition name="routefade">
+          <component :is="Component" :key="$route.path" />
+        </transition>
+      </router-view>
     </q-page-container>
 
     <q-footer v-if="footerVisible" class="bg-space-station">
