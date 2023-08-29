@@ -18,7 +18,7 @@
       <q-list class="q-pb-md">
         <q-item tag="label">
           <q-item-section>
-            <q-item-label>Show plate number in car title</q-item-label>
+            <q-item-label>Show number plate title</q-item-label>
           </q-item-section>
           <q-item-section avatar>
             <q-toggle
