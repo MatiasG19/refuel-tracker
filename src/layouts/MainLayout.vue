@@ -145,8 +145,6 @@ emitter.on('updateTitle', e => (title.value = e))
 const leftDrawerOpen = ref(false)
 const title = ref('')
 
-Platform.is.mobile
-
 function addKeyboardListeners() {
   if (Platform.is.mobile) {
     Keyboard.addListener('keyboardDidShow', () => {
@@ -171,7 +169,9 @@ function add() {
 }
 
 onMounted(() => {
-  addKeyboardListeners()
+  if (Platform.is.mobile) {
+    addKeyboardListeners()
+  }
 })
 
 onUnmounted(() => {
