@@ -18,22 +18,31 @@
         </div>
 
         <div class="row">
-          <div class="col">
-            <div class="text-h4 accent-space-station">
+          <div class="col-3 n">
+            <div class="text-h5 accent-space-station">
+              {{ fuelConsumption }}
+            </div>
+            <div class="text-subtitle1">
+              {{ vehicle.fuelUnit?.fuelConsumptionUnit }}
+            </div>
+          </div>
+
+          <div class="col-3">
+            <div class="text-h5 accent-space-station">
               {{ refuel.distanceDriven }}
             </div>
             <div class="text-subtitle1">
               {{ vehicle.fuelUnit?.distanceUnit }}
             </div>
           </div>
-          <div class="col">
-            <div class="text-h4 accent-space-station">
+          <div class="col-3">
+            <div class="text-h5 accent-space-station">
               {{ refuel.payedAmount }}
             </div>
             <div class="text-subtitle1">{{ vehicle.currencyUnit }}</div>
           </div>
-          <div class="col">
-            <div class="text-h4 accent-space-station">
+          <div class="col-3">
+            <div class="text-h5 accent-space-station">
               {{ refuel.refueledAmount }}
             </div>
             <div class="text-subtitle1">{{ vehicle.fuelUnit?.fuelUnit }}</div>
@@ -56,6 +65,10 @@ const props = defineProps({
   },
   vehicle: {
     type: Vehicle,
+    required: true
+  },
+  fuelConsumption: {
+    type: String,
     required: true
   }
 })

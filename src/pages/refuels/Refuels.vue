@@ -1,7 +1,7 @@
 <template>
   <q-page>
     <div class="q-px-md q-gutter-md">
-      <q-badge align="top">{{ vehicleName }}</q-badge>
+      <q-badge v-if="vehiclesExists" align="top">{{ vehicleName }}</q-badge>
     </div>
     <div v-if="vehiclesExists && filterActive" class="q-pt-md text-center">
       <q-btn
@@ -52,6 +52,7 @@
       :key="i"
       :refuel="refuel"
       :vehicle="vehicle"
+      :fuelConsumption="vehicleFuelConsumption(vehicle, refuel.id).toFixed(2)"
       class="q-pt-md q-pl-md q-pr-md"
     />
   </q-page>
@@ -67,6 +68,7 @@ import { confirmDialog } from 'src/components/dialogs/confirmDialog'
 import { useSettingsStore } from 'src/stores/settingsStore'
 import { useRefuelStore } from 'src/stores/refuelStore'
 import { Vehicle } from 'src/scripts/libraries/refuel/models'
+import { vehicleFuelConsumption } from 'src/scripts/libraries/refuel/functions/vehicle'
 
 const router = useRouter()
 const refuelStore = useRefuelStore()

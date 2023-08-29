@@ -1,4 +1,7 @@
-export type fuelConsumptionFunc = typeof litresPer100km
+export type fuelConsumptionFunc = (
+  fuelAmount: number,
+  distance: number
+) => number
 
 export function litresPer100km(fuelAmount: number, distance: number) {
   return litresPer100DistanceUnit(fuelAmount, distance)
