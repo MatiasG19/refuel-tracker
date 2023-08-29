@@ -44,3 +44,27 @@ test('Calculate fuel consumption from two refuels', () => {
 
   expect(vehicleFuelConsumption(vehicle)).toBe(7)
 })
+
+test('Calculate specific fuel consumption', () => {
+  const vehicle = new Vehicle()
+  vehicle.fuelUnitId = 1
+  vehicle.refuels = new Array<Refuel>()
+  vehicle.refuels.push({
+    id: 1,
+    vehicleId: 1,
+    payedAmount: 0.0,
+    refueledAmount: 5.0,
+    date: new Date(),
+    distanceDriven: 100.0
+  })
+  vehicle.refuels.push({
+    id: 2,
+    vehicleId: 1,
+    payedAmount: 0.0,
+    refueledAmount: 30.0,
+    date: new Date(),
+    distanceDriven: 400.0
+  })
+
+  expect(vehicleFuelConsumption(vehicle, 2)).toBe(7.5)
+})
