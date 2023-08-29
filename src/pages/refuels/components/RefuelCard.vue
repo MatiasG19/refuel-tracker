@@ -18,7 +18,7 @@
         </div>
 
         <div class="row">
-          <div class="col-3 n">
+          <div class="col-3">
             <div class="text-h5 accent-space-station">
               {{ fuelConsumption }}
             </div>

@@ -1,10 +1,21 @@
 <template>
-  <q-item clickable tag="a" :to="link">
-    <q-item-section v-if="icon" avatar class="space-station">
+  <q-item clickable :to="link" v-ripple>
+    <q-item-section
+      v-if="icon"
+      avatar
+      :class="
+        link === $route.fullPath ? 'accent-space-station' : 'space-station'
+      "
+    >
       <q-icon :name="icon" />
     </q-item-section>
 
-    <q-item-section class="space-station">
+    <q-item-section
+      c
+      :class="
+        link === $route.fullPath ? 'accent-space-station' : 'space-station'
+      "
+    >
       <q-item-label>{{ title }}</q-item-label>
       <q-item-label caption> {{ caption }} </q-item-label>
     </q-item-section>
