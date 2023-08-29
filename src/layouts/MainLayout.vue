@@ -79,6 +79,16 @@
             :to="'/vehicles'"
           />
         </div>
+        <div class="col">
+          <q-btn
+            round
+            flat
+            dense
+            icon="local_gas_station"
+            class="col"
+            :to="'/refuels'"
+          />
+        </div>
       </q-toolbar>
     </q-footer>
   </q-layout>
