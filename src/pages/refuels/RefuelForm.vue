@@ -1,6 +1,7 @@
 <template>
   <div>
     <q-form @submit="onSubmit" class="q-pa-md q-gutter-md">
+      <q-badge align="top">{{ vehicleName }}</q-badge>
       <c-input
         type="tel"
         :value="refuel.payedAmount?.toString()"
@@ -63,7 +64,7 @@
         <q-popup-proxy transition-show="scale" transition-hide="scale">
           <q-time
             :modelValue="refuelTime"
-            @update:modelValue="evt => updateTime(evt)"
+            @update:modelValue="evt => updateTime(evt!)"
             format24h
           />
           <div class="row items-center justify-end">
@@ -117,6 +118,7 @@ const settingsStore = useSettingsStore()
 const refuel = ref<Refuel>(new Refuel())
 const refuelDate = ref(QuasarDate.formatDate(Date.now(), 'YYYY/MM/DD'))
 const refuelTime = ref(QuasarDate.formatDate(Date.now(), 'HH:mm'))
+const vehicleName = ref<string>('')
 
 let routePath = ''
 
@@ -161,6 +163,10 @@ onMounted(async () => {
   if (routePath.includes('/add')) emitter.emit('updateTitle', 'Add refuel')
   else if (routePath.includes('/edit'))
     emitter.emit('updateTitle', 'Edit refuel')
+
+  vehicleName.value = settingsStore.plateNumberInTitleActive
+    ? settingsStore.selectedVehiclePlateNumber
+    : settingsStore.selectedVehicleName
 
   refuel.value.vehicleId = settingsStore.selectedVehicleId ?? 0
   if (props.id) {

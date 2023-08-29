@@ -1,6 +1,9 @@
 <template>
   <q-page>
-    <div v-if="vehiclesExit && filterActive" class="q-pt-md text-center">
+    <div class="q-px-md q-gutter-md">
+      <q-badge align="top">{{ vehicleName }}</q-badge>
+    </div>
+    <div v-if="vehiclesExists && filterActive" class="q-pt-md text-center">
       <q-btn
         class="q-pa-xs"
         style="color: pink"
@@ -13,7 +16,7 @@
       >
     </div>
     <div
-      v-if="vehiclesExit && refuels.length === 0"
+      v-if="vehiclesExists && refuels.length === 0"
       class="absolute-center items-center"
     >
       <div class="row">
@@ -29,7 +32,7 @@
         @click="router.push('/refuels/add')"
       />
     </div>
-    <div v-else-if="!vehiclesExit" class="absolute-center items-center">
+    <div v-else-if="!vehiclesExists" class="absolute-center items-center">
       <div class="row">
         <q-icon class="col" name="img:local_gas_station.svg" size="100px" />
       </div>
@@ -72,7 +75,8 @@ const settingsStore = useSettingsStore()
 const vehicle = ref<Vehicle>(new Vehicle())
 const filterActive = ref(settingsStore.refuelFilterActive)
 const filterHint = 'Filter 1 Month from 2021.12.19'
-const vehiclesExit = settingsStore.selectedVehicleId
+const vehiclesExists = settingsStore.selectedVehicleId
+const vehicleName = ref<string>('')
 
 let refuels = computed(() => {
   if (!filterActive.value)
@@ -125,6 +129,9 @@ onMounted(async () => {
   vehicle.value =
     (await refuelStore.getVehicle(settingsStore.selectedVehicleId ?? 0)) ??
     vehicle.value
+  vehicleName.value = settingsStore.plateNumberInTitleActive
+    ? vehicle.value.plateNumber
+    : vehicle.value.name
 })
 
 onUnmounted(() => {
