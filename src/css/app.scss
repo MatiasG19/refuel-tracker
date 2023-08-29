@@ -29,11 +29,10 @@
 /****************************/
 // Transitions
 /****************************/
-.fadein-enter-active,
-.fadein-leave-active {
-  transition: opacity 0.11s ease-in;
+.routefade-enter-active {
+  transition: opacity 0.15s ease-in;
 }
-.fadein-enter-from,
-.fadein-leave-to {
+
+.routefade-enter-from {
   opacity: 0;
 }
