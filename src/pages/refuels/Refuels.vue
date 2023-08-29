@@ -2,9 +2,6 @@
   <q-page>
     <TransitionGroup name="fadein">
       <template v-if="!loading">
-        <div class="q-px-md q-gutter-md">
-          <q-badge v-if="vehiclesExists" align="top">{{ vehicleName }}</q-badge>
-        </div>
         <div v-if="vehiclesExists && filterActive" class="q-pt-md text-center">
           <q-btn
             class="q-pa-xs"
@@ -48,17 +45,22 @@
             @click="router.push('/vehicles/add')"
           />
         </div>
-        <refuel-card
-          v-else
-          v-for="(refuel, i) in refuels"
-          :key="i"
-          :refuel="refuel"
-          :vehicle="vehicle"
-          :fuelConsumption="
-            vehicleFuelConsumption(vehicle, refuel.id).toFixed(2)
-          "
-          class="q-pt-md q-pl-md q-pr-md"
-        />
+        <template v-else>
+          <div class="q-px-md q-gutter-md">
+            <q-badge align="top">{{ vehicleName }}</q-badge>
+          </div>
+
+          <refuel-card
+            v-for="(refuel, i) in refuels"
+            :key="i"
+            :refuel="refuel"
+            :vehicle="vehicle"
+            :fuelConsumption="
+              vehicleFuelConsumption(vehicle, refuel.id).toFixed(2)
+            "
+            class="q-pt-md q-pl-md q-pr-md"
+          />
+        </template>
       </template>
     </TransitionGroup>
   </q-page>
