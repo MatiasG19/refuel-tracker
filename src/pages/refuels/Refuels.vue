@@ -1,6 +1,6 @@
 <template>
   <q-page>
-    <TransitionGroup>
+    <TransitionGroup name="fadein">
       <template v-if="!loading">
         <div class="q-px-md q-gutter-md">
           <q-badge v-if="vehiclesExists" align="top">{{ vehicleName }}</q-badge>
@@ -151,15 +151,3 @@ onUnmounted(() => {
   emitter.off('showRefuelOptionsDialog')
 })
 </script>
-
-<style scoped>
-.v-enter-active,
-.v-leave-active {
-  transition: opacity 0.3s ease;
-}
-
-.v-enter-from,
-.v-leave-to {
-  opacity: 0;
-}
-</style>

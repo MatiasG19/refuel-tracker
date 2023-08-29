@@ -25,3 +25,15 @@
     color: #60EFB3;
     background-color: #6E6B9D;
 }
+
+/****************************/
+// Transitions
+/****************************/
+.fadein-enter-active,
+.fadein-leave-active {
+  transition: opacity 0.2s ease-in;
+}
+.fadein-enter-from,
+.fadein-leave-to {
+  opacity: 0;
+}
