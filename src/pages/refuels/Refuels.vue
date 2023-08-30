@@ -50,7 +50,7 @@
 
       <q-virtual-scroll
         ref="virtualListRef"
-        style="max-height: 85vh; overflow-x: hidden"
+        style="max-height: 90vh; overflow-x: hidden"
         :items-size="refuels.length"
         :items-fn="getRefuels"
         :virtual-scroll-item-size="200"
@@ -177,6 +177,7 @@ onBeforeMount(async () => {
   if (scrollToIndex.value < 0) scrollToIndex.value = 0
 
   loading.value = false
+  // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
   ;(virtualListRef.value! as QVirtualScroll).scrollTo(scrollToIndex.value)
 })
 
