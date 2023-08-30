@@ -10,12 +10,13 @@ const routes: RouteRecordRaw[] = [
         component: () => import('pages/graphData/GraphData.vue')
       },
       {
-        path: '/refuels',
+        path: '/refuels/:id?',
         component: () => import('src/pages/refuels/layouts/RefuelLayout.vue'),
         children: [
           {
             path: '',
-            component: () => import('src/pages/refuels/Refuels.vue')
+            component: () => import('src/pages/refuels/Refuels.vue'),
+            props: true
           },
           {
             path: 'add',

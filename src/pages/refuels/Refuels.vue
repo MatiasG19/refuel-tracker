@@ -44,11 +44,12 @@
       />
     </div>
     <template v-else>
-      <div class="q-px-md q-gutter-md">
+      <div class="q-px-md q-pb-xs q-gutter-md">
         <q-badge align="top">{{ vehicleName }}</q-badge>
       </div>
 
       <q-virtual-scroll
+        ref="virtualListRef"
         style="max-height: 85vh; overflow-x: hidden"
         :items-size="refuels.length"
         :items-fn="getRefuels"
@@ -70,7 +71,7 @@
 
 <script setup lang="ts">
 import RefuelCard from 'src/pages/refuels/components/RefuelCard.vue'
-import { computed, ref, onMounted, onUnmounted } from 'vue'
+import { computed, ref, onUnmounted, onBeforeMount } from 'vue'
 import { useRouter } from 'vue-router'
 import { emitter } from 'src/boot/mitt'
 import { optionsDialog } from 'src/components/dialogs/optionsDialog'
@@ -79,6 +80,7 @@ import { useSettingsStore } from 'src/stores/settingsStore'
 import { useRefuelStore } from 'src/stores/refuelStore'
 import { Refuel, Vehicle } from 'src/scripts/libraries/refuel/models'
 import { vehicleFuelConsumption } from 'src/scripts/libraries/refuel/functions/vehicle'
+import { QVirtualScroll } from 'quasar'
 
 const router = useRouter()
 const refuelStore = useRefuelStore()
@@ -90,6 +92,14 @@ const filterHint = 'Filter 1 Month from 2021.12.19'
 const vehiclesExists = settingsStore.selectedVehicleId
 const vehicleName = ref<string>('')
 const loading = ref(true)
+const virtualListRef = ref(null)
+let scrollToIndex = ref(0)
+
+const props = defineProps({
+  id: {
+    type: Number
+  }
+})
 
 let refuels = computed(() => {
   return [...refuelStore.refuels].sort(
@@ -146,7 +156,7 @@ emitter.on('showRefuelOptionsDialog', id =>
   ])
 )
 
-onMounted(async () => {
+onBeforeMount(async () => {
   emitter.emit('updateTitle', 'Refuels')
 
   vehicleName.value = settingsStore.plateNumberInTitleActive
@@ -158,7 +168,16 @@ onMounted(async () => {
     (await refuelStore.getVehicle(settingsStore.selectedVehicleId ?? 0)) ??
     vehicle.value
 
+  // Define to which index to scroll
+  if (props.id && props.id > 0)
+    scrollToIndex.value = refuelStore.refuels
+      .sort((a, b) => b.date.getTime() - a.date.getTime())
+      .findIndex(r => r.id == props.id)
+
+  if (scrollToIndex.value < 0) scrollToIndex.value = 0
+
   loading.value = false
+  ;(virtualListRef.value! as QVirtualScroll).scrollTo(scrollToIndex.value)
 })
 
 onUnmounted(() => {
