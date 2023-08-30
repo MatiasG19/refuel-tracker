@@ -1,6 +1,6 @@
 <template>
   <div>
-    <q-form @submit="onSubmit" class="q-pa-md q-gutter-md">
+    <q-form @submit="onSubmit" class="q-px-md q-gutter-md">
       <q-badge align="top">{{ vehicleName }}</q-badge>
       <c-input
         type="tel"
@@ -79,7 +79,7 @@
           label="Cancel"
           no-caps
           class="btn"
-          @click="$router.go(-1)"
+          @click="onCancel"
         />
         <q-space />
         <q-btn
@@ -151,11 +151,27 @@ function updateTime(event: string) {
 }
 
 async function onSubmit() {
+  let savedRefuel = refuel.value
   if (routePath.includes('/add'))
-    await refuelStore.addRefuel({ ...refuel.value })
+    savedRefuel.id = await refuelStore.addRefuel({ ...refuel.value })
   else if (routePath.includes('/edit'))
     await refuelStore.updateRefuel({ ...refuel.value })
-  void router.push('/refuels')
+
+  const scrollToId = savedRefuel && savedRefuel.id ? savedRefuel.id : 0
+
+  void router.push({
+    path: `/refuels/${scrollToId}`,
+    params: { id: scrollToId }
+  })
+}
+
+function onCancel() {
+  if (refuel.value.id)
+    router.push({
+      path: `/refuels/${refuel.value.id}`,
+      params: { id: refuel.value.id }
+    })
+  else router.go(-1)
 }
 
 onMounted(async () => {

@@ -30,8 +30,8 @@ export const useRefuelStore = defineStore('refuelStore', () => {
     return refuels.find(v => v.id == id) ?? null
   }
 
-  async function addRefuel(refuel: Refuel) {
-    await db.refuels.add(refuel)
+  async function addRefuel(refuel: Refuel): Promise<number> {
+    return (await db.refuels.add(refuel)) as number
   }
 
   async function updateRefuel(refuel: Refuel) {

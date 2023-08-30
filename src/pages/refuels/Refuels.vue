@@ -44,33 +44,45 @@
       />
     </div>
     <template v-else>
-      <div class="q-px-md q-gutter-md">
+      <div class="q-px-md q-pb-xs q-gutter-md">
         <q-badge align="top">{{ vehicleName }}</q-badge>
       </div>
 
-      <refuel-card
-        v-for="(refuel, i) in refuels"
-        :key="i"
-        :refuel="refuel"
-        :vehicle="vehicle"
-        :fuelConsumption="vehicleFuelConsumption(vehicle, refuel.id).toFixed(2)"
-        class="q-pt-md q-pl-md q-pr-md"
-      />
+      <q-virtual-scroll
+        ref="virtualListRef"
+        style="max-height: 90vh; overflow-x: hidden"
+        :items-size="refuels.length"
+        :items-fn="getRefuels"
+        :virtual-scroll-item-size="200"
+        virtual-scroll-slice-ratio-before="1"
+        virtual-scroll-slice-ratio-after="4"
+        v-slot="{ item, index }"
+      >
+        <refuel-card
+          :key="index"
+          :refuel="item"
+          :vehicle="vehicle"
+          :fuelConsumption="vehicleFuelConsumption(vehicle, item.id).toFixed(2)"
+          :loading="loading"
+          class="q-pt-md q-pl-md q-pr-md"
+        />
+      </q-virtual-scroll>
     </template>
   </q-page>
 </template>
 
 <script setup lang="ts">
 import RefuelCard from 'src/pages/refuels/components/RefuelCard.vue'
-import { computed, ref, onMounted, onUnmounted } from 'vue'
+import { computed, ref, onUnmounted, onBeforeMount } from 'vue'
 import { useRouter } from 'vue-router'
 import { emitter } from 'src/boot/mitt'
 import { optionsDialog } from 'src/components/dialogs/optionsDialog'
 import { confirmDialog } from 'src/components/dialogs/confirmDialog'
 import { useSettingsStore } from 'src/stores/settingsStore'
 import { useRefuelStore } from 'src/stores/refuelStore'
-import { Vehicle } from 'src/scripts/libraries/refuel/models'
+import { Refuel, Vehicle } from 'src/scripts/libraries/refuel/models'
 import { vehicleFuelConsumption } from 'src/scripts/libraries/refuel/functions/vehicle'
+import { QVirtualScroll } from 'quasar'
 
 const router = useRouter()
 const refuelStore = useRefuelStore()
@@ -81,14 +93,29 @@ const filterActive = ref(settingsStore.refuelFilterActive)
 const filterHint = 'Filter 1 Month from 2021.12.19'
 const vehiclesExists = settingsStore.selectedVehicleId
 const vehicleName = ref<string>('')
+const loading = ref(true)
+const virtualListRef = ref(null)
+let scrollToIndex = ref(0)
+
+const props = defineProps({
+  id: {
+    type: Number
+  }
+})
 
 let refuels = computed(() => {
-  if (!filterActive.value)
-    return [...refuelStore.refuels].sort(
-      (a, b) => b.date.getTime() - a.date.getTime()
-    )
-  return refuelStore.refuels
+  return [...refuelStore.refuels].sort(
+    (a, b) => b.date.getTime() - a.date.getTime()
+  )
 })
+
+function getRefuels(from: number, size: number): ReadonlyArray<Refuel> {
+  const items = []
+  for (let i = 0; i < size; i++) {
+    items.push(refuels.value[from + i])
+  }
+  return Object.freeze(items)
+}
 
 function removeFilter() {
   settingsStore.toggleRefuelFilter(false)
@@ -127,7 +154,7 @@ emitter.on('showRefuelOptionsDialog', id =>
   ])
 )
 
-onMounted(async () => {
+onBeforeMount(async () => {
   emitter.emit('updateTitle', 'Refuels')
 
   vehicleName.value = settingsStore.plateNumberInTitleActive
@@ -138,6 +165,18 @@ onMounted(async () => {
   vehicle.value =
     (await refuelStore.getVehicle(settingsStore.selectedVehicleId ?? 0)) ??
     vehicle.value
+
+  // Define to which index to scroll
+  if (props.id && props.id > 0)
+    scrollToIndex.value = refuelStore.refuels
+      .sort((a, b) => b.date.getTime() - a.date.getTime())
+      .findIndex(r => r.id == props.id)
+
+  if (scrollToIndex.value < 0) scrollToIndex.value = 0
+
+  loading.value = false
+  // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+  ;(virtualListRef.value! as QVirtualScroll).scrollTo(scrollToIndex.value)
 })
 
 onUnmounted(() => {

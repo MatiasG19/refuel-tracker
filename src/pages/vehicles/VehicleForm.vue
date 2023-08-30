@@ -9,7 +9,7 @@
       />
       <c-input
         v-model="vehicle.plateNumber"
-        label="Plate number"
+        label="Number plate"
         :rules="[requiredFieldRule]"
       />
       <c-select
