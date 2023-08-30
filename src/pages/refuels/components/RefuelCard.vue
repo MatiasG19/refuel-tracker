@@ -1,7 +1,7 @@
 <template>
   <div>
     <transition name="fadein">
-      <q-card v-if="!loading" class="space-station">
+      <q-card class="space-station" v-if="!loading">
         <q-card-section>
           <div class="row items-center no-wrap">
             <div class="col">
@@ -46,11 +46,14 @@
               <div class="text-h5 accent-space-station">
                 {{ refuel.refueledAmount }}
               </div>
-              <div class="text-subtitle1">{{ vehicle.fuelUnit?.fuelUnit }}</div>
+              <div class="text-subtitle1">
+                {{ vehicle.fuelUnit?.fuelUnit }}
+              </div>
             </div>
           </div>
         </q-card-section>
       </q-card>
+      <refuel-card-skeleton v-else />
     </transition>
   </div>
 </template>
@@ -59,6 +62,7 @@
 import { Refuel, Vehicle } from 'src/scripts/libraries/refuel/models'
 import { date } from 'quasar'
 import { emitter } from 'src/boot/mitt'
+import RefuelCardSkeleton from './RefuelCardSkeleton.vue'
 
 const props = defineProps({
   refuel: {
