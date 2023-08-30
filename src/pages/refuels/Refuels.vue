@@ -112,11 +112,7 @@ let refuels = computed(() => {
 function getRefuels(from: number, size: number): ReadonlyArray<Refuel> {
   const items = []
   for (let i = 0; i < size; i++) {
-    items.push(
-      refuelStore.refuels.sort((a, b) => b.date.getTime() - a.date.getTime())[
-        from + i
-      ]
-    )
+    items.push(refuels.value[from + i])
   }
   return Object.freeze(items)
 }
