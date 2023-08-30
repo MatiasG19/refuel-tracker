@@ -48,7 +48,7 @@
 
     <q-page-container>
       <router-view v-slot="{ Component }">
-        <transition name="routefade">
+        <transition name="fadein">
           <component :is="Component" :key="$route.path" />
         </transition>
       </router-view>
