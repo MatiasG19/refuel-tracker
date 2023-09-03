@@ -12,7 +12,12 @@ export async function exportDB(path: string) {
 
 export async function importDB(path: string) {
   const blob = await readBlob(path)
-  await db.import(blob, { overwriteValues: true })
+  await db.import(blob, {
+    overwriteValues: true,
+    clearTablesBeforeImport: true,
+    acceptVersionDiff: true,
+    acceptMissingTables: true
+  })
 }
 
 async function writeBlob(blob: Blob, path: string) {
