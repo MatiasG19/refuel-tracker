@@ -15,8 +15,7 @@ export async function importDB(path: string) {
   await db.import(blob, {
     overwriteValues: true,
     clearTablesBeforeImport: true,
-    acceptVersionDiff: true,
-    acceptMissingTables: true
+    acceptVersionDiff: true
   })
 }
 
