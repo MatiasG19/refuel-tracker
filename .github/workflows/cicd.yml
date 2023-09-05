@@ -45,10 +45,12 @@ jobs:
 
     steps:
       - name: Set tag name
-        run: if ${{ github.event_name == 'release' }}; then tag=${{ github.ref_name }}
-              elif ${{ github.event_name == 'workflow_dispatch' }}; then tag=${{ inputs.tag }}
+        run: if ${{ github.event_name == 'release' }}; then
+              tag=${{ github.ref_name }};
+              elif ${{ github.event_name == 'workflow_dispatch' }}; then
+              tag=${{ inputs.tag }};
               fi
-              echo "TAG=$tag" >> $GITHUB_ENV
+              echo "TAG=$tag" >> $GITHUB_ENV;
 
       - name: Checkout
         uses: actions/checkout@v3
