@@ -6,6 +6,12 @@ on:
       - '**'
   release:
     types: [released, prereleased]
+  workflow_dispatch:
+    inputs:
+      tag:
+        description: Version
+        default: '0.0.0'
+        required: true
 
 env:
   REPO_NAME: ${{ github.event.repository.name }}
@@ -71,7 +77,7 @@ jobs:
         run: yarn test
 
       - name: Set version in package.json
-        if: ${{ github.event_name == 'release' }}
+        if: ${{ github.event_name == 'release' }} || ${{ github.event_name == 'workflow_dispatch' }}
         uses: maxgfr/github-change-json@v0.0.21
         with:
           key: 'version'
@@ -82,7 +88,7 @@ jobs:
         run: yarn appbuild
 
       - name: Sign apk
-        if: ${{ github.event_name == 'release' }}
+        if: ${{ github.event_name == 'release' }} || ${{ github.event_name == 'workflow_dispatch' }}
         uses: MatiasG19/android-sign@2.0.0
         with:
           releaseDirectory: ${{ env.RELEASE_PATH }}
@@ -95,7 +101,7 @@ jobs:
           BUILD_TOOLS_VERSION: '33.0.2'
 
       - name: Rename apk
-        if: ${{ github.event_name == 'release' }}
+        if: ${{ github.event_name == 'release' }} || ${{ github.event_name == 'workflow_dispatch' }}
         run: cd ${{ env.RELEASE_PATH_SIGNED }} &&
           mv *.apk $(echo ${{ env.REPO_NAME }}-${{ github.ref_name }}.apk;)
 
@@ -104,3 +110,10 @@ jobs:
         run: gh release upload ${{ github.ref_name }} ${{ env.RELEASE_PATH_SIGNED }}/*.apk
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Upload artifact
+        if: ${{ github.event_name == 'workflow_dispatch' }}
+        uses: actions/upload-artifact@v3
+        with:
+          name: ${{ env.REPO_NAME }}-${{ inputs.tag }}
+          path: ${{ env.RELEASE_PATH_SIGNED }}
