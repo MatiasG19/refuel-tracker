@@ -6,6 +6,12 @@ on:
       - '**'
   release:
     types: [released, prereleased]
+  workflow_dispatch:
+    inputs:
+      tag:
+        description: Version
+        default: '0.0.0'
+        required: true
 
 env:
   REPO_NAME: ${{ github.event.repository.name }}
@@ -38,6 +44,14 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
+      - name: Set tag name
+        run: if ${{ github.event_name == 'release' }}; then
+              tag=${{ github.ref_name }};
+              elif ${{ github.event_name == 'workflow_dispatch' }}; then
+              tag=${{ inputs.tag }};
+              fi;
+              echo "TAG=$tag" >> $GITHUB_ENV;
+
       - name: Checkout
         uses: actions/checkout@v3
 
@@ -71,18 +85,18 @@ jobs:
         run: yarn test
 
       - name: Set version in package.json
-        if: ${{ github.event_name == 'release' }}
+        if: ${{ github.event_name == 'release' || github.event_name == 'workflow_dispatch' }}
         uses: maxgfr/github-change-json@v0.0.21
         with:
           key: 'version'
-          value: ${{ github.ref_name }}
+          value: ${{ env.TAG }}
           path: ${{ github.workspace }}/package.json
 
       - name: Build apk
         run: yarn appbuild
 
       - name: Sign apk
-        if: ${{ github.event_name == 'release' }}
+        if: ${{ github.event_name == 'release' || github.event_name == 'workflow_dispatch' }}
         uses: MatiasG19/android-sign@2.0.0
         with:
           releaseDirectory: ${{ env.RELEASE_PATH }}
@@ -95,12 +109,19 @@ jobs:
           BUILD_TOOLS_VERSION: '33.0.2'
 
       - name: Rename apk
-        if: ${{ github.event_name == 'release' }}
+        if: ${{ github.event_name == 'release' || github.event_name == 'workflow_dispatch' }}
         run: cd ${{ env.RELEASE_PATH_SIGNED }} &&
-          mv *.apk $(echo ${{ env.REPO_NAME }}-${{ github.ref_name }}.apk;)
+          mv *.apk $(echo ${{ env.REPO_NAME }}-${{ env.TAG }}.apk;)
 
       - name: Append apk to release
         if: ${{ github.event_name == 'release' }}
-        run: gh release upload ${{ github.ref_name }} ${{ env.RELEASE_PATH_SIGNED }}/*.apk
+        run: gh release upload ${{ env.TAG }} ${{ env.RELEASE_PATH_SIGNED }}/*.apk
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Upload artifact
+        if: ${{ github.event_name == 'workflow_dispatch' }}
+        uses: actions/upload-artifact@v3
+        with:
+          name: ${{ env.REPO_NAME }}-${{ env.TAG }}
+          path: ${{ env.RELEASE_PATH_SIGNED }}
