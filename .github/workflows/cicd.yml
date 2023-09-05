@@ -49,7 +49,7 @@ jobs:
               tag=${{ github.ref_name }};
               elif ${{ github.event_name == 'workflow_dispatch' }}; then
               tag=${{ inputs.tag }};
-              fi
+              fi;
               echo "TAG=$tag" >> $GITHUB_ENV;
 
       - name: Checkout
