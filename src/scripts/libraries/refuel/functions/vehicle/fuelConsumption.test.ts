@@ -66,5 +66,7 @@ test('Calculate specific fuel consumption', () => {
     distanceDriven: 400.0
   })
 
-  expect(vehicleFuelConsumption(vehicle, 2)).toBe(7.5)
+  expect(
+    vehicleFuelConsumption(vehicle, vehicle.refuels.filter(r => r.id === 2)[0])
+  ).toBe(7.5)
 })

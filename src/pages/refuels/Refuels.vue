@@ -62,7 +62,7 @@
           :key="index"
           :refuel="item"
           :vehicle="vehicle"
-          :fuelConsumption="vehicleFuelConsumption(vehicle, item.id).toFixed(2)"
+          :fuelConsumption="vehicleFuelConsumption(vehicle, item).toFixed(2)"
           :loading="loading"
           class="q-pt-md q-pl-md q-pr-md"
         />
