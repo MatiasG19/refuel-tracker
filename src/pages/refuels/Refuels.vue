@@ -54,7 +54,7 @@
         :items-size="refuels.length"
         :items-fn="getRefuels"
         :virtual-scroll-item-size="200"
-        virtual-scroll-slice-ratio-before="1"
+        virtual-scroll-slice-ratio-before="4"
         virtual-scroll-slice-ratio-after="4"
         v-slot="{ item, index }"
       >
@@ -62,7 +62,7 @@
           :key="index"
           :refuel="item"
           :vehicle="vehicle"
-          :fuelConsumption="vehicleFuelConsumption(vehicle, item.id).toFixed(2)"
+          :fuelConsumption="vehicleFuelConsumption(vehicle, item).toFixed(2)"
           :loading="loading"
           class="q-pt-md q-pl-md q-pr-md"
         />
@@ -176,7 +176,10 @@ onBeforeMount(async () => {
 
   loading.value = false
   // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-  ;(virtualListRef.value! as QVirtualScroll).scrollTo(scrollToIndex.value)
+  ;(virtualListRef.value! as QVirtualScroll).scrollTo(
+    scrollToIndex.value + 2,
+    'end-force'
+  )
 })
 
 onUnmounted(() => {
