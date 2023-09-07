@@ -86,11 +86,7 @@ jobs:
 
       - name: Set version in package.json
         if: ${{ github.event_name == 'release' || github.event_name == 'workflow_dispatch' }}
-        uses: maxgfr/github-change-json@v0.0.21
-        with:
-          key: 'version'
-          value: ${{ env.TAG }}
-          path: ${{ github.workspace }}/package.json
+        run: node ./modifyPackageJson.mjs $TAG
 
       - name: Build apk
         run: yarn appbuild
