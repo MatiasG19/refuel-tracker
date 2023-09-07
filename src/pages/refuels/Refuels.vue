@@ -54,7 +54,7 @@
         :items-size="refuels.length"
         :items-fn="getRefuels"
         :virtual-scroll-item-size="200"
-        virtual-scroll-slice-ratio-before="1"
+        virtual-scroll-slice-ratio-before="4"
         virtual-scroll-slice-ratio-after="4"
         v-slot="{ item, index }"
       >
