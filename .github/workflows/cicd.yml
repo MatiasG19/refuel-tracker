@@ -88,6 +88,11 @@ jobs:
         if: ${{ github.event_name == 'release' || github.event_name == 'workflow_dispatch' }}
         run: node ./modifyPackageJson.mjs $TAG
 
+      - name: Set version in build.gradle
+        if: ${{ github.event_name == 'release' || github.event_name == 'workflow_dispatch' }}
+        working-directory: src-capacitor/android/app
+        run: REPLACE='versionName "1.0"' && sed -i 's/$REPLACE/versionName $TAG/g' build.gradle
+
       - name: Build apk
         run: yarn appbuild
 
