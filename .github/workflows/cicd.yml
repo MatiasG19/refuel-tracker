@@ -46,11 +46,11 @@ jobs:
     steps:
       - name: Set tag name
         run: if ${{ github.event_name == 'release' }}; then
-              tag=${{ github.ref_name }};
-              elif ${{ github.event_name == 'workflow_dispatch' }}; then
-              tag=${{ inputs.tag }};
-              fi;
-              echo "TAG=$tag" >> $GITHUB_ENV;
+          tag=${{ github.ref_name }};
+          elif ${{ github.event_name == 'workflow_dispatch' }}; then
+          tag=${{ inputs.tag }};
+          fi;
+          echo "TAG=$tag" >> $GITHUB_ENV;
 
       - name: Checkout
         uses: actions/checkout@v3
@@ -73,10 +73,10 @@ jobs:
           restore-keys: |
             ${{ runner.os }}-yarn-
 
-      - name: Install app dependecies
+      - name: Install app dependencies
         run: yarn --frozen-lockfile --prefer-offline
 
-      - name: Install capacitor dependecies
+      - name: Install capacitor dependencies
         working-directory: src-capacitor
         run: yarn --frozen-lockfile
 
@@ -86,11 +86,12 @@ jobs:
 
       - name: Set version in package.json
         if: ${{ github.event_name == 'release' || github.event_name == 'workflow_dispatch' }}
-        uses: maxgfr/github-change-json@v0.0.21
-        with:
-          key: 'version'
-          value: ${{ env.TAG }}
-          path: ${{ github.workspace }}/package.json
+        run: node ./modifyPackageJson.mjs $TAG
+
+      - name: Set version in build.gradle
+        if: ${{ github.event_name == 'release' || github.event_name == 'workflow_dispatch' }}
+        working-directory: src-capacitor/android/app
+        run: sed -i "s/versionName \"1.0\"/versionName \"$TAG\"/" build.gradle
 
       - name: Build apk
         run: yarn appbuild
