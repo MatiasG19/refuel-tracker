@@ -73,10 +73,10 @@ jobs:
           restore-keys: |
             ${{ runner.os }}-yarn-
 
-      - name: Install app dependecies
+      - name: Install app dependencies
         run: yarn --frozen-lockfile --prefer-offline
 
-      - name: Install capacitor dependecies
+      - name: Install capacitor dependencies
         working-directory: src-capacitor
         run: yarn --frozen-lockfile
 
@@ -91,7 +91,7 @@ jobs:
       - name: Set version in build.gradle
         if: ${{ github.event_name == 'release' || github.event_name == 'workflow_dispatch' }}
         working-directory: src-capacitor/android/app
-        run: REPLACE='versionName "1.0"' && sed -i "s/$REPLACE/versionName $TAG/g" build.gradle
+        run: sed -i "s/versionName \"1.0\"/versionName \"$TAG\"/" build.gradle
 
       - name: Build apk
         run: yarn appbuild
