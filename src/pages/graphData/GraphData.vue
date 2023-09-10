@@ -75,9 +75,10 @@ import {
   OptionInDialog,
   optionsDialog
 } from 'src/components/dialogs/optionsDialog'
-import { useQuasar } from 'quasar'
+import { Notify, useQuasar } from 'quasar'
 import { useCheckForUpdate } from 'src/scripts/libraries/utils'
 import { useRouter } from 'vue-router'
+import { initStoragePersistence } from 'src/boot/storageManager'
 
 const $q = useQuasar()
 $q.dark.set('auto')
@@ -146,6 +147,9 @@ watchEffect(() => {
 })
 
 onBeforeMount(async () => {
+  const p = await initStoragePersistence()
+  const s = 'presited ' + p.toString()
+  Notify.create(s)
   initSettings()
   periods.value = await refuelStore.getPeriods()
 })
