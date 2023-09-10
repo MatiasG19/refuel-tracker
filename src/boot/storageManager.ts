@@ -14,19 +14,23 @@ async function isStoragePersisted() {
   persisted the storage, false if not, and undefined if the API is not present.
 */
 async function persist() {
+  console.log('navigator', window.navigator)
+  console.log('navigator.storage', window.navigator.storage)
+  console.log('persist', window.navigator.storage.persist)
+
   return navigator.storage && navigator.storage.persist
     ? await navigator.storage.persist()
     : undefined
 }
 
-export async function initStoragePersistence(): Promise<boolean> {
+export async function initStoragePersistence(): Promise<string> {
   try {
-    if (await isStoragePersisted()) return true
+    if (await isStoragePersisted()) return 'true'
 
     const presisted = await persist()
-    if (presisted) return true
-  } catch (error) {
-    return false
+    if (presisted) return 'true'
+  } catch (error: unknown) {
+    return (error as Error).stack?.toString() ?? ''
   }
-  return false
+  return 'false ende'
 }

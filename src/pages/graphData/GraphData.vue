@@ -148,7 +148,7 @@ watchEffect(() => {
   )
 })
 
-let p = ref(false)
+let p = ref('defualt')
 let ex = ref('')
 function log() {
   Notify.create(p.value.toString())
