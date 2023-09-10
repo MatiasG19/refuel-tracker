@@ -157,6 +157,7 @@ function log() {
 function log2() {
   Notify.create(ex.value.toString())
   console.log(ex.value)
+  console.log(navigator.storage)
 }
 
 onBeforeMount(async () => {
