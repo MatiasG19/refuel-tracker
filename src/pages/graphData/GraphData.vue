@@ -1,5 +1,6 @@
 <template>
   <q-page class="items-center">
+    <q-btn @click="log">BUTTON</q-btn>
     <div
       v-if="vehiclesExits && graphData.length === 0"
       class="absolute-center items-center"
@@ -146,10 +147,14 @@ watchEffect(() => {
   )
 })
 
+let p = ref(false)
+function log() {
+  Notify.create(p.value.toString())
+  console.log(p.value)
+}
+
 onBeforeMount(async () => {
-  const p = await initStoragePersistence()
-  const s = 'presited ' + p.toString()
-  Notify.create(s)
+  p.value = await initStoragePersistence()
   initSettings()
   periods.value = await refuelStore.getPeriods()
 })
