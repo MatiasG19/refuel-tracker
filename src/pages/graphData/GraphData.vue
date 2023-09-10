@@ -1,6 +1,7 @@
 <template>
   <q-page class="items-center">
-    <q-btn @click="log">BUTTON</q-btn>
+    <q-btn @click="log">Presisted</q-btn>
+    <q-btn @click="log2">Exception</q-btn>
     <div
       v-if="vehiclesExits && graphData.length === 0"
       class="absolute-center items-center"
@@ -148,13 +149,23 @@ watchEffect(() => {
 })
 
 let p = ref(false)
+let ex = ref('')
 function log() {
   Notify.create(p.value.toString())
   console.log(p.value)
 }
+function log2() {
+  Notify.create(ex.value.toString())
+  console.log(ex.value)
+}
 
 onBeforeMount(async () => {
-  p.value = await initStoragePersistence()
+  try {
+    p.value = await initStoragePersistence()
+    throw new Error('MGA')
+  } catch (error: unknown) {
+    ex.value = (error as Error).stack?.toString() ?? ''
+  }
   initSettings()
   periods.value = await refuelStore.getPeriods()
 })
