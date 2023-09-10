@@ -20,13 +20,13 @@ async function persist() {
 }
 
 export async function initStoragePersistence(): Promise<boolean> {
-  const permission = await navigator.permissions.query({
-    name: 'persistent-storage'
-  })
+  try {
+    if (await isStoragePersisted()) return true
 
-  if (permission.state === 'granted') return true
-
-  await persist()
-  if (await isStoragePersisted()) return true
+    const presisted = await persist()
+    if (presisted) return true
+  } catch (error) {
+    return false
+  }
   return false
 }
