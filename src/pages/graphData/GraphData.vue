@@ -162,7 +162,7 @@ function log2() {
 
 onBeforeMount(async () => {
   try {
-    p.value = await initStoragePersistence()
+    initStoragePersistence().then(v => (p.value = v))
     throw new Error('MGA')
   } catch (error: unknown) {
     ex.value = (error as Error).stack?.toString() ?? ''

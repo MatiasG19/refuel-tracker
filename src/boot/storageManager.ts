@@ -27,7 +27,7 @@ export async function initStoragePersistence(): Promise<string> {
   try {
     if (await isStoragePersisted()) return 'true'
 
-    const presisted = await navigator.storage.persisted()
+    const presisted = await navigator.storage.persist()
     // await persist()
     if (presisted) return 'true'
   } catch (error: unknown) {
