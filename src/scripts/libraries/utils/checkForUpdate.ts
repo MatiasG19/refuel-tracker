@@ -56,6 +56,8 @@ export function useCheckForUpdate(): () => void {
 
   async function showNotification(version: string) {
     if ($q.platform.is.mobile) {
+      const status = await LocalNotifications.checkPermissions()
+      if (status.display !== 'granted') LocalNotifications.requestPermissions()
       await LocalNotifications.schedule({
         notifications: [
           {
