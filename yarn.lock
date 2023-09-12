@@ -34,6 +34,11 @@
   resolved "https://registry.yarnpkg.com/@capacitor/local-notifications/-/local-notifications-5.0.6.tgz#9684dbd7086e325e61b9297569ee9c06e5b8d8f9"
   integrity sha512-DB+ZBjv3Ri/0mtSzjMxLMHNGfg5m615ewDfQxp++mu7pYUM1RkxfSiigw73+PlZXDow1YNQJRlzTkwEKs6Pf+g==
 
+"@capacitor/splash-screen@^5.0.6":
+  version "5.0.6"
+  resolved "https://registry.yarnpkg.com/@capacitor/splash-screen/-/splash-screen-5.0.6.tgz#d29320de49cc68add59e17fecb64aa2f1a08447f"
+  integrity sha512-9B8wSm89D+LlshFw8B+mjPU8pJNf1WOx2mkMjMvcH0/EqxNaE+ZaO8lPCX+9WvWSEZs3O3l11qiSnOFHeK0t9A==
+
 "@esbuild/android-arm64@0.18.20":
   version "0.18.20"
   resolved "https://registry.yarnpkg.com/@esbuild/android-arm64/-/android-arm64-0.18.20.tgz#984b4f9c8d0377443cc2dfcef266d02244593622"
