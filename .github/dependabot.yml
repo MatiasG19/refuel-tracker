@@ -11,4 +11,4 @@ updates:
         update-types: ['version-update:semver-minor']
     open-pull-requests-limit: 10
     labels:
-      - 'dependency'
+      - 'dependencies'
