@@ -148,6 +148,11 @@ watchEffect(() => {
 })
 
 onBeforeMount(async () => {
+  await SplashScreen.show({
+    // showDuration: 5000,
+    autoHide: false
+  })
+
   initSettings()
   periods.value = await refuelStore.getPeriods()
 })
@@ -155,7 +160,14 @@ onBeforeMount(async () => {
 onMounted(() => {
   checkForUpdate()
   graphDataStore.readGraphData()
-  if (Platform.is.android) SplashScreen.hide()
+  if (Platform.is.android) console.log('Android')
+
+  setTimeout(() => {
+    ;(async () => {
+      await SplashScreen.hide()
+    })()
+  }, 1000)
+  // SplashScreen.hide()
 })
 
 onUnmounted(() => {
