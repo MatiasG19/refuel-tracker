@@ -78,6 +78,8 @@ import {
 import { useQuasar } from 'quasar'
 import { useCheckForUpdate } from 'src/scripts/libraries/utils'
 import { useRouter } from 'vue-router'
+import { SplashScreen } from '@capacitor/splash-screen'
+import { Platform } from 'quasar'
 
 const $q = useQuasar()
 $q.dark.set('auto')
@@ -153,6 +155,7 @@ onBeforeMount(async () => {
 onMounted(() => {
   checkForUpdate()
   graphDataStore.readGraphData()
+  if (Platform.is.android) SplashScreen.hide()
 })
 
 onUnmounted(() => {
