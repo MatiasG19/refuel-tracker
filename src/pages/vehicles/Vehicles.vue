@@ -36,10 +36,12 @@ import { emitter } from 'src/boot/mitt'
 import { useSettingsStore } from 'src/stores/settingsStore'
 import { useRefuelStore } from 'src/stores/refuelStore'
 import { Vehicle } from 'src/scripts/libraries/refuel/models'
+import { useQuasar } from 'quasar'
 
 const router = useRouter()
 const refuelStore = useRefuelStore()
 const settingsStore = useSettingsStore()
+const $q = useQuasar()
 
 const vehicleData = computed(() => {
   if (refuelStore.vehicles) return refuelStore.getAllVehicleData()
@@ -74,10 +76,17 @@ emitter.on('showVehicleOptionsDialog', id =>
         confirmDialog(
           'Delete vehicle?',
           (id: number) => {
+            $q.loading.show({
+              delay: 400,
+              spinnerColor: 'accent',
+              messageColor: 'accent',
+              message: 'Deleting vehicle'
+            })
             ;(async () =>
               await refuelStore
                 .deleteVehicle(id)
                 .then(async () => await refuelStore.readVehicles()))()
+            $q.loading.hide()
           },
           id
         )
