@@ -17,7 +17,7 @@ export class RefuelTrackerDexie extends Dexie {
       refuels:
         '++id, date, refuelAmount, payedAmount, distanceDriven, vehicleId',
       settings:
-        '++id, colorThemeId, distanceUnitId, vehicleId, plateNumberInTitleActive, autoBackupActive, autoBackupPath, refuelFilterActive'
+        '++id, colorThemeId, distanceUnitId, vehicleId, plateNumberInTitleActive, autoBackupActive, autoBackupPath, refuelFilterActive, lastUpdateCheck'
     })
 
     // Only called on very first database creation

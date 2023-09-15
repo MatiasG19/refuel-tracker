@@ -7,6 +7,7 @@ export class Settings {
   autoBackupActive!: boolean
   autoBackupPath!: string
   refuelFilterActive!: boolean
+  lastUpdateCheck!: Date
 }
 
 export class SelectOption {
