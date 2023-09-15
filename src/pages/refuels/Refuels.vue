@@ -175,11 +175,9 @@ onBeforeMount(async () => {
   if (scrollToIndex.value < 0) scrollToIndex.value = 0
 
   loading.value = false
-  // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-  ;(virtualListRef.value! as QVirtualScroll).scrollTo(
-    scrollToIndex.value,
-    'end-force'
-  )
+
+  if (virtualListRef.value)
+    (virtualListRef.value as QVirtualScroll).scrollTo(scrollToIndex.value)
 })
 
 onUnmounted(() => {
