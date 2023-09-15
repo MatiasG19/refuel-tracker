@@ -74,7 +74,6 @@ export function useCheckForUpdate(): () => Promise<void> {
 
   async function showNotification(version: string) {
     const status = await LocalNotifications.checkPermissions()
-    LocalNotifications.requestPermissions()
     if (status.display !== 'granted') LocalNotifications.requestPermissions()
     await LocalNotifications.schedule({
       notifications: [
