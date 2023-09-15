@@ -5,17 +5,15 @@ import {
   ActionPerformed
 } from '@capacitor/local-notifications'
 import axios from 'axios'
-import { useQuasar, openURL } from 'quasar'
+import { openURL } from 'quasar'
 import packageJson from '../../../../package.json'
-import { useSettingsStore } from 'src/stores/settingsStore'
+import { db } from 'src/boot/dexie'
 
-export function useCheckForUpdate(): () => void {
-  const settingsStore = useSettingsStore()
-  const $q = useQuasar()
+export function useCheckForUpdate(): () => Promise<void> {
   let versionNotifHandle: PluginListenerHandle
 
-  function checkForUpdate() {
-    if (settingsStore.checkForUpdate)
+  async function checkForUpdate() {
+    if (await checkInterval())
       axios
         .get(
           `https://api.github.com/repos/${packageJson.author}/${packageJson.name}/releases`
@@ -25,18 +23,16 @@ export function useCheckForUpdate(): () => void {
           if (
             releases &&
             releases.length &&
-            // ts-ignore
             checkNewVersion(releases[0].tag_name, packageJson.version)
           ) {
             registerDownloadActionListener(releases[0].tag_name)
-            // ts-ignore
             showNotification(releases[0].tag_name)
           }
         })
         .catch(response =>
           console.debug('Could not check for updates! Response: ', response)
         )
-    settingsStore.checkForUpdate = false
+    setLastUpdateInDb()
   }
 
   function checkNewVersion(
@@ -54,53 +50,72 @@ export function useCheckForUpdate(): () => void {
     return false
   }
 
+  async function checkInterval(): Promise<boolean> {
+    const lastUpdate = await getLastUpdateFromDb()
+
+    const diffTime = new Date(Date.now()).getTime() - lastUpdate.getTime()
+
+    const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24))
+
+    if (diffDays >= 7) return true
+    return false
+  }
+
+  async function getLastUpdateFromDb(): Promise<Date> {
+    const settings = await db.settings.toArray()
+    return settings[0].lastUpdateCheck
+  }
+
+  async function setLastUpdateInDb() {
+    const settings = await db.settings.toArray()
+    settings[0].lastUpdateCheck = new Date(Date.now())
+    await db.settings.put(settings[0])
+  }
+
   async function showNotification(version: string) {
-    if ($q.platform.is.mobile) {
-      await LocalNotifications.schedule({
-        notifications: [
-          {
-            title: `New version of ${packageJson.productName} available`,
-            body: `Tap to download version ${version}`,
-            id: 1,
-            schedule: { at: new Date(Date.now()) },
-            actionTypeId: 'NEW_VERSION'
-          }
-        ]
-      })
-    }
+    const status = await LocalNotifications.checkPermissions()
+    LocalNotifications.requestPermissions()
+    if (status.display !== 'granted') LocalNotifications.requestPermissions()
+    await LocalNotifications.schedule({
+      notifications: [
+        {
+          title: `New version of ${packageJson.productName} available`,
+          body: `Tap to download version ${version}`,
+          id: 1,
+          schedule: { at: new Date(Date.now() + 100) },
+          actionTypeId: 'NEW_VERSION'
+        }
+      ]
+    })
   }
 
   function registerDownloadActionListener(version: string) {
-    if ($q.platform.is.mobile) {
-      versionNotifHandle = LocalNotifications.addListener(
-        'localNotificationActionPerformed',
-        (n: ActionPerformed) => {
-          if (n.actionId === 'DOWNLOAD_NEW_VERSION')
-            openURL(
-              `https://github.com/${packageJson.author}/${packageJson.name}/releases/download/${version}/${packageJson.name}-${version}.apk`
-            )
-        }
-      )
-    }
+    versionNotifHandle = LocalNotifications.addListener(
+      'localNotificationActionPerformed',
+      (n: ActionPerformed) => {
+        if (n.actionId === 'DOWNLOAD_NEW_VERSION')
+          openURL(
+            `https://github.com/${packageJson.author}/${packageJson.name}/releases/download/${version}/${packageJson.name}-${version}.apk`
+          )
+      }
+    )
   }
 
   onMounted(() => {
-    if ($q.platform.is.mobile) {
-      LocalNotifications.registerActionTypes({
-        types: [
-          {
-            id: 'NEW_VERSION',
-            actions: [
-              {
-                id: 'DOWNLOAD_NEW_VERSION',
-                title: 'Download',
-                foreground: true
-              }
-            ]
-          }
-        ]
-      })
-    }
+    LocalNotifications.registerActionTypes({
+      types: [
+        {
+          id: 'NEW_VERSION',
+          actions: [
+            {
+              id: 'DOWNLOAD_NEW_VERSION',
+              title: 'Download',
+              foreground: true
+            }
+          ]
+        }
+      ]
+    })
   })
 
   onUnmounted(() => {
