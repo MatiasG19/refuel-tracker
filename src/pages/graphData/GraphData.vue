@@ -76,7 +76,6 @@ import {
   optionsDialog
 } from 'src/components/dialogs/optionsDialog'
 import { useQuasar } from 'quasar'
-import { useCheckForUpdate } from 'src/scripts/libraries/utils'
 import { useRouter } from 'vue-router'
 
 const $q = useQuasar()
@@ -86,7 +85,6 @@ const router = useRouter()
 const refuelStore = useRefuelStore()
 const graphDataStore = useGraphDataStore()
 const settingsStore = useSettingsStore()
-const checkForUpdate = useCheckForUpdate()
 
 const loading = ref(false)
 const periods = ref<Period[]>([])
@@ -151,7 +149,6 @@ onBeforeMount(async () => {
 })
 
 onMounted(() => {
-  checkForUpdate()
   graphDataStore.readGraphData()
 })
 
