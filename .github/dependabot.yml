@@ -10,6 +10,7 @@ updates:
     open-pull-requests-limit: 10
     labels:
       - 'dependencies'
+      
   - package-ecosystem: 'npm'
     directory: '/src-capacitor'
     schedule:
@@ -18,5 +19,12 @@ updates:
       - dependency-name: '*'
         update-types: ['version-update:semver-major']
     open-pull-requests-limit: 10
+    labels:
+      - 'dependencies'
+
+  - package-ecosystem: "github-actions"
+    directory: "/"
+    schedule:
+      interval: "weekly"
     labels:
       - 'dependencies'
