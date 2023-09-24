@@ -17,14 +17,20 @@
             />
           </div>
         </div>
-        <div>
-          <div class="text-h4 accent-space-station">{{ graphData.value }}</div>
-          <div class="text-subtitle1">{{ graphData.unit }}</div>
+        <div class="row items-center no-wrap">
+          <div class="col-4">
+            <div class="text-h4 accent-space-station">
+              {{ graphData.value }}
+            </div>
+            <div class="text-subtitle1">{{ graphData.unit }}</div>
+          </div>
+          <div class="col">
+            <Line id="my-chart-id" :options="chartOptions" :data="chartData" />
+          </div>
         </div>
       </q-card-section>
 
       <q-card-section class="accent-space-station" v-if="false">
-        Graph-Graph-Graph-Graph-Graph-Graph-Graph
       </q-card-section>
 
       <q-card-actions v-if="false">
@@ -42,6 +48,14 @@
 <script setup lang="ts">
 import { GraphData } from '../scripts/models'
 import { emitter } from 'src/boot/mitt'
+import { Line } from 'vue-chartjs'
+import {
+  CategoryScale,
+  Chart as ChartJS,
+  LinearScale,
+  LineElement,
+  PointElement
+} from 'chart.js'
 
 defineProps({
   graphData: {
@@ -53,4 +67,24 @@ defineProps({
     required: true
   }
 })
+
+ChartJS.register(CategoryScale, LinearScale, PointElement, LineElement)
+
+const chartData = {
+  labels: ['January', 'February', 'March', 'April', 'Mai', 'June', 'July'],
+  datasets: [{ data: [40, 39, 10, 40, 39, 80, 40], backgroundColor: '#60EFB3' }]
+}
+
+const chartOptions = {
+  responsive: true,
+  maintainAspectRatio: false,
+  scales: {
+    x: {
+      display: true
+    },
+    y: {
+      display: false
+    }
+  }
+}
 </script>
