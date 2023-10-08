@@ -24,7 +24,7 @@
             </div>
             <div class="text-subtitle1">{{ graphData.unit }}</div>
           </div>
-          <div class="col">
+          <div class="col" style="height:70px">
             <Line id="my-chart-id" :options="chartOptions" :data="chartData" />
           </div>
         </div>
@@ -80,7 +80,7 @@ const chartOptions = {
   maintainAspectRatio: false,
   scales: {
     x: {
-      display: true
+      display: false
     },
     y: {
       display: false
