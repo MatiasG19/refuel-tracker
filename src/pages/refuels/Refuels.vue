@@ -1,6 +1,9 @@
 <template>
   <q-page>
-    <div v-if="vehiclesExists && filterActive" class="q-pt-md text-center">
+    <div
+      v-if="vehiclesExists && refuelFilterStore.filterActive"
+      class="q-pt-md text-center"
+    >
       <q-btn
         class="q-pa-xs"
         style="color: pink"
@@ -83,13 +86,14 @@ import { useRefuelStore } from 'src/stores/refuelStore'
 import { Refuel, Vehicle } from 'src/scripts/libraries/refuel/models'
 import { vehicleFuelConsumption } from 'src/scripts/libraries/refuel/functions/vehicle'
 import { QVirtualScroll } from 'quasar'
+import { useRefuelFilterStore } from './stores/refuelFilterStore'
 
 const router = useRouter()
 const refuelStore = useRefuelStore()
 const settingsStore = useSettingsStore()
+const refuelFilterStore = useRefuelFilterStore()
 
 const vehicle = ref<Vehicle>(new Vehicle())
-const filterActive = ref(settingsStore.refuelFilterActive)
 const filterHint = 'Filter 1 Month from 2021.12.19'
 const vehiclesExists = settingsStore.selectedVehicleId
 const vehicleName = ref<string>('')
@@ -118,8 +122,7 @@ function getRefuels(from: number, size: number): ReadonlyArray<Refuel> {
 }
 
 function removeFilter() {
-  settingsStore.toggleRefuelFilter(false)
-  filterActive.value = false
+  refuelFilterStore.removeFilter()
 }
 
 emitter.on('showRefuelOptionsDialog', id =>

@@ -2,11 +2,13 @@ import { Dexie, Table } from 'dexie'
 import { Settings } from '../scripts/models'
 import { Vehicle, Refuel } from 'src/scripts/libraries/refuel/models'
 import { GraphSettings } from 'src/pages/graphData/scripts/models'
+import { RefuelFilter } from 'src/pages/refuels/models'
 
 export class RefuelTrackerDexie extends Dexie {
   graphSettings!: Table<GraphSettings>
   vehicles!: Table<Vehicle>
   refuels!: Table<Refuel>
+  refuelFilters!: Table<RefuelFilter>
   settings!: Table<Settings>
 
   constructor() {
@@ -16,6 +18,7 @@ export class RefuelTrackerDexie extends Dexie {
       vehicles: '++id, name, plateNumber, fuelUnitId',
       refuels:
         '++id, date, refuelAmount, payedAmount, distanceDriven, vehicleId',
+      refuelFilters: '++id, name, active, dateFrom, dateUntil',
       settings:
         '++id, colorThemeId, distanceUnitId, vehicleId, plateNumberInTitleActive, autoBackupActive, autoBackupPath, refuelFilterActive, lastUpdateCheck'
     })
@@ -25,6 +28,7 @@ export class RefuelTrackerDexie extends Dexie {
       this.insertGraphSettings()
       this.insertDemoData()
       this.insertSettings()
+      this.insertRefuelFilter()
     })
   }
 
@@ -93,6 +97,15 @@ export class RefuelTrackerDexie extends Dexie {
     const date = new Date()
     settings.lastUpdateCheck = new Date(date.setDate(date.getDate() - 365))
     ;(async () => await this.settings.put(settings))()
+  }
+
+  insertRefuelFilter() {
+    const refuelFilter = new RefuelFilter()
+    refuelFilter.name = ''
+    refuelFilter.active = false
+    refuelFilter.dateFrom = new Date()
+    refuelFilter.dateUntil = new Date()
+    ;(async () => await this.refuelFilters.put(refuelFilter))()
   }
 }
 
