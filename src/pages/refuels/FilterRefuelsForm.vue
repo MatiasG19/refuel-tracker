@@ -1,6 +1,6 @@
 <template>
   <div>
-    <q-form @submit="onSubmit" class="q-pa-md q-gutter-md">
+    <q-form @submit="onSubmit" class="q-px-md q-gutter-md">
       <c-input
         color="accent"
         :value="filterDateFrom"
@@ -35,14 +35,22 @@
         </q-popup-proxy>
       </c-input>
 
-      <div class="q-gutter-sm">
+      <div class="row">
         <q-btn
           color="negative"
           label="Cancel"
           no-caps
+          class="form-btn"
           @click="$router.push('/refuels')"
         />
-        <q-btn color="positive" label="Filter" type="submit" no-caps />
+        <q-space />
+        <q-btn
+          color="positive"
+          label="Filter"
+          type="submit"
+          no-caps
+          class="form-btn"
+        />
       </div>
     </q-form>
   </div>
@@ -60,8 +68,12 @@ import CInput from 'src/components/inputs/CInput.vue'
 const router = useRouter()
 const refuelFilterStore = useRefuelFilterStore()
 
-const filterDateFrom = ref<string>(date.formatDate(Date.now(), 'YYYY/MM/DD'))
-const filterDateUntil = ref<string>(date.formatDate(Date.now(), 'YYYY/MM/DD'))
+const filterDateFrom = ref<string>(
+  date.formatDate(refuelFilterStore.dateFrom, 'YYYY/MM/DD')
+)
+const filterDateUntil = ref<string>(
+  date.formatDate(refuelFilterStore.dateUntil, 'YYYY/MM/DD')
+)
 
 function updateDateFrom(event: string) {
   refuelFilterStore.dateFrom = new Date(event)
@@ -69,7 +81,6 @@ function updateDateFrom(event: string) {
     refuelFilterStore.dateFrom,
     'YYYY/MM/DD'
   )
-  console.log(date.formatDate(refuelFilterStore.dateFrom, 'YYYY/MM/DD'))
 }
 
 function updateDateUntil(event: string) {

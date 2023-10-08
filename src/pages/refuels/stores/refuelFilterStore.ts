@@ -4,6 +4,7 @@ import { ref } from 'vue'
 import { date } from 'quasar'
 
 export const useRefuelFilterStore = defineStore('refuelFilterStore', () => {
+  const filterName = ref<string>('')
   const filterActive = ref<boolean>(false)
   const dateFrom = ref<Date>(new Date())
   const dateUntil = ref<Date>(new Date())
@@ -11,28 +12,27 @@ export const useRefuelFilterStore = defineStore('refuelFilterStore', () => {
   function setFilter() {
     ;(async () => {
       const refuelFilters = await db.refuelFilters.toArray()
-      refuelFilters[0].name =
+      refuelFilters[0].name = filterName.value =
         date.formatDate(dateFrom.value, 'YYYY/MM/DD') +
         ' - ' +
         date.formatDate(dateUntil.value, 'YYYY/MM/DD')
-      refuelFilters[0].active = true
+      refuelFilters[0].active = filterActive.value = true
       refuelFilters[0].dateFrom = dateFrom.value
       refuelFilters[0].dateUntil = dateUntil.value
       await db.refuelFilters.put(refuelFilters[0])
-      filterActive.value = true
     })()
   }
 
   function removeFilter() {
     ;(async () => {
       const refuelFilters = await db.refuelFilters.toArray()
-      refuelFilters[0].active = false
+      refuelFilters[0].active = filterActive.value = false
       await db.refuelFilters.put(refuelFilters[0])
-      filterActive.value = false
     })()
   }
 
   return {
+    filterName,
     filterActive,
     dateFrom,
     dateUntil,
