@@ -99,7 +99,24 @@ function onSubmit() {
 }
 
 onBeforeMount(() => {
-  refuelFilterStore.readFilter()
+  if (refuelFilterStore.filterActive == false) {
+    refuelFilterStore.filterName =
+      date.formatDate(refuelFilterStore.dateFrom, 'YYYY/MM/DD') +
+      ' - ' +
+      date.formatDate(refuelFilterStore.dateUntil, 'YYYY/MM/DD')
+    let d = new Date()
+    d.setHours(0)
+    d.setMinutes(0)
+    d.setSeconds(0)
+    d.setMilliseconds(0)
+    refuelFilterStore.dateFrom = d
+    d = new Date()
+    d.setHours(23)
+    d.setMinutes(59)
+    d.setSeconds(59)
+    d.setMilliseconds(999)
+    refuelFilterStore.dateUntil = d
+  }
 })
 
 onMounted(() => {
