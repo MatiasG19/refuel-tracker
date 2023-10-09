@@ -81,7 +81,7 @@
 
 <script setup lang="ts">
 import RefuelCard from 'src/pages/refuels/components/RefuelCard.vue'
-import { computed, ref, onUnmounted, onBeforeMount, watch } from 'vue'
+import { computed, ref, onUnmounted, onBeforeMount } from 'vue'
 import { useRouter } from 'vue-router'
 import { emitter } from 'src/boot/mitt'
 import { optionsDialog } from 'src/components/dialogs/optionsDialog'
