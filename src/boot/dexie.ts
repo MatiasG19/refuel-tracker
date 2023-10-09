@@ -18,17 +18,22 @@ export class RefuelTrackerDexie extends Dexie {
       vehicles: '++id, name, plateNumber, fuelUnitId',
       refuels:
         '++id, date, refuelAmount, payedAmount, distanceDriven, vehicleId',
-      refuelFilters: '++id, name, active, dateFrom, dateUntil',
       settings:
         '++id, colorThemeId, distanceUnitId, vehicleId, plateNumberInTitleActive, autoBackupActive, autoBackupPath, refuelFilterActive, lastUpdateCheck'
     })
+    this.version(2)
+      .stores({
+        refuelFilters: '++id, name, active, dateFrom, dateUntil'
+      })
+      .upgrade(trans => {
+        this.insertRefuelFilter()
+      })
 
     // Only called on very first database creation
     this.on('populate', () => {
       this.insertGraphSettings()
       this.insertDemoData()
       this.insertSettings()
-      this.insertRefuelFilter()
     })
   }
 
