@@ -12,10 +12,10 @@
   resolved "https://registry.yarnpkg.com/@babel/parser/-/parser-7.22.11.tgz#becf8ee33aad2a35ed5607f521fe6e72a615f905"
   integrity sha512-R5zb8eJIBPJriQtbH/htEQy4k7E2dHWlD2Y2VT07JCzwYZHBxV5ZYtM0UhXSNMT74LyxuM+b1jdL7pSesXbC/g==
 
-"@capacitor/core@^5.4.1":
-  version "5.4.1"
-  resolved "https://registry.yarnpkg.com/@capacitor/core/-/core-5.4.1.tgz#5c90f5df3d60e752c5de137de5653751fefe1752"
-  integrity sha512-QG9gORuxw2WNcVpLHT1W3LzACOJvFWRuHcz4b9edzxehSELqiSQ4DoGWLp4PuNBBp2oV/fGA4FMNmfZ1jIAAWg==
+"@capacitor/core@^5.4.2":
+  version "5.4.2"
+  resolved "https://registry.yarnpkg.com/@capacitor/core/-/core-5.4.2.tgz#c7303f6b0b080e5f585b79399f246701c4c8ea84"
+  integrity sha512-XbR1vldJFzBWHeoGPpgfNy3Zhjf0NxXdHEaGNANWVBg0ZWG2gwFr1dcRALUUQtbwrEEkCCNiLYg4YiQPRk7SEQ==
   dependencies:
     tslib "^2.1.0"
 
