@@ -25,7 +25,7 @@ export class RefuelTrackerDexie extends Dexie {
       .stores({
         refuelFilters: '++id, name, active, dateFrom, dateUntil'
       })
-      .upgrade(trans => {
+      .upgrade(() => {
         this.insertRefuelFilter()
       })
 
