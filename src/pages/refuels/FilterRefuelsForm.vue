@@ -57,7 +57,7 @@
 </template>
 
 <script setup lang="ts">
-import { ref, onMounted } from 'vue'
+import { ref, onMounted, computed, onBeforeMount } from 'vue'
 import { date } from 'quasar'
 import { useRouter } from 'vue-router'
 import { emitter } from 'src/boot/mitt'
@@ -68,33 +68,39 @@ import CInput from 'src/components/inputs/CInput.vue'
 const router = useRouter()
 const refuelFilterStore = useRefuelFilterStore()
 
-const filterDateFrom = ref<string>(
-  date.formatDate(refuelFilterStore.dateFrom, 'YYYY/MM/DD')
-)
-const filterDateUntil = ref<string>(
-  date.formatDate(refuelFilterStore.dateUntil, 'YYYY/MM/DD')
-)
+const filterDateFrom = computed(() => {
+  return date.formatDate(refuelFilterStore.dateFrom, 'YYYY/MM/DD')
+})
+const filterDateUntil = computed(() => {
+  return date.formatDate(refuelFilterStore.dateUntil, 'YYYY/MM/DD')
+})
 
 function updateDateFrom(event: string) {
-  refuelFilterStore.dateFrom = new Date(event)
-  filterDateFrom.value = date.formatDate(
-    refuelFilterStore.dateFrom,
-    'YYYY/MM/DD'
-  )
+  let d = new Date(event)
+  d.setHours(0)
+  d.setMinutes(0)
+  d.setSeconds(0)
+  d.setMilliseconds(0)
+  d = d
 }
 
 function updateDateUntil(event: string) {
-  refuelFilterStore.dateUntil = new Date(event)
-  filterDateUntil.value = date.formatDate(
-    refuelFilterStore.dateUntil,
-    'YYYY/MM/DD'
-  )
+  let d = new Date(event)
+  d.setHours(23)
+  d.setMinutes(59)
+  d.setSeconds(59)
+  d.setMilliseconds(999)
+  refuelFilterStore.dateUntil = d
 }
 
 function onSubmit() {
   refuelFilterStore.setFilter()
   void router.push('/refuels')
 }
+
+onBeforeMount(() => {
+  refuelFilterStore.readFilter()
+})
 
 onMounted(() => {
   emitter.emit('updateTitle', 'Filter refuels')

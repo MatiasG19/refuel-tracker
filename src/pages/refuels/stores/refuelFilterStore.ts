@@ -31,12 +31,23 @@ export const useRefuelFilterStore = defineStore('refuelFilterStore', () => {
     })()
   }
 
+  function readFilter() {
+    ;(async () => {
+      const refuelFilters = await db.refuelFilters.toArray()
+      filterName.value = refuelFilters[0].name
+      filterActive.value = refuelFilters[0].active
+      dateFrom.value = refuelFilters[0].dateFrom
+      dateUntil.value = refuelFilters[0].dateUntil
+    })()
+  }
+
   return {
     filterName,
     filterActive,
     dateFrom,
     dateUntil,
     setFilter,
-    removeFilter
+    removeFilter,
+    readFilter
   }
 })
