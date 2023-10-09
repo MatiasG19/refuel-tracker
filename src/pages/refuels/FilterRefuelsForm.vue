@@ -81,7 +81,7 @@ function updateDateFrom(event: string) {
   d.setMinutes(0)
   d.setSeconds(0)
   d.setMilliseconds(0)
-  d = d
+  refuelFilterStore.dateFrom = d
 }
 
 function updateDateUntil(event: string) {
