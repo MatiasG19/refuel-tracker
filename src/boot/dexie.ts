@@ -31,6 +31,7 @@ export class RefuelTrackerDexie extends Dexie {
           .table('settings')
           .toCollection()
           .modify(setting => {
+            // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access
             delete setting.refuelFilterActive
           })
       })
@@ -105,7 +106,6 @@ export class RefuelTrackerDexie extends Dexie {
     settings.plateNumberInTitleActive = false
     settings.autoBackupActive = false
     settings.autoBackupPath = ''
-    settings.refuelFilterActive = false
     const date = new Date()
     settings.lastUpdateCheck = new Date(date.setDate(date.getDate() - 365))
     ;(async () => await this.settings.put(settings))()
