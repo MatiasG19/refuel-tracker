@@ -7,14 +7,7 @@ export const useSettingsStore = defineStore('featureTourStore', () => {
 
   function skipTour() {}
 
-  function toggleIntroSlides(state: boolean) {
-    ;(async () => {
-      const settings = await db.settings.toArray()
-      settings[0].introTour = state
-      await db.settings.put(settings[0])
-      introTour.value = state
-    })()
-  }
+  function toggleIntroSlides(state: boolean) {}
 
   return {
     skipTour,
