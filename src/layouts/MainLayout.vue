@@ -1,107 +1,112 @@
 <template>
   <q-layout view="lHh Lpr lFf" class="bg-space-station">
-    <q-header>
-      <q-toolbar class="bg-space-station">
-        <q-btn
-          flat
-          dense
-          round
-          icon="menu"
-          aria-label="Menu"
-          @click="toggleLeftDrawer"
-        />
+    <feature-tour v-if="introTourActive"></feature-tour>
 
-        <q-toolbar-title>
-          {{ title }}
-        </q-toolbar-title>
-
-        <q-btn
-          v-if="
-            routePath == '/refuels' || routePath.match('\/refuels\/[-0-9]+')
-          "
-          :to="'/refuels/filter'"
-          icon="filter_list"
-          round
-          flat
-          dense
-        />
-      </q-toolbar>
-    </q-header>
-
-    <q-drawer
-      v-model="leftDrawerOpen"
-      show-if-above
-      bordered
-      class="space-station"
-    >
-      <q-list>
-        <q-item-label header class="space-station">
-          Refuel Tracker
-        </q-item-label>
-
-        <EssentialLink
-          v-for="link in linkList"
-          :key="link.title"
-          v-bind="link"
-          class="space-station"
-        />
-      </q-list>
-    </q-drawer>
-
-    <q-page-container>
-      <router-view v-slot="{ Component }">
-        <transition name="fadein">
-          <component :is="Component" :key="$route.path" />
-        </transition>
-      </router-view>
-    </q-page-container>
-
-    <q-footer v-if="footerVisible" class="bg-space-station">
-      <q-toolbar class="q-gutter-xs text-center">
-        <div class="col">
-          <q-btn round flat dense icon="bar_chart" class="col" :to="'/'" />
-        </div>
-        <div class="col">
+    <template v-else>
+      <q-header>
+        <q-toolbar class="bg-space-station">
           <q-btn
-            round
             flat
             dense
-            icon="add"
-            class="col"
-            @click="add()"
-            :disable="
-              !settingsStore.selectedVehicleId &&
-              !routePath.includes('/vehicles')
+            round
+            icon="menu"
+            aria-label="Menu"
+            @click="toggleLeftDrawer"
+          />
+
+          <q-toolbar-title>
+            {{ title }}
+          </q-toolbar-title>
+
+          <q-btn
+            v-if="
+              routePath == '/refuels' || routePath.match('\/refuels\/[-0-9]+')
             "
-          />
-        </div>
-        <div class="col">
-          <q-btn
+            :to="'/refuels/filter'"
+            icon="filter_list"
             round
             flat
             dense
-            icon="drive_eta"
-            class="col"
-            :to="'/vehicles'"
           />
-        </div>
-        <div class="col">
-          <q-btn
-            round
-            flat
-            dense
-            icon="local_gas_station"
-            class="col"
-            :to="'/refuels'"
+        </q-toolbar>
+      </q-header>
+
+      <q-drawer
+        v-model="leftDrawerOpen"
+        show-if-above
+        bordered
+        class="space-station"
+      >
+        <q-list>
+          <q-item-label header class="space-station">
+            Refuel Tracker
+          </q-item-label>
+
+          <EssentialLink
+            v-for="link in linkList"
+            :key="link.title"
+            v-bind="link"
+            class="space-station"
           />
-        </div>
-      </q-toolbar>
-    </q-footer>
+        </q-list>
+      </q-drawer>
+
+      <q-page-container>
+        <router-view v-slot="{ Component }">
+          <transition name="fadein">
+            <component :is="Component" :key="$route.path" />
+          </transition>
+        </router-view>
+      </q-page-container>
+
+      <q-footer v-if="footerVisible" class="bg-space-station">
+        <q-toolbar class="q-gutter-xs text-center">
+          <div class="col">
+            <q-btn round flat dense icon="bar_chart" class="col" :to="'/'" />
+          </div>
+          <div class="col">
+            <q-btn
+              round
+              flat
+              dense
+              icon="add"
+              class="col"
+              @click="add()"
+              :disable="
+                !settingsStore.selectedVehicleId &&
+                !routePath.includes('/vehicles')
+              "
+            />
+          </div>
+          <div class="col">
+            <q-btn
+              round
+              flat
+              dense
+              icon="drive_eta"
+              class="col"
+              :to="'/vehicles'"
+            />
+          </div>
+          <div class="col">
+            <q-btn
+              round
+              flat
+              dense
+              icon="local_gas_station"
+              class="col"
+              :to="'/refuels'"
+            />
+          </div>
+        </q-toolbar>
+      </q-footer>
+    </template>
   </q-layout>
 </template>
 
 <script setup lang="ts">
 import EssentialLink from 'components/EssentialLink.vue'
+import FeatureTour from 'src/components/FeatureTour.vue'
 import { ref, computed, onMounted, onUnmounted } from 'vue'
 import { useRouter } from 'vue-router'
 import { emitter } from 'src/boot/mitt'
@@ -141,6 +146,9 @@ const linkList = [
     link: '/support'
   }
 ]
+const introTourActive = computed(() => {
+  return settingsStore.introTour
+})
 
 const router = useRouter()
 const settingsStore = useSettingsStore()
@@ -150,6 +158,8 @@ emitter.on('updateTitle', e => (title.value = e))
 
 const leftDrawerOpen = ref(false)
 const title = ref('')
+const introTour = ref(settingsStore.introTour)
+const slide = ref('first')
 
 function addKeyboardListeners() {
   if (Platform.is.mobile) {
