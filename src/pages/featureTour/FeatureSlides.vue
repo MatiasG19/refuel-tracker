@@ -1,14 +1,25 @@
 <template>
-  <q-carousel animated v-model="slide">
+  <q-carousel arrows animated v-model="slide" height="100vh">
     <q-carousel-slide
       name="first"
       img-src="https://cdn.quasar.dev/img/mountains.jpg"
     >
       <div class="absolute-bottom custom-caption">
-        <div class="text-h2">First stop</div>
-        <div class="text-subtitle1">Mountains</div>
-        <q-btn @click="() => (slide = 'second')">Take tour</q-btn>
-        <q-btn @click="skipTour">Skip tour</q-btn>
+        <q-btn
+          dense
+          flat
+          size="sm"
+          class="btn q-ma-xs"
+          color="negative"
+          @click="skipTour"
+          >Skip tour</q-btn
+        >
+        <q-btn
+          class="btn q-ma-xs"
+          color="positive"
+          @click="() => (slide = 'second')"
+          >Take tour</q-btn
+        >
       </div>
     </q-carousel-slide>
     <q-carousel-slide
@@ -16,9 +27,12 @@
       img-src="https://cdn.quasar.dev/img/parallax1.jpg"
     >
       <div class="absolute-bottom custom-caption">
-        <div class="text-h2">Second stop</div>
-        <div class="text-subtitle1">Famous City</div>
-        <q-btn @click="() => (slide = 'third')">Next</q-btn>
+        <q-btn
+          class="btn q-ma-xs"
+          color="positive"
+          @click="() => (slide = 'third')"
+          >Next</q-btn
+        >
       </div>
     </q-carousel-slide>
     <q-carousel-slide
@@ -26,9 +40,9 @@
       img-src="https://cdn.quasar.dev/img/parallax2.jpg"
     >
       <div class="absolute-bottom custom-caption">
-        <div class="text-h2">Third stop</div>
-        <div class="text-subtitle1">Famous Bridge</div>
-        <q-btn @click="leaveSlides">Start tracking!</q-btn>
+        <q-btn class="btn q-ma-xs" color="positive" @click="leaveSlides"
+          >Start tracking!</q-btn
+        >
       </div>
     </q-carousel-slide>
   </q-carousel>
@@ -50,3 +64,9 @@ function skipTour() {
   featureTourStore.skipEntireTour()
 }
 </script>
+
+<style scoped>
+.btn {
+  width: 99%;
+}
+</style>
