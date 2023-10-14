@@ -44,9 +44,9 @@ export class RefuelTrackerDexie extends Dexie {
         return tx
           .table('settings')
           .toCollection()
-          .modify(settings => {
+          .modify(setting => {
             // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access
-            settings.introTour = true
+            setting.introTour = true
           })
       })
 
