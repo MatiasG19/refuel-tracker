@@ -105,6 +105,7 @@ onBeforeMount(() => {
       ' - ' +
       date.formatDate(refuelFilterStore.dateUntil, 'YYYY/MM/DD')
     let d = new Date()
+    d.setDate(d.getDate() - 30) // Start 30 days in the past
     d.setHours(0)
     d.setMinutes(0)
     d.setSeconds(0)
