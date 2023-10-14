@@ -1,9 +1,15 @@
 <template>
-  <q-carousel arrows animated v-model="slide" height="100vh">
-    <q-carousel-slide
-      name="first"
-      img-src="https://cdn.quasar.dev/img/mountains.jpg"
-    >
+  <q-carousel
+    arrows
+    animated
+    v-model="slide"
+    height="100vh"
+    class="bg-space-station"
+  >
+    <q-carousel-slide name="first" img-src="img:direction_car.svg">
+      <div class="absolute-center items-center">
+        <q-icon class="col" name="img:bar_chart.svg" size="100px" />
+      </div>
       <div class="absolute-bottom custom-caption">
         <q-btn
           dense
@@ -14,6 +20,7 @@
           @click="skipTour"
           >Skip tour</q-btn
         >
+
         <q-btn
           class="btn q-ma-xs"
           color="positive"
@@ -22,10 +29,10 @@
         >
       </div>
     </q-carousel-slide>
-    <q-carousel-slide
-      name="second"
-      img-src="https://cdn.quasar.dev/img/parallax1.jpg"
-    >
+    <q-carousel-slide name="second">
+      <div class="absolute-center items-center">
+        <q-icon class="col" name="img:directions_car.svg" size="100px" />
+      </div>
       <div class="absolute-bottom custom-caption">
         <q-btn
           class="btn q-ma-xs"
@@ -35,10 +42,10 @@
         >
       </div>
     </q-carousel-slide>
-    <q-carousel-slide
-      name="third"
-      img-src="https://cdn.quasar.dev/img/parallax2.jpg"
-    >
+    <q-carousel-slide name="third">
+      <div class="absolute-center items-center">
+        <q-icon class="col" name="img:local_gas_station.svg" size="100px" />
+      </div>
       <div class="absolute-bottom custom-caption">
         <q-btn class="btn q-ma-xs" color="positive" @click="leaveSlides"
           >Start tracking!</q-btn
