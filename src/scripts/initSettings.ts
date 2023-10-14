@@ -18,5 +18,6 @@ export function initSettings() {
       settingsStore.changeSelectedVehicle(vehicles[0])
     }
     settingsStore.togglePlateNumberInTitle(settings[0].plateNumberInTitleActive)
+    settingsStore.toggleIntroTour(settings[0].introTour)
   })()
 }
