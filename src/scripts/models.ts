@@ -7,6 +7,7 @@ export class Settings {
   autoBackupActive!: boolean
   autoBackupPath!: string
   lastUpdateCheck!: Date
+  introTour!: boolean
 }
 
 export class SelectOption {

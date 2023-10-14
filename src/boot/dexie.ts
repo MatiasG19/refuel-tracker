@@ -35,6 +35,19 @@ export class RefuelTrackerDexie extends Dexie {
             delete setting.refuelFilterActive
           })
       })
+    this.version(3)
+      .stores({
+        settings:
+          '++id, colorThemeId, distanceUnitId, vehicleId, plateNumberInTitleActive, autoBackupActive, autoBackupPath, lastUpdateCheck, introTour'
+      })
+      .upgrade(tx => {
+        return tx
+          .table('settings')
+          .toCollection()
+          .modify((settings: Settings) => {
+            settings.introTour = true
+          })
+      })
 
     // Only called on very first database creation
     this.on('populate', () => {
@@ -108,6 +121,7 @@ export class RefuelTrackerDexie extends Dexie {
     settings.autoBackupPath = ''
     const date = new Date()
     settings.lastUpdateCheck = new Date(date.setDate(date.getDate() - 365))
+    // settings.introTour = true
     ;(async () => await this.settings.put(settings))()
   }
 
