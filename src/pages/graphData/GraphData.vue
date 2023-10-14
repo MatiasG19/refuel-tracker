@@ -69,7 +69,6 @@ import packageJson from '../../../package.json'
 import { useRefuelStore } from 'src/stores/refuelStore'
 import { useSettingsStore } from 'src/stores/settingsStore'
 import { useGraphDataStore } from './stores/graphDataStore'
-import { initSettings } from 'src/scripts/initSettings'
 import { GraphData, Period } from 'src/pages/graphData/scripts/models'
 import {
   OptionInDialog,
@@ -144,7 +143,6 @@ watchEffect(() => {
 })
 
 onBeforeMount(async () => {
-  initSettings()
   periods.value = await refuelStore.getPeriods()
 })
 
