@@ -50,7 +50,6 @@ export class RefuelTrackerDexie extends Dexie {
       this.insertGraphSettings()
       this.insertDemoData()
       this.insertSettings()
-      this.insertRefuelFilter()
     })
   }
 
