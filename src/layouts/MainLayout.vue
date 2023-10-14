@@ -106,7 +106,7 @@
 
 <script setup lang="ts">
 import EssentialLink from 'components/EssentialLink.vue'
-import FeatureTour from 'src/components/FeatureTour.vue'
+import FeatureTour from 'src/pages/featureTour/FeatureTour.vue'
 import { ref, computed, onMounted, onUnmounted } from 'vue'
 import { useRouter } from 'vue-router'
 import { emitter } from 'src/boot/mitt'
