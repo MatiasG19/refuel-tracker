@@ -16,7 +16,9 @@
         </q-toolbar-title>
 
         <q-btn
-          v-if="routePath == '/refuels'"
+          v-if="
+            routePath == '/refuels' || routePath.match('\/refuels\/[-0-9]+')
+          "
           :to="'/refuels/filter'"
           icon="filter_list"
           round

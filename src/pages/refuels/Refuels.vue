@@ -1,19 +1,11 @@
 <template>
   <q-page>
-    <div v-if="vehiclesExists && filterActive" class="q-pt-md text-center">
-      <q-btn
-        class="q-pa-xs"
-        style="color: pink"
-        flat
-        no-caps
-        label=" "
-        @click="removeFilter"
-        icon-right="delete_outline"
-        >{{ filterHint }}</q-btn
-      >
-    </div>
     <div
-      v-if="vehiclesExists && refuels.length === 0"
+      v-if="
+        vehiclesExists &&
+        refuels.length === 0 &&
+        !refuelFilterStore.filterActive
+      "
       class="absolute-center items-center"
     >
       <div class="row">
@@ -46,6 +38,22 @@
     <template v-else>
       <div class="q-px-md q-pb-xs q-gutter-md">
         <q-badge align="top">{{ vehicleName }}</q-badge>
+      </div>
+
+      <div
+        v-if="vehiclesExists && refuelFilterStore.filterActive"
+        class="q-pt-md text-center"
+      >
+        <q-btn
+          class="q-pa-xs"
+          style="color: pink"
+          flat
+          no-caps
+          label=" "
+          @click="removeFilter"
+          icon-right="delete_outline"
+          >{{ refuelFilterStore.filterName }}</q-btn
+        >
       </div>
 
       <q-virtual-scroll
@@ -83,14 +91,14 @@ import { useRefuelStore } from 'src/stores/refuelStore'
 import { Refuel, Vehicle } from 'src/scripts/libraries/refuel/models'
 import { vehicleFuelConsumption } from 'src/scripts/libraries/refuel/functions/vehicle'
 import { QVirtualScroll } from 'quasar'
+import { useRefuelFilterStore } from './stores/refuelFilterStore'
 
 const router = useRouter()
 const refuelStore = useRefuelStore()
 const settingsStore = useSettingsStore()
+const refuelFilterStore = useRefuelFilterStore()
 
 const vehicle = ref<Vehicle>(new Vehicle())
-const filterActive = ref(settingsStore.refuelFilterActive)
-const filterHint = 'Filter 1 Month from 2021.12.19'
 const vehiclesExists = settingsStore.selectedVehicleId
 const vehicleName = ref<string>('')
 const loading = ref(true)
@@ -104,9 +112,21 @@ const props = defineProps({
 })
 
 let refuels = computed(() => {
-  return [...refuelStore.refuels].sort(
-    (a, b) => b.date.getTime() - a.date.getTime()
-  )
+  let items = []
+  if (refuelFilterStore.filterActive)
+    items = [...refuelStore.refuels]
+      .filter(
+        r =>
+          r.date.getTime() >= refuelFilterStore.dateFrom.getTime() &&
+          r.date.getTime() <= refuelFilterStore.dateUntil.getTime()
+      )
+      .sort((a, b) => b.date.getTime() - a.date.getTime())
+  else
+    items = [...refuelStore.refuels].sort(
+      (a, b) => b.date.getTime() - a.date.getTime()
+    )
+
+  return items
 })
 
 function getRefuels(from: number, size: number): ReadonlyArray<Refuel> {
@@ -114,12 +134,11 @@ function getRefuels(from: number, size: number): ReadonlyArray<Refuel> {
   for (let i = 0; i < size; i++) {
     items.push(refuels.value[from + i])
   }
-  return Object.freeze(items)
+  return items
 }
 
 function removeFilter() {
-  settingsStore.toggleRefuelFilter(false)
-  filterActive.value = false
+  refuelFilterStore.removeFilter()
 }
 
 emitter.on('showRefuelOptionsDialog', id =>

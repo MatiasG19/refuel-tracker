@@ -2,11 +2,13 @@ import { Dexie, Table } from 'dexie'
 import { Settings } from '../scripts/models'
 import { Vehicle, Refuel } from 'src/scripts/libraries/refuel/models'
 import { GraphSettings } from 'src/pages/graphData/scripts/models'
+import { RefuelFilter } from 'src/pages/refuels/models'
 
 export class RefuelTrackerDexie extends Dexie {
   graphSettings!: Table<GraphSettings>
   vehicles!: Table<Vehicle>
   refuels!: Table<Refuel>
+  refuelFilters!: Table<RefuelFilter>
   settings!: Table<Settings>
 
   constructor() {
@@ -17,14 +19,29 @@ export class RefuelTrackerDexie extends Dexie {
       refuels:
         '++id, date, refuelAmount, payedAmount, distanceDriven, vehicleId',
       settings:
-        '++id, colorThemeId, distanceUnitId, vehicleId, plateNumberInTitleActive, autoBackupActive, autoBackupPath, refuelFilterActive, lastUpdateCheck'
+        '++id, colorThemeId, distanceUnitId, vehicleId, plateNumberInTitleActive, autoBackupActive, autoBackupPath, lastUpdateCheck'
     })
+    this.version(2)
+      .stores({
+        refuelFilters: '++id, name, active, dateFrom, dateUntil'
+      })
+      .upgrade(tx => {
+        this.insertRefuelFilter()
+        return tx
+          .table('settings')
+          .toCollection()
+          .modify(setting => {
+            // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access
+            delete setting.refuelFilterActive
+          })
+      })
 
     // Only called on very first database creation
     this.on('populate', () => {
       this.insertGraphSettings()
       this.insertDemoData()
       this.insertSettings()
+      this.insertRefuelFilter()
     })
   }
 
@@ -89,10 +106,18 @@ export class RefuelTrackerDexie extends Dexie {
     settings.plateNumberInTitleActive = false
     settings.autoBackupActive = false
     settings.autoBackupPath = ''
-    settings.refuelFilterActive = false
     const date = new Date()
     settings.lastUpdateCheck = new Date(date.setDate(date.getDate() - 365))
     ;(async () => await this.settings.put(settings))()
+  }
+
+  insertRefuelFilter() {
+    const refuelFilter = new RefuelFilter()
+    refuelFilter.name = ''
+    refuelFilter.active = false
+    refuelFilter.dateFrom = new Date()
+    refuelFilter.dateUntil = new Date()
+    ;(async () => await this.refuelFilters.put(refuelFilter))()
   }
 }
 

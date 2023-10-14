@@ -78,7 +78,7 @@
           color="negative"
           label="Cancel"
           no-caps
-          class="btn"
+          class="form-btn"
           @click="onCancel"
         />
         <q-space />
@@ -87,7 +87,7 @@
           label="Confirm"
           type="submit"
           no-caps
-          class="btn"
+          class="form-btn"
         />
       </div>
     </q-form>
@@ -206,9 +206,3 @@ onMounted(async () => {
   }
 })
 </script>
-
-<style scoped>
-.btn {
-  width: 40%;
-}
-</style>

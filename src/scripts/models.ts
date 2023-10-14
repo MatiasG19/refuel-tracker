@@ -6,7 +6,6 @@ export class Settings {
   plateNumberInTitleActive!: boolean
   autoBackupActive!: boolean
   autoBackupPath!: string
-  refuelFilterActive!: boolean
   lastUpdateCheck!: Date
 }
 
