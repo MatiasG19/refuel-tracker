@@ -1,6 +1,6 @@
 <template>
   <q-layout view="lHh Lpr lFf" class="bg-space-station">
-    <feature-slides v-if="introTourActive"></feature-slides>
+    <feature-slides v-if="introSlidesActive"></feature-slides>
 
     <template v-else>
       <q-header>
@@ -106,7 +106,7 @@
 
 <script setup lang="ts">
 import EssentialLink from 'components/EssentialLink.vue'
-import FeatureSlides from 'src/pages/featureTour/IntroSlides.vue'
+import FeatureSlides from 'src/pages/featureTour/FeatureSlides.vue'
 import { ref, computed, onMounted, onUnmounted } from 'vue'
 import { useRouter } from 'vue-router'
 import { emitter } from 'src/boot/mitt'
