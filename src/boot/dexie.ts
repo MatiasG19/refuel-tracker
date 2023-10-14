@@ -3,6 +3,7 @@ import { Settings } from '../scripts/models'
 import { Vehicle, Refuel } from 'src/scripts/libraries/refuel/models'
 import { GraphSettings } from 'src/pages/graphData/scripts/models'
 import { RefuelFilter } from 'src/pages/refuels/models'
+import { FeatureTour } from 'src/pages/featureTour/models'
 
 export class RefuelTrackerDexie extends Dexie {
   graphSettings!: Table<GraphSettings>
@@ -10,6 +11,7 @@ export class RefuelTrackerDexie extends Dexie {
   refuels!: Table<Refuel>
   refuelFilters!: Table<RefuelFilter>
   settings!: Table<Settings>
+  featureTours!: Table<FeatureTour>
 
   constructor() {
     super('RefuelTrackerDb')
@@ -35,10 +37,13 @@ export class RefuelTrackerDexie extends Dexie {
             delete setting.refuelFilterActive
           })
       })
-    this.version(3).stores({
-      settings:
-        '++id, colorThemeId, distanceUnitId, vehicleId, plateNumberInTitleActive, autoBackupActive, autoBackupPath, lastUpdateCheck, introTour'
-    })
+    this.version(3)
+      .stores({
+        featureTours: 'id, active'
+      })
+      .upgrade(() => {
+        this.insertFeatureTours()
+      })
 
     // Only called on very first database creation
     this.on('populate', () => {
@@ -123,6 +128,36 @@ export class RefuelTrackerDexie extends Dexie {
     refuelFilter.dateFrom = new Date()
     refuelFilter.dateUntil = new Date()
     ;(async () => await this.refuelFilters.put(refuelFilter))()
+  }
+
+  insertFeatureTours() {
+    const tours = []
+    // Intro slides
+    let featureTour = new FeatureTour()
+    featureTour.id = 1
+    featureTour.active = true
+    tours.push(featureTour)
+    // Move graph cards
+    featureTour = new FeatureTour()
+    featureTour.id = 2
+    featureTour.active = true
+    tours.push(featureTour)
+    // Navigation footer
+    featureTour = new FeatureTour()
+    featureTour.id = 3
+    featureTour.active = true
+    tours.push(featureTour)
+    // Side bar
+    featureTour = new FeatureTour()
+    featureTour.id = 4
+    featureTour.active = true
+    tours.push(featureTour)
+    // Refuel filter
+    featureTour = new FeatureTour()
+    featureTour.id = 5
+    featureTour.active = true
+    tours.push(featureTour)
+    ;(async () => await this.featureTours.bulkPut(tours))()
   }
 }
 

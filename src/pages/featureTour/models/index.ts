@@ -1,5 +1,4 @@
 export class FeatureTour {
-  id?: number
+  id!: number
   active!: boolean
-  description!: string
 }
