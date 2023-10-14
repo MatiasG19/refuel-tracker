@@ -14,7 +14,7 @@
         <q-separator spaced />
       </template>
 
-      <q-item-label header>Settings</q-item-label>
+      <q-item-label header>Options</q-item-label>
       <q-list class="q-pb-md">
         <q-item tag="label">
           <q-item-section>
@@ -25,6 +25,20 @@
               v-model="plateNumberInTitle"
               @update:model-value="togglePlateNumberInTitle"
               color="positive"
+            />
+          </q-item-section>
+        </q-item>
+        <q-item tag="label">
+          <q-item-section>
+            <q-item-label>Start feature tour</q-item-label>
+          </q-item-section>
+          <q-item-section avatar>
+            <q-btn
+              label="Tour"
+              color="positive"
+              class="btn"
+              no-caps
+              @click="takeTour"
             />
           </q-item-section>
         </q-item>
@@ -53,7 +67,9 @@
             <q-item-section avatar>
               <q-btn
                 label="Change"
+                no-caps
                 color="positive"
+                class="btn"
                 :disable="!autoBackup"
                 @click="chooseAutoBackupFolder"
               />
@@ -65,7 +81,13 @@
             <q-item-label>Export</q-item-label>
           </q-item-section>
           <q-item-section avatar>
-            <q-btn label="Export" color="positive" @click="exportBackup" />
+            <q-btn
+              label="Export"
+              color="positive"
+              no-caps
+              class="btn"
+              @click="exportBackup"
+            />
           </q-item-section>
         </q-item>
 
@@ -74,7 +96,13 @@
             <q-item-label>Import</q-item-label>
           </q-item-section>
           <q-item-section avatar>
-            <q-btn label="Import" color="positive" @click="importBackup" />
+            <q-btn
+              label="Import"
+              color="positive"
+              class="btn"
+              no-caps
+              @click="importBackup"
+            />
           </q-item-section>
         </q-item>
       </q-list>
@@ -90,6 +118,8 @@ import { useSettingsStore } from 'src/stores/settingsStore'
 import { exportDB, importDB } from 'src/scripts/libraries/backup/backup'
 import { FilePicker } from 'src/plugins/capacitor-file-picker'
 import { Notify, Platform } from 'quasar'
+import { useFeatureStore } from './featureTour/stores/featureTourStore'
+import { useRouter } from 'vue-router'
 
 type GetContentResultAction = (result: { path: string }) => void
 let getContentResultAction: GetContentResultAction
@@ -97,7 +127,9 @@ let getContentResultAction: GetContentResultAction
 type OpenDocumentTreeResultAction = (result: { path: string }) => void
 let openDocumentTreeResultAction: OpenDocumentTreeResultAction
 
+const router = useRouter()
 const settingsStore = useSettingsStore()
+const featureTourStore = useFeatureStore()
 
 const colorThemeOptions = [
   {
@@ -121,20 +153,7 @@ const colorThemeOptions = [
     value: 5
   }
 ]
-
-// const distanceUnitOptions = [
-//   {
-//     label: 'km',
-//     value: 1
-//   },
-//   {
-//     label: 'miles',
-//     value: 2
-//   }
-// ]
-
 const colorTheme = ref(settingsStore.selectedColorThemeId)
-// const distanceUnit = ref(settingsStore.selectedDistanceUnitId)
 const plateNumberInTitle = ref(settingsStore.plateNumberInTitleActive)
 const autoBackup = ref(settingsStore.autoBackupActive)
 
@@ -142,12 +161,13 @@ function changeColorTheme(value: number) {
   settingsStore.changeColorTheme(value)
 }
 
-// function changeDistanceUnit(value: number) {
-//   settingsStore.changeDistanceUnit(value)
-// }
-
 function togglePlateNumberInTitle(value: boolean) {
   settingsStore.togglePlateNumberInTitle(value)
+}
+
+function takeTour() {
+  featureTourStore.startTour()
+  router.push('/')
 }
 
 async function toggleAutoBackup(value: boolean) {
@@ -208,3 +228,9 @@ onUnmounted(() => {
   }
 })
 </script>
+
+<style scoped>
+.btn {
+  width: 20vh;
+}
+</style>

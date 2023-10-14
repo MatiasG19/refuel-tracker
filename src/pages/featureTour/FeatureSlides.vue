@@ -14,6 +14,7 @@
         <q-btn
           dense
           flat
+          no-caps
           size="sm"
           class="btn q-ma-xs"
           color="negative"
@@ -24,6 +25,7 @@
         <q-btn
           class="btn q-ma-xs"
           color="positive"
+          no-caps
           @click="() => (slide = 'second')"
           >Take tour</q-btn
         >
@@ -37,6 +39,7 @@
         <q-btn
           class="btn q-ma-xs"
           color="positive"
+          no-caps
           @click="() => (slide = 'third')"
           >Next</q-btn
         >
@@ -47,7 +50,7 @@
         <q-icon class="col" name="img:local_gas_station.svg" size="100px" />
       </div>
       <div class="absolute-bottom custom-caption">
-        <q-btn class="btn q-ma-xs" color="positive" @click="leaveSlides"
+        <q-btn no-caps class="btn q-ma-xs" color="positive" @click="leaveSlides"
           >Start tracking!</q-btn
         >
       </div>

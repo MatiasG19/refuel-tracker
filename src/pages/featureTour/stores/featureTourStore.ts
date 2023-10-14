@@ -14,6 +14,15 @@ export const useFeatureStore = defineStore('featureTourStore', () => {
     })()
   }
 
+  function startTour() {
+    ;(async () => {
+      const featureTours = await db.featureTours.toArray()
+      featureTours.forEach(f => (f.active = true))
+      await db.featureTours.bulkPut(featureTours)
+      featureSlides.value = true
+    })()
+  }
+
   function finishFeatureSlides() {
     finishFeatureTour(1)
   }
@@ -48,6 +57,7 @@ export const useFeatureStore = defineStore('featureTourStore', () => {
 
   return {
     skipEntireTour,
+    startTour,
     finishFeatureSlides,
     finishMoveGraphCards,
     finishNavigationFooter,
