@@ -57,7 +57,7 @@
 </template>
 
 <script setup lang="ts">
-import { ref, onMounted, computed, onBeforeMount } from 'vue'
+import { onMounted, computed, onBeforeMount } from 'vue'
 import { date } from 'quasar'
 import { useRouter } from 'vue-router'
 import { emitter } from 'src/boot/mitt'
