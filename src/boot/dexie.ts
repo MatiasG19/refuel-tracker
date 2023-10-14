@@ -35,20 +35,10 @@ export class RefuelTrackerDexie extends Dexie {
             delete setting.refuelFilterActive
           })
       })
-    this.version(3)
-      .stores({
-        settings:
-          '++id, colorThemeId, distanceUnitId, vehicleId, plateNumberInTitleActive, autoBackupActive, autoBackupPath, lastUpdateCheck, introTour'
-      })
-      .upgrade(tx => {
-        return tx
-          .table('settings')
-          .toCollection()
-          .modify(setting => {
-            // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access
-            setting.introTour = true
-          })
-      })
+    this.version(3).stores({
+      settings:
+        '++id, colorThemeId, distanceUnitId, vehicleId, plateNumberInTitleActive, autoBackupActive, autoBackupPath, lastUpdateCheck, introTour'
+    })
 
     // Only called on very first database creation
     this.on('populate', () => {
