@@ -1,6 +1,6 @@
 <template>
   <q-layout view="lHh Lpr lFf" class="bg-space-station">
-    <feature-tour v-if="introTourActive"></feature-tour>
+    <feature-slides v-if="introTourActive"></feature-slides>
 
     <template v-else>
       <q-header>
@@ -106,7 +106,7 @@
 
 <script setup lang="ts">
 import EssentialLink from 'components/EssentialLink.vue'
-import FeatureTour from 'src/pages/featureTour/FeatureTour.vue'
+import FeatureSlides from 'src/pages/featureTour/IntroSlides.vue'
 import { ref, computed, onMounted, onUnmounted } from 'vue'
 import { useRouter } from 'vue-router'
 import { emitter } from 'src/boot/mitt'
@@ -146,9 +146,6 @@ const linkList = [
     link: '/support'
   }
 ]
-const introTourActive = computed(() => {
-  return settingsStore.introTour
-})
 
 const router = useRouter()
 const settingsStore = useSettingsStore()
@@ -158,8 +155,7 @@ emitter.on('updateTitle', e => (title.value = e))
 
 const leftDrawerOpen = ref(false)
 const title = ref('')
-const introTour = ref(settingsStore.introTour)
-const slide = ref('first')
+const introSlidesActive = ref(settingsStore.introTour)
 
 function addKeyboardListeners() {
   if (Platform.is.mobile) {
