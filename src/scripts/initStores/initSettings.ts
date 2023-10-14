@@ -1,5 +1,5 @@
 import { useSettingsStore } from 'src/stores/settingsStore'
-import { db } from '../boot/dexie'
+import { db } from '../../boot/dexie'
 
 export function initSettings() {
   const settingsStore = useSettingsStore()
@@ -18,6 +18,5 @@ export function initSettings() {
       settingsStore.changeSelectedVehicle(vehicles[0])
     }
     settingsStore.togglePlateNumberInTitle(settings[0].plateNumberInTitleActive)
-    settingsStore.toggleIntroTour(settings[0].introTour)
   })()
 }

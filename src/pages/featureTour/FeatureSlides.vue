@@ -36,18 +36,17 @@
 
 <script setup lang="ts">
 import { ref } from 'vue'
+import { useFeatureStore } from './stores/featureTourStore'
 
-import { useSettingsStore } from 'src/stores/settingsStore'
-
-const settingsStore = useSettingsStore()
+const featureTourStore = useFeatureStore()
 
 const slide = ref('first')
 
 function leaveSlides() {
-  settingsStore.toggleIntroTour(false)
+  featureTourStore.finishFeatureSlides()
 }
 
 function skipTour() {
-  settingsStore.toggleIntroTour(false)
+  featureTourStore.skipEntireTour()
 }
 </script>

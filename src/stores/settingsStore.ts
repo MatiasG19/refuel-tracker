@@ -13,7 +13,6 @@ export const useSettingsStore = defineStore('settingsStore', () => {
   const autoBackupActive = ref<boolean>(false)
   const autoBackupPath = ref<string>('')
   const selectedColorThemeId = ref<number>(1)
-  const introTour = ref<boolean>(false)
 
   function changeDistanceUnit(distanceUnitId: number) {
     ;(async () => {
@@ -80,15 +79,6 @@ export const useSettingsStore = defineStore('settingsStore', () => {
     })()
   }
 
-  function toggleIntroTour(state: boolean) {
-    ;(async () => {
-      const settings = await db.settings.toArray()
-      settings[0].introTour = state
-      await db.settings.put(settings[0])
-      introTour.value = state
-    })()
-  }
-
   return {
     selectedDistanceUnitId,
     selectedVehicleId,
@@ -98,13 +88,11 @@ export const useSettingsStore = defineStore('settingsStore', () => {
     autoBackupActive,
     autoBackupPath,
     selectedColorThemeId,
-    introTour,
     changeDistanceUnit,
     changeSelectedVehicle,
     togglePlateNumberInTitle,
     toggleAutoBackup,
     setAutoBackupPath,
-    changeColorTheme,
-    toggleIntroTour
+    changeColorTheme
   }
 })

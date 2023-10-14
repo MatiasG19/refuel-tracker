@@ -1,6 +1,6 @@
 <template>
   <q-layout view="lHh Lpr lFf" class="bg-space-station">
-    <feature-slides v-if="introSlidesActive"></feature-slides>
+    <feature-slides v-if="featureSlidesActive"></feature-slides>
 
     <template v-else>
       <q-header>
@@ -111,6 +111,7 @@ import { ref, computed, onMounted, onUnmounted } from 'vue'
 import { useRouter } from 'vue-router'
 import { emitter } from 'src/boot/mitt'
 import { useSettingsStore } from 'src/stores/settingsStore'
+import { useFeatureStore } from 'src/pages/featureTour/stores/featureTourStore'
 import { Keyboard } from '@capacitor/keyboard'
 import { Platform } from 'quasar'
 
@@ -149,13 +150,14 @@ const linkList = [
 
 const router = useRouter()
 const settingsStore = useSettingsStore()
+const featureTourStore = useFeatureStore()
 const routePath = computed(() => router.currentRoute.value.path)
 const footerVisible = ref(true)
 emitter.on('updateTitle', e => (title.value = e))
 
 const leftDrawerOpen = ref(false)
 const title = ref('')
-const introSlidesActive = ref(settingsStore.introTour)
+const featureSlidesActive = computed(() => featureTourStore.featureSlides)
 
 function addKeyboardListeners() {
   if (Platform.is.mobile) {
