@@ -117,7 +117,6 @@ export class RefuelTrackerDexie extends Dexie {
     settings.autoBackupPath = ''
     const date = new Date()
     settings.lastUpdateCheck = new Date(date.setDate(date.getDate() - 365))
-    // settings.introTour = true
     ;(async () => await this.settings.put(settings))()
   }
 
