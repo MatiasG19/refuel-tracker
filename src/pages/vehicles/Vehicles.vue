@@ -1,5 +1,6 @@
 <template>
   <q-page>
+    <feature-tour-vehicle-page></feature-tour-vehicle-page>
     <div v-if="vehicleData.length === 0" class="absolute-center items-center">
       <div class="row">
         <q-icon class="col" name="img:directions_car.svg" size="100px" />
@@ -37,6 +38,7 @@ import { useSettingsStore } from 'src/stores/settingsStore'
 import { useRefuelStore } from 'src/stores/refuelStore'
 import { Vehicle } from 'src/scripts/libraries/refuel/models'
 import { useQuasar } from 'quasar'
+import FeatureTourVehiclePage from '/src/components/featureTours/FeatureTourVehiclePage.vue'
 
 const router = useRouter()
 const refuelStore = useRefuelStore()

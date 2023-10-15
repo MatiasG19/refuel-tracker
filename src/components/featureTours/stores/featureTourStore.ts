@@ -7,6 +7,7 @@ export const useFeatureTourStore = defineStore('featureTourStore', () => {
   const graphDataPage = ref<boolean>(false)
   const graphDataPageSteps = ref<boolean[]>([false, false, false, false])
   const vehiclePage = ref<boolean>(false)
+  const vehiclePageSteps = ref<boolean[]>([false, false, false])
   const refuelPage = ref<boolean>(false)
 
   const overlayMainLayout = ref<boolean>(false)
@@ -77,6 +78,7 @@ export const useFeatureTourStore = defineStore('featureTourStore', () => {
     graphDataPage,
     graphDataPageSteps,
     vehiclePage,
+    vehiclePageSteps,
     refuelPage,
     overlayMainLayout
   }
