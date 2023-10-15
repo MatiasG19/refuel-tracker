@@ -1,7 +1,7 @@
 <template>
   <q-layout view="lHh Lpr lFf" class="bg-space-station">
     <main-layout-overlay></main-layout-overlay>
-    <feature-slides v-if="featureSlidesActive"></feature-slides>
+    <feature-slides v-if="featureTourStore.featureSlides"></feature-slides>
     <template v-else>
       <q-header>
         <q-toolbar class="bg-space-station">
@@ -151,13 +151,13 @@ const linkList = [
 
 const router = useRouter()
 const settingsStore = useSettingsStore()
+const featureTourStore = useFeatureTourStore()
 const routePath = computed(() => router.currentRoute.value.path)
 const footerVisible = ref(true)
 emitter.on('updateTitle', e => (title.value = e))
 
 const leftDrawerOpen = ref(false)
 const title = ref('')
-const featureSlidesActive = computed(() => featureTourStore.featureSlides)
 
 function addKeyboardListeners() {
   if (Platform.is.mobile) {
