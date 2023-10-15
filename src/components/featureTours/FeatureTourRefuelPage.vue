@@ -4,8 +4,8 @@
     class="fixed-center item0"
   >
     <div>
-      Here are all added refuel entries. Use the button in the top right corner
-      to
+      Here are all added refuel entries for the currently selected vehicle. Use
+      the button in the top right corner to
       <span class="text-positive">filter</span> refuels.
     </div>
     <q-btn no-caps size="sm" color="positive" @click="nextStep(1)">Next</q-btn>
