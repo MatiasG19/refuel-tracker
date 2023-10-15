@@ -61,6 +61,7 @@ onBeforeMount(() => {
   if (featureTourStore.graphDataPage) {
     featureTourStore.overlayMainLayout = true
     featureTourStore.graphDataPageSteps.forEach(s => {
+      // eslint-disable-next-line @typescript-eslint/no-unused-vars
       s = false
     })
     featureTourStore.graphDataPageSteps[0] = true

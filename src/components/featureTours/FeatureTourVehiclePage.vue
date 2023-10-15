@@ -55,6 +55,7 @@ onBeforeMount(() => {
   if (featureTourStore.vehiclePage) {
     featureTourStore.overlayMainLayout = true
     featureTourStore.vehiclePageSteps.forEach(s => {
+      // eslint-disable-next-line @typescript-eslint/no-unused-vars
       s = false
     })
     featureTourStore.vehiclePageSteps[0] = true
