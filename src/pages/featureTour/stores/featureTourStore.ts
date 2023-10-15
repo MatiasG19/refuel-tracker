@@ -4,6 +4,9 @@ import { ref } from 'vue'
 
 export const useFeatureStore = defineStore('featureTourStore', () => {
   const featureSlides = ref<boolean>(false)
+  const graphDataPage = ref<boolean>(false)
+  const vehiclePage = ref<boolean>(false)
+  const refuelPage = ref<boolean>(false)
 
   function skipEntireTour() {
     ;(async () => {
@@ -11,6 +14,9 @@ export const useFeatureStore = defineStore('featureTourStore', () => {
       featureTours.forEach(f => (f.active = false))
       await db.featureTours.bulkPut(featureTours)
       featureSlides.value = false
+      graphDataPage.value = false
+      vehiclePage.value = false
+      refuelPage.value = false
     })()
   }
 
@@ -20,27 +26,30 @@ export const useFeatureStore = defineStore('featureTourStore', () => {
       featureTours.forEach(f => (f.active = true))
       await db.featureTours.bulkPut(featureTours)
       featureSlides.value = true
+      graphDataPage.value = true
+      vehiclePage.value = true
+      refuelPage.value = true
     })()
   }
 
   function finishFeatureSlides() {
     finishFeatureTour(1)
+    featureSlides.value = false
   }
 
-  function finishMoveGraphCards() {
+  function finishGraphDataPage() {
     finishFeatureTour(2)
+    graphDataPage.value = false
   }
 
-  function finishNavigationFooter() {
+  function finishVehiclePage() {
     finishFeatureTour(3)
+    vehiclePage.value = false
   }
 
-  function finishSideBar() {
+  function finishRefuelPage() {
     finishFeatureTour(4)
-  }
-
-  function finishRefuelFilter() {
-    finishFeatureTour(5)
+    refuelPage.value = false
   }
 
   function finishFeatureTour(id: number) {
@@ -51,7 +60,6 @@ export const useFeatureStore = defineStore('featureTourStore', () => {
         .toArray()
       featureTours[0].active = false
       await db.featureTours.put(featureTours[0])
-      featureSlides.value = false
     })()
   }
 
@@ -59,10 +67,12 @@ export const useFeatureStore = defineStore('featureTourStore', () => {
     skipEntireTour,
     startTour,
     finishFeatureSlides,
-    finishMoveGraphCards,
-    finishNavigationFooter,
-    finishSideBar,
-    finishRefuelFilter,
-    featureSlides
+    finishGraphDataPage,
+    finishVehiclePage,
+    finishRefuelPage,
+    featureSlides,
+    graphDataPage,
+    vehiclePage,
+    refuelPage
   }
 })

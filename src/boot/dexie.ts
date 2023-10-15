@@ -137,24 +137,19 @@ export class RefuelTrackerDexie extends Dexie {
     featureTour.id = 1
     featureTour.active = true
     tours.push(featureTour)
-    // Move graph cards
+    // Graph data page
     featureTour = new FeatureTour()
     featureTour.id = 2
     featureTour.active = true
     tours.push(featureTour)
-    // Navigation footer
+    // Vehicle page
     featureTour = new FeatureTour()
     featureTour.id = 3
     featureTour.active = true
     tours.push(featureTour)
-    // Side bar
+    // Refuel page
     featureTour = new FeatureTour()
     featureTour.id = 4
-    featureTour.active = true
-    tours.push(featureTour)
-    // Refuel filter
-    featureTour = new FeatureTour()
-    featureTour.id = 5
     featureTour.active = true
     tours.push(featureTour)
     ;(async () => await this.featureTours.bulkPut(tours))()
