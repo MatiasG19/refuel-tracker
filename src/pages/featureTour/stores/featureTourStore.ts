@@ -5,6 +5,7 @@ import { ref } from 'vue'
 export const useFeatureStore = defineStore('featureTourStore', () => {
   const featureSlides = ref<boolean>(false)
   const graphDataPage = ref<boolean>(false)
+  const graphDataPageSteps = ref<boolean[]>([true, false, false, false])
   const vehiclePage = ref<boolean>(false)
   const refuelPage = ref<boolean>(false)
 
@@ -72,6 +73,7 @@ export const useFeatureStore = defineStore('featureTourStore', () => {
     finishRefuelPage,
     featureSlides,
     graphDataPage,
+    graphDataPageSteps,
     vehiclePage,
     refuelPage
   }

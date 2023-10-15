@@ -1,5 +1,6 @@
 <template>
   <q-page class="items-center">
+    <feature-tour-graph-data-page></feature-tour-graph-data-page>
     <div
       v-if="vehiclesExits && graphData.length === 0"
       class="absolute-center items-center"
@@ -76,6 +77,7 @@ import {
 } from 'src/components/dialogs/optionsDialog'
 import { useQuasar } from 'quasar'
 import { useRouter } from 'vue-router'
+import FeatureTourGraphDataPage from 'src/pages/featureTour/FeatureTourGraphDataPage.vue'
 
 const $q = useQuasar()
 $q.dark.set('auto')
