@@ -118,7 +118,7 @@ import { useSettingsStore } from 'src/stores/settingsStore'
 import { exportDB, importDB } from 'src/scripts/libraries/backup/backup'
 import { FilePicker } from 'src/plugins/capacitor-file-picker'
 import { Notify, Platform } from 'quasar'
-import { useFeatureStore } from './featureTour/stores/featureTourStore'
+import { useFeatureTourStore } from 'src/components/featureTours/stores/featureTourStore'
 import { useRouter } from 'vue-router'
 
 type GetContentResultAction = (result: { path: string }) => void
@@ -129,7 +129,7 @@ let openDocumentTreeResultAction: OpenDocumentTreeResultAction
 
 const router = useRouter()
 const settingsStore = useSettingsStore()
-const featureTourStore = useFeatureStore()
+const featureTourStore = useFeatureTourStore()
 
 const colorThemeOptions = [
   {
