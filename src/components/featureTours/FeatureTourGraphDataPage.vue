@@ -7,7 +7,7 @@
   >
     <div>
       This is the <span class="text-positive">main page</span>. <br />Here you
-      can see all data for your currently selected vehicle.
+      can see all data for the currently selected vehicle.
     </div>
     <q-btn no-caps size="sm" color="positive" @click="nextStep(1)">Next</q-btn>
   </div>
