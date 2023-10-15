@@ -2,12 +2,14 @@ import { defineStore } from 'pinia'
 import { db } from 'src/boot/dexie'
 import { ref } from 'vue'
 
-export const useFeatureStore = defineStore('featureTourStore', () => {
+export const useFeatureTourStore = defineStore('featureTourStore', () => {
   const featureSlides = ref<boolean>(false)
   const graphDataPage = ref<boolean>(false)
   const graphDataPageSteps = ref<boolean[]>([true, false, false, false])
   const vehiclePage = ref<boolean>(false)
   const refuelPage = ref<boolean>(false)
+
+  const overlayMainLayout = ref<boolean>(false)
 
   function skipEntireTour() {
     ;(async () => {
@@ -75,6 +77,7 @@ export const useFeatureStore = defineStore('featureTourStore', () => {
     graphDataPage,
     graphDataPageSteps,
     vehiclePage,
-    refuelPage
+    refuelPage,
+    overlayMainLayout
   }
 })

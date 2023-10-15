@@ -1,5 +1,4 @@
 <template>
-  <div v-if="featureTourStore.graphDataPage" class="overlay"></div>
   <div
     v-if="
       featureTourStore.graphDataPage && featureTourStore.graphDataPageSteps[0]
@@ -44,15 +43,23 @@
 </template>
 
 <script setup lang="ts">
-import { useFeatureStore } from './stores/featureTourStore'
+import { onBeforeMount } from 'vue'
+import { useFeatureTourStore } from './stores/featureTourStore'
 
-const featureTourStore = useFeatureStore()
+const featureTourStore = useFeatureTourStore()
 
 function nextStep(step: number, finish = false) {
   featureTourStore.graphDataPageSteps[step - 1] = false
   if (!finish) featureTourStore.graphDataPageSteps[step] = true
-  if (finish) featureTourStore.finishGraphDataPage()
+  if (finish) {
+    featureTourStore.finishGraphDataPage()
+    featureTourStore.overlayMainLayout = false
+  }
 }
+
+onBeforeMount(() => {
+  if (featureTourStore.graphDataPage) featureTourStore.overlayMainLayout = true
+})
 </script>
 
 <style scoped>
@@ -86,15 +93,5 @@ function nextStep(step: number, finish = false) {
   background-color: white;
   border-radius: 5px;
   box-shadow: 0px 3px 3px 3px rgba(0, 0, 0, 0.2);
-}
-
-.overlay {
-  content: '';
-  position: absolute;
-  z-index: 10000;
-  padding: 10px;
-  width: 100%;
-  height: 100%;
-  background-color: rgba(0, 0, 0, 0.5);
 }
 </style>

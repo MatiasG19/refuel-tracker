@@ -60,9 +60,9 @@
 
 <script setup lang="ts">
 import { ref } from 'vue'
-import { useFeatureStore } from './stores/featureTourStore'
+import { useFeatureTourStore } from './stores/featureTourStore'
 
-const featureTourStore = useFeatureStore()
+const featureTourStore = useFeatureTourStore()
 
 const slide = ref('first')
 
