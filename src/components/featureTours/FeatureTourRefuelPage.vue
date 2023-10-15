@@ -1,0 +1,99 @@
+<template>
+  <div
+    v-if="featureTourStore.refuelPage && featureTourStore.refuelPageSteps[0]"
+    class="fixed-center item0"
+  >
+    <div>
+      Here are all added refuel entries. Use the button in the top right corner
+      to
+      <span class="text-positive">filter</span> refuels.
+    </div>
+    <q-btn no-caps size="sm" color="positive" @click="nextStep(1)">Next</q-btn>
+  </div>
+
+  <div
+    v-if="featureTourStore.refuelPage && featureTourStore.refuelPageSteps[1]"
+    class="fixed-center item1"
+  >
+    <div>
+      Use the the "plus" button in the bottom navigation bar to
+      <span class="text-positive">add</span> more refuels.
+    </div>
+    <q-btn no-caps size="sm" color="positive" @click="nextStep(2)">Next</q-btn>
+  </div>
+
+  <div
+    v-if="featureTourStore.refuelPage && featureTourStore.refuelPageSteps[2]"
+    class="fixed-center item2"
+  >
+    <div>
+      To <span class="text-positive">edit</span> a refuel, use the "three dot"
+      button.
+    </div>
+    <q-btn no-caps size="sm" color="positive" @click="nextStep(3, true)"
+      >Finish</q-btn
+    >
+  </div>
+</template>
+
+<script setup lang="ts">
+import { onBeforeMount } from 'vue'
+import { useFeatureTourStore } from './stores/featureTourStore'
+
+const featureTourStore = useFeatureTourStore()
+
+function nextStep(step: number, finish = false) {
+  featureTourStore.refuelPageSteps[step - 1] = false
+  if (!finish) featureTourStore.refuelPageSteps[step] = true
+  if (finish) {
+    featureTourStore.finishRefuelPage()
+    featureTourStore.overlayMainLayout = false
+  }
+}
+
+onBeforeMount(() => {
+  if (featureTourStore.refuelPage) {
+    featureTourStore.overlayMainLayout = true
+    featureTourStore.refuelPageSteps.forEach(s => {
+      s = false
+    })
+    featureTourStore.refuelPageSteps[0] = true
+  }
+})
+</script>
+
+<style scoped>
+.item0 {
+  position: fixed;
+  z-index: 10000;
+  padding: 10px;
+  color: black;
+  background-color: white;
+  border-radius: 5px;
+  box-shadow: 0px 3px 3px 3px rgba(0, 0, 0, 0.2);
+}
+
+.item1 {
+  top: 80vh;
+  left: 60vw;
+  position: fixed;
+  z-index: 10000;
+  padding: 10px;
+  color: black;
+  background-color: white;
+  border-radius: 5px;
+  box-shadow: 0px 3px 3px 3px rgba(0, 0, 0, 0.2);
+}
+
+.item2 {
+  top: 15vh;
+  left: 70vw;
+  position: fixed;
+  z-index: 10000;
+  padding: 10px;
+  color: black;
+  background-color: white;
+  border-radius: 5px;
+  box-shadow: 0px 3px 3px 3px rgba(0, 0, 0, 0.2);
+}
+</style>

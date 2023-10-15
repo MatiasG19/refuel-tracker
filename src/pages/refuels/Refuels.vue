@@ -1,5 +1,6 @@
 <template>
   <q-page>
+    <feature-tour-refuel-page></feature-tour-refuel-page>
     <div
       v-if="
         vehiclesExists &&
@@ -92,6 +93,7 @@ import { Refuel, Vehicle } from 'src/scripts/libraries/refuel/models'
 import { vehicleFuelConsumption } from 'src/scripts/libraries/refuel/functions/vehicle'
 import { QVirtualScroll } from 'quasar'
 import { useRefuelFilterStore } from './stores/refuelFilterStore'
+import FeatureTourRefuelPage from 'src/components/featureTours/FeatureTourRefuelPage.vue'
 
 const router = useRouter()
 const refuelStore = useRefuelStore()
