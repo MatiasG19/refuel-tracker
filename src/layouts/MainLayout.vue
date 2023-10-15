@@ -106,12 +106,12 @@
 
 <script setup lang="ts">
 import EssentialLink from 'components/EssentialLink.vue'
-import FeatureSlides from 'src/pages/featureTour/FeatureSlides.vue'
+import FeatureSlides from 'src/components/featureTour/FeatureSlides.vue'
 import { ref, computed, onMounted, onUnmounted } from 'vue'
 import { useRouter } from 'vue-router'
 import { emitter } from 'src/boot/mitt'
 import { useSettingsStore } from 'src/stores/settingsStore'
-import { useFeatureStore } from 'src/pages/featureTour/stores/featureTourStore'
+import { useFeatureStore } from 'src/components/featureTour/stores/featureTourStore'
 import { Keyboard } from '@capacitor/keyboard'
 import { Platform } from 'quasar'
 

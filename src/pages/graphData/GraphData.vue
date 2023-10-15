@@ -77,7 +77,7 @@ import {
 } from 'src/components/dialogs/optionsDialog'
 import { useQuasar } from 'quasar'
 import { useRouter } from 'vue-router'
-import FeatureTourGraphDataPage from 'src/pages/featureTour/FeatureTourGraphDataPage.vue'
+import FeatureTourGraphDataPage from 'src/components/featureTour/FeatureTourGraphDataPage.vue'
 
 const $q = useQuasar()
 $q.dark.set('auto')
