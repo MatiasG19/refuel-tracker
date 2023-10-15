@@ -1,8 +1,6 @@
 <template>
   <q-layout view="lHh Lpr lFf" class="bg-space-station">
-    <main-layout-overlay
-      v-if="featureTourStore.overlayMainLayout"
-    ></main-layout-overlay>
+    <main-layout-overlay></main-layout-overlay>
     <feature-slides v-if="featureSlidesActive"></feature-slides>
     <template v-else>
       <q-header>
@@ -113,7 +111,6 @@ import { ref, computed, onMounted, onUnmounted } from 'vue'
 import { useRouter } from 'vue-router'
 import { emitter } from 'src/boot/mitt'
 import { useSettingsStore } from 'src/stores/settingsStore'
-import { useFeatureTourStore } from 'src/components/featureTours/stores/featureTourStore'
 import { Keyboard } from '@capacitor/keyboard'
 import { Platform } from 'quasar'
 import MainLayoutOverlay from 'src/components/featureTours/MainLayoutOverlay.vue'
@@ -153,7 +150,6 @@ const linkList = [
 
 const router = useRouter()
 const settingsStore = useSettingsStore()
-const featureTourStore = useFeatureTourStore()
 const routePath = computed(() => router.currentRoute.value.path)
 const footerVisible = ref(true)
 emitter.on('updateTitle', e => (title.value = e))

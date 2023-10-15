@@ -1,8 +1,12 @@
 <template>
-  <div class="overlay"></div>
+  <div v-if="featureTourStore.overlayMainLayout" class="overlay"></div>
 </template>
 
-<script setup lang="ts"></script>
+<script setup lang="ts">
+import { useFeatureTourStore } from 'src/components/featureTours/stores/featureTourStore'
+
+const featureTourStore = useFeatureTourStore()
+</script>
 
 <style scoped>
 .overlay {
