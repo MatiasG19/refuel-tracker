@@ -3,7 +3,7 @@ import { Settings } from '../scripts/models'
 import { Vehicle, Refuel } from 'src/scripts/libraries/refuel/models'
 import { GraphSettings } from 'src/pages/graphData/scripts/models'
 import { RefuelFilter } from 'src/pages/refuels/models'
-import { FeatureTour } from 'src/components/featureTour/models'
+import { FeatureTour } from 'src/components/featureTours/models'
 
 export class RefuelTrackerDexie extends Dexie {
   graphSettings!: Table<GraphSettings>

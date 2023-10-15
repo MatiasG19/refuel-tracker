@@ -1,4 +1,4 @@
-import { useFeatureStore } from 'src/components/featureTour/stores/featureTourStore'
+import { useFeatureStore } from 'src/components/featureTours/stores/featureTourStore'
 import { db } from '../../boot/dexie'
 
 export function initFeatureTour() {
