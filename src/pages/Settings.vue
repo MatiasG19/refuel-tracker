@@ -231,6 +231,6 @@ onUnmounted(() => {
 
 <style scoped>
 .btn {
-  width: 20vh;
+  width: 25vw;
 }
 </style>
