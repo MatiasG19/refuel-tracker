@@ -58,7 +58,13 @@ function nextStep(step: number, finish = false) {
 }
 
 onBeforeMount(() => {
-  if (featureTourStore.graphDataPage) featureTourStore.overlayMainLayout = true
+  if (featureTourStore.graphDataPage) {
+    featureTourStore.overlayMainLayout = true
+    featureTourStore.graphDataPageSteps.forEach(s => {
+      s = false
+    })
+    featureTourStore.graphDataPageSteps[0] = true
+  }
 })
 </script>
 
