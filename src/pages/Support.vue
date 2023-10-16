@@ -44,6 +44,23 @@
           </div>
         </div>
       </q-carousel-slide>
+      <q-carousel-slide name="tour" class="column no-wrap flex-center">
+        <div class="q-mt-md text-center">
+          <div class="column items-center">
+            <div class="q-mb-md text-center">
+              Go on a tour and explore all features!
+            </div>
+            <q-btn
+              color="accent"
+              icon-right="explore"
+              label="Tour"
+              @click="takeTour"
+              no-caps
+              outline
+            />
+          </div>
+        </div>
+      </q-carousel-slide>
       <q-carousel-slide name="code" class="column no-wrap flex-center">
         <div class="q-mt-md text-center">
           <div class="q-mb-md text-center">
@@ -117,17 +134,25 @@ import { useRouter } from 'vue-router'
 import packageJson from '../../package.json'
 import { openURL } from 'quasar'
 import { emitter } from 'src/boot/mitt'
+import { useFeatureTourStore } from 'src/components/featureTours/stores/featureTourStore'
 
 const router = useRouter()
+const featureTourStore = useFeatureTourStore()
+
 const routePath = computed(() => router.currentRoute.value.path)
 const ratingModel = ref(3)
-const slide = ref('code')
+const slide = ref('tour')
 const repositoryLink = 'https://github.com/MatiasG19/refuel-tracker'
 const licenseLink =
   'https://github.com/MatiasG19/refuel-tracker/blob/main/LICENSE'
 const issueLink = 'https://github.com/MatiasG19/refuel-tracker/issues/new'
 
 const emits = defineEmits(['update:title'])
+
+function takeTour() {
+  featureTourStore.startTour()
+  router.push('/')
+}
 
 onMounted(() => {
   emits('update:title', routePath.value)

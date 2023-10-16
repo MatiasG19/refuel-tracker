@@ -28,20 +28,6 @@
             />
           </q-item-section>
         </q-item>
-        <q-item tag="label">
-          <q-item-section>
-            <q-item-label>Start feature tour</q-item-label>
-          </q-item-section>
-          <q-item-section avatar>
-            <q-btn
-              label="Tour"
-              color="positive"
-              class="btn"
-              no-caps
-              @click="takeTour"
-            />
-          </q-item-section>
-        </q-item>
       </q-list>
 
       <q-item-label header>Backup</q-item-label>
@@ -118,8 +104,6 @@ import { useSettingsStore } from 'src/stores/settingsStore'
 import { exportDB, importDB } from 'src/scripts/libraries/backup/backup'
 import { FilePicker } from 'src/plugins/capacitor-file-picker'
 import { Notify, Platform } from 'quasar'
-import { useFeatureTourStore } from 'src/components/featureTours/stores/featureTourStore'
-import { useRouter } from 'vue-router'
 
 type GetContentResultAction = (result: { path: string }) => void
 let getContentResultAction: GetContentResultAction
@@ -127,9 +111,7 @@ let getContentResultAction: GetContentResultAction
 type OpenDocumentTreeResultAction = (result: { path: string }) => void
 let openDocumentTreeResultAction: OpenDocumentTreeResultAction
 
-const router = useRouter()
 const settingsStore = useSettingsStore()
-const featureTourStore = useFeatureTourStore()
 
 const colorThemeOptions = [
   {
@@ -163,11 +145,6 @@ function changeColorTheme(value: number) {
 
 function togglePlateNumberInTitle(value: boolean) {
   settingsStore.togglePlateNumberInTitle(value)
-}
-
-function takeTour() {
-  featureTourStore.startTour()
-  router.push('/')
 }
 
 async function toggleAutoBackup(value: boolean) {
