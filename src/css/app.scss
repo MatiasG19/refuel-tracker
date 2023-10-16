@@ -1,29 +1,29 @@
 // space-station
 .space-station {
   font-family: "Source Sans Pro", sans-serif;
-  color: #c5c5dd;
-  background-color: #6E6B9D;
+  color: $secondary;
+  background-color: $primary;
   opacity: 1.0;
 }
 
 .bg-space-station {
   font-family: "Source Sans Pro", sans-serif;
-  color: #c5c5dd;
-  background-color: #3A395B;
+  color: $secondary;
+  background-color: $dark;
   opacity: 1.0;
 }
 
 .el-space-station {
   font-family: "Source Sans Pro", sans-serif;
-  color: #3A395B;
-  background-color: #c5c5dd;
+  color: $dark;
+  background-color: $secondary;
   opacity: 1.0;
 }
 
 .accent-space-station {
   font-family: "Source Sans Pro", sans-serif;
-  color: #60EFB3;
-  background-color: #6E6B9D;
+  color: $accent;
+  background-color: $primary;
 }
 
 /****************************/
@@ -39,4 +39,8 @@
 
 .form-btn {
   width: 40%;
+}
+
+.cursive {
+  font-style: italic;
 }

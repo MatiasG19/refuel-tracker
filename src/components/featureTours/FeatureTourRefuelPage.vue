@@ -6,7 +6,7 @@
     <div>
       Here are all added refuel entries for the currently selected vehicle. Use
       the button in the top right corner to
-      <span class="text-positive">filter</span> refuels.
+      <span class="text-primary cursive">filter</span> refuels.
     </div>
     <q-btn no-caps size="sm" color="positive" @click="nextStep(1)">Next</q-btn>
   </div>
@@ -17,7 +17,7 @@
   >
     <div>
       Use the the "plus" button in the bottom navigation bar to
-      <span class="text-positive">add</span> more refuels.
+      <span class="text-primary cursive">add</span> more refuels.
     </div>
     <q-btn no-caps size="sm" color="positive" @click="nextStep(2)">Next</q-btn>
   </div>
@@ -27,8 +27,8 @@
     class="fixed-center item2"
   >
     <div>
-      To <span class="text-positive">edit</span> a refuel, use the "three dot"
-      button.
+      To <span class="text-primary cursive">edit</span> a refuel, use the "three
+      dot" button.
     </div>
     <q-btn no-caps size="sm" color="positive" @click="nextStep(3, true)"
       >Finish</q-btn
@@ -63,13 +63,13 @@ onBeforeMount(() => {
 })
 </script>
 
-<style scoped>
+<style lang="scss" scoped>
 .item0 {
   position: fixed;
   z-index: 10000;
   padding: 10px;
   color: black;
-  background-color: white;
+  background-color: $secondary;
   border-radius: 5px;
   box-shadow: 0px 3px 3px 3px rgba(0, 0, 0, 0.2);
 }
@@ -81,7 +81,7 @@ onBeforeMount(() => {
   z-index: 10000;
   padding: 10px;
   color: black;
-  background-color: white;
+  background-color: $secondary;
   border-radius: 5px;
   box-shadow: 0px 3px 3px 3px rgba(0, 0, 0, 0.2);
 }
@@ -93,7 +93,7 @@ onBeforeMount(() => {
   z-index: 10000;
   padding: 10px;
   color: black;
-  background-color: white;
+  background-color: $secondary;
   border-radius: 5px;
   box-shadow: 0px 3px 3px 3px rgba(0, 0, 0, 0.2);
 }
