@@ -25,7 +25,7 @@
     "dexie-export-import": "^4.0.7",
     "mitt": "^3.0.1",
     "pinia": "^2.1.7",
-    "quasar": "^2.12.7",
+    "quasar": "^2.13.0",
     "vue": "^3.3.6",
     "vue-i18n": "^9.5.0",
     "vue-router": "^4.2.5"
