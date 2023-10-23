@@ -36,45 +36,50 @@
       />
     </div>
     <template v-else>
-      <div class="q-px-md q-pb-xs q-gutter-md">
-        <q-badge align="top">{{ vehicleName }}</q-badge>
-      </div>
+      <div ref="elRef">
+        <div class="q-px-md q-pb-xs q-gutter-md">
+          <q-badge align="top">{{ vehicleName }}</q-badge>
+        </div>
 
-      <div
-        v-if="vehiclesExists && refuelFilterStore.filterActive"
-        class="q-pt-md text-center"
-      >
-        <q-btn
-          class="q-pa-xs"
-          style="color: pink"
-          flat
-          no-caps
-          label=" "
-          @click="removeFilter"
-          icon-right="delete_outline"
-          >{{ refuelFilterStore.filterName }}</q-btn
+        <div
+          v-if="vehiclesExists && refuelFilterStore.filterActive"
+          class="q-pt-md text-center"
         >
+          <q-btn
+            class="q-pa-xs"
+            style="color: pink"
+            flat
+            no-caps
+            label=" "
+            @click="removeFilter"
+            icon-right="delete_outline"
+            >{{ refuelFilterStore.filterName }}</q-btn
+          >
+        </div>
       </div>
 
-      <q-virtual-scroll
-        ref="virtualListRef"
-        style="max-height: 90vh; overflow-x: hidden"
-        :items-size="refuels.length"
-        :items-fn="getRefuels"
-        :virtual-scroll-item-size="200"
-        virtual-scroll-slice-ratio-before="4"
-        virtual-scroll-slice-ratio-after="4"
-        v-slot="{ item, index }"
-      >
-        <refuel-card
-          :key="index"
-          :refuel="item"
-          :vehicle="vehicle"
-          :fuelConsumption="vehicleFuelConsumption(vehicle, item).toFixed(2)"
-          :loading="loading"
-          class="q-pt-md q-pl-md q-pr-md"
-        />
-      </q-virtual-scroll>
+      <div style="box-sizing: border-box; height: 100px; max-height: 100px">
+        <q-virtual-scroll
+          id="vscroll"
+          ref="virtualListRef"
+          style="overflow-x: hidden"
+          :items-size="refuels.length"
+          :items-fn="getRefuels"
+          :virtual-scroll-item-size="200"
+          virtual-scroll-slice-ratio-before="4"
+          virtual-scroll-slice-ratio-after="4"
+          v-slot="{ item, index }"
+        >
+          <refuel-card
+            :key="index"
+            :refuel="item"
+            :vehicle="vehicle"
+            :fuelConsumption="vehicleFuelConsumption(vehicle, item).toFixed(2)"
+            :loading="loading"
+            class="q-pt-md q-pl-md q-pr-md"
+          />
+        </q-virtual-scroll>
+      </div>
     </template>
   </q-page>
 </template>
@@ -92,6 +97,8 @@ import { Refuel, Vehicle } from 'src/scripts/libraries/refuel/models'
 import { vehicleFuelConsumption } from 'src/scripts/libraries/refuel/functions/vehicle'
 import { QVirtualScroll } from 'quasar'
 import { useRefuelFilterStore } from './stores/refuelFilterStore'
+import { dom } from 'quasar'
+const { height } = dom
 
 const router = useRouter()
 const refuelStore = useRefuelStore()
@@ -103,6 +110,7 @@ const vehiclesExists = settingsStore.selectedVehicleId
 const vehicleName = ref<string>('')
 const loading = ref(true)
 const virtualListRef = ref(null)
+const elRef = ref(null)
 let scrollToIndex = ref(0)
 
 const props = defineProps({
@@ -173,6 +181,17 @@ emitter.on('showRefuelOptionsDialog', id =>
   ])
 )
 
+let vscrollHeight = (
+  settingsStore.layoutHeight -
+  settingsStore.headerHeight -
+  settingsStore.footerHeight -
+  100
+)
+  // eslint-disable-next-line @typescript-eslint/no-unsafe-argument
+  // height((elRef.value as QVirtualScroll).$el)
+  .toString()
+  .concat('px')
+
 onBeforeMount(async () => {
   emitter.emit('updateTitle', 'Refuels')
 
@@ -197,9 +216,33 @@ onBeforeMount(async () => {
 
   if (virtualListRef.value)
     (virtualListRef.value as QVirtualScroll).scrollTo(scrollToIndex.value)
+
+  // if (elRef.value) {
+  //   vscrollHeight = (
+  //     settingsStore.layoutHeight -
+  //     settingsStore.headerHeight -
+  //     settingsStore.footerHeight
+  //   )
+  //     // eslint-disable-next-line @typescript-eslint/no-unsafe-argument
+  //     // height((elRef.value as QVirtualScroll).$el) -
+  //     // 100
+  //     .toString()
+  //     .concat('px')
+  // }
+
+  console.log(settingsStore.layoutHeight)
+  console.log(settingsStore.headerHeight)
+  console.log(settingsStore.footerHeight)
+  console.log(vscrollHeight)
 })
 
 onUnmounted(() => {
   emitter.off('showRefuelOptionsDialog')
 })
 </script>
+
+<style>
+#vscroll {
+  /* max-height: v-bind('vscrollHeight'); */
+}
+</style>

@@ -14,6 +14,10 @@ export const useSettingsStore = defineStore('settingsStore', () => {
   const autoBackupPath = ref<string>('')
   const selectedColorThemeId = ref<number>(1)
 
+  const layoutHeight = ref(0)
+  const headerHeight = ref(0)
+  const footerHeight = ref(0)
+
   function changeDistanceUnit(distanceUnitId: number) {
     ;(async () => {
       const settings = await db.settings.toArray()
@@ -88,6 +92,9 @@ export const useSettingsStore = defineStore('settingsStore', () => {
     autoBackupActive,
     autoBackupPath,
     selectedColorThemeId,
+    layoutHeight,
+    headerHeight,
+    footerHeight,
     changeDistanceUnit,
     changeSelectedVehicle,
     togglePlateNumberInTitle,

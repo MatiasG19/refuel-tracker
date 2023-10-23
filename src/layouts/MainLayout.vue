@@ -1,6 +1,6 @@
 <template>
-  <q-layout view="lHh Lpr lFf" class="bg-space-station">
-    <q-header>
+  <q-layout view="lHh Lpr lFf" class="bg-space-station" ref="layoutRef">
+    <q-header ref="headerRef">
       <q-toolbar class="bg-space-station">
         <q-btn
           flat
@@ -56,7 +56,7 @@
       </router-view>
     </q-page-container>
 
-    <q-footer v-if="footerVisible" class="bg-space-station">
+    <q-footer v-if="footerVisible" class="bg-space-station" ref="footerRef">
       <q-toolbar class="q-gutter-xs text-center">
         <div class="col">
           <q-btn round flat dense icon="bar_chart" class="col" :to="'/'" />
@@ -108,6 +108,12 @@ import { emitter } from 'src/boot/mitt'
 import { useSettingsStore } from 'src/stores/settingsStore'
 import { Keyboard } from '@capacitor/keyboard'
 import { Platform } from 'quasar'
+import { dom, QLayout, QHeader, QFooter } from 'quasar'
+const { height } = dom
+
+const layoutRef = ref(null)
+const footerRef = ref(null)
+const headerRef = ref(null)
 
 const linkList = [
   {
@@ -177,6 +183,21 @@ function add() {
 onMounted(() => {
   if (Platform.is.mobile) {
     addKeyboardListeners()
+  }
+
+  if (layoutRef.value) {
+    // eslint-disable-next-line @typescript-eslint/no-unsafe-argument
+    settingsStore.layoutHeight = height((layoutRef.value as QLayout).$el)
+  }
+
+  if (headerRef.value) {
+    // eslint-disable-next-line @typescript-eslint/no-unsafe-argument
+    settingsStore.headerHeight = height((headerRef.value as QHeader).$el)
+  }
+
+  if (footerRef.value) {
+    // eslint-disable-next-line @typescript-eslint/no-unsafe-argument
+    settingsStore.footerHeight = height((footerRef.value as QFooter).$el)
   }
 })
 

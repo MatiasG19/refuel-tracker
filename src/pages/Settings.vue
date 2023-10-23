@@ -200,6 +200,10 @@ onMounted(() => {
       openDocumentTreeResultAction(res)
     })
   }
+
+  console.log(settingsStore.layoutHeight)
+  console.log(settingsStore.headerHeight)
+  console.log(settingsStore.footerHeight)
 })
 
 onUnmounted(() => {
