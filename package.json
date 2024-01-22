@@ -36,7 +36,7 @@
     "@capacitor/keyboard": "^5.0.7",
     "@capacitor/local-notifications": "^5.0.6",
     "@intlify/vite-plugin-vue-i18n": "^3.3.1",
-    "@quasar/app-vite": "^1.7.1",
+    "@quasar/app-vite": "^1.7.3",
     "@types/node": "^12.20.21",
     "@typescript-eslint/eslint-plugin": "^5.10.0",
     "@typescript-eslint/parser": "^5.10.0",
