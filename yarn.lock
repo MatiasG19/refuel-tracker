@@ -29,10 +29,10 @@
   resolved "https://registry.yarnpkg.com/@capacitor/keyboard/-/keyboard-5.0.7.tgz#a9c02d768658da945b058c132cbe10599cb99d2a"
   integrity sha512-+6lW8z2nXTM2NOG7D7pOasCfIGicz26+EeDRXIj5AtJibbjwtE1Q5GIY+qGHgzpmwOF0qmcrGJBz4zagDwUapg==
 
-"@capacitor/local-notifications@^5.0.6":
-  version "5.0.6"
-  resolved "https://registry.yarnpkg.com/@capacitor/local-notifications/-/local-notifications-5.0.6.tgz#9684dbd7086e325e61b9297569ee9c06e5b8d8f9"
-  integrity sha512-DB+ZBjv3Ri/0mtSzjMxLMHNGfg5m615ewDfQxp++mu7pYUM1RkxfSiigw73+PlZXDow1YNQJRlzTkwEKs6Pf+g==
+"@capacitor/local-notifications@^5.0.7":
+  version "5.0.7"
+  resolved "https://registry.yarnpkg.com/@capacitor/local-notifications/-/local-notifications-5.0.7.tgz#e03ecc8add8a8394a1bd257ad29b410b5ac72077"
+  integrity sha512-Q16sAv9B55qrXRBgjsom3UAXQ9J5I9HxOToYtQ6jvM3237DphotvVSNriX2AGeXLi5nHkmNv2ZsFu17wTrRcpA==
 
 "@esbuild/android-arm64@0.18.20":
   version "0.18.20"
