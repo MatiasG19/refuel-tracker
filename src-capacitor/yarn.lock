@@ -52,10 +52,10 @@
   resolved "https://registry.yarnpkg.com/@capacitor/keyboard/-/keyboard-5.0.8.tgz#b8cc21bd6e06273ec61974be9d7f4d8c421a63a4"
   integrity sha512-XYyBzGlzjgLPqyPVdu5McGLYV6+G2efVR4I3l5cF1B27M6U/oFqv9CQU74WNG08nee28bfccboNpv6eWCLYn1A==
 
-"@capacitor/local-notifications@^5.0.6":
-  version "5.0.6"
-  resolved "https://registry.yarnpkg.com/@capacitor/local-notifications/-/local-notifications-5.0.6.tgz#9684dbd7086e325e61b9297569ee9c06e5b8d8f9"
-  integrity sha512-DB+ZBjv3Ri/0mtSzjMxLMHNGfg5m615ewDfQxp++mu7pYUM1RkxfSiigw73+PlZXDow1YNQJRlzTkwEKs6Pf+g==
+"@capacitor/local-notifications@^5.0.7":
+  version "5.0.7"
+  resolved "https://registry.yarnpkg.com/@capacitor/local-notifications/-/local-notifications-5.0.7.tgz#e03ecc8add8a8394a1bd257ad29b410b5ac72077"
+  integrity sha512-Q16sAv9B55qrXRBgjsom3UAXQ9J5I9HxOToYtQ6jvM3237DphotvVSNriX2AGeXLi5nHkmNv2ZsFu17wTrRcpA==
 
 "@capacitor/splash-screen@^5.0.7":
   version "5.0.7"
