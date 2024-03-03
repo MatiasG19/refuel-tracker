@@ -116,25 +116,15 @@ jobs:
         env:
           BUILD_TOOLS_VERSION: '33.0.2'
 
-      - name: Rename apk
+      - name: Rename apk and aab
         if: ${{ github.event_name == 'release' || github.event_name == 'workflow_dispatch' }}
         run: cd ${{ env.RELEASE_PATH_SIGNED }} &&
-          mv *.apk $(echo ${{ env.REPO_NAME }}-${{ env.TAG }}.apk;)
-
-      - name: Rename aab
-        if: ${{ github.event_name == 'release' || github.event_name == 'workflow_dispatch' }}
-        run: cd ${{ env.RELEASE_PATH_SIGNED }} &&
+          mv *.apk $(echo ${{ env.REPO_NAME }}-${{ env.TAG }}.apk;) &&
           mv *.aab $(echo ${{ env.REPO_NAME }}-${{ env.TAG }}.aab;)
 
-      - name: Append apk to release
+      - name: Append apk and aab to release
         if: ${{ github.event_name == 'release' }}
-        run: gh release upload ${{ env.TAG }} ${{ env.RELEASE_PATH_SIGNED }}/*.apk
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-
-      - name: Append aab to release
-        if: ${{ github.event_name == 'release' }}
-        run: gh release upload ${{ env.TAG }} ${{ env.RELEASE_PATH_SIGNED }}/*.aab
+        run: gh release upload ${{ env.TAG }} ${{ env.RELEASE_PATH_SIGNED }}/*.apk ${{ env.RELEASE_PATH_SIGNED }}/*.aab
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
