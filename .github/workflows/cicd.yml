@@ -100,10 +100,10 @@ jobs:
         working-directory: src-capacitor/android/app
         run: sed -i "s/versionName \"1.0\"/versionName \"$TAG\"/" build.gradle
 
-      - name: Build apk
+      - name: Build apk and aab
         run: yarn appbuild
 
-      - name: Sign apk
+      - name: Sign apk and aab
         if: ${{ github.event_name == 'release' || github.event_name == 'workflow_dispatch' }}
         uses: MatiasG19/android-sign@2.0.0
         with:
