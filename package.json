@@ -13,7 +13,7 @@
     "build": "quasar build",
     "mode": "quasar mode add capacitor",
     "appdev": "quasar dev -m capacitor -T android",
-    "appbuild": "quasar build -m capacitor -T android",
+    "appbuild": "quasar build -m capacitor -T android -- bundleRelease",
     "favicons": "icongenie generate --theme-color 8488ff --icon ./.icons/icon.png",
     "appicons": "icongenie generate --mode capacitor --theme-color 8488ff --skip-trim --icon ./.icons/appicon.png",
     "splashicons": "icongenie generate --mode capacitor --filter splashscreen --splashscreen-icon-ratio 30 --theme-color 8488ff --skip-trim --icon ./.icons/icon.png"
