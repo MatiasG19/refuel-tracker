@@ -13,7 +13,7 @@
     "build": "quasar build",
     "mode": "quasar mode add capacitor",
     "appdev": "quasar dev -m capacitor -T android",
-    "appbuild": "quasar build -m capacitor -T android",
+    "appbuild": "quasar build -m capacitor -T android -- bundleRelease",
     "favicons": "icongenie generate --theme-color 8488ff --icon ./.icons/icon.png",
     "appicons": "icongenie generate --mode capacitor --theme-color 8488ff --skip-trim --icon ./.icons/appicon.png",
     "splashicons": "icongenie generate --mode capacitor --filter splashscreen --splashscreen-icon-ratio 30 --theme-color 8488ff --skip-trim --icon ./.icons/icon.png"
@@ -49,7 +49,7 @@
     "vitest": "^0.34.6"
   },
   "engines": {
-    "node": "^18 || ^16 || ^14.19",
+    "node": "^20",
     "npm": ">= 6.13.4",
     "yarn": ">= 1.21.1"
   }
