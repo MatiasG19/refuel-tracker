@@ -109,7 +109,7 @@ jobs:
 
       - name: Sign apk and aab
         if: ${{ github.event_name == 'release' || github.event_name == 'workflow_dispatch' }}
-        uses: MatiasG19/android-sign@fix/aab-signing
+        uses: MatiasG19/android-sign@testAAB
         with:
           releaseDirectory: ${{ env.APK_RELEASE_PATH }}
           signingKeyBase64: ${{ secrets.MY_KEY }}
