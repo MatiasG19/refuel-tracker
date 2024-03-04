@@ -105,7 +105,7 @@ jobs:
         run: yarn appbuild
 
       - name: Move AAB to APK release folder
-        run: mv ${{ env.AAB_RELEASE_PATH }}*.aab ${{ env.APK_RELEASE_PATH }}
+        run: mv ${{ env.AAB_RELEASE_PATH }}/*.aab ${{ env.APK_RELEASE_PATH }}
 
       - name: Sign apk and aab
         if: ${{ github.event_name == 'release' || github.event_name == 'workflow_dispatch' }}
