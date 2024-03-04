@@ -21,6 +21,12 @@
   </p>
 </div>
 
+<div align="center">
+    <img src=".screenshots/MainPage.png" alt="Logo" width="270" height="490">
+    <img src=".screenshots/Vehicles.png" alt="Logo" width="270" height="490">
+    <img src=".screenshots/Refuels.png" alt="Logo" width="270" height="490">
+</div>
+
 ## Features
 
 - Easy to use interface with quick bottom navigation
