@@ -15,7 +15,8 @@ on:
 
 env:
   REPO_NAME: ${{ github.event.repository.name }}
-  RELEASE_PATH: ${{ github.workspace }}/dist/capacitor/android/apk/release
+  APK_RELEASE_PATH: ${{ github.workspace }}/dist/capacitor/android/apk/release
+  AAB_RELEASE_PATH: ${{ github.workspace }}/dist/capacitor/android/bundle/release
   RELEASE_PATH_SIGNED: ${{ github.workspace }}/dist/capacitor/android/apk/release/signed
 
 jobs:
@@ -103,11 +104,14 @@ jobs:
       - name: Build apk and aab
         run: yarn appbuild
 
+      - name: Move AAB to APK release folder
+        run: mv ${{ env.AAB_RELEASE_PATH }}*.aab ${{ env.APK_RELEASE_PATH }}
+
       - name: Sign apk and aab
         if: ${{ github.event_name == 'release' || github.event_name == 'workflow_dispatch' }}
         uses: MatiasG19/android-sign@2.0.0
         with:
-          releaseDirectory: ${{ env.RELEASE_PATH }}
+          releaseDirectory: ${{ env.APK_RELEASE_PATH }}
           signingKeyBase64: ${{ secrets.MY_KEY }}
           output: ${{ env.RELEASE_PATH_SIGNED }}
           alias: ${{ secrets.KEY_ALIAS }}
