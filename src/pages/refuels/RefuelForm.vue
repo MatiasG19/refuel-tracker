@@ -5,7 +5,9 @@
       <c-input
         type="tel"
         :value="refuel.payedAmount?.toString()"
-        @update:modelValue="(evt: string) => (refuel.payedAmount = +replaceComma(evt))"
+        @update:modelValue="
+          (evt: string) => (refuel.payedAmount = +replaceComma(evt))
+        "
         label="Payed amount"
         :rules="[
           requiredFieldRule,
@@ -18,7 +20,9 @@
       <c-input
         type="tel"
         :value="refuel.distanceDriven?.toString()"
-        @update:modelValue="(evt: string) => (refuel.distanceDriven = +replaceComma(evt))"
+        @update:modelValue="
+          (evt: string) => (refuel.distanceDriven = +replaceComma(evt))
+        "
         label="Distance driven"
         :rules="[
           requiredFieldRule,
@@ -30,7 +34,9 @@
       <c-input
         type="tel"
         :value="refuel.refueledAmount?.toString()"
-        @update:modelValue="(evt: string) => (refuel.refueledAmount = +replaceComma(evt))"
+        @update:modelValue="
+          (evt: string) => (refuel.refueledAmount = +replaceComma(evt))
+        "
         label="Refueled amount"
         :rules="[
           requiredFieldRule,

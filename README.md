@@ -49,25 +49,25 @@
 Install dependencies
 
 ```bash
-yarn
+npm install
 ```
 
 Start in browser
 
 ```bash
-yarn dev
+npm run dev
 ```
 
 Start in Android Studio
 
 ```bash
-yarn appdev
+npm run appdev
 ```
 
 Create apk
 
 ```bash
-yarn appbuild
+npm run appbuild
 ```
 
 ## Contribute
