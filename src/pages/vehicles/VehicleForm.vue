@@ -66,7 +66,6 @@ import { useI18n } from 'vue-i18n'
 defineOptions({
   i18n: {
     messages: {
-      vehicleName: 'Vehicle name123',
       'en-US': {
         vehicleName: 'Vehicle name123'
       },
