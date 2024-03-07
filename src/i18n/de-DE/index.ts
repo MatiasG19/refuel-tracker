@@ -25,7 +25,7 @@ export default {
     whPerMile: ' Wh/mile'
   },
   form: {
-    cancel: 'Cancel',
-    confirm: 'Confirm'
+    cancel: 'Abbrechen',
+    confirm: 'Bestätigen'
   }
 }

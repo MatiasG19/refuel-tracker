@@ -9,7 +9,7 @@
       />
       <c-input
         v-model="vehicle.plateNumber"
-        label="Number plate"
+        :label="t('licensePlate')"
         :rules="[requiredFieldRule]"
       />
       <c-select
@@ -17,12 +17,12 @@
         class="q-pb-md"
         v-model="vehicle.fuelUnitId"
         :options="fuelUnits"
-        label="Fuel unit"
+        :label="t('fuelUnit')"
       />
       <c-input
         class="q-pb-md"
         v-model="vehicle.currencyUnit"
-        label="Currency unit"
+        :label="t('currencyUnit')"
         :rules="[requiredFieldRule]"
       />
 
@@ -37,7 +37,7 @@
         <q-space />
         <q-btn
           color="positive"
-          label="Confirm"
+          :label="t('form.confirm')"
           type="submit"
           no-caps
           class="btn"
@@ -62,17 +62,12 @@ import { useSettingsStore } from 'src/stores/settingsStore'
 import { useRefuelStore } from 'src/stores/refuelStore'
 import { Vehicle } from 'src/scripts/libraries/refuel/models'
 import { useI18n } from 'vue-i18n'
+import i18nMessages from './i18n'
 
 defineOptions({
   i18n: {
-    messages: {
-      'en-US': {
-        vehicleName: 'Vehicle name123'
-      },
-      'de-DE': {
-        vehicleName: 'Fahrzeugname'
-      }
-    }
+   // eslint-disable-next-line  @typescript-eslint/no-unsafe-assignment
+    messages: i18nMessages
   }
 })
 
