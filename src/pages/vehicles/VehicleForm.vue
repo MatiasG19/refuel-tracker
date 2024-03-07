@@ -3,7 +3,7 @@
     <q-form @submit="onSubmit" class="q-pa-md q-gutter-md">
       <c-input
         v-model="vehicle.name"
-        label="Vehicle name"
+        :label="t('vehicleName')"
         :rules="[requiredFieldRule, max50Characters]"
         autofocus
       />
@@ -62,6 +62,20 @@ import { useSettingsStore } from 'src/stores/settingsStore'
 import { useRefuelStore } from 'src/stores/refuelStore'
 import { Vehicle } from 'src/scripts/libraries/refuel/models'
 import { useI18n } from 'vue-i18n'
+
+defineOptions({
+  i18n: {
+    messages: {
+      vehicleName: 'Vehicle name123',
+      'en-US': {
+        vehicleName: 'Vehicle name123'
+      },
+      'de-DE': {
+        vehicleName: 'Fahrzeugname'
+      }
+    }
+  }
+})
 
 const router = useRouter()
 const refuelStore = useRefuelStore()
