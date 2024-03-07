@@ -18,6 +18,24 @@
       <q-list class="q-pb-md">
         <q-item tag="label">
           <q-item-section>
+            <q-item-label>Language</q-item-label>
+          </q-item-section>
+          <q-item-section avatar>
+            <c-select
+              v-model="currentLanguage"
+              :options="languageOptions"
+              class="q-pb-md"
+              label=""
+              standout="text-white"
+              bg-color="accent"
+              color="accent"
+              dense
+            />
+          </q-item-section>
+        </q-item>
+
+        <q-item tag="label">
+          <q-item-section>
             <q-item-label>Show number plate title</q-item-label>
           </q-item-section>
           <q-item-section avatar>
@@ -90,6 +108,7 @@ import { useSettingsStore } from 'src/stores/settingsStore'
 import { exportDB, importDB } from 'src/scripts/libraries/backup/backup'
 import { FilePicker } from 'src/plugins/capacitor-file-picker'
 import { Notify, Platform } from 'quasar'
+import { SelectOption } from 'src/scripts/models'
 
 type GetContentResultAction = (result: { path: string }) => void
 let getContentResultAction: GetContentResultAction
@@ -99,6 +118,8 @@ let openDocumentTreeResultAction: OpenDocumentTreeResultAction
 
 const settingsStore = useSettingsStore()
 
+const currentLanguage = ref(1)
+const languageOptions = ref<SelectOption[]>([ { label: 'English', value: 1}, { label: 'Deutsch', value: 2}])
 const colorThemeOptions = [
   {
     label: 'Space Station',
