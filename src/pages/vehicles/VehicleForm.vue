@@ -29,7 +29,7 @@
       <div class="row">
         <q-btn
           color="negative"
-          label="Cancel"
+          :label="t('form.cancel')"
           no-caps
           class="btn"
           @click="$router.go(-1)"
@@ -61,10 +61,13 @@ import { SelectOption } from 'src/scripts/models'
 import { useSettingsStore } from 'src/stores/settingsStore'
 import { useRefuelStore } from 'src/stores/refuelStore'
 import { Vehicle } from 'src/scripts/libraries/refuel/models'
+import { useI18n } from 'vue-i18n'
 
 const router = useRouter()
 const refuelStore = useRefuelStore()
 const settingsStore = useSettingsStore()
+// eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
+const { t } = useI18n()
 
 const vehicle = ref<Vehicle>(new Vehicle())
 const fuelUnits = ref<SelectOption[]>([])
