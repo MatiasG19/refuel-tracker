@@ -135,6 +135,6 @@ const emits = defineEmits(['update:title'])
 
 onMounted(() => {
   emits('update:title', routePath.value)
-  emitter.emit('updateTitle', t('pages.support.Support'))
+  emitter.emit('updateTitle', t('pages.support.title'))
 })
 </script>
