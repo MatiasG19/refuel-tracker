@@ -66,7 +66,6 @@ import { useI18n } from 'vue-i18n'
 const router = useRouter()
 const refuelStore = useRefuelStore()
 const settingsStore = useSettingsStore()
-// eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
 const { t } = useI18n()
 
 const vehicle = ref<Vehicle>(new Vehicle())

@@ -43,7 +43,6 @@ const router = useRouter()
 const refuelStore = useRefuelStore()
 const settingsStore = useSettingsStore()
 const $q = useQuasar()
-// eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
 const { t } = useI18n()
 
 const vehicleData = computed(() => {
