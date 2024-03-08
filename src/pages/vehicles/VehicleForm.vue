@@ -113,9 +113,13 @@ onMounted(async () => {
 
   // Update title
   routePath = router.currentRoute.value.path.toLocaleLowerCase()
-  if (routePath.includes('/add')) emitter.emit('updateTitle', 'Add vehicle')
+  if (routePath.includes('/add'))
+    emitter.emit('updateTitle', t('pages.vehicles.vehicleForm.titleAddVehicle'))
   else if (routePath.includes('/edit'))
-    emitter.emit('updateTitle', 'Edit vehicle')
+    emitter.emit(
+      'updateTitle',
+      t('pages.vehicles.vehicleForm.titleEditVehicle')
+    )
 })
 </script>
 

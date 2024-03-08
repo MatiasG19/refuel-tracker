@@ -54,7 +54,7 @@ const vehicleData = computed(() => {
 emitter.on('showVehicleOptionsDialog', id =>
   optionsDialog([
     {
-      text: 'Show refuels',
+      text: t('pages.vehicles.vehicles.optionsDialog.showRefuels'),
       icon: 'local_gas_station',
       action: () => {
         ;(async () => {
@@ -66,24 +66,26 @@ emitter.on('showVehicleOptionsDialog', id =>
       }
     },
     {
-      text: 'Edit',
+      text: t('pages.vehicles.vehicles.optionsDialog.edit'),
       icon: 'edit',
       action: () => {
         router.push({ path: `/vehicles/edit/${id}`, params: { id } })
       }
     },
     {
-      text: 'Delete',
+      text: t('pages.vehicles.vehicles.optionsDialog.delete'),
       icon: 'delete',
       action: () =>
         confirmDialog(
-          'Delete vehicle?',
+          t('pages.vehicles.vehicles.optionsDialog.deleteVehicle'),
           (id: number) => {
             $q.loading.show({
               delay: 400,
               spinnerColor: 'accent',
               messageColor: 'accent',
-              message: 'Deleting vehicle'
+              message: t(
+                'pages.vehicles.vehicles.optionsDialog.deletingVehicle'
+              )
             })
             ;(async () =>
               await refuelStore
@@ -103,7 +105,7 @@ async function selectVehicle(vehicle: Vehicle) {
 }
 
 onMounted(async () => {
-  emitter.emit('updateTitle', 'Vehicles')
+  emitter.emit('updateTitle', t('pages.vehicles.vehicles.title'))
   await refuelStore.readVehicles()
 })
 
