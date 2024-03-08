@@ -27,5 +27,18 @@ export default {
   form: {
     cancel: 'Abbrechen',
     confirm: 'Bestätigen'
+  },
+  pages: {
+    vehicles: {
+      vehicles: {
+        addVehicle: 'Fahrzeug hinzufügen'
+      },
+      vehicleForm: {
+        vehicleName: 'Fahrzeugname',
+        licensePlate: 'Kennzeichen',
+        fuelUnit: 'Kraftstoffeinheit',
+        currencyUnit: 'Währung'
+      }
+    }
   }
 }

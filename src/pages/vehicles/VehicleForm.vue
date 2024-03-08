@@ -3,13 +3,13 @@
     <q-form @submit="onSubmit" class="q-pa-md q-gutter-md">
       <c-input
         v-model="vehicle.name"
-        :label="t('vehicleName')"
+        :label="t('pages.vehicles.vehicleForm.vehicleName')"
         :rules="[requiredFieldRule, max50Characters]"
         autofocus
       />
       <c-input
         v-model="vehicle.plateNumber"
-        :label="t('licensePlate')"
+        :label="t('pages.vehicles.vehicleForm.licensePlate')"
         :rules="[requiredFieldRule]"
       />
       <c-select
@@ -17,12 +17,12 @@
         class="q-pb-md"
         v-model="vehicle.fuelUnitId"
         :options="fuelUnits"
-        :label="t('fuelUnit')"
+        :label="t('pages.vehicles.vehicleForm.fuelUnit')"
       />
       <c-input
         class="q-pb-md"
         v-model="vehicle.currencyUnit"
-        :label="t('currencyUnit')"
+        :label="t('pages.vehicles.vehicleForm.currencyUnit')"
         :rules="[requiredFieldRule]"
       />
 
@@ -62,14 +62,6 @@ import { useSettingsStore } from 'src/stores/settingsStore'
 import { useRefuelStore } from 'src/stores/refuelStore'
 import { Vehicle } from 'src/scripts/libraries/refuel/models'
 import { useI18n } from 'vue-i18n'
-import i18nMessages from './i18n'
-
-defineOptions({
-  i18n: {
-   // eslint-disable-next-line  @typescript-eslint/no-unsafe-assignment
-    messages: i18nMessages
-  }
-})
 
 const router = useRouter()
 const refuelStore = useRefuelStore()

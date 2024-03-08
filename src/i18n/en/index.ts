@@ -27,5 +27,18 @@ export default {
   form: {
     cancel: 'Cancel',
     confirm: 'Confirm'
+  },
+  pages: {
+    vehicles: {
+      vehicles: {
+        addVehicle: 'Add vehicle'
+      },
+      vehicleForm: {
+        vehicleName: 'Vehicle name',
+        licensePlate: 'License plate',
+        fuelUnit: 'Fuel unit',
+        currencyUnit: 'Currency'
+      }
+    }
   }
 }

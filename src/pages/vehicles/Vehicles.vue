@@ -6,7 +6,7 @@
       </div>
       <q-btn
         color="accent"
-        label="Add vehicle"
+        :label="t('pages.vehicles.vehicles.addVehicle')"
         icon-right="add"
         unelevated
         no-caps
@@ -37,11 +37,14 @@ import { useSettingsStore } from 'src/stores/settingsStore'
 import { useRefuelStore } from 'src/stores/refuelStore'
 import { Vehicle } from 'src/scripts/libraries/refuel/models'
 import { useQuasar } from 'quasar'
+import { useI18n } from 'vue-i18n'
 
 const router = useRouter()
 const refuelStore = useRefuelStore()
 const settingsStore = useSettingsStore()
 const $q = useQuasar()
+// eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
+const { t } = useI18n()
 
 const vehicleData = computed(() => {
   if (refuelStore.vehicles) return refuelStore.getAllVehicleData()
