@@ -119,7 +119,11 @@ let openDocumentTreeResultAction: OpenDocumentTreeResultAction
 const settingsStore = useSettingsStore()
 
 const currentLanguage = ref(1)
-const languageOptions = ref<SelectOption[]>([ { label: 'System', value: 1}, { label: 'English', value: 2}, { label: 'Deutsch', value: 3}])
+const languageOptions = ref<SelectOption[]>([
+  { label: 'System', value: 1 },
+  { label: 'English', value: 2 },
+  { label: 'Deutsch', value: 3 }
+])
 const colorThemeOptions = [
   {
     label: 'Space Station',
