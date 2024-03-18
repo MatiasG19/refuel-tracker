@@ -37,7 +37,7 @@
     "@capacitor/local-notifications": "^5.0.7",
     "@intlify/vite-plugin-vue-i18n": "^7.0.0",
     "@quasar/app-vite": "^1.8.0",
-    "@types/node": "^20.11.25",
+    "@types/node": "^20.11.28",
     "@typescript-eslint/eslint-plugin": "^7.2.0",
     "@typescript-eslint/parser": "^7.3.0",
     "autoprefixer": "^10.4.17",
