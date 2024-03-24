@@ -98,8 +98,7 @@ jobs:
 
       - name: Set version in build.gradle
         if: ${{ github.event_name == 'release' || github.event_name == 'workflow_dispatch' }}
-        working-directory: src-capacitor/android/app
-        run: sed -i "s/versionName \"1.0\"/versionName \"$TAG\"/" build.gradle
+        run: node ./modifyBuildGradle.mjs $TAG
 
       - name: Build apk and aab
         run: yarn appbuild
