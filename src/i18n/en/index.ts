@@ -28,6 +28,15 @@ export default {
     cancel: 'Cancel',
     confirm: 'Confirm'
   },
+  layouts: {
+    main: {
+      graphs: 'Graphs',
+      vehicles: 'Vehicles',
+      refuels: 'Refuels',
+      settings: 'Settings',
+      helpAndSupport: 'Help and Support'
+    }
+  },
   pages: {
     vehicles: {
       vehicles: {

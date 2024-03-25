@@ -108,43 +108,46 @@ import { emitter } from 'src/boot/mitt'
 import { useSettingsStore } from 'src/stores/settingsStore'
 import { Keyboard } from '@capacitor/keyboard'
 import { Platform } from 'quasar'
+import { useI18n } from 'vue-i18n'
+
+const router = useRouter()
+const settingsStore = useSettingsStore()
+const routePath = computed(() => router.currentRoute.value.path)
+const { t } = useI18n()
 
 const linkList = [
   {
-    title: 'Graphs',
+    title: `${t('layouts.main.graphs')}`,
     caption: '',
     icon: 'bar_chart',
     link: '/'
   },
   {
-    title: 'Vehicles',
+    title: `${t('layouts.main.vehicles')}`,
     caption: '',
     icon: 'drive_eta',
     link: '/vehicles'
   },
   {
-    title: 'Refuels',
+    title: `${t('layouts.main.refuels')}`,
     caption: '',
     icon: 'local_gas_station',
     link: '/refuels'
   },
   {
-    title: 'Settings',
+    title: `${t('layouts.main.settings')}`,
     caption: '',
     icon: 'settings',
     link: '/settings'
   },
   {
-    title: 'Help and Support',
+    title: `${t('layouts.main.helpAndSupport')}`,
     caption: '',
     icon: 'favorite_outline',
     link: '/support'
   }
 ]
 
-const router = useRouter()
-const settingsStore = useSettingsStore()
-const routePath = computed(() => router.currentRoute.value.path)
 const footerVisible = ref(true)
 emitter.on('updateTitle', e => (title.value = e))
 
