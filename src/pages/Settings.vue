@@ -1,42 +1,31 @@
 <template>
   <div class="q-pa-md q-gutter-md">
     <q-list>
-      <template v-if="false">
-        <q-item-label header>Themes</q-item-label>
+      <q-item-label header>{{
+        t('pages.settings.sections.settings.title')
+      }}</q-item-label>
+      <q-list class="q-pb-md">
         <c-select
+          v-model="currentLanguage"
+          :options="languageOptions"
+          class="q-pb-md"
+          :label="t('pages.settings.sections.settings.language')"
+        />
+
+        <c-select
+          v-if="false"
           class="q-pb-md"
           v-model="colorTheme"
           @update:model-value="changeColorTheme"
           :options="colorThemeOptions"
-          label="Color theme"
+          :label="t('pages.settings.sections.settings.colorTheme')"
         />
 
-        <q-separator spaced />
-      </template>
-
-      <q-item-label header>Settings</q-item-label>
-      <q-list class="q-pb-md">
         <q-item tag="label">
           <q-item-section>
-            <q-item-label>Language</q-item-label>
-          </q-item-section>
-          <q-item-section avatar>
-            <c-select
-              v-model="currentLanguage"
-              :options="languageOptions"
-              class="q-pb-md"
-              label=""
-              standout="text-white"
-              bg-color="accent"
-              color="accent"
-              dense
-            />
-          </q-item-section>
-        </q-item>
-
-        <q-item tag="label">
-          <q-item-section>
-            <q-item-label>Show number plate title</q-item-label>
+            <q-item-label>{{
+              t('pages.settings.sections.settings.licensePlateInTitle')
+            }}</q-item-label>
           </q-item-section>
           <q-item-section avatar>
             <q-toggle
@@ -48,12 +37,16 @@
         </q-item>
       </q-list>
 
-      <q-item-label header>Backup</q-item-label>
+      <q-item-label header>{{
+        t('pages.settings.sections.backup.title')
+      }}</q-item-label>
       <q-list class="q-pb-md">
         <template v-if="false">
           <q-item tag="label">
             <q-item-section>
-              <q-item-label>Auto backup</q-item-label>
+              <q-item-label>{{
+                t('pages.settings.sections.backup.autoBackup')
+              }}</q-item-label>
             </q-item-section>
             <q-item-section avatar>
               <q-toggle
@@ -66,11 +59,13 @@
 
           <q-item tag="label">
             <q-item-section>
-              <q-item-label>Auto backup folder</q-item-label>
+              <q-item-label>{{
+                t('pages.settings.sections.backup.autoBackupFolder')
+              }}</q-item-label>
             </q-item-section>
             <q-item-section avatar>
               <q-btn
-                label="Change"
+                :label="t('pages.settings.sections.backup.change')"
                 color="positive"
                 :disable="!autoBackup"
                 @click="chooseAutoBackupFolder"
@@ -80,19 +75,31 @@
         </template>
         <q-item tag="label">
           <q-item-section>
-            <q-item-label>Export</q-item-label>
+            <q-item-label>{{
+              t('pages.settings.sections.backup.export')
+            }}</q-item-label>
           </q-item-section>
           <q-item-section avatar>
-            <q-btn label="Export" color="positive" @click="exportBackup" />
+            <q-btn
+              :label="t('pages.settings.sections.backup.export')"
+              color="positive"
+              @click="exportBackup"
+            />
           </q-item-section>
         </q-item>
 
         <q-item tag="label">
           <q-item-section>
-            <q-item-label>Import</q-item-label>
+            <q-item-label>{{
+              t('pages.settings.sections.backup.import')
+            }}</q-item-label>
           </q-item-section>
           <q-item-section avatar>
-            <q-btn label="Import" color="positive" @click="importBackup" />
+            <q-btn
+              :label="t('pages.settings.sections.backup.import')"
+              color="positive"
+              @click="importBackup"
+            />
           </q-item-section>
         </q-item>
       </q-list>
@@ -109,14 +116,16 @@ import { exportDB, importDB } from 'src/scripts/libraries/backup/backup'
 import { FilePicker } from 'src/plugins/capacitor-file-picker'
 import { Notify, Platform } from 'quasar'
 import { SelectOption } from 'src/scripts/models'
+import { useI18n } from 'vue-i18n'
+
+const { t } = useI18n()
+const settingsStore = useSettingsStore()
 
 type GetContentResultAction = (result: { path: string }) => void
 let getContentResultAction: GetContentResultAction
 
 type OpenDocumentTreeResultAction = (result: { path: string }) => void
 let openDocumentTreeResultAction: OpenDocumentTreeResultAction
-
-const settingsStore = useSettingsStore()
 
 const currentLanguage = ref(1)
 const languageOptions = ref<SelectOption[]>([
@@ -216,7 +225,7 @@ async function importBackup() {
 }
 
 onMounted(() => {
-  emitter.emit('updateTitle', 'Settings')
+  emitter.emit('updateTitle', t('pages.settings.title'))
   if (Platform.is.mobile) {
     FilePicker.addListener('getContentResult', res => {
       getContentResultAction(res)
