@@ -31,7 +31,7 @@
     "vue-router": "^4.3.0"
   },
   "devDependencies": {
-    "@capacitor/core": "^5.7.3",
+    "@capacitor/core": "^5.7.4",
     "@capacitor/filesystem": "^5.2.1",
     "@capacitor/keyboard": "^5.0.8",
     "@capacitor/local-notifications": "^5.0.7",
