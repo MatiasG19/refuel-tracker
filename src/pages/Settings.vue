@@ -122,6 +122,7 @@ import {
   getLanguageOptions,
   getLanguages
 } from 'src/scripts/staticData/languages'
+import { Device } from '@capacitor/device'
 
 const { t, locale } = useI18n()
 const settingsStore = useSettingsStore()
@@ -177,11 +178,12 @@ function changeColorTheme(value: number) {
   settingsStore.changeColorTheme(value)
 }
 
-function changeLanguage(value: number) {
+async function changeLanguage(value: number) {
   settingsStore.changeLanguage(value)
   const lang = getLanguages().find(l => l.id === value)
   if (lang) {
-    locale.value = lang.code
+    if (lang.id === 1) locale.value = (await Device.getLanguageCode()).value
+    else locale.value = lang.code
     emitter.emit('updateTitle', t('pages.settings.title'))
   }
 }

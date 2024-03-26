@@ -109,6 +109,7 @@ import { useSettingsStore } from 'src/stores/settingsStore'
 import { Keyboard } from '@capacitor/keyboard'
 import { Platform } from 'quasar'
 import { useI18n } from 'vue-i18n'
+import { initSettingsLate } from 'src/scripts/initSettingsLate'
 
 const router = useRouter()
 const settingsStore = useSettingsStore()
@@ -178,6 +179,7 @@ function add() {
 }
 
 onMounted(() => {
+  initSettingsLate()
   if (Platform.is.mobile) {
     addKeyboardListeners()
   }
