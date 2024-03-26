@@ -79,7 +79,7 @@ export default {
       }
     },
     support: {
-      title: 'Support',
+      title: 'Help and Support',
       greetingPart1: 'Thank you',
       greetingPart2: 'for using',
       greetingPart3: '! I hope you have been enjoying the app so far',

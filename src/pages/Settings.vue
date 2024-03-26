@@ -7,6 +7,7 @@
       <q-list class="q-pb-md">
         <c-select
           v-model="currentLanguage"
+          @update:model-value="changeLanguage"
           :options="languageOptions"
           class="q-pb-md"
           :label="t('pages.settings.sections.settings.language')"
@@ -117,8 +118,12 @@ import { FilePicker } from 'src/plugins/capacitor-file-picker'
 import { Notify, Platform } from 'quasar'
 import { SelectOption } from 'src/scripts/models'
 import { useI18n } from 'vue-i18n'
+import {
+  getLanguageOptions,
+  getLanguages
+} from 'src/scripts/staticData/languages'
 
-const { t } = useI18n()
+const { t, locale } = useI18n()
 const settingsStore = useSettingsStore()
 
 type GetContentResultAction = (result: { path: string }) => void
@@ -128,11 +133,7 @@ type OpenDocumentTreeResultAction = (result: { path: string }) => void
 let openDocumentTreeResultAction: OpenDocumentTreeResultAction
 
 const currentLanguage = ref(1)
-const languageOptions = ref<SelectOption[]>([
-  { label: 'System', value: 1 },
-  { label: 'English', value: 2 },
-  { label: 'Deutsch', value: 3 }
-])
+const languageOptions = ref<SelectOption[]>(getLanguageOptions())
 const colorThemeOptions = [
   {
     label: 'Space Station',
@@ -174,6 +175,15 @@ const autoBackup = ref(settingsStore.autoBackupActive)
 
 function changeColorTheme(value: number) {
   settingsStore.changeColorTheme(value)
+}
+
+function changeLanguage(value: number) {
+  settingsStore.changeLanguage(value)
+  const lang = getLanguages().find(l => l.id === value)
+  if (lang) {
+    locale.value = lang.code
+    emitter.emit('updateTitle', t('pages.settings.title'))
+  }
 }
 
 // function changeDistanceUnit(value: number) {
@@ -226,6 +236,7 @@ async function importBackup() {
 
 onMounted(() => {
   emitter.emit('updateTitle', t('pages.settings.title'))
+  currentLanguage.value = settingsStore.selectedLanguageId
   if (Platform.is.mobile) {
     FilePicker.addListener('getContentResult', res => {
       getContentResultAction(res)

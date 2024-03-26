@@ -30,7 +30,7 @@ export default {
   },
   layouts: {
     main: {
-      graphs: 'Graphs',
+      graphs: 'Graphen',
       vehicles: 'Fahrzeuge',
       refuels: 'Betankungen',
       settings: 'Einstellungen',
@@ -79,7 +79,7 @@ export default {
       }
     },
     support: {
-      title: 'Unterstützung',
+      title: 'Hilfe und Unterstützung',
       greetingPart1: 'Danke',
       greetingPart2: 'fürs Benutzen des',
       greetingPart3: '! Ich hoffe Dir gefällt die App soweit',
@@ -88,8 +88,8 @@ export default {
       slide3: 'Gefällt Dir das  Projekt? Schenke einen Stern!',
       slide4:
         'Bewerte die App oder hinterlasse Feedback, um die App zu verbessern!',
-      version: 'version',
-      btnLicense: 'View license on GitHub'
+      version: 'Version',
+      btnLicense: 'Lizenz auf GitHub einsehen'
     }
   }
 }

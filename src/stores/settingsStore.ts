@@ -13,6 +13,7 @@ export const useSettingsStore = defineStore('settingsStore', () => {
   const autoBackupActive = ref<boolean>(false)
   const autoBackupPath = ref<string>('')
   const selectedColorThemeId = ref<number>(1)
+  const selectedLanguageId = ref<number>(1)
 
   function changeDistanceUnit(distanceUnitId: number) {
     ;(async () => {
@@ -79,6 +80,15 @@ export const useSettingsStore = defineStore('settingsStore', () => {
     })()
   }
 
+  function changeLanguage(languageId: number) {
+    ;(async () => {
+      const settings = await db.settings.toArray()
+      settings[0].languageId = languageId
+      await db.settings.put(settings[0])
+      selectedLanguageId.value = languageId
+    })()
+  }
+
   return {
     selectedDistanceUnitId,
     selectedVehicleId,
@@ -88,11 +98,13 @@ export const useSettingsStore = defineStore('settingsStore', () => {
     autoBackupActive,
     autoBackupPath,
     selectedColorThemeId,
+    selectedLanguageId,
     changeDistanceUnit,
     changeSelectedVehicle,
     togglePlateNumberInTitle,
     toggleAutoBackup,
     setAutoBackupPath,
-    changeColorTheme
+    changeColorTheme,
+    changeLanguage
   }
 })
