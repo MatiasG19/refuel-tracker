@@ -136,7 +136,7 @@ export default {
       }
     },
     support: {
-      title: 'Hilfe und Unterstützung',
+      title: 'Hilfe und Support',
       greetingPart1: 'Danke',
       greetingPart2: 'fürs Benutzen von',
       greetingPart3: '! Ich hoffe Dir gefällt die App soweit',
