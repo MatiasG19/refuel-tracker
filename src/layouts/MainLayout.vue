@@ -116,38 +116,38 @@ const settingsStore = useSettingsStore()
 const routePath = computed(() => router.currentRoute.value.path)
 const { t } = useI18n()
 
-const linkList = [
+const linkList = ref([
   {
-    title: `${t('layouts.main.graphs')}`,
+    title: computed(() => `${t('layouts.main.graphs')}`),
     caption: '',
     icon: 'bar_chart',
     link: '/'
   },
   {
-    title: `${t('layouts.main.vehicles')}`,
+    title: computed(() => `${t('layouts.main.vehicles')}`),
     caption: '',
     icon: 'drive_eta',
     link: '/vehicles'
   },
   {
-    title: `${t('layouts.main.refuels')}`,
+    title: computed(() => `${t('layouts.main.refuels')}`),
     caption: '',
     icon: 'local_gas_station',
     link: '/refuels'
   },
   {
-    title: `${t('layouts.main.settings')}`,
+    title: computed(() => `${t('layouts.main.settings')}`),
     caption: '',
     icon: 'settings',
     link: '/settings'
   },
   {
-    title: `${t('layouts.main.helpAndSupport')}`,
+    title: computed(() => `${t('layouts.main.helpAndSupport')}`),
     caption: '',
     icon: 'favorite_outline',
     link: '/support'
   }
-]
+])
 
 const footerVisible = ref(true)
 emitter.on('updateTitle', e => (title.value = e))
