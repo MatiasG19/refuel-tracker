@@ -69,7 +69,7 @@ jobs:
           node-version: 20.x
 
       - name: Install app dependencies
-        run: npm run ci
+        run: npm ci
 
       - name: Install capacitor dependencies
         working-directory: src-capacitor
