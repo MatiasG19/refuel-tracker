@@ -18,20 +18,23 @@ export class RefuelTrackerDexie extends Dexie {
       vehicles: '++id, name, plateNumber, fuelUnitId',
       refuels:
         '++id, date, refuelAmount, payedAmount, distanceDriven, vehicleId',
-      refuelFilters: '++id, name, active, dateFrom, dateUntil',
       settings:
         '++id, colorThemeId, distanceUnitId, vehicleId, plateNumberInTitleActive, autoBackupActive, autoBackupPath, lastUpdateCheck, languageId'
     })
-    this.version(2).upgrade(tx => {
-      this.insertRefuelFilter()
-      return tx
-        .table('settings')
-        .toCollection()
-        .modify(setting => {
-          // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access
-          delete setting.refuelFilterActive
-        })
-    })
+    this.version(2)
+      .stores({
+        refuelFilters: '++id, name, active, dateFrom, dateUntil'
+      })
+      .upgrade(tx => {
+        this.insertRefuelFilter()
+        return tx
+          .table('settings')
+          .toCollection()
+          .modify(setting => {
+            // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access
+            delete setting.refuelFilterActive
+          })
+      })
 
     // Only called on very first database creation
     this.on('populate', () => {
