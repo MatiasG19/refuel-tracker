@@ -1,9 +1,9 @@
 export default {
   periods: {
-    week: 'Week',
-    threeMonths: '3 Months',
-    sixMonths: '6 Months',
-    year: 'Year',
+    week: 'Woche',
+    threeMonths: '3 Monate',
+    sixMonths: '6 Monate',
+    year: 'Jahr',
     max: 'Max'
   },
   distanceUnits: {
@@ -11,8 +11,8 @@ export default {
     milesShort: 'mi'
   },
   fuelUnits: {
-    litre: 'Litre',
-    gallon: 'Gallon',
+    litre: 'Liter',
+    gallon: 'Gallonen',
     kWh: 'kWh',
     wh: 'Wh'
   },
@@ -22,7 +22,7 @@ export default {
     mpgImperial: 'MPG Imperial',
     kWhPer100km: 'kWh/100km',
     whPer100km: 'Wh/100km',
-    whPerMile: ' Wh/mile'
+    whPerMile: ' Wh/Mile'
   },
   components: {
     dialogs: {
