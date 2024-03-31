@@ -69,7 +69,7 @@ export default {
       refuels: {
         title: 'Betankungen',
         optionsDialog: {
-          edit: 'Editieren',
+          edit: 'Bearbeiten',
           delete: 'Löschen',
           deleteRefuel: 'Eintrag löschen?',
           deletingRefuel: 'Eintrag wird gelöscht'
@@ -77,7 +77,7 @@ export default {
       },
       refuelsForm: {
         titleAddRefuel: 'Betankung hinzufügen',
-        titleEditRefuel: 'Betankung editieren',
+        titleEditRefuel: 'Betankung bearbeiten',
         payedAmount: 'Gezahlter Betrag',
         distanceDriven: 'Gefahrene Distanz',
         refueledAmount: 'Getankte Menge',
@@ -101,7 +101,7 @@ export default {
         title: 'Fahrzeuge',
         optionsDialog: {
           showRefuels: 'Betankungen anzeigen',
-          edit: 'Editieren',
+          edit: 'Bearbeiten',
           delete: 'Löschen',
           deleteVehicle: 'Fahrzeug löschen?',
           deletingVehicle: 'Fahrzeug wird gelöscht'
@@ -113,7 +113,7 @@ export default {
         fuelUnit: 'Kraftstoffeinheit',
         currencyUnit: 'Währung',
         titleAddVehicle: 'Fahrzeug hinzufügen',
-        titleEditVehicle: 'Fahrzeug editieren'
+        titleEditVehicle: 'Fahrzeug bearbeiten'
       }
     },
     settings: {
