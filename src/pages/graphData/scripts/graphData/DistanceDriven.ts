@@ -1,6 +1,7 @@
 import { vehicleDistanceDriven } from 'src/scripts/libraries/refuel/functions/vehicle'
 import { Vehicle } from 'src/scripts/libraries/refuel/models'
 import { AbstractGraphData } from '../abstract/AbstractGraphData'
+import { i18n } from 'src/boot/i18n'
 
 export class DistanceDriven extends AbstractGraphData {
   constructor(protected vehicle: Vehicle) {
@@ -8,7 +9,8 @@ export class DistanceDriven extends AbstractGraphData {
   }
 
   protected setTitle(): string {
-    return 'Distance driven'
+    const { t } = i18n.global
+    return t('pages.graphData.distanceDriven')
   }
 
   protected calculateValue(vehicle: Vehicle): string {

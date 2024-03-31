@@ -37,6 +37,10 @@ export default {
     confirm: 'Confirm',
     filter: 'Filtern'
   },
+  placeholders: {
+    addRefuel: 'Add refuel',
+    addVehicle: 'Add vehicle'
+  },
   layouts: {
     main: {
       graphs: 'Graphs',
@@ -47,6 +51,20 @@ export default {
     }
   },
   pages: {
+    graphData: {
+      distanceDriven: 'Distance driven',
+      fuelBurnt: 'Fuel burnt',
+      fuelConsumption: 'Fuel consumption',
+      fuelPricing: 'Fuel pricing',
+      moneySpent: 'Money spent',
+      refuelsMade: 'Refuels made',
+      optionsInDialog: {
+        moveTop: 'Move top',
+        moveUp: 'Move up',
+        moveDown: 'Move down',
+        moveBottom: 'Move bottom'
+      }
+    },
     refuels: {
       refuels: {
         title: 'Refuels'
@@ -70,7 +88,6 @@ export default {
     vehicles: {
       vehicles: {
         title: 'Vehicles',
-        addVehicle: 'Add vehicle',
         optionsDialog: {
           showRefuels: 'Show refuels',
           edit: 'Edit',

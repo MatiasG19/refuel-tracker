@@ -37,6 +37,10 @@ export default {
     confirm: 'Bestätigen',
     filter: 'Filtern'
   },
+  placeholders: {
+    addRefuel: 'Betankung hinzufügen',
+    addVehicle: 'Fahrzeug hinzufügen'
+  },
   layouts: {
     main: {
       graphs: 'Graphen',
@@ -47,6 +51,20 @@ export default {
     }
   },
   pages: {
+    graphData: {
+      distanceDriven: 'Gefahrene Distanz',
+      fuelBurnt: 'Verbrauchter Kraftstoff',
+      fuelConsumption: 'Verbrauch',
+      fuelPricing: 'Kraftstoffpreis',
+      moneySpent: 'Ausgegebenes Geld',
+      refuelsMade: 'Anzahl Betankungen',
+      optionsInDialog: {
+        moveTop: 'Ganz nach oben',
+        moveUp: 'Eins höher',
+        moveDown: 'Eins tiefer',
+        moveBottom: 'Ganz nach unten'
+      }
+    },
     refuels: {
       refuels: {
         title: 'Betankungen'
@@ -75,7 +93,6 @@ export default {
     vehicles: {
       vehicles: {
         title: 'Fahrzeuge',
-        addVehicle: 'Fahrzeug hinzufügen',
         optionsDialog: {
           showRefuels: 'Betankungen anzeigen',
           edit: 'Editieren',

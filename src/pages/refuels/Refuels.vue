@@ -13,7 +13,7 @@
       </div>
       <q-btn
         color="accent"
-        label="Add refuel"
+        :label="t('placeholders.addRefuel')"
         icon-right="add"
         unelevated
         no-caps
@@ -27,7 +27,7 @@
       </div>
       <q-btn
         color="accent"
-        label="Add vehicle"
+        :label="t('placeholders.addVehicle')"
         icon-right="add"
         unelevated
         no-caps

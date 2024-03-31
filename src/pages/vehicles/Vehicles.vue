@@ -6,7 +6,7 @@
       </div>
       <q-btn
         color="accent"
-        :label="t('pages.vehicles.vehicles.addVehicle')"
+        :label="t('placeholders.addVehicle')"
         icon-right="add"
         unelevated
         no-caps
