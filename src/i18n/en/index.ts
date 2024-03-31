@@ -24,6 +24,14 @@ export default {
     whPer100km: 'Wh/100km',
     whPerMile: ' Wh/mile'
   },
+  components: {
+    dialogs: {
+      confirmDialog: {
+        cancel: 'Cancel',
+        confirm: 'Confirm'
+      }
+    }
+  },
   form: {
     cancel: 'Cancel',
     confirm: 'Confirm'

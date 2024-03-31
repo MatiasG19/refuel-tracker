@@ -24,6 +24,14 @@ export default {
     whPer100km: 'Wh/100km',
     whPerMile: ' Wh/mile'
   },
+  components: {
+    dialogs: {
+      confirmDialog: {
+        cancel: 'Abbrechen',
+        confirm: 'Bestätigen'
+      }
+    }
+  },
   form: {
     cancel: 'Abbrechen',
     confirm: 'Bestätigen'
@@ -43,7 +51,7 @@ export default {
         title: 'Fahrzeuge',
         addVehicle: 'Fahrzeug hinzufügen',
         optionsDialog: {
-          showRefuels: 'Zeige Betankungen',
+          showRefuels: 'Betankungen anzeigen',
           edit: 'Editieren',
           delete: 'Löschen',
           deleteVehicle: 'Fahrzeug löschen?',
