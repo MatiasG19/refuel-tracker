@@ -2,9 +2,7 @@ import fs from 'fs'
 import path from 'path'
 import process from 'process'
 
-function modifyPackageJson(
-  version
-) {
+function modifyPackageJson(version) {
   const filePath = path.resolve(process.cwd(), 'package.json')
   const file = fs.readFileSync(filePath, 'utf8')
   const newFile = JSON.parse(file)
@@ -18,7 +16,7 @@ function modifyPackageJson(
 }
 
 function main() {
-  var args = process.argv.slice(2);
+  var args = process.argv.slice(2)
   modifyPackageJson(args[0])
 }
 
