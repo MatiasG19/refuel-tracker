@@ -41,17 +41,9 @@ export default {
     addRefuel: 'Betankung hinzufügen',
     addVehicle: 'Fahrzeug hinzufügen'
   },
-  layouts: {
-    main: {
-      graphs: 'Graphen',
-      vehicles: 'Fahrzeuge',
-      refuels: 'Betankungen',
-      settings: 'Einstellungen',
-      helpAndSupport: 'Hilfe und Support'
-    }
-  },
   pages: {
     graphData: {
+      title: 'Graphen',
       distanceDriven: 'Gefahrene Distanz',
       fuelBurnt: 'Verbrauchter Kraftstoff',
       fuelConsumption: 'Verbrauch',

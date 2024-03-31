@@ -41,17 +41,9 @@ export default {
     addRefuel: 'Add refuel',
     addVehicle: 'Add vehicle'
   },
-  layouts: {
-    main: {
-      graphs: 'Graphs',
-      vehicles: 'Vehicles',
-      refuels: 'Refuels',
-      settings: 'Settings',
-      helpAndSupport: 'Help and Support'
-    }
-  },
   pages: {
     graphData: {
+      title: 'Graphs',
       distanceDriven: 'Distance driven',
       fuelBurnt: 'Fuel burnt',
       fuelConsumption: 'Fuel consumption',
