@@ -67,7 +67,13 @@ export default {
     },
     refuels: {
       refuels: {
-        title: 'Refuels'
+        title: 'Refuels',
+        optionsDialog: {
+          edit: 'Edit',
+          delete: 'Delete',
+          deleteRefuel: 'Delete refuel entry?',
+          deletingRefuel: 'Deleting refuel entry'
+        }
       },
       refuelsForm: {
         titleAddRefuel: 'Add refuel',

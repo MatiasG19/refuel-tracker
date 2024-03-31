@@ -67,7 +67,13 @@ export default {
     },
     refuels: {
       refuels: {
-        title: 'Betankungen'
+        title: 'Betankungen',
+        optionsDialog: {
+          edit: 'Editieren',
+          delete: 'Löschen',
+          deleteRefuel: 'Eintrag löschen?',
+          deletingRefuel: 'Eintrag wird gelöscht'
+        }
       },
       refuelsForm: {
         titleAddRefuel: 'Betankung hinzufügen',

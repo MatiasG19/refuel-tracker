@@ -146,18 +146,18 @@ function removeFilter() {
 emitter.on('showRefuelOptionsDialog', id =>
   optionsDialog([
     {
-      text: 'Edit',
+      text: t('pages.refuels.refuels.optionsDialog.edit'),
       icon: 'edit',
       action: () => {
         router.push({ path: `/refuels/edit/${id}`, params: { id } })
       }
     },
     {
-      text: 'Delete',
+      text: t('pages.refuels.refuels.optionsDialog.delete'),
       icon: 'delete',
       action: () =>
         confirmDialog(
-          'Delete refuel entry?',
+          t('pages.refuels.refuels.optionsDialog.deleteRefuel'),
           (id: number) => {
             ;(async () =>
               await refuelStore
