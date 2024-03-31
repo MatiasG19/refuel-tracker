@@ -34,7 +34,8 @@ export default {
   },
   form: {
     cancel: 'Abbrechen',
-    confirm: 'Bestätigen'
+    confirm: 'Bestätigen',
+    filter: 'Filtern'
   },
   layouts: {
     main: {
@@ -46,6 +47,31 @@ export default {
     }
   },
   pages: {
+    refuels: {
+      refuels: {
+        title: 'Betankungen'
+      },
+      refuelsForm: {
+        titleAddRefuel: 'Betankung hinzufügen',
+        titleEditRefuel: 'Betankung editieren',
+        payedAmount: 'Gezahlter Betrag',
+        distanceDriven: 'Gefahrene Distanz',
+        refueledAmount: 'Getankte Menge',
+        refuelDate: 'Datum',
+        close: 'Schließen',
+        refuelTime: 'Uhrzeit'
+      },
+      filterRefuelsForm: {
+        title: 'Betankungen filtern',
+        filterFrom: 'Filtern von',
+        filterUntil: 'Filtern bis'
+      }
+    },
+    filterRefuelsForm: {
+      title: 'Betankungen filtern',
+      filterFrom: 'Filtern von',
+      filterTo: 'Filtern bis'
+    },
     vehicles: {
       vehicles: {
         title: 'Fahrzeuge',

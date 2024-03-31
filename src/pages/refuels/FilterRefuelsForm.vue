@@ -4,7 +4,7 @@
       <c-input
         color="accent"
         :value="filterDateFrom"
-        label="Filter from"
+        :label="t('pages.refuels.filterRefuelsForm.filterFrom')"
         :rules="[requiredFieldRule]"
       >
         <q-popup-proxy transition-show="scale" transition-hide="scale">
@@ -21,7 +21,7 @@
       <c-input
         color="accent"
         :value="filterDateUntil"
-        label="Filter until"
+        :label="t('pages.refuels.filterRefuelsForm.filterUntil')"
         :rules="[requiredFieldRule]"
       >
         <q-popup-proxy transition-show="scale" transition-hide="scale">
@@ -38,7 +38,7 @@
       <div class="row">
         <q-btn
           color="negative"
-          label="Cancel"
+          :label="t('form.cancel')"
           no-caps
           class="form-btn"
           @click="$router.push('/refuels')"
@@ -46,7 +46,7 @@
         <q-space />
         <q-btn
           color="positive"
-          label="Filter"
+          :label="t('form.filter')"
           type="submit"
           no-caps
           class="form-btn"
@@ -64,9 +64,11 @@ import { emitter } from 'src/boot/mitt'
 import { requiredFieldRule } from 'src/scripts/libraries/validation'
 import { useRefuelFilterStore } from './stores/refuelFilterStore'
 import CInput from 'src/components/inputs/CInput.vue'
+import { useI18n } from 'vue-i18n'
 
 const router = useRouter()
 const refuelFilterStore = useRefuelFilterStore()
+const { t } = useI18n()
 
 const filterDateFrom = computed(() => {
   return date.formatDate(refuelFilterStore.dateFrom, 'YYYY/MM/DD')
@@ -121,6 +123,6 @@ onBeforeMount(() => {
 })
 
 onMounted(() => {
-  emitter.emit('updateTitle', 'Filter refuels')
+  emitter.emit('updateTitle', t('pages.refuels.filterRefuelsForm.title'))
 })
 </script>

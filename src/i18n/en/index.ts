@@ -34,7 +34,8 @@ export default {
   },
   form: {
     cancel: 'Cancel',
-    confirm: 'Confirm'
+    confirm: 'Confirm',
+    filter: 'Filtern'
   },
   layouts: {
     main: {
@@ -46,6 +47,26 @@ export default {
     }
   },
   pages: {
+    refuels: {
+      refuels: {
+        title: 'Refuels'
+      },
+      refuelsForm: {
+        titleAddRefuel: 'Add refuel',
+        titleEditRefuel: 'Edit refuel',
+        payedAmount: 'Payed amount',
+        distanceDriven: 'Distance driven',
+        refueledAmount: 'Refueled amount',
+        refuelDate: 'Refuel date',
+        close: 'Close',
+        refuelTime: 'Refuel time'
+      },
+      filterRefuelsForm: {
+        title: 'Filter refuels',
+        filterFrom: 'Filter from',
+        filterUntil: 'Filter until'
+      }
+    },
     vehicles: {
       vehicles: {
         title: 'Vehicles',

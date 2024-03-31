@@ -92,11 +92,13 @@ import { Refuel, Vehicle } from 'src/scripts/libraries/refuel/models'
 import { vehicleFuelConsumption } from 'src/scripts/libraries/refuel/functions/vehicle'
 import { QVirtualScroll } from 'quasar'
 import { useRefuelFilterStore } from './stores/refuelFilterStore'
+import { useI18n } from 'vue-i18n'
 
 const router = useRouter()
 const refuelStore = useRefuelStore()
 const settingsStore = useSettingsStore()
 const refuelFilterStore = useRefuelFilterStore()
+const { t } = useI18n()
 
 const vehicle = ref<Vehicle>(new Vehicle())
 const vehiclesExists = settingsStore.selectedVehicleId
@@ -174,7 +176,7 @@ emitter.on('showRefuelOptionsDialog', id =>
 )
 
 onBeforeMount(async () => {
-  emitter.emit('updateTitle', 'Refuels')
+  emitter.emit('updateTitle', t('pages.refuels.refuels.title'))
 
   vehicleName.value = settingsStore.plateNumberInTitleActive
     ? settingsStore.selectedVehiclePlateNumber

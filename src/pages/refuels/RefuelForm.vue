@@ -8,7 +8,7 @@
         @update:modelValue="
           (evt: string) => (refuel.payedAmount = +replaceComma(evt))
         "
-        label="Payed amount"
+        :label="t('pages.refuels.refuelsForm.payedAmount')"
         :rules="[
           requiredFieldRule,
           numbersOnlyRule,
@@ -23,7 +23,7 @@
         @update:modelValue="
           (evt: string) => (refuel.distanceDriven = +replaceComma(evt))
         "
-        label="Distance driven"
+        :label="t('pages.refuels.refuelsForm.distanceDriven')"
         :rules="[
           requiredFieldRule,
           numbersOnlyRule,
@@ -37,7 +37,7 @@
         @update:modelValue="
           (evt: string) => (refuel.refueledAmount = +replaceComma(evt))
         "
-        label="Refueled amount"
+        :label="t('pages.refuels.refuelsForm.refueledAmount')"
         :rules="[
           requiredFieldRule,
           numbersOnlyRule,
@@ -48,7 +48,7 @@
 
       <c-input
         :value="refuelDate"
-        label="Refuel date"
+        :label="t('pages.refuels.refuelsForm.refuelDate')"
         :rules="[requiredFieldRule]"
       >
         <q-popup-proxy transition-show="scale" transition-hide="scale">
@@ -57,14 +57,19 @@
             @update:modelValue="evt => updateDate(evt)"
           />
           <div class="row items-center justify-end">
-            <q-btn v-close-popup label="Close" color="primary" flat />
+            <q-btn
+              v-close-popup
+              :label="t('pages.refuels.refuelsForm.close')"
+              color="primary"
+              flat
+            />
           </div>
         </q-popup-proxy>
       </c-input>
 
       <c-input
         :value="refuelTime"
-        label="Refuel time"
+        :label="t('pages.refuels.refuelsForm.refuelTime')"
         :rules="[requiredFieldRule]"
       >
         <q-popup-proxy transition-show="scale" transition-hide="scale">
@@ -74,7 +79,12 @@
             format24h
           />
           <div class="row items-center justify-end">
-            <q-btn v-close-popup label="Close" color="primary" flat />
+            <q-btn
+              v-close-popup
+              :label="t('pages.refuels.refuelsForm.close')"
+              color="primary"
+              flat
+            />
           </div>
         </q-popup-proxy>
       </c-input>
@@ -82,7 +92,7 @@
       <div class="row">
         <q-btn
           color="negative"
-          label="Cancel"
+          :label="t('form.cancel')"
           no-caps
           class="form-btn"
           @click="onCancel"
@@ -90,7 +100,7 @@
         <q-space />
         <q-btn
           color="positive"
-          label="Confirm"
+          :label="t('form.confirm')"
           type="submit"
           no-caps
           class="form-btn"
@@ -116,10 +126,12 @@ import { useSettingsStore } from 'src/stores/settingsStore'
 import { useRefuelStore } from 'src/stores/refuelStore'
 import { Refuel } from 'src/scripts/libraries/refuel/models'
 import { replaceComma } from 'src/scripts/libraries/utils'
+import { useI18n } from 'vue-i18n'
 
 const router = useRouter()
 const refuelStore = useRefuelStore()
 const settingsStore = useSettingsStore()
+const { t } = useI18n()
 
 const refuel = ref<Refuel>(new Refuel())
 const refuelDate = ref(QuasarDate.formatDate(Date.now(), 'YYYY/MM/DD'))
@@ -182,9 +194,10 @@ function onCancel() {
 
 onMounted(async () => {
   routePath = router.currentRoute.value.path.toLocaleLowerCase()
-  if (routePath.includes('/add')) emitter.emit('updateTitle', 'Add refuel')
+  if (routePath.includes('/add'))
+    emitter.emit('updateTitle', t('pages.refuels.refuelsForm.titleAddRefuel'))
   else if (routePath.includes('/edit'))
-    emitter.emit('updateTitle', 'Edit refuel')
+    emitter.emit('updateTitle', t('pages.refuels.refuelsForm.titleEditRefuel'))
 
   vehicleName.value = settingsStore.plateNumberInTitleActive
     ? settingsStore.selectedVehiclePlateNumber
