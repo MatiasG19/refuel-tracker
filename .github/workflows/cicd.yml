@@ -33,13 +33,13 @@ jobs:
           node-version: 20.x
 
       - name: Install app dependencies
-        run: yarn --frozen-lockfile --prefer-offline
+        run: npm ci
 
       - name: Check format
-        run: yarn check-format
+        run: npm run check-format
 
       - name: Lint
-        run: yarn lint
+        run: npm run lint
 
   Build-Test-Release:
     runs-on: ubuntu-latest
@@ -68,29 +68,16 @@ jobs:
         with:
           node-version: 20.x
 
-      - name: Get yarn cache directory path
-        id: yarn-cache-dir-path
-        run: echo "dir=$(yarn cache dir)" >> $GITHUB_OUTPUT
-
-      - name: Cache yarn dependencies
-        uses: actions/cache@v4
-        id: yarn-cache
-        with:
-          path: ${{ steps.yarn-cache-dir-path.outputs.dir }}
-          key: ${{ runner.os }}-yarn-${{ hashFiles('**/yarn.lock') }}
-          restore-keys: |
-            ${{ runner.os }}-yarn-
-
       - name: Install app dependencies
-        run: yarn --frozen-lockfile --prefer-offline
+        run: npm run ci
 
       - name: Install capacitor dependencies
         working-directory: src-capacitor
-        run: yarn --frozen-lockfile
+        run: npm ci
 
       - name: Run tests
         if: ${{ github.event_name != 'release' }}
-        run: yarn test
+        run: npm run test
 
       - name: Set version in package.json
         if: ${{ github.event_name == 'release' || github.event_name == 'workflow_dispatch' }}
@@ -101,7 +88,7 @@ jobs:
         run: node ./modifyBuildGradle.mjs $TAG
 
       - name: Build apk and aab
-        run: yarn appbuild
+        run: npm run appbuild
 
       - name: Move AAB to APK release folder
         run: mv ${{ env.AAB_RELEASE_PATH }}/*.aab ${{ env.APK_RELEASE_PATH }}
