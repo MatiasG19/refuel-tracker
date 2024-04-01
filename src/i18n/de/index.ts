@@ -1,4 +1,5 @@
 export default {
+  systemLanguage: 'System',
   periods: {
     week: 'Woche',
     threeMonths: '3 Monate',

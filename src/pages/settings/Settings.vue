@@ -6,7 +6,10 @@
         <c-select
           v-model="currentLanguage"
           @update:model-value="changeLanguage"
-          :options="languageOptions"
+          :options="[
+            { label: t('systemLanguage'), value: 1 },
+            ...languageOptions
+          ]"
           class="q-pb-md"
           :label="t('sections.settings.language')"
         />
