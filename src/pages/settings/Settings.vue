@@ -1,16 +1,14 @@
 <template>
   <div class="q-pa-md q-gutter-md">
     <q-list>
-      <q-item-label header>{{
-        t('pages.settings.sections.settings.title')
-      }}</q-item-label>
+      <q-item-label header>{{ t('sections.settings.title') }}</q-item-label>
       <q-list class="q-pb-md">
         <c-select
           v-model="currentLanguage"
           @update:model-value="changeLanguage"
           :options="languageOptions"
           class="q-pb-md"
-          :label="t('pages.settings.sections.settings.language')"
+          :label="t('sections.settings.language')"
         />
 
         <c-select
@@ -19,13 +17,13 @@
           v-model="colorTheme"
           @update:model-value="changeColorTheme"
           :options="colorThemeOptions"
-          :label="t('pages.settings.sections.settings.colorTheme')"
+          :label="t('sections.settings.colorTheme')"
         />
 
         <q-item tag="label">
           <q-item-section>
             <q-item-label>{{
-              t('pages.settings.sections.settings.licensePlateInTitle')
+              t('sections.settings.licensePlateInTitle')
             }}</q-item-label>
           </q-item-section>
           <q-item-section avatar>
@@ -38,16 +36,12 @@
         </q-item>
       </q-list>
 
-      <q-item-label header>{{
-        t('pages.settings.sections.backup.title')
-      }}</q-item-label>
+      <q-item-label header>{{ t('sections.backup.title') }}</q-item-label>
       <q-list class="q-pb-md">
         <template v-if="false">
           <q-item tag="label">
             <q-item-section>
-              <q-item-label>{{
-                t('pages.settings.sections.backup.autoBackup')
-              }}</q-item-label>
+              <q-item-label>{{ t('sections.backup.autoBackup') }}</q-item-label>
             </q-item-section>
             <q-item-section avatar>
               <q-toggle
@@ -61,12 +55,12 @@
           <q-item tag="label">
             <q-item-section>
               <q-item-label>{{
-                t('pages.settings.sections.backup.autoBackupFolder')
+                t('sections.backup.autoBackupFolder')
               }}</q-item-label>
             </q-item-section>
             <q-item-section avatar>
               <q-btn
-                :label="t('pages.settings.sections.backup.change')"
+                :label="t('sections.backup.change')"
                 color="positive"
                 :disable="!autoBackup"
                 @click="chooseAutoBackupFolder"
@@ -76,13 +70,11 @@
         </template>
         <q-item tag="label">
           <q-item-section>
-            <q-item-label>{{
-              t('pages.settings.sections.backup.export')
-            }}</q-item-label>
+            <q-item-label>{{ t('sections.backup.export') }}</q-item-label>
           </q-item-section>
           <q-item-section avatar>
             <q-btn
-              :label="t('pages.settings.sections.backup.export')"
+              :label="t('sections.backup.export')"
               color="positive"
               @click="exportBackup"
             />
@@ -91,13 +83,11 @@
 
         <q-item tag="label">
           <q-item-section>
-            <q-item-label>{{
-              t('pages.settings.sections.backup.import')
-            }}</q-item-label>
+            <q-item-label>{{ t('sections.backup.import') }}</q-item-label>
           </q-item-section>
           <q-item-section avatar>
             <q-btn
-              :label="t('pages.settings.sections.backup.import')"
+              :label="t('sections.backup.import')"
               color="positive"
               @click="importBackup"
             />
@@ -118,13 +108,14 @@ import { FilePicker } from 'src/plugins/capacitor-file-picker'
 import { Notify, Platform } from 'quasar'
 import { SelectOption } from 'src/scripts/models'
 import { useI18n } from 'vue-i18n'
+import messages from './i18n'
 import {
   getLanguageOptions,
   getLanguages
 } from 'src/scripts/staticData/languages'
 import { Device } from '@capacitor/device'
 
-const { t, locale } = useI18n()
+const { t, locale } = useI18n({ useScope: 'global', messages })
 const settingsStore = useSettingsStore()
 
 type GetContentResultAction = (result: { path: string }) => void
@@ -184,7 +175,7 @@ async function changeLanguage(value: number) {
   if (lang) {
     if (lang.id === 1) locale.value = (await Device.getLanguageCode()).value
     else locale.value = lang.code
-    emitter.emit('updateTitle', t('pages.settings.title'))
+    emitter.emit('updateTitle', t('title'))
   }
 }
 
@@ -237,7 +228,7 @@ async function importBackup() {
 }
 
 onMounted(() => {
-  emitter.emit('updateTitle', t('pages.settings.title'))
+  emitter.emit('updateTitle', t('title'))
   currentLanguage.value = settingsStore.selectedLanguageId
   if (Platform.is.mobile) {
     FilePicker.addListener('getContentResult', res => {
