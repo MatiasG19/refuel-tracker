@@ -19,13 +19,13 @@
     "splashicons": "icongenie generate --mode capacitor --filter splashscreen --splashscreen-icon-ratio 30 --theme-color 8488ff --skip-trim --icon ./.icons/icon.png"
   },
   "dependencies": {
-    "@quasar/extras": "^1.16.9",
+    "@quasar/extras": "^1.16.11",
     "axios": "^1.6.8",
     "dexie": "^3.2.7",
     "dexie-export-import": "^4.1.1",
     "mitt": "^3.0.1",
     "pinia": "^2.1.7",
-    "quasar": "^2.15.1",
+    "quasar": "^2.15.2",
     "vue": "^3.4.20",
     "vue-i18n": "^9.10.2",
     "vue-router": "^4.3.0"
@@ -38,13 +38,13 @@
     "@capacitor/local-notifications": "^5.0.7",
     "@intlify/vite-plugin-vue-i18n": "^7.0.0",
     "@quasar/app-vite": "^1.8.0",
-    "@types/node": "^20.11.30",
-    "@typescript-eslint/eslint-plugin": "^7.3.1",
-    "@typescript-eslint/parser": "^7.3.1",
+    "@types/node": "^20.12.2",
+    "@typescript-eslint/eslint-plugin": "^7.4.0",
+    "@typescript-eslint/parser": "^7.4.0",
     "autoprefixer": "^10.4.19",
     "eslint": "^8.57.0",
     "eslint-config-prettier": "^9.1.0",
-    "eslint-plugin-vue": "^9.23.0",
+    "eslint-plugin-vue": "^9.24.0",
     "prettier": "^3.2.5",
     "typescript": "^5.4.3",
     "vitest": "^1.4.0"
