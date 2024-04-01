@@ -1,0 +1,1 @@
+import"./index.9da299ca.js";import"./index.af9e0f6e.js";import"./dexie.e9b82229.js";function g(t){return t.replace(",",".")}function i(){const t=new Date;return`${t.getFullYear()}${e(t.getMonth()+1)}${e(t.getDate())}_${e(t.getHours())}${e(t.getMinutes())}${e(t.getSeconds())}`}function e(t){return t.toString().length==1?`0${t.toString()}`:t.toString()}export{i as g,g as r};

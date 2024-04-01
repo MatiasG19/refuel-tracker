@@ -12,6 +12,7 @@
 		}
 	},
 	"server": {
-		"url": "http://192.168.0.200:9500"
+		"androidScheme": "http",
+		"url": "http://192.168.0.20:9500"
 	}
 }
