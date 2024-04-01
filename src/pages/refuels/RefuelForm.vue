@@ -8,7 +8,7 @@
         @update:modelValue="
           (evt: string) => (refuel.payedAmount = +replaceComma(evt))
         "
-        :label="t('pages.refuels.refuelsForm.payedAmount')"
+        :label="t('refuelsForm.payedAmount')"
         :rules="[
           requiredFieldRule,
           numbersOnlyRule,
@@ -23,7 +23,7 @@
         @update:modelValue="
           (evt: string) => (refuel.distanceDriven = +replaceComma(evt))
         "
-        :label="t('pages.refuels.refuelsForm.distanceDriven')"
+        :label="t('refuelsForm.distanceDriven')"
         :rules="[
           requiredFieldRule,
           numbersOnlyRule,
@@ -37,7 +37,7 @@
         @update:modelValue="
           (evt: string) => (refuel.refueledAmount = +replaceComma(evt))
         "
-        :label="t('pages.refuels.refuelsForm.refueledAmount')"
+        :label="t('refuelsForm.refueledAmount')"
         :rules="[
           requiredFieldRule,
           numbersOnlyRule,
@@ -48,7 +48,7 @@
 
       <c-input
         :value="refuelDate"
-        :label="t('pages.refuels.refuelsForm.refuelDate')"
+        :label="t('refuelsForm.refuelDate')"
         :rules="[requiredFieldRule]"
       >
         <q-popup-proxy transition-show="scale" transition-hide="scale">
@@ -59,7 +59,7 @@
           <div class="row items-center justify-end">
             <q-btn
               v-close-popup
-              :label="t('pages.refuels.refuelsForm.close')"
+              :label="t('refuelsForm.close')"
               color="primary"
               flat
             />
@@ -69,7 +69,7 @@
 
       <c-input
         :value="refuelTime"
-        :label="t('pages.refuels.refuelsForm.refuelTime')"
+        :label="t('refuelsForm.refuelTime')"
         :rules="[requiredFieldRule]"
       >
         <q-popup-proxy transition-show="scale" transition-hide="scale">
@@ -81,7 +81,7 @@
           <div class="row items-center justify-end">
             <q-btn
               v-close-popup
-              :label="t('pages.refuels.refuelsForm.close')"
+              :label="t('refuelsForm.close')"
               color="primary"
               flat
             />
@@ -127,11 +127,12 @@ import { useRefuelStore } from 'src/stores/refuelStore'
 import { Refuel } from 'src/scripts/libraries/refuel/models'
 import { replaceComma } from 'src/scripts/libraries/utils'
 import { useI18n } from 'vue-i18n'
+import messages from './i18n'
 
 const router = useRouter()
 const refuelStore = useRefuelStore()
 const settingsStore = useSettingsStore()
-const { t } = useI18n()
+const { t } = useI18n({ useScope: 'local', messages })
 
 const refuel = ref<Refuel>(new Refuel())
 const refuelDate = ref(QuasarDate.formatDate(Date.now(), 'YYYY/MM/DD'))
@@ -195,9 +196,9 @@ function onCancel() {
 onMounted(async () => {
   routePath = router.currentRoute.value.path.toLocaleLowerCase()
   if (routePath.includes('/add'))
-    emitter.emit('updateTitle', t('pages.refuels.refuelsForm.titleAddRefuel'))
+    emitter.emit('updateTitle', t('refuelsForm.titleAddRefuel'))
   else if (routePath.includes('/edit'))
-    emitter.emit('updateTitle', t('pages.refuels.refuelsForm.titleEditRefuel'))
+    emitter.emit('updateTitle', t('refuelsForm.titleEditRefuel'))
 
   vehicleName.value = settingsStore.plateNumberInTitleActive
     ? settingsStore.selectedVehiclePlateNumber

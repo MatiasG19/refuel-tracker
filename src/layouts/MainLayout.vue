@@ -118,31 +118,31 @@ const { t } = useI18n()
 
 const linkList = ref([
   {
-    title: computed(() => `${t('pages.graphData.title')}`),
+    title: computed(() => `${t('drawer.graphPage')}`),
     caption: '',
     icon: 'bar_chart',
     link: '/'
   },
   {
-    title: computed(() => `${t('pages.vehicles.vehicles.title')}`),
+    title: computed(() => `${t('drawer.vehiclesPage')}`),
     caption: '',
     icon: 'drive_eta',
     link: '/vehicles'
   },
   {
-    title: computed(() => `${t('pages.refuels.refuels.title')}`),
+    title: computed(() => `${t('drawer.refuelsPage')}`),
     caption: '',
     icon: 'local_gas_station',
     link: '/refuels'
   },
   {
-    title: computed(() => `${t('pages.settings.title')}`),
+    title: computed(() => `${t('drawer.settingsPage')}`),
     caption: '',
     icon: 'settings',
     link: '/settings'
   },
   {
-    title: computed(() => `${t('pages.support.title')}`),
+    title: computed(() => `${t('drawer.supportPage')}`),
     caption: '',
     icon: 'favorite_outline',
     link: '/support'

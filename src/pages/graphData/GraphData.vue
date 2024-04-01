@@ -74,6 +74,7 @@ import { optionsDialog } from 'src/components/dialogs/optionsDialog'
 import { useQuasar } from 'quasar'
 import { useRouter } from 'vue-router'
 import { useI18n } from 'vue-i18n'
+import messages from './i18n'
 
 const $q = useQuasar()
 $q.dark.set('auto')
@@ -82,7 +83,7 @@ const router = useRouter()
 const refuelStore = useRefuelStore()
 const graphDataStore = useGraphDataStore()
 const settingsStore = useSettingsStore()
-const { t } = useI18n()
+const { t } = useI18n({ useScope: 'local', messages })
 
 const loading = ref(false)
 const periods = ref<Period[]>([])
@@ -90,25 +91,25 @@ const graphData = computed(() => graphDataStore.graphData)
 const vehiclesExits = computed(() => settingsStore.selectedVehicleId)
 const optionsInDialog = ref([
   {
-    text: computed(() => `${t('pages.graphData.optionsInDialog.moveTop')}`),
+    text: computed(() => `${t('graphData.optionsInDialog.moveTop')}`),
     icon: 'keyboard_double_arrow_up',
     action: (data: unknown) =>
       graphDataStore.moveGraphCard.moveTop((data as GraphData).uid)
   },
   {
-    text: computed(() => `${t('pages.graphData.optionsInDialog.moveUp')}`),
+    text: computed(() => `${t('graphData.optionsInDialog.moveUp')}`),
     icon: 'keyboard_arrow_up',
     action: (data: unknown) =>
       graphDataStore.moveGraphCard.moveUp((data as GraphData).uid)
   },
   {
-    text: computed(() => `${t('pages.graphData.optionsInDialog.moveDown')}`),
+    text: computed(() => `${t('graphData.optionsInDialog.moveDown')}`),
     icon: 'keyboard_arrow_down',
     action: (data: unknown) =>
       graphDataStore.moveGraphCard.moveDown((data as GraphData).uid)
   },
   {
-    text: computed(() => `${t('pages.graphData.optionsInDialog.moveBottom')}`),
+    text: computed(() => `${t('graphData.optionsInDialog.moveBottom')}`),
     icon: 'keyboard_double_arrow_down',
     action: (data: unknown) =>
       graphDataStore.moveGraphCard.moveBottom((data as GraphData).uid)
