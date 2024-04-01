@@ -7,7 +7,7 @@
           v-model="currentLanguage"
           @update:model-value="changeLanguage"
           :options="[
-            { label: t('systemLanguage'), value: 1 },
+            { label: t('systemLanguage'), value: LanugageId.System },
             ...languageOptions
           ]"
           class="q-pb-md"
@@ -114,11 +114,11 @@ import { useI18n } from 'vue-i18n'
 import messages from './i18n'
 import {
   getLanguageOptions,
-  getLanguages
-} from 'src/scripts/staticData/languages'
-import { Device } from '@capacitor/device'
+  setI18nLanguage
+} from 'src/scripts/libraries/utils/language'
+import { LanugageId } from '../../scripts/models'
 
-const { t, locale } = useI18n({ useScope: 'global', messages })
+const { t } = useI18n({ useScope: 'global', messages })
 const settingsStore = useSettingsStore()
 
 type GetContentResultAction = (result: { path: string }) => void
@@ -172,14 +172,10 @@ function changeColorTheme(value: number) {
   settingsStore.changeColorTheme(value)
 }
 
-async function changeLanguage(value: number) {
-  settingsStore.changeLanguage(value)
-  const lang = getLanguages().find(l => l.id === value)
-  if (lang) {
-    if (lang.id === 1) locale.value = (await Device.getLanguageCode()).value
-    else locale.value = lang.code
-    emitter.emit('updateTitle', t('title'))
-  }
+async function changeLanguage(languageId: number) {
+  settingsStore.changeLanguage(languageId)
+  await setI18nLanguage(languageId)
+  emitter.emit('updateTitle', t('title'))
 }
 
 // function changeDistanceUnit(value: number) {

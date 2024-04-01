@@ -20,3 +20,7 @@ export class Language {
   text!: string
   code!: string
 }
+
+export const LanugageId = {
+  System: 1
+}
