@@ -1,6 +1,7 @@
 import { defineStore } from 'pinia'
 import { db } from '../../../boot/dexie'
 import { useGraphDataStore } from './graphDataStore'
+import { DropResult } from 'vue3-smooth-dnd'
 
 export const useGraphCardStore = defineStore('graphCardStore', () => {
   const store = useGraphDataStore()
@@ -154,10 +155,23 @@ export const useGraphCardStore = defineStore('graphCardStore', () => {
     })()
   }
 
+  function moveCard(dropResult: DropResult) {
+    const { removedIndex, addedIndex } = dragResult
+    if (removedIndex === null && addedIndex === null) return
+    ;(async () => {
+      let data = await store.getGraphSettings()
+
+      await db.transaction('rw', [db.graphSettings], async () => {
+        //
+      })
+    })()
+  }
+
   return {
     moveTop,
     moveUp,
     moveDown,
-    moveBottom
+    moveBottom,
+    moveCard
   }
 })
