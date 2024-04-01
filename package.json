@@ -19,7 +19,7 @@
     "splashicons": "icongenie generate --mode capacitor --filter splashscreen --splashscreen-icon-ratio 30 --theme-color 8488ff --skip-trim --icon ./.icons/icon.png"
   },
   "dependencies": {
-    "@quasar/extras": "^1.16.9",
+    "@quasar/extras": "^1.16.11",
     "axios": "^1.6.8",
     "dexie": "^3.2.7",
     "dexie-export-import": "^4.1.1",
