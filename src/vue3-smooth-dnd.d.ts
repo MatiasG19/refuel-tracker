@@ -1,4 +1,4 @@
-declare module 'vue-smooth-dnd' {
+declare module 'vue3-smooth-dnd' {
   import Vue from 'vue'
 
   type Payload = any
