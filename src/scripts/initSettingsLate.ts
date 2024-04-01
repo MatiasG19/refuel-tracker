@@ -1,24 +1,9 @@
-import { db } from '../boot/dexie'
-import { Device } from '@capacitor/device'
-import { useI18n } from 'vue-i18n'
-import { getLanguages } from './staticData/languages'
+import { useSettingsStore } from 'src/stores/settingsStore'
+import { setI18nLanguage } from './libraries/utils/language'
 
 export function initSettingsLate() {
-  const { locale } = useI18n()
-
   ;(async () => {
-    const settings = await db.settings.toArray()
-    if (!settings[0]) return Promise.resolve()
-
-    // Select language
-    if (settings[0].languageId) {
-      if (settings[0].languageId === 1) {
-        locale.value = (await Device.getLanguageCode()).value
-      } else {
-        locale.value = getLanguages().filter(
-          l => l.id === settings[0].languageId
-        )[0].code
-      }
-    }
+    const settingStore = useSettingsStore()
+    await setI18nLanguage(settingStore.selectedLanguageId)
   })()
 }
