@@ -8,7 +8,7 @@ export class MoneySpent extends AbstractGraphData {
   }
 
   protected setTitle(): string {
-    return 'Money spent'
+    return 'graphData.moneySpent'
   }
 
   protected calculateValue(vehicle: Vehicle): string {

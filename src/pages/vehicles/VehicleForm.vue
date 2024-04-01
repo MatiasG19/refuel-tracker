@@ -3,13 +3,13 @@
     <q-form @submit="onSubmit" class="q-pa-md q-gutter-md">
       <c-input
         v-model="vehicle.name"
-        label="Vehicle name"
+        :label="t('vehicleForm.vehicleName')"
         :rules="[requiredFieldRule, max50Characters]"
         autofocus
       />
       <c-input
         v-model="vehicle.plateNumber"
-        label="Number plate"
+        :label="t('vehicleForm.licensePlate')"
         :rules="[requiredFieldRule]"
       />
       <c-select
@@ -17,19 +17,19 @@
         class="q-pb-md"
         v-model="vehicle.fuelUnitId"
         :options="fuelUnits"
-        label="Fuel unit"
+        :label="t('vehicleForm.fuelUnit')"
       />
       <c-input
         class="q-pb-md"
         v-model="vehicle.currencyUnit"
-        label="Currency unit"
+        :label="t('vehicleForm.currencyUnit')"
         :rules="[requiredFieldRule]"
       />
 
       <div class="row">
         <q-btn
           color="negative"
-          label="Cancel"
+          :label="t('form.cancel')"
           no-caps
           class="btn"
           @click="$router.go(-1)"
@@ -37,7 +37,7 @@
         <q-space />
         <q-btn
           color="positive"
-          label="Confirm"
+          :label="t('form.confirm')"
           type="submit"
           no-caps
           class="btn"
@@ -61,10 +61,13 @@ import { SelectOption } from 'src/scripts/models'
 import { useSettingsStore } from 'src/stores/settingsStore'
 import { useRefuelStore } from 'src/stores/refuelStore'
 import { Vehicle } from 'src/scripts/libraries/refuel/models'
+import { useI18n } from 'vue-i18n'
+import messages from './i18n'
 
 const router = useRouter()
 const refuelStore = useRefuelStore()
 const settingsStore = useSettingsStore()
+const { t } = useI18n({ useScope: 'local', messages })
 
 const vehicle = ref<Vehicle>(new Vehicle())
 const fuelUnits = ref<SelectOption[]>([])
@@ -110,9 +113,10 @@ onMounted(async () => {
 
   // Update title
   routePath = router.currentRoute.value.path.toLocaleLowerCase()
-  if (routePath.includes('/add')) emitter.emit('updateTitle', 'Add vehicle')
+  if (routePath.includes('/add'))
+    emitter.emit('updateTitle', t('vehicleForm.titleAddVehicle'))
   else if (routePath.includes('/edit'))
-    emitter.emit('updateTitle', 'Edit vehicle')
+    emitter.emit('updateTitle', t('vehicleForm.titleEditVehicle'))
 })
 </script>
 

@@ -8,7 +8,7 @@ export class FuelBurnt extends AbstractGraphData {
   }
 
   protected setTitle(): string {
-    return 'Fuel burnt'
+    return 'graphData.fuelBurnt'
   }
 
   protected calculateValue(vehicle: Vehicle): string {

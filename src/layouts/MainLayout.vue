@@ -108,43 +108,47 @@ import { emitter } from 'src/boot/mitt'
 import { useSettingsStore } from 'src/stores/settingsStore'
 import { Keyboard } from '@capacitor/keyboard'
 import { Platform } from 'quasar'
+import { useI18n } from 'vue-i18n'
+import { initSettingsLate } from 'src/scripts/initSettingsLate'
 
-const linkList = [
+const router = useRouter()
+const settingsStore = useSettingsStore()
+const routePath = computed(() => router.currentRoute.value.path)
+const { t } = useI18n()
+
+const linkList = ref([
   {
-    title: 'Graphs',
+    title: computed(() => `${t('drawer.graphPage')}`),
     caption: '',
     icon: 'bar_chart',
     link: '/'
   },
   {
-    title: 'Vehicles',
+    title: computed(() => `${t('drawer.vehiclesPage')}`),
     caption: '',
     icon: 'drive_eta',
     link: '/vehicles'
   },
   {
-    title: 'Refuels',
+    title: computed(() => `${t('drawer.refuelsPage')}`),
     caption: '',
     icon: 'local_gas_station',
     link: '/refuels'
   },
   {
-    title: 'Settings',
+    title: computed(() => `${t('drawer.settingsPage')}`),
     caption: '',
     icon: 'settings',
     link: '/settings'
   },
   {
-    title: 'Help and Support',
+    title: computed(() => `${t('drawer.supportPage')}`),
     caption: '',
     icon: 'favorite_outline',
     link: '/support'
   }
-]
+])
 
-const router = useRouter()
-const settingsStore = useSettingsStore()
-const routePath = computed(() => router.currentRoute.value.path)
 const footerVisible = ref(true)
 emitter.on('updateTitle', e => (title.value = e))
 
@@ -175,6 +179,7 @@ function add() {
 }
 
 onMounted(() => {
+  initSettingsLate()
   if (Platform.is.mobile) {
     addKeyboardListeners()
   }

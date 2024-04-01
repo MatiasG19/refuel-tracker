@@ -6,7 +6,7 @@
       </div>
       <q-btn
         color="accent"
-        label="Add vehicle"
+        :label="t('placeholders.addVehicle')"
         icon-right="add"
         unelevated
         no-caps
@@ -37,11 +37,14 @@ import { useSettingsStore } from 'src/stores/settingsStore'
 import { useRefuelStore } from 'src/stores/refuelStore'
 import { Vehicle } from 'src/scripts/libraries/refuel/models'
 import { useQuasar } from 'quasar'
+import { useI18n } from 'vue-i18n'
+import messages from './i18n'
 
 const router = useRouter()
 const refuelStore = useRefuelStore()
 const settingsStore = useSettingsStore()
 const $q = useQuasar()
+const { t } = useI18n({ useScope: 'local', messages })
 
 const vehicleData = computed(() => {
   if (refuelStore.vehicles) return refuelStore.getAllVehicleData()
@@ -51,7 +54,7 @@ const vehicleData = computed(() => {
 emitter.on('showVehicleOptionsDialog', id =>
   optionsDialog([
     {
-      text: 'Show refuels',
+      text: t('vehicles.optionsDialog.showRefuels'),
       icon: 'local_gas_station',
       action: () => {
         ;(async () => {
@@ -63,24 +66,24 @@ emitter.on('showVehicleOptionsDialog', id =>
       }
     },
     {
-      text: 'Edit',
+      text: t('vehicles.optionsDialog.edit'),
       icon: 'edit',
       action: () => {
         router.push({ path: `/vehicles/edit/${id}`, params: { id } })
       }
     },
     {
-      text: 'Delete',
+      text: t('vehicles.optionsDialog.delete'),
       icon: 'delete',
       action: () =>
         confirmDialog(
-          'Delete vehicle?',
+          t('vehicles.optionsDialog.deleteVehicle'),
           (id: number) => {
             $q.loading.show({
               delay: 400,
               spinnerColor: 'accent',
               messageColor: 'accent',
-              message: 'Deleting vehicle'
+              message: t('vehicles.optionsDialog.deletingVehicle')
             })
             ;(async () =>
               await refuelStore
@@ -100,7 +103,7 @@ async function selectVehicle(vehicle: Vehicle) {
 }
 
 onMounted(async () => {
-  emitter.emit('updateTitle', 'Vehicles')
+  emitter.emit('updateTitle', t('vehicles.title'))
   await refuelStore.readVehicles()
 })
 

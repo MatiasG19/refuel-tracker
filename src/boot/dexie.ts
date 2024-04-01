@@ -13,13 +13,13 @@ export class RefuelTrackerDexie extends Dexie {
 
   constructor() {
     super('RefuelTrackerDb')
-    this.version(1).stores({
+    this.version(3).stores({
       graphSettings: '++id, uid, sequence, periodId, visible',
       vehicles: '++id, name, plateNumber, fuelUnitId',
       refuels:
         '++id, date, refuelAmount, payedAmount, distanceDriven, vehicleId',
       settings:
-        '++id, colorThemeId, distanceUnitId, vehicleId, plateNumberInTitleActive, autoBackupActive, autoBackupPath, lastUpdateCheck'
+        '++id, colorThemeId, distanceUnitId, vehicleId, plateNumberInTitleActive, autoBackupActive, autoBackupPath, lastUpdateCheck, languageId'
     })
     this.version(2)
       .stores({

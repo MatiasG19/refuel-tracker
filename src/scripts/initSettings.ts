@@ -9,6 +9,7 @@ export function initSettings() {
     if (!settings[0]) return Promise.resolve()
 
     settingsStore.changeColorTheme(settings[0].colorThemeId)
+    settingsStore.changeLanguage(settings[0].languageId ?? 1)
     settingsStore.changeDistanceUnit(settings[0].distanceUnitId)
     if (settings[0].vehicleId) {
       const vehicles = await db.vehicles

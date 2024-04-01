@@ -37,6 +37,11 @@
 - View and edit your refuels or add past ones
 - Backup data in text format
 
+## Languages
+
+- English
+- German
+
 ## Getting started
 
 ### Prerequisits

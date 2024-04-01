@@ -1,9 +1,10 @@
 <template>
   <q-page class="q-pa-md">
     <h5 class="q-mt-md text-center">
-      <span style="color: #ef60cb">Thank you</span> for using
+      <span style="color: #ef60cb">{{ t('greetingPart1') }}</span>
+      {{ t('greetingPart2') }}
       <span style="color: #60efb3">{{ packageJson.productName }}</span
-      >! I hope you have been enjoying the app so far
+      >{{ t('greetingPart3') }}
       <q-icon name="rocket_launch" color="accent"></q-icon>
     </h5>
 
@@ -31,8 +32,7 @@
         <div class="q-mt-md text-center">
           <div class="column items-center">
             <div class="q-mb-md text-center">
-              Rate this app if you like it or leave feedback to improve your
-              experience!
+              {{ t('slide4') }}
             </div>
             <q-rating
               v-model="ratingModel"
@@ -47,7 +47,7 @@
       <q-carousel-slide name="code" class="column no-wrap flex-center">
         <div class="q-mt-md text-center">
           <div class="q-mb-md text-center">
-            {{ packageJson.productName }}'s code is open source! Check it out!
+            {{ packageJson.productName }}{{ t('slide1') }}
           </div>
           <q-btn
             color="accent"
@@ -63,7 +63,7 @@
         <div class="q-mt-md text-center">
           <div class="column items-center">
             <div class="q-mb-md text-center">
-              Having issues or improvement ideas?
+              {{ t('slide2') }}
             </div>
             <q-btn
               color="accent"
@@ -80,7 +80,7 @@
         <div class="q-mt-md text-center">
           <div class="column items-center">
             <div class="q-mb-md text-center">
-              Like the project? Leave a star!
+              {{ t('slide3') }}
             </div>
             <q-btn
               color="accent"
@@ -96,13 +96,14 @@
     </q-carousel>
 
     <div class="q-mt-md full-width text-center">
-      {{ packageJson.productName }} version {{ packageJson.version }}
+      {{ packageJson.productName }} {{ t('version') }}
+      {{ packageJson.version }}
     </div>
     <div class="q-mt-md full-width text-center">
       <q-btn
         size="sm"
         color="accent"
-        label="View license on GitHub"
+        :label="t('btnLicense')"
         @click="openURL(licenseLink)"
         no-caps
         outline
@@ -114,11 +115,15 @@
 <script setup lang="ts">
 import { onMounted, computed, ref } from 'vue'
 import { useRouter } from 'vue-router'
-import packageJson from '../../package.json'
+import packageJson from '../../../package.json'
 import { openURL } from 'quasar'
-import { emitter } from 'src/boot/mitt'
+import { emitter } from '../../boot/mitt'
+import { useI18n } from 'vue-i18n'
+import messages from './i18n'
 
 const router = useRouter()
+const { t } = useI18n({ useScope: 'global', messages })
+
 const routePath = computed(() => router.currentRoute.value.path)
 const ratingModel = ref(3)
 const slide = ref('code')
@@ -131,6 +136,6 @@ const emits = defineEmits(['update:title'])
 
 onMounted(() => {
   emits('update:title', routePath.value)
-  emitter.emit('updateTitle', 'Support')
+  emitter.emit('updateTitle', t('title'))
 })
 </script>

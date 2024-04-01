@@ -4,7 +4,7 @@
       <q-card-section>
         <div class="row items-center no-wrap">
           <div class="col">
-            <div class="text-subtitle2">{{ graphData.title }}</div>
+            <div class="text-subtitle2">{{ t(`${graphData.title}`) }}</div>
           </div>
 
           <div class="col-auto space-station">
@@ -42,6 +42,8 @@
 <script setup lang="ts">
 import { GraphData } from '../scripts/models'
 import { emitter } from 'src/boot/mitt'
+import { useI18n } from 'vue-i18n'
+import messages from '../i18n'
 
 defineProps({
   graphData: {
@@ -53,4 +55,6 @@ defineProps({
     required: true
   }
 })
+
+const { t } = useI18n({ useScope: 'local', messages })
 </script>

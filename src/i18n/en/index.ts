@@ -1,4 +1,5 @@
 export default {
+  systemLanguage: 'System',
   periods: {
     week: 'Week',
     threeMonths: '3 Months',
@@ -23,5 +24,29 @@ export default {
     kWhPer100km: 'kWh/100km',
     whPer100km: 'Wh/100km',
     whPerMile: ' Wh/mile'
+  },
+  components: {
+    dialogs: {
+      confirmDialog: {
+        cancel: 'Cancel',
+        confirm: 'Confirm'
+      }
+    }
+  },
+  form: {
+    cancel: 'Cancel',
+    confirm: 'Confirm',
+    filter: 'Filtern'
+  },
+  placeholders: {
+    addRefuel: 'Add refuel',
+    addVehicle: 'Add vehicle'
+  },
+  drawer: {
+    graphPage: 'Graphs',
+    vehiclesPage: 'Vehicles',
+    refuelsPage: 'Refuels',
+    settingsPage: 'Settings',
+    supportPage: 'Help and Support'
   }
 }

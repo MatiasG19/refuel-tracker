@@ -54,11 +54,11 @@ const routes: RouteRecordRaw[] = [
       },
       {
         path: '/settings',
-        component: () => import('pages/Settings.vue')
+        component: () => import('pages/settings/Settings.vue')
       },
       {
         path: '/support',
-        component: () => import('pages/Support.vue')
+        component: () => import('pages/support/Support.vue')
       }
     ]
   },

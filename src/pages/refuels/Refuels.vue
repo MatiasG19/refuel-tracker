@@ -13,7 +13,7 @@
       </div>
       <q-btn
         color="accent"
-        label="Add refuel"
+        :label="t('placeholders.addRefuel')"
         icon-right="add"
         unelevated
         no-caps
@@ -27,7 +27,7 @@
       </div>
       <q-btn
         color="accent"
-        label="Add vehicle"
+        :label="t('placeholders.addVehicle')"
         icon-right="add"
         unelevated
         no-caps
@@ -92,11 +92,14 @@ import { Refuel, Vehicle } from 'src/scripts/libraries/refuel/models'
 import { vehicleFuelConsumption } from 'src/scripts/libraries/refuel/functions/vehicle'
 import { QVirtualScroll } from 'quasar'
 import { useRefuelFilterStore } from './stores/refuelFilterStore'
+import { useI18n } from 'vue-i18n'
+import messages from './i18n'
 
 const router = useRouter()
 const refuelStore = useRefuelStore()
 const settingsStore = useSettingsStore()
 const refuelFilterStore = useRefuelFilterStore()
+const { t } = useI18n({ useScope: 'local', messages })
 
 const vehicle = ref<Vehicle>(new Vehicle())
 const vehiclesExists = settingsStore.selectedVehicleId
@@ -144,18 +147,18 @@ function removeFilter() {
 emitter.on('showRefuelOptionsDialog', id =>
   optionsDialog([
     {
-      text: 'Edit',
+      text: t('refuels.optionsDialog.edit'),
       icon: 'edit',
       action: () => {
         router.push({ path: `/refuels/edit/${id}`, params: { id } })
       }
     },
     {
-      text: 'Delete',
+      text: t('refuels.optionsDialog.delete'),
       icon: 'delete',
       action: () =>
         confirmDialog(
-          'Delete refuel entry?',
+          t('refuels.optionsDialog.deleteRefuel'),
           (id: number) => {
             ;(async () =>
               await refuelStore
@@ -174,7 +177,7 @@ emitter.on('showRefuelOptionsDialog', id =>
 )
 
 onBeforeMount(async () => {
-  emitter.emit('updateTitle', 'Refuels')
+  emitter.emit('updateTitle', t('refuels.title'))
 
   vehicleName.value = settingsStore.plateNumberInTitleActive
     ? settingsStore.selectedVehiclePlateNumber

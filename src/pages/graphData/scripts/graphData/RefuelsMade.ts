@@ -8,7 +8,7 @@ export class RefuelsMade extends AbstractGraphData {
   }
 
   protected setTitle(): string {
-    return 'Refuels made'
+    return 'graphData.refuelsMade'
   }
 
   protected calculateValue(vehicle: Vehicle): string {

@@ -8,7 +8,7 @@ export class DistanceDriven extends AbstractGraphData {
   }
 
   protected setTitle(): string {
-    return 'Distance driven'
+    return 'graphData.distanceDriven'
   }
 
   protected calculateValue(vehicle: Vehicle): string {

@@ -8,7 +8,7 @@
           class="column btn"
           no-caps
           color="negative"
-          label="Cancel"
+          :label="t('components.dialogs.confirmDialog.cancel')"
         />
         <q-space />
         <q-btn
@@ -16,7 +16,7 @@
           class="column btn"
           no-caps
           color="positive"
-          label="Confirm"
+          :label="t('components.dialogs.confirmDialog.confirm')"
         />
       </q-card-actions>
     </q-card>
@@ -25,6 +25,9 @@
 
 <script setup lang="ts">
 import { useDialogPluginComponent } from 'quasar'
+import { useI18n } from 'vue-i18n'
+
+const { t } = useI18n()
 
 const { dialogRef, onDialogOK, onDialogCancel } = useDialogPluginComponent()
 
