@@ -174,12 +174,13 @@ function changeColorTheme(value: number) {
 
 async function changeLanguage(value: number) {
   settingsStore.changeLanguage(value)
-  const lang = getLanguages().find(l => l.id === value)
-  if (lang) {
-    if (lang.id === 1) locale.value = (await Device.getLanguageCode()).value
-    else locale.value = lang.code
-    emitter.emit('updateTitle', t('title'))
+  if (value === 1) {
+    locale.value = (await Device.getLanguageCode()).value
+  } else {
+    const lang = getLanguages().find(l => l.id === value)
+    locale.value = lang.code
   }
+  emitter.emit('updateTitle', t('title'))
 }
 
 // function changeDistanceUnit(value: number) {

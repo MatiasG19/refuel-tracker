@@ -9,12 +9,10 @@
     "@capacitor/app": "^5.0.7",
     "@capacitor/cli": "^5.7.4",
     "@capacitor/core": "^5.7.4",
+    "@capacitor/device": "^5.0.7",
     "@capacitor/filesystem": "^5.2.1",
     "@capacitor/keyboard": "^5.0.8",
     "@capacitor/local-notifications": "^5.0.7",
     "@capacitor/splash-screen": "^5.0.7"
-  },
-  "devDependencies": {
-    "@capacitor/device": "^5.0.7"
   }
 }
