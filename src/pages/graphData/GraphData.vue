@@ -42,13 +42,17 @@
         />
       </template>
       <template v-else>
-        <graph-card
-          v-for="data in graphData"
-          :key="data.uid"
-          :graphData="data"
-          :periods="periods"
-          class="q-pt-md q-pl-md q-pr-md"
-        />
+        <Container @drop="onDrop">
+          <Draggable v-for="data in graphData" :key="data.uid">
+            <div class="draggable-item">
+              <graph-card
+                class="q-pt-md q-pl-md q-pr-md"
+                :graphData="data"
+                :periods="periods"
+              />
+            </div>
+          </Draggable>
+        </Container>
       </template>
     </template>
   </q-page>
@@ -75,6 +79,7 @@ import { useQuasar } from 'quasar'
 import { useRouter } from 'vue-router'
 import { useI18n } from 'vue-i18n'
 import messages from './i18n'
+import { Container, Draggable } from 'vue3-smooth-dnd'
 
 const $q = useQuasar()
 $q.dark.set('auto')
@@ -141,6 +146,8 @@ watchEffect(() => {
     })()
   )
 })
+
+function onDrop() {}
 
 onBeforeMount(async () => {
   periods.value = await refuelStore.getPeriods()
