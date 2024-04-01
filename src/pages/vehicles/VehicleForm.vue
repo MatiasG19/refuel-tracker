@@ -3,13 +3,13 @@
     <q-form @submit="onSubmit" class="q-pa-md q-gutter-md">
       <c-input
         v-model="vehicle.name"
-        :label="t('pages.vehicles.vehicleForm.vehicleName')"
+        :label="t('vehicleForm.vehicleName')"
         :rules="[requiredFieldRule, max50Characters]"
         autofocus
       />
       <c-input
         v-model="vehicle.plateNumber"
-        :label="t('pages.vehicles.vehicleForm.licensePlate')"
+        :label="t('vehicleForm.licensePlate')"
         :rules="[requiredFieldRule]"
       />
       <c-select
@@ -17,12 +17,12 @@
         class="q-pb-md"
         v-model="vehicle.fuelUnitId"
         :options="fuelUnits"
-        :label="t('pages.vehicles.vehicleForm.fuelUnit')"
+        :label="t('vehicleForm.fuelUnit')"
       />
       <c-input
         class="q-pb-md"
         v-model="vehicle.currencyUnit"
-        :label="t('pages.vehicles.vehicleForm.currencyUnit')"
+        :label="t('vehicleForm.currencyUnit')"
         :rules="[requiredFieldRule]"
       />
 
@@ -62,11 +62,12 @@ import { useSettingsStore } from 'src/stores/settingsStore'
 import { useRefuelStore } from 'src/stores/refuelStore'
 import { Vehicle } from 'src/scripts/libraries/refuel/models'
 import { useI18n } from 'vue-i18n'
+import messages from './i18n'
 
 const router = useRouter()
 const refuelStore = useRefuelStore()
 const settingsStore = useSettingsStore()
-const { t } = useI18n()
+const { t } = useI18n({ useScope: 'local', messages })
 
 const vehicle = ref<Vehicle>(new Vehicle())
 const fuelUnits = ref<SelectOption[]>([])
@@ -113,12 +114,9 @@ onMounted(async () => {
   // Update title
   routePath = router.currentRoute.value.path.toLocaleLowerCase()
   if (routePath.includes('/add'))
-    emitter.emit('updateTitle', t('pages.vehicles.vehicleForm.titleAddVehicle'))
+    emitter.emit('updateTitle', t('vehicleForm.titleAddVehicle'))
   else if (routePath.includes('/edit'))
-    emitter.emit(
-      'updateTitle',
-      t('pages.vehicles.vehicleForm.titleEditVehicle')
-    )
+    emitter.emit('updateTitle', t('vehicleForm.titleEditVehicle'))
 })
 </script>
 
