@@ -1,4 +1,5 @@
 export class GraphData {
+  id?: number
   uid!: string
   title!: string
   value!: string
