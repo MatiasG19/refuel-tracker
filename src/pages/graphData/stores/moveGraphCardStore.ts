@@ -168,15 +168,38 @@ export const useGraphCardStore = defineStore('graphCardStore', () => {
       g => g.sequence === removedIndex + 1
     )[0]
 
+    // Move down
+    let startIndex = removedIndex + 2,
+      endIndex = addedIndex + 1,
+      sign = -1
     // Move up
     if (addedIndex < removedIndex) {
+      startIndex = addedIndex + 1
+      endIndex = removedIndex
+      sign = 1
+    }
+
+    // Move up
+    if (sign > 0) {
       const graphData = store.graphData.filter(
         g => g.sequence >= addedIndex + 1 && g.sequence <= removedIndex
       )
 
       for (let i = removedIndex; i >= addedIndex + 1; i--) {
         const graph = graphData.filter(g => g.sequence === i)[0]
-        graph.sequence = i + 1
+        graph.sequence += 1
+      }
+      movedGraph.sequence = addedIndex + 1
+    }
+    // Move down
+    else {
+      const graphData = store.graphData.filter(
+        g => g.sequence >= startIndex && g.sequence <= endIndex
+      )
+
+      for (let i = startIndex; i <= endIndex; i++) {
+        const graph = graphData.filter(g => g.sequence === i)[0]
+        graph.sequence += sign
       }
       movedGraph.sequence = addedIndex + 1
     }
