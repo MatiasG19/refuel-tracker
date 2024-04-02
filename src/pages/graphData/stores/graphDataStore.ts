@@ -26,9 +26,9 @@ export const useGraphDataStore = defineStore('graphDataStore', () => {
 
     const vehicle = await refuelStore.getVehicle(settings.selectedVehicleId)
     if (vehicle && vehicle.refuels?.length) {
-      graphData.value = new GraphDataFactory(vehicle)
-        .getAll(await getGraphSettings())
-        .sort((a, b) => a.sequence - b.sequence)
+      graphData.value = new GraphDataFactory(vehicle).getAll(
+        await getGraphSettings()
+      )
     } else {
       graphData.value.length = 0
     }
