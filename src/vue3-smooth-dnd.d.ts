@@ -1,7 +1,7 @@
 declare module 'vue3-smooth-dnd' {
-  import Vue from 'vue'
+  import { VueElement } from 'vue'
 
-  type Payload = any
+  type Payload = unknown
 
   interface DropResult {
     removedIndex: number
@@ -18,7 +18,7 @@ declare module 'vue3-smooth-dnd' {
 
   interface NodeDescription {
     value: string
-    props: Vue.VNodeData
+    props: unknown
   }
 
   interface ContainerProps {
@@ -53,11 +53,11 @@ declare module 'vue3-smooth-dnd' {
     onDropReady?: (dropResult: DropResult) => void
   }
 
-  class Container extends Vue {
+  class Container extends VueElement {
     props: ContainerProps
   }
 
-  class Draggable extends Vue {
+  class Draggable extends VueElement {
     props: {
       tag?: string | NodeDescription
     }
