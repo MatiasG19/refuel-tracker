@@ -57,7 +57,7 @@ export const useGraphCardStore = defineStore('graphCardStore', () => {
           })
         }
         await db.graphSettings.update(movedGraph.id as number, {
-          sequence: addedIndex + 1
+          sequence: movedGraph.sequence
         })
       })
     })()
