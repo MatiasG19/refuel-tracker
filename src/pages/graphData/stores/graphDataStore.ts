@@ -3,14 +3,13 @@ import { ref } from 'vue'
 import { db } from 'src/boot/dexie'
 import { GraphDataFactory } from 'src/pages/graphData/scripts/GraphDataFactory'
 import { GraphData } from 'src/pages/graphData/scripts/models'
-import { useGraphCardStore } from './moveGraphCardStore'
 import { useSettingsStore } from 'src/stores/settingsStore'
 import { useRefuelStore } from 'src/stores/refuelStore'
+import { DropResult } from 'vue3-smooth-dnd'
 
 export const useGraphDataStore = defineStore('graphDataStore', () => {
   const graphData = ref<GraphData[]>([])
 
-  const moveGraphCard = useGraphCardStore()
   const settings = useSettingsStore()
   const refuelStore = useRefuelStore()
 
@@ -34,10 +33,67 @@ export const useGraphDataStore = defineStore('graphDataStore', () => {
     }
   }
 
+  function moveCard(dropResult: DropResult) {
+    const { removedIndex, addedIndex } = dropResult
+    if (
+      removedIndex === null ||
+      addedIndex === null ||
+      removedIndex === addedIndex
+    )
+      return
+
+    const movedGraph = graphData.value.filter(
+      g => g.sequence === removedIndex + 1
+    )[0]
+
+    // Move down
+    let startIndex = removedIndex + 2,
+      endIndex = addedIndex + 1,
+      sign = -1
+    // Move up
+    if (addedIndex < removedIndex) {
+      startIndex = addedIndex + 1
+      endIndex = removedIndex
+      sign = 1
+    }
+
+    const graphDataValues = graphData.value.filter(
+      g => g.sequence >= startIndex && g.sequence <= endIndex
+    )
+
+    // Move up
+    if (sign > 0) {
+      for (let i = endIndex; i >= startIndex; i--) {
+        const graph = graphDataValues.filter(g => g.sequence === i)[0]
+        graph.sequence += sign
+      }
+    } else {
+      for (let i = startIndex; i <= endIndex; i++) {
+        const graph = graphDataValues.filter(g => g.sequence === i)[0]
+        graph.sequence += sign
+      }
+    }
+    movedGraph.sequence = addedIndex + 1
+
+    // Save to database
+    ;(async () => {
+      await db.transaction('rw', [db.graphSettings], async () => {
+        for (let j = 0; j < graphDataValues.length; j++) {
+          await db.graphSettings.update(graphDataValues[j].id as number, {
+            sequence: graphDataValues[j].sequence
+          })
+        }
+        await db.graphSettings.update(movedGraph.id as number, {
+          sequence: movedGraph.sequence
+        })
+      })
+    })()
+  }
+
   return {
     graphData,
-    moveGraphCard,
     getGraphSettings,
-    readGraphData
+    readGraphData,
+    moveCard
   }
 })

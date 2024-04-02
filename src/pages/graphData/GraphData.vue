@@ -132,7 +132,7 @@ watchEffect(() => {
 })
 
 function onDrop(dropResult: DropResult) {
-  graphDataStore.moveGraphCard.moveCard(dropResult)
+  graphDataStore.moveCard(dropResult)
 }
 
 onBeforeMount(async () => {
