@@ -73,7 +73,7 @@ import packageJson from '../../../package.json'
 import { useRefuelStore } from 'src/stores/refuelStore'
 import { useSettingsStore } from 'src/stores/settingsStore'
 import { useGraphDataStore } from './stores/graphDataStore'
-import { GraphData, Period } from 'src/pages/graphData/scripts/models'
+import { Period } from 'src/pages/graphData/scripts/models'
 import { optionsDialog } from 'src/components/dialogs/optionsDialog'
 import { useQuasar } from 'quasar'
 import { useRouter } from 'vue-router'
@@ -99,28 +99,9 @@ const graphData = computed(() =>
 const vehiclesExits = computed(() => settingsStore.selectedVehicleId)
 const optionsInDialog = ref([
   {
-    text: computed(() => `${t('graphData.optionsInDialog.moveTop')}`),
-    icon: 'keyboard_double_arrow_up',
-    action: (data: unknown) =>
-      graphDataStore.moveGraphCard.moveTop((data as GraphData).uid)
-  },
-  {
-    text: computed(() => `${t('graphData.optionsInDialog.moveUp')}`),
-    icon: 'keyboard_arrow_up',
-    action: (data: unknown) =>
-      graphDataStore.moveGraphCard.moveUp((data as GraphData).uid)
-  },
-  {
-    text: computed(() => `${t('graphData.optionsInDialog.moveDown')}`),
-    icon: 'keyboard_arrow_down',
-    action: (data: unknown) =>
-      graphDataStore.moveGraphCard.moveDown((data as GraphData).uid)
-  },
-  {
-    text: computed(() => `${t('graphData.optionsInDialog.moveBottom')}`),
-    icon: 'keyboard_double_arrow_down',
-    action: (data: unknown) =>
-      graphDataStore.moveGraphCard.moveBottom((data as GraphData).uid)
+    text: computed(() => `${t('graphData.optionsInDialog.move')}`),
+    icon: 'swap_vert',
+    action: (data: unknown) => console.log('move graph card', data)
   }
 ])
 
