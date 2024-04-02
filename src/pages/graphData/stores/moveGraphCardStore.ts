@@ -205,25 +205,33 @@ export const useGraphCardStore = defineStore('graphCardStore', () => {
       )[0].id
 
       await db.transaction('rw', [db.graphSettings], async () => {
-        // Move up
-        if (addedIndex < removedIndex) {
-          settings = settings.filter(
-            s => s.sequence >= addedIndex + 1 && s.sequence <= removedIndex
-          )
+        settings = settings.filter(
+          s => s.sequence >= startIndex && s.sequence <= endIndex
+        )
 
-          for (let i = removedIndex; i >= addedIndex + 1; i--) {
+        // Move up
+        if (sign > 0) {
+          for (let i = endIndex; i >= startIndex; i--) {
             await db.graphSettings.update(
               settings.filter(s => s.sequence === i)[0].id as number,
               {
-                sequence: i + 1
+                sequence: i + sign
               }
             )
           }
-          await db.graphSettings.update(movedCardId as number, {
-            sequence: addedIndex + 1
-          })
         } else {
+          for (let i = startIndex; i <= endIndex; i++) {
+            await db.graphSettings.update(
+              settings.filter(s => s.sequence === i)[0].id as number,
+              {
+                sequence: i + sign
+              }
+            )
+          }
         }
+        await db.graphSettings.update(movedCardId as number, {
+          sequence: addedIndex + 1
+        })
       })
     })()
   }
