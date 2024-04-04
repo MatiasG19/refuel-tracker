@@ -2,7 +2,8 @@
   <q-page class="items-center">
     <div v-if="editOrder" class="text-center">
       <q-btn
-        class="q-pl-md q-pt-xs"
+        class="q-pa-xs btn"
+        dense
         color="accent"
         :label="t('graphData.saveOrder')"
         no-caps
@@ -168,3 +169,9 @@ onUnmounted(() => {
   emitter.off('selectedVehicleChanged')
 })
 </script>
+
+<style scoped>
+.btn {
+  width: 40%;
+}
+</style>
