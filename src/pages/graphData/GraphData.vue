@@ -1,6 +1,5 @@
 <template>
   <q-page class="items-center">
-    <q-btn @click="animate">Animate</q-btn>
     <div
       v-if="vehiclesExits && graphData.length === 0"
       class="absolute-center items-center"
@@ -43,14 +42,19 @@
         />
       </template>
       <template v-else>
-        <Container @drop="onDrop" lock-axis="y">
+        <Container
+          @drop="onDrop"
+          lock-axis="y"
+          auto-scroll-enabled="true"
+          drag-handle-selector=".draggable"
+        >
           <Draggable v-for="data in graphData" :key="data.uid">
-            <div class="draggable-item">
+            <div :class="{ draggable: editOrder }">
               <graph-card
                 class="q-pt-md q-pl-md q-pr-md"
                 :graphData="data"
                 :periods="periods"
-                :shake-animation="animationOn"
+                :shake-animation="editOrder"
               />
             </div>
           </Draggable>
@@ -82,6 +86,7 @@ import { useRouter } from 'vue-router'
 import { useI18n } from 'vue-i18n'
 import messages from './i18n'
 import { Container, Draggable, DropResult } from 'vue3-smooth-dnd'
+import { App } from '@capacitor/app'
 
 const $q = useQuasar()
 $q.dark.set('auto')
@@ -92,14 +97,8 @@ const graphDataStore = useGraphDataStore()
 const settingsStore = useSettingsStore()
 const { t } = useI18n({ useScope: 'local', messages })
 
-const animationOn = ref(false)
-
-function animate() {
-  animationOn.value = !animationOn.value
-  console.log(animationOn.value)
-}
-
 const loading = ref(false)
+const editOrder = ref(false)
 const periods = ref<Period[]>([])
 const graphData = computed(() =>
   // eslint-disable-next-line vue/no-side-effects-in-computed-properties
@@ -110,7 +109,7 @@ const optionsInDialog = ref([
   {
     text: computed(() => `${t('graphData.optionsInDialog.move')}`),
     icon: 'swap_vert',
-    action: (data: unknown) => console.log('move graph card', data)
+    action: () => (editOrder.value = !editOrder.value)
   }
 ])
 
@@ -150,6 +149,7 @@ onBeforeMount(async () => {
 
 onMounted(() => {
   graphDataStore.readGraphData()
+  App.addListener('backButton', () => (editOrder.value = false))
 })
 
 onUnmounted(() => {
