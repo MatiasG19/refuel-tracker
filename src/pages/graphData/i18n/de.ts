@@ -9,6 +9,7 @@ export default {
     refuelsMade: 'Anzahl Betankungen',
     optionsInDialog: {
       move: 'Verschieben'
-    }
+    },
+    saveOrder: 'Speichern'
   }
 }

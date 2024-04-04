@@ -1,5 +1,15 @@
 <template>
   <q-page class="items-center">
+    <div v-if="editOrder" class="text-center">
+      <q-btn
+        class="q-pl-md q-pt-xs"
+        color="accent"
+        :label="t('graphData.saveOrder')"
+        no-caps
+        @click="editOrder = false"
+      />
+    </div>
+
     <div
       v-if="vehiclesExits && graphData.length === 0"
       class="absolute-center items-center"
