@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div :class="{ shake: shakeAnimation }">
     <q-card class="space-station">
       <q-card-section>
         <div class="row items-center no-wrap">
@@ -30,7 +30,7 @@
       <q-card-actions v-if="false">
         <div v-for="(period, i) in periods" :key="i" class="col text-center">
           <q-btn :ripple="false" dense flat no-caps class="space-station">{{
-            periods[i].name
+            period.name
           }}</q-btn>
           <q-separator vertical />
         </div>
@@ -40,7 +40,7 @@
 </template>
 
 <script setup lang="ts">
-import { GraphData } from '../scripts/models'
+import { GraphData, Period } from '../scripts/models'
 import { emitter } from 'src/boot/mitt'
 import { useI18n } from 'vue-i18n'
 import messages from '../i18n'
@@ -51,10 +51,31 @@ defineProps({
     required: true
   },
   periods: {
-    type: Array,
+    type: Array<Period>,
     required: true
+  },
+  shakeAnimation: {
+    type: Boolean
   }
 })
 
 const { t } = useI18n({ useScope: 'local', messages })
+
+const randomFactor = Math.random() * 0.4 + 0.5
+const randomOffset = (Math.ceil(Math.random()) + 2) * randomFactor * -1 + 'px'
+const randomAnimationDuration =
+  (Math.ceil(Math.random()) * 0.3 + 0.3) * randomFactor + 's'
 </script>
+
+<style scoped>
+.shake {
+  animation: shake v-bind(randomAnimationDuration) alternate infinite;
+  transform: translate3d(0, 0, 0);
+}
+
+@keyframes shake {
+  50% {
+    transform: translate3d(v-bind(randomOffset), 0, 0);
+  }
+}
+</style>

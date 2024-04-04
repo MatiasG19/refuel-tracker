@@ -1,5 +1,6 @@
 <template>
   <q-page class="items-center">
+    <q-btn @click="animate">Animate</q-btn>
     <div
       v-if="vehiclesExits && graphData.length === 0"
       class="absolute-center items-center"
@@ -49,6 +50,7 @@
                 class="q-pt-md q-pl-md q-pr-md"
                 :graphData="data"
                 :periods="periods"
+                :shake-animation="animationOn"
               />
             </div>
           </Draggable>
@@ -89,6 +91,13 @@ const refuelStore = useRefuelStore()
 const graphDataStore = useGraphDataStore()
 const settingsStore = useSettingsStore()
 const { t } = useI18n({ useScope: 'local', messages })
+
+const animationOn = ref(false)
+
+function animate() {
+  animationOn.value = !animationOn.value
+  console.log(animationOn.value)
+}
 
 const loading = ref(false)
 const periods = ref<Period[]>([])
