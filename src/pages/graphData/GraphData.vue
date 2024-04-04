@@ -6,6 +6,7 @@
         color="accent"
         :label="t('graphData.saveOrder')"
         no-caps
+        unelevated
         @click="editOrder = false"
       />
     </div>
