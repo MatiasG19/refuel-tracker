@@ -7,7 +7,7 @@
             <div class="text-subtitle2">{{ t(`${graphData.title}`) }}</div>
           </div>
 
-          <div class="col-auto space-station">
+          <div class="col-auto space-station" v-if="!shakeAnimation">
             <q-btn
               dense
               round
@@ -18,7 +18,14 @@
           </div>
         </div>
         <div>
-          <div class="text-h4 accent-space-station">{{ graphData.value }}</div>
+          <div class="row">
+            <div class="col text-h4 accent-space-station">
+              {{ graphData.value }}
+            </div>
+            <div class="col-auto cursor-pointer">
+              <q-icon v-if="shakeAnimation" name="drag_indicator" size="xl" />
+            </div>
+          </div>
           <div class="text-subtitle1">{{ graphData.unit }}</div>
         </div>
       </q-card-section>
