@@ -129,19 +129,6 @@ function saveOrder() {
   graphDataStore.saveCardOrder()
 }
 
-emitter.on('showGraphOptionsDialog', payload =>
-  optionsDialog(optionsInDialog.value, payload)
-)
-
-emitter.on('selectedVehicleChanged', () =>
-  (() => {
-    graphDataStore
-      .readGraphData()
-      .then(() => setTimeout(() => (loading.value = false), 100))
-    loading.value = false
-  })()
-)
-
 watchEffect(() => {
   // Emit inside watchEffect to catch window reloads
   emitter.emit(
@@ -166,6 +153,19 @@ onBeforeMount(async () => {
 onMounted(() => {
   graphDataStore.readGraphData()
   App.addListener('backButton', () => (editOrder.value = false))
+
+  emitter.on('showGraphOptionsDialog', payload =>
+    optionsDialog(optionsInDialog.value, payload)
+  )
+
+  emitter.on('selectedVehicleChanged', () =>
+    (() => {
+      graphDataStore
+        .readGraphData()
+        .then(() => setTimeout(() => (loading.value = false), 100))
+      loading.value = false
+    })()
+  )
 })
 
 onUnmounted(() => {
