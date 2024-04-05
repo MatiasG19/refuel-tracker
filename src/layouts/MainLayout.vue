@@ -16,6 +16,16 @@
         </q-toolbar-title>
 
         <q-btn
+          v-if="routePath == '/'"
+          class="q-pt-xs q-pl-md q-mt-md q-mr-xs"
+          color="accent"
+          label=""
+          icon="save"
+          no-caps
+          unelevated
+        />
+
+        <q-btn
           v-if="
             routePath == '/refuels' || routePath.match('\/refuels\/[-0-9]+')
           "
@@ -57,19 +67,7 @@
     </q-page-container>
 
     <q-footer v-if="footerVisible" class="bg-space-station">
-      <q-toolbar v-if="true" class="q-gutter-xs text-center">
-        <div class="col">
-          <q-btn
-            class="q-pa-xs btn"
-            dense
-            color="accent"
-            :label="t('graphData.saveOrder')"
-            no-caps
-            unelevated
-          />
-        </div>
-      </q-toolbar>
-      <q-toolbar v-if="false" class="q-gutter-xs text-center">
+      <q-toolbar class="q-gutter-xs text-center">
         <div class="col">
           <q-btn round flat dense icon="bar_chart" class="col" :to="'/'" />
         </div>
