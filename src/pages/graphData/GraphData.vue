@@ -120,7 +120,7 @@ const optionsInDialog = ref([
   {
     text: computed(() => `${t('graphData.optionsInDialog.move')}`),
     icon: 'swap_vert',
-    action: () => (editOrder.value = !editOrder.value)
+    action: () => (editOrder.value = true)
   }
 ])
 

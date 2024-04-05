@@ -57,7 +57,19 @@
     </q-page-container>
 
     <q-footer v-if="footerVisible" class="bg-space-station">
-      <q-toolbar class="q-gutter-xs text-center">
+      <q-toolbar v-if="true" class="q-gutter-xs text-center">
+        <div class="col">
+          <q-btn
+            class="q-pa-xs btn"
+            dense
+            color="accent"
+            :label="t('graphData.saveOrder')"
+            no-caps
+            unelevated
+          />
+        </div>
+      </q-toolbar>
+      <q-toolbar v-if="false" class="q-gutter-xs text-center">
         <div class="col">
           <q-btn round flat dense icon="bar_chart" class="col" :to="'/'" />
         </div>
