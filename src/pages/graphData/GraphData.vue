@@ -173,21 +173,3 @@ onUnmounted(() => {
   emitter.off('selectedVehicleChanged')
 })
 </script>
-
-<style scoped>
-.btn {
-  width: 40%;
-}
-
-.fade-enter-active,
-.fade-leave-active {
-  transition: opacity 0.3s;
-}
-
-.fade-enter-from {
-  opacity: 0;
-}
-.fade-leave-to {
-  opacity: 0;
-}
-</style>
