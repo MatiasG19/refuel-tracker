@@ -9,7 +9,6 @@ export default {
     refuelsMade: 'Refuels made',
     optionsInDialog: {
       move: 'Move'
-    },
-    saveOrder: 'Save'
+    }
   }
 }
