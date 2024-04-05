@@ -1,16 +1,18 @@
 <template>
   <q-page class="items-center">
-    <div v-if="editOrder" class="text-center">
-      <q-btn
-        class="q-pa-xs btn"
-        dense
-        color="accent"
-        :label="t('graphData.saveOrder')"
-        no-caps
-        unelevated
-        @click="editOrder = false"
-      />
-    </div>
+    <Transition name="fade">
+      <div v-if="editOrder" class="text-center">
+        <q-btn
+          class="q-pa-xs btn"
+          dense
+          color="accent"
+          :label="t('graphData.saveOrder')"
+          no-caps
+          unelevated
+          @click="saveOrder"
+        />
+      </div>
+    </Transition>
 
     <div
       v-if="vehiclesExits && graphData.length === 0"
@@ -122,6 +124,11 @@ const optionsInDialog = ref([
   }
 ])
 
+function saveOrder() {
+  editOrder.value = false
+  graphDataStore.saveCardOrder()
+}
+
 emitter.on('showGraphOptionsDialog', payload =>
   optionsDialog(optionsInDialog.value, payload)
 )
@@ -170,5 +177,17 @@ onUnmounted(() => {
 <style scoped>
 .btn {
   width: 40%;
+}
+
+.fade-enter-active,
+.fade-leave-active {
+  transition: opacity 0.3s;
+}
+
+.fade-enter-from {
+  opacity: 0;
+}
+.fade-leave-to {
+  opacity: 0;
 }
 </style>

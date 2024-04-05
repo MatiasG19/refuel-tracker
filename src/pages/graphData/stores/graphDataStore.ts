@@ -76,18 +76,16 @@ export const useGraphDataStore = defineStore('graphDataStore', () => {
     }
     movedGraph.sequence = addedIndex + 1
     graphData.value = graphData.value.sort((a, b) => a.sequence - b.sequence)
+  }
 
-    // Save to database
+  function saveCardOrder() {
     ;(async () => {
       await db.transaction('rw', [db.graphSettings], async () => {
-        for (let j = 0; j < graphDataValues.length; j++) {
-          await db.graphSettings.update(graphDataValues[j].id as number, {
-            sequence: graphDataValues[j].sequence
+        for (let j = 0; j < graphData.value.length; j++) {
+          await db.graphSettings.update(graphData.value[j].id as number, {
+            sequence: graphData.value[j].sequence
           })
         }
-        await db.graphSettings.update(movedGraph.id as number, {
-          sequence: movedGraph.sequence
-        })
       })
     })()
   }
@@ -96,6 +94,7 @@ export const useGraphDataStore = defineStore('graphDataStore', () => {
     graphData,
     getGraphSettings,
     readGraphData,
-    moveCard
+    moveCard,
+    saveCardOrder
   }
 })
