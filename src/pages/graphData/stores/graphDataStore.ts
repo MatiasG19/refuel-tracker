@@ -28,6 +28,7 @@ export const useGraphDataStore = defineStore('graphDataStore', () => {
       graphData.value = new GraphDataFactory(vehicle).getAll(
         await getGraphSettings()
       )
+      graphData.value = graphData.value.sort((a, b) => a.sequence - b.sequence)
     } else {
       graphData.value.length = 0
     }
@@ -74,6 +75,7 @@ export const useGraphDataStore = defineStore('graphDataStore', () => {
       }
     }
     movedGraph.sequence = addedIndex + 1
+    graphData.value = graphData.value.sort((a, b) => a.sequence - b.sequence)
 
     // Save to database
     ;(async () => {

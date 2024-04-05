@@ -112,10 +112,7 @@ const { t } = useI18n({ useScope: 'local', messages })
 const loading = ref(false)
 const editOrder = ref(false)
 const periods = ref<Period[]>([])
-const graphData = computed(() =>
-  // eslint-disable-next-line vue/no-side-effects-in-computed-properties
-  graphDataStore.graphData.sort((a, b) => a.sequence - b.sequence)
-)
+const graphData = computed(() => graphDataStore.graphData)
 const vehiclesExits = computed(() => settingsStore.selectedVehicleId)
 const optionsInDialog = ref([
   {
