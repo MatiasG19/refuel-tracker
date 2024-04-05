@@ -23,7 +23,7 @@
               {{ graphData.value }}
             </div>
             <div class="col-auto cursor-pointer">
-              <q-icon v-if="shakeAnimation" name="drag_indicator" size="xl" />
+              <q-icon v-if="shakeAnimation" name="drag_indicator" size="md" />
             </div>
           </div>
           <div class="text-subtitle1">{{ graphData.unit }}</div>
