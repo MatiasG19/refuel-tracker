@@ -26,8 +26,10 @@
 </div>
 
 <div align="center" class="center">
-  <a  href="https://play.google.com/store/apps/details?id=capacitor.quasar.refueltracker&pcampaignid=pcampaignidMKT-Other-global-all-co-prtnr-py-PartBadge-Mar2515-1"><img width="161" height="63" alt="Get it on Google Play" src="https://play.google.com/intl/en_us/badges/static/images/badges/en_badge_web_generic.png"/></a>
-  <a href="https://github.com/ImranR98/Obtainium"><img style="margin: 10px" width="141" height="42" alt="Get it on Obtainium" src="https://raw.githubusercontent.com/ImranR98/Obtainium/main/assets/graphics/badge_obtainium.png"/></a>
+  <p>
+    <a href="https://play.google.com/store/apps/details?id=capacitor.quasar.refueltracker&pcampaignid=pcampaignidMKT-Other-global-all-co-prtnr-py-PartBadge-Mar2515-1"><img width="141" height="41" alt="Get it on Google Play" src=".icons/google-play-badge.png"/></a>
+    <a href="https://github.com/ImranR98/Obtainium"><img width="141" height="42" alt="Get it on Obtainium" src="https://raw.githubusercontent.com/ImranR98/Obtainium/main/assets/graphics/badge_obtainium.png"/></a>
+  </p>
 </div>
 
 <div align="center" class="center">
