@@ -1,7 +1,7 @@
 <template>
   <div>
     <q-form @submit="onSubmit" class="q-px-md q-gutter-md">
-      <q-badge align="top">{{ vehicleName }}</q-badge>
+      <q-badge style="text-align: top">{{ vehicleName }}</q-badge>
       <c-input
         type="tel"
         :value="refuel.payedAmount?.toString()"
