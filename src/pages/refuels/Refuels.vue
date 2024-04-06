@@ -37,7 +37,7 @@
     </div>
     <template v-else>
       <div class="q-px-md q-pb-xs q-gutter-md">
-        <q-badge align="top">{{ vehicleName }}</q-badge>
+        <q-badge>{{ vehicleName }}</q-badge>
       </div>
 
       <div
