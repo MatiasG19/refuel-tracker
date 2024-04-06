@@ -22,6 +22,10 @@
 </div>
 
 <div align="center">
+  <a href='https://play.google.com/store/apps/details?id=capacitor.quasar.refueltracker&pcampaignid=pcampaignidMKT-Other-global-all-co-prtnr-py-PartBadge-Mar2515-1'><img  width="161" height="63" alt='Get it on Google Play' src='https://play.google.com/intl/en_us/badges/static/images/badges/en_badge_web_generic.png'/></a>
+</div>
+
+<div align="center">
     <img src=".screenshots/MainPage.png" alt="Logo" width="270" height="490">
     <img src=".screenshots/Vehicles.png" alt="Logo" width="270" height="490">
     <img src=".screenshots/Refuels.png" alt="Logo" width="270" height="490">
