@@ -11,7 +11,7 @@
 
 <h3 align="center" class="center">Refuel Tracker</h3>
 
-<div class="center">
+<div align="center" class="center">
   <p>Tracks your refuels and displays your data in nice graphs.</p>
 </div>
 
