@@ -7,12 +7,13 @@
             <div class="text-subtitle2">{{ t(`${graphData.title}`) }}</div>
           </div>
 
-          <div class="col-auto space-station" v-if="!shakeAnimation">
+          <div class="col-auto space-station">
             <q-btn
+              :disable="shakeAnimation"
               dense
               round
               flat
-              icon="more_vert"
+              :icon="shakeAnimation ? '' : 'more_vert'"
               @click="emitter.emit('showGraphOptionsDialog', graphData)"
             />
           </div>
