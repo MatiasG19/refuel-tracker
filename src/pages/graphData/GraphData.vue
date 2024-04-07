@@ -1,19 +1,5 @@
 <template>
   <q-page class="items-center">
-    <Transition name="fade">
-      <div v-if="editOrder" class="text-center">
-        <q-btn
-          class="q-pa-xs btn"
-          dense
-          color="accent"
-          :label="t('graphData.saveOrder')"
-          no-caps
-          unelevated
-          @click="saveOrder"
-        />
-      </div>
-    </Transition>
-
     <div
       v-if="vehiclesExits && graphData.length === 0"
       class="absolute-center items-center"
@@ -120,13 +106,21 @@ const optionsInDialog = ref([
   {
     text: computed(() => `${t('graphData.optionsInDialog.move')}`),
     icon: 'swap_vert',
-    action: () => (editOrder.value = true)
+    action: () => editOrderFun()
   }
 ])
+
+function editOrderFun() {
+  editOrder.value = true
+  emitter.emit('showSaveButton', true)
+  emitter.on('save', () => saveOrder())
+}
 
 function saveOrder() {
   editOrder.value = false
   graphDataStore.saveCardOrder()
+  emitter.off('save')
+  emitter.emit('showSaveButton', false)
 }
 
 watchEffect(() => {
@@ -171,5 +165,7 @@ onMounted(() => {
 onUnmounted(() => {
   emitter.off('showGraphOptionsDialog')
   emitter.off('selectedVehicleChanged')
+  emitter.emit('showSaveButton', false)
+  emitter.off('save')
 })
 </script>

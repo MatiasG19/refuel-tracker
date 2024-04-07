@@ -6,6 +6,8 @@ type Events = {
   showVehicleOptionsDialog: number
   showRefuelOptionsDialog: number
   selectedVehicleChanged: boolean
+  showSaveButton: boolean
+  save: boolean
 }
 
 export const emitter = mitt<Events>()

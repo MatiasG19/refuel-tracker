@@ -16,13 +16,14 @@
         </q-toolbar-title>
 
         <q-btn
-          v-if="routePath == '/'"
+          v-if="saveButtonVisible"
           class="q-pt-xs q-pl-md q-mt-md q-mr-xs"
           color="accent"
           label=""
           icon="save"
           no-caps
           unelevated
+          @click="emitter.emit('save', true)"
         />
 
         <q-btn
@@ -160,8 +161,7 @@ const linkList = ref([
 ])
 
 const footerVisible = ref(true)
-emitter.on('updateTitle', e => (title.value = e))
-
+const saveButtonVisible = ref(false)
 const leftDrawerOpen = ref(false)
 const title = ref('')
 
@@ -193,9 +193,13 @@ onMounted(() => {
   if (Platform.is.mobile) {
     addKeyboardListeners()
   }
+
+  emitter.on('updateTitle', e => (title.value = e))
+  emitter.on('showSaveButton', e => (saveButtonVisible.value = e))
 })
 
 onUnmounted(() => {
   emitter.off('updateTitle')
+  emitter.off('showSaveButton')
 })
 </script>
