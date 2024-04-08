@@ -1,5 +1,6 @@
-import { initSettings } from 'src/scripts/initSettings'
-initSettings()
+import { useSettingsStore } from 'src/stores/settingsStore'
+const settingsStore = useSettingsStore()
+settingsStore.initSettings()
 
 import { useRefuelFilterStore } from 'src/pages/refuels/stores/refuelFilterStore'
 const refuelFilterStore = useRefuelFilterStore()
