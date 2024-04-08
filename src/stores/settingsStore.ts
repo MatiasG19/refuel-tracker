@@ -19,26 +19,24 @@ export const useSettingsStore = defineStore('settingsStore', () => {
     const settings = await db.settings.toArray()
     if (settings.length === 0) return Promise.resolve()
 
-    changeColorTheme(settings[0].colorThemeId)
-    changeLanguage(settings[0].languageId ?? 1)
-    changeDistanceUnit(settings[0].distanceUnitId)
+    await changeColorTheme(settings[0].colorThemeId)
+    await changeLanguage(settings[0].languageId ?? 1)
+    await changeDistanceUnit(settings[0].distanceUnitId)
     if (settings[0].vehicleId) {
       const vehicle = await db.vehicles
         .where('id')
         .equals(settings[0].vehicleId)
         .first()
-      changeSelectedVehicle(vehicle ?? null)
+      await changeSelectedVehicle(vehicle ?? null)
     }
-    togglePlateNumberInTitle(settings[0].plateNumberInTitleActive)
+    await togglePlateNumberInTitle(settings[0].plateNumberInTitleActive)
   }
 
-  function changeDistanceUnit(distanceUnitId: number) {
-    ;(async () => {
-      const settings = await db.settings.toArray()
-      settings[0].distanceUnitId = distanceUnitId
-      await db.settings.put(settings[0])
-      selectedDistanceUnitId.value = distanceUnitId
-    })()
+  async function changeDistanceUnit(distanceUnitId: number) {
+    const settings = await db.settings.toArray()
+    settings[0].distanceUnitId = distanceUnitId
+    await db.settings.put(settings[0])
+    selectedDistanceUnitId.value = distanceUnitId
   }
 
   async function changeSelectedVehicle(vehicle: Vehicle | null) {
@@ -61,49 +59,39 @@ export const useSettingsStore = defineStore('settingsStore', () => {
     }
   }
 
-  function togglePlateNumberInTitle(state: boolean) {
-    ;(async () => {
-      const settings = await db.settings.toArray()
-      settings[0].plateNumberInTitleActive = state
-      await db.settings.put(settings[0])
-      plateNumberInTitleActive.value = state
-    })()
+  async function togglePlateNumberInTitle(state: boolean) {
+    const settings = await db.settings.toArray()
+    settings[0].plateNumberInTitleActive = state
+    await db.settings.put(settings[0])
+    plateNumberInTitleActive.value = state
   }
 
-  function toggleAutoBackup(state: boolean) {
-    ;(async () => {
-      const settings = await db.settings.toArray()
-      settings[0].autoBackupActive = state
-      await db.settings.put(settings[0])
-      autoBackupActive.value = state
-    })()
+  async function toggleAutoBackup(state: boolean) {
+    const settings = await db.settings.toArray()
+    settings[0].autoBackupActive = state
+    await db.settings.put(settings[0])
+    autoBackupActive.value = state
   }
 
-  function setAutoBackupPath(path: string) {
-    ;(async () => {
-      const settings = await db.settings.toArray()
-      settings[0].autoBackupPath = path
-      await db.settings.put(settings[0])
-      autoBackupPath.value = path
-    })()
+  async function setAutoBackupPath(path: string) {
+    const settings = await db.settings.toArray()
+    settings[0].autoBackupPath = path
+    await db.settings.put(settings[0])
+    autoBackupPath.value = path
   }
 
-  function changeColorTheme(themeId: number) {
-    ;(async () => {
-      const settings = await db.settings.toArray()
-      settings[0].colorThemeId = themeId
-      await db.settings.put(settings[0])
-      selectedColorThemeId.value = themeId
-    })()
+  async function changeColorTheme(themeId: number) {
+    const settings = await db.settings.toArray()
+    settings[0].colorThemeId = themeId
+    await db.settings.put(settings[0])
+    selectedColorThemeId.value = themeId
   }
 
-  function changeLanguage(languageId: number) {
-    ;(async () => {
-      const settings = await db.settings.toArray()
-      settings[0].languageId = languageId
-      await db.settings.put(settings[0])
-      selectedLanguageId.value = languageId
-    })()
+  async function changeLanguage(languageId: number) {
+    const settings = await db.settings.toArray()
+    settings[0].languageId = languageId
+    await db.settings.put(settings[0])
+    selectedLanguageId.value = languageId
   }
 
   return {
