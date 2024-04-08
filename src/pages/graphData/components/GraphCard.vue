@@ -14,7 +14,7 @@
               round
               flat
               :icon="shakeAnimation ? '' : 'more_vert'"
-              @click="emitter.emit('showGraphOptionsDialog', graphData)"
+              @click="emit('onOptionsClick', graphData)"
             />
           </div>
         </div>
@@ -49,7 +49,6 @@
 
 <script setup lang="ts">
 import { GraphData, Period } from '../scripts/models'
-import { emitter } from 'src/boot/mitt'
 import { useI18n } from 'vue-i18n'
 import messages from '../i18n'
 import { onLongPress } from '@vueuse/core'
@@ -70,7 +69,7 @@ defineProps({
 })
 
 const { t } = useI18n({ useScope: 'local', messages })
-const emit = defineEmits(['onLongPress'])
+const emit = defineEmits(['onLongPress', 'onOptionsClick'])
 
 const randomFactor = Math.random() * 0.4 + 0.5
 const randomOffset = (Math.ceil(Math.random()) + 2) * randomFactor * -1 + 'px'

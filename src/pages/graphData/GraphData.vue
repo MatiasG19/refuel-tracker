@@ -56,6 +56,9 @@
                 :periods="periods"
                 :shake-animation="editOrder"
                 @on-long-press="editOrderFun()"
+                @on-options-click="
+                  payload => optionsDialog(optionsInDialog, payload)
+                "
               />
             </div>
           </Draggable>
@@ -142,16 +145,11 @@ onMounted(() => {
   updateTitle()
   graphDataStore.readGraphData()
   App.addListener('backButton', () => (editOrder.value = false))
-
-  emitter.on('showGraphOptionsDialog', payload =>
-    optionsDialog(optionsInDialog.value, payload)
-  )
   clearTimeout(timeOut)
   loading.value = false
 })
 
 onUnmounted(() => {
-  emitter.off('showGraphOptionsDialog')
   emitter.emit('showSaveButton', false)
   emitter.off('save')
 })
