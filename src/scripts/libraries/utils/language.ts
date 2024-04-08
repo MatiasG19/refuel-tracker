@@ -17,7 +17,10 @@ export async function setI18nLanguage(languageId: number) {
   const locale = i18n.global.locale
   if (languageId) {
     if (languageId === LanugageId.System) {
-      locale.value = (await Device.getLanguageCode()).value
+      const code = await Device.getLanguageCode()
+      locale.value = getLanguages().filter(
+        l => code.value === l.codeString
+      )[0].code
     } else {
       locale.value = getLanguages().filter(l => l.id === languageId)[0].code
     }
