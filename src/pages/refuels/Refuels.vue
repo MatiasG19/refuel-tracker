@@ -1,9 +1,5 @@
 <template>
   <q-page>
-    <div class="q-px-md q-pb-xs q-gutter-md">
-      <q-badge align="top">{{ vehicleName }}</q-badge>
-    </div>
-
     <div
       v-if="
         vehiclesExists &&
@@ -40,6 +36,10 @@
       />
     </div>
     <template v-else>
+      <div class="q-px-md q-pb-xs q-gutter-md">
+        <q-badge>{{ vehicleName }}</q-badge>
+      </div>
+
       <div
         v-if="vehiclesExists && refuelFilterStore.filterActive"
         class="q-pt-md text-center"
