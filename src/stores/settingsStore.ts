@@ -15,6 +15,23 @@ export const useSettingsStore = defineStore('settingsStore', () => {
   const selectedColorThemeId = ref<number>(1)
   const selectedLanguageId = ref<number>(1)
 
+  async function initSettings() {
+    const settings = await db.settings.toArray()
+    if (settings.length === 0) return Promise.resolve()
+
+    changeColorTheme(settings[0].colorThemeId)
+    changeLanguage(settings[0].languageId ?? 1)
+    changeDistanceUnit(settings[0].distanceUnitId)
+    if (settings[0].vehicleId) {
+      const vehicle = await db.vehicles
+        .where('id')
+        .equals(settings[0].vehicleId)
+        .first()
+      changeSelectedVehicle(vehicle ?? null)
+    }
+    togglePlateNumberInTitle(settings[0].plateNumberInTitleActive)
+  }
+
   function changeDistanceUnit(distanceUnitId: number) {
     ;(async () => {
       const settings = await db.settings.toArray()
@@ -99,6 +116,7 @@ export const useSettingsStore = defineStore('settingsStore', () => {
     autoBackupPath,
     selectedColorThemeId,
     selectedLanguageId,
+    initSettings,
     changeDistanceUnit,
     changeSelectedVehicle,
     togglePlateNumberInTitle,
