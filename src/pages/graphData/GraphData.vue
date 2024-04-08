@@ -147,9 +147,14 @@ onMounted(() => {
   App.addListener('backButton', () => (editOrder.value = false))
   clearTimeout(timeOut)
   loading.value = false
+  emitter.on('selectedVehicleChanged', () => {
+    updateTitle()
+    graphDataStore.readGraphData()
+  })
 })
 
 onUnmounted(() => {
+  emitter.off('selectedVehicleChanged')
   emitter.emit('showSaveButton', false)
   emitter.off('save')
 })
