@@ -1,5 +1,5 @@
 <template>
-  <div :class="{ shake: shakeAnimation }">
+  <div :class="{ shake: shakeAnimation }" ref="htmlRefHook">
     <q-card class="space-station">
       <q-card-section>
         <div class="row items-center no-wrap">
@@ -52,6 +52,8 @@ import { GraphData, Period } from '../scripts/models'
 import { emitter } from 'src/boot/mitt'
 import { useI18n } from 'vue-i18n'
 import messages from '../i18n'
+import { onLongPress } from '@vueuse/core'
+import { ref } from 'vue'
 
 defineProps({
   graphData: {
@@ -68,11 +70,17 @@ defineProps({
 })
 
 const { t } = useI18n({ useScope: 'local', messages })
+const emit = defineEmits(['onLongPress'])
 
 const randomFactor = Math.random() * 0.4 + 0.5
 const randomOffset = (Math.ceil(Math.random()) + 2) * randomFactor * -1 + 'px'
 const randomAnimationDuration =
   (Math.ceil(Math.random()) * 0.3 + 0.3) * randomFactor + 's'
+const htmlRefHook = ref<HTMLElement>()
+
+onLongPress(htmlRefHook, () => {
+  emit('onLongPress')
+})
 </script>
 
 <style scoped>

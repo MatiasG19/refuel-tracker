@@ -55,6 +55,7 @@
                 :graphData="data"
                 :periods="periods"
                 :shake-animation="editOrder"
+                @on-long-press="editOrderFun()"
               />
             </div>
           </Draggable>
@@ -66,14 +67,7 @@
 
 <script setup lang="ts">
 import GraphCard from 'src/pages/graphData/components/GraphCard.vue'
-import {
-  ref,
-  watchEffect,
-  computed,
-  onBeforeMount,
-  onMounted,
-  onUnmounted
-} from 'vue'
+import { ref, computed, onBeforeMount, onMounted, onUnmounted } from 'vue'
 import { emitter } from 'src/boot/mitt'
 import packageJson from '../../../package.json'
 import { useRefuelStore } from 'src/stores/refuelStore'
@@ -123,8 +117,7 @@ function saveOrder() {
   emitter.emit('showSaveButton', false)
 }
 
-watchEffect(() => {
-  // Emit inside watchEffect to catch window reloads
+function updateTitle() {
   emitter.emit(
     'updateTitle',
     (() => {
@@ -134,7 +127,7 @@ watchEffect(() => {
       return settingsStore.selectedVehicleName
     })()
   )
-})
+}
 
 function onDrop(dropResult: DropResult) {
   graphDataStore.moveCard(dropResult)
@@ -145,6 +138,7 @@ onBeforeMount(async () => {
 })
 
 onMounted(() => {
+  updateTitle()
   graphDataStore.readGraphData()
   App.addListener('backButton', () => (editOrder.value = false))
 
