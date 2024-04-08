@@ -138,6 +138,7 @@ onBeforeMount(async () => {
 })
 
 onMounted(() => {
+  const timeOut = setTimeout(() => (loading.value = true), 200)
   updateTitle()
   graphDataStore.readGraphData()
   App.addListener('backButton', () => (editOrder.value = false))
@@ -145,20 +146,12 @@ onMounted(() => {
   emitter.on('showGraphOptionsDialog', payload =>
     optionsDialog(optionsInDialog.value, payload)
   )
-
-  emitter.on('selectedVehicleChanged', () =>
-    (() => {
-      graphDataStore
-        .readGraphData()
-        .then(() => setTimeout(() => (loading.value = false), 100))
-      loading.value = false
-    })()
-  )
+  clearTimeout(timeOut)
+  loading.value = false
 })
 
 onUnmounted(() => {
   emitter.off('showGraphOptionsDialog')
-  emitter.off('selectedVehicleChanged')
   emitter.emit('showSaveButton', false)
   emitter.off('save')
 })
