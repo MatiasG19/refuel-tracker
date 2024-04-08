@@ -45,7 +45,7 @@
         <Container
           @drop="onDrop"
           lock-axis="y"
-          auto-scroll-enabled="true"
+          :auto-scroll-enabled="true"
           drag-handle-selector=".draggable"
         >
           <Draggable v-for="data in graphData" :key="data.uid">
