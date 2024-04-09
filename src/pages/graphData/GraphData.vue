@@ -138,7 +138,6 @@ function onDrop(dropResult: DropResult) {
 }
 
 onMounted(async () => {
-  console.log('GraphData onMount', new Date().toISOString())
   const timeOut = setTimeout(() => (loading.value = true), 200)
   await initSettings()
   periods.value = await refuelStore.getPeriods()
