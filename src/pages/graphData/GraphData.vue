@@ -70,7 +70,7 @@
 
 <script setup lang="ts">
 import GraphCard from 'src/pages/graphData/components/GraphCard.vue'
-import { ref, computed, onBeforeMount, onMounted, onUnmounted } from 'vue'
+import { ref, computed, onMounted, onUnmounted } from 'vue'
 import { emitter } from 'src/boot/mitt'
 import packageJson from '../../../package.json'
 import { useRefuelStore } from 'src/stores/refuelStore'
@@ -84,6 +84,7 @@ import { useI18n } from 'vue-i18n'
 import messages from './i18n'
 import { Container, Draggable, DropResult } from 'vue3-smooth-dnd'
 import { App } from '@capacitor/app'
+import { initSettings } from 'src/scripts/initSettings'
 
 const $q = useQuasar()
 $q.dark.set('auto')
@@ -136,25 +137,19 @@ function onDrop(dropResult: DropResult) {
   graphDataStore.moveCard(dropResult)
 }
 
-onBeforeMount(async () => {
-  periods.value = await refuelStore.getPeriods()
-})
-
-onMounted(() => {
+onMounted(async () => {
+  console.log('GraphData onMount', new Date().toISOString())
   const timeOut = setTimeout(() => (loading.value = true), 200)
+  await initSettings()
+  periods.value = await refuelStore.getPeriods()
   updateTitle()
   graphDataStore.readGraphData()
   App.addListener('backButton', () => (editOrder.value = false))
   clearTimeout(timeOut)
   loading.value = false
-  emitter.on('selectedVehicleChanged', () => {
-    updateTitle()
-    graphDataStore.readGraphData()
-  })
 })
 
 onUnmounted(() => {
-  emitter.off('selectedVehicleChanged')
   emitter.emit('showSaveButton', false)
   emitter.off('save')
 })
