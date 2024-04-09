@@ -47,6 +47,8 @@
           lock-axis="y"
           :auto-scroll-enabled="true"
           drag-handle-selector=".draggable"
+          class="scroll"
+          style="height: 90vh"
         >
           <Draggable v-for="data in graphData" :key="data.uid">
             <div :class="{ draggable: editOrder }">
