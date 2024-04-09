@@ -215,5 +215,6 @@ onMounted(() => {
 onUnmounted(() => {
   emitter.off('updateTitle')
   emitter.off('showSaveButton')
+  removeEventListener('resize', calculateAreaHeight)
 })
 </script>
