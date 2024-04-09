@@ -1,6 +1,6 @@
 <template>
   <q-layout view="lHh Lpr lFf" class="bg-space-station">
-    <q-header>
+    <q-header ref="header">
       <q-toolbar class="bg-space-station">
         <q-btn
           flat
@@ -67,7 +67,7 @@
       </router-view>
     </q-page-container>
 
-    <q-footer v-if="footerVisible" class="bg-space-station">
+    <q-footer v-if="footerVisible" class="bg-space-station" ref="footer">
       <q-toolbar class="q-gutter-xs text-center">
         <div class="col">
           <q-btn round flat dense icon="bar_chart" class="col" :to="'/'" />
@@ -125,6 +125,8 @@ const router = useRouter()
 const settingsStore = useSettingsStore()
 const routePath = computed(() => router.currentRoute.value.path)
 const { t } = useI18n()
+const header = ref()
+const footer = ref()
 
 const linkList = ref([
   {
@@ -187,6 +189,15 @@ function add() {
   else void router.push('/refuels/add')
 }
 
+function calculateAreaHeight() {
+  settingsStore.areaHeight =
+    document.documentElement.clientHeight -
+    // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access
+    header.value.heightHint -
+    // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access
+    footer.value.heightHint
+}
+
 onMounted(() => {
   if (Platform.is.mobile) {
     addKeyboardListeners()
@@ -194,6 +205,11 @@ onMounted(() => {
 
   emitter.on('updateTitle', e => (title.value = e))
   emitter.on('showSaveButton', e => (saveButtonVisible.value = e))
+
+  addEventListener('resize', () => {
+    calculateAreaHeight()
+  })
+  calculateAreaHeight()
 })
 
 onUnmounted(() => {

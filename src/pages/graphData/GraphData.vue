@@ -48,7 +48,7 @@
           :auto-scroll-enabled="true"
           drag-handle-selector=".draggable"
           class="scroll"
-          style="height: 90vh"
+          :style="areaHeight"
         >
           <Draggable v-for="data in graphData" :key="data.uid">
             <div :class="{ draggable: editOrder }">
@@ -97,6 +97,7 @@ const graphDataStore = useGraphDataStore()
 const settingsStore = useSettingsStore()
 const { t } = useI18n({ useScope: 'local', messages })
 
+const areaHeight = computed(() => `height: ${settingsStore.areaHeight}px`)
 const loading = ref(false)
 const editOrder = ref(false)
 const periods = ref<Period[]>([])

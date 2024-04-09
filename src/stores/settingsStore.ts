@@ -14,6 +14,7 @@ export const useSettingsStore = defineStore('settingsStore', () => {
   const autoBackupPath = ref<string>('')
   const selectedColorThemeId = ref<number>(1)
   const selectedLanguageId = ref<number>(1)
+  const areaHeight = ref(0)
 
   async function initSettings() {
     const settings = await db.settings.toArray()
@@ -105,6 +106,7 @@ export const useSettingsStore = defineStore('settingsStore', () => {
     autoBackupPath,
     selectedColorThemeId,
     selectedLanguageId,
+    areaHeight,
     initSettings,
     changeDistanceUnit,
     changeSelectedVehicle,
