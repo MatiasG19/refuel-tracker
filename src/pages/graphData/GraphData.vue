@@ -111,10 +111,10 @@ const optionsInDialog = ref([
   }
 ])
 
-function editOrderFun() {
-  editOrder.value = true
-  emitter.emit('showSaveButton', true)
-  emitter.on('save', () => saveOrder())
+function editOrderFun(value = true) {
+  editOrder.value = value
+  emitter.emit('showSaveButton', value)
+  if (value) emitter.on('save', () => saveOrder())
 }
 
 function saveOrder() {
@@ -146,7 +146,9 @@ onMounted(async () => {
   periods.value = await refuelStore.getPeriods()
   updateTitle()
   graphDataStore.readGraphData()
-  App.addListener('backButton', () => (editOrder.value = false))
+  App.addListener('backButton', () => {
+    editOrderFun(false)
+  })
   clearTimeout(timeOut)
   loading.value = false
 })
@@ -154,5 +156,6 @@ onMounted(async () => {
 onUnmounted(() => {
   emitter.emit('showSaveButton', false)
   emitter.off('save')
+  App.removeAllListeners()
 })
 </script>
