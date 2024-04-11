@@ -97,12 +97,12 @@ const graphDataStore = useGraphDataStore()
 const settingsStore = useSettingsStore()
 const { t } = useI18n({ useScope: 'local', messages })
 
-const areaHeight = computed(() => `height: ${settingsStore.areaHeight}px`)
 const loading = ref(false)
 const editOrder = ref(false)
 const periods = ref<Period[]>([])
 const graphData = computed(() => graphDataStore.graphData)
 const vehiclesExits = computed(() => settingsStore.selectedVehicleId)
+const areaHeight = computed(() => `height: ${settingsStore.areaHeight}px`)
 const optionsInDialog = ref([
   {
     text: computed(() => `${t('graphData.optionsInDialog.move')}`),
