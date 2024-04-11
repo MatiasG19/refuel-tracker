@@ -1,23 +1,17 @@
 import { useSettingsStore } from 'src/stores/settingsStore'
-import { db } from '../boot/dexie'
+import { setI18nLanguage } from './libraries/utils/language'
+import { useRefuelFilterStore } from 'src/pages/refuels/stores/refuelFilterStore'
+import { registerGraphData } from 'src/pages/graphData/scripts/registerGraphData'
+import { registerFuelConsumption } from 'src/scripts/libraries/refuel/functions/fuelConsumption/registerFuelConsumption'
 
-export function initSettings() {
+export async function initSettings() {
   const settingsStore = useSettingsStore()
+  await settingsStore.initSettings()
+  await setI18nLanguage(settingsStore.selectedLanguageId)
 
-  ;(async () => {
-    const settings = await db.settings.toArray()
-    if (!settings[0]) return Promise.resolve()
+  const refuelFilterStore = useRefuelFilterStore()
+  refuelFilterStore.readFilter()
 
-    settingsStore.changeColorTheme(settings[0].colorThemeId)
-    settingsStore.changeLanguage(settings[0].languageId ?? 1)
-    settingsStore.changeDistanceUnit(settings[0].distanceUnitId)
-    if (settings[0].vehicleId) {
-      const vehicles = await db.vehicles
-        .where('id')
-        .equals(settings[0].vehicleId)
-        .toArray()
-      settingsStore.changeSelectedVehicle(vehicles[0])
-    }
-    settingsStore.togglePlateNumberInTitle(settings[0].plateNumberInTitleActive)
-  })()
+  registerGraphData()
+  registerFuelConsumption()
 }

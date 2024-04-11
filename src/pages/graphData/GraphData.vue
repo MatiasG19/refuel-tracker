@@ -42,13 +42,29 @@
         />
       </template>
       <template v-else>
-        <graph-card
-          v-for="data in graphData"
-          :key="data.uid"
-          :graphData="data"
-          :periods="periods"
-          class="q-pt-md q-pl-md q-pr-md"
-        />
+        <Container
+          @drop="onDrop"
+          lock-axis="y"
+          :auto-scroll-enabled="true"
+          drag-handle-selector=".draggable"
+          class="scroll"
+          :style="areaHeight"
+        >
+          <Draggable v-for="data in graphData" :key="data.uid">
+            <div :class="{ draggable: editOrder }">
+              <graph-card
+                class="q-pt-md q-pl-md q-pr-md"
+                :graphData="data"
+                :periods="periods"
+                :shake-animation="editOrder"
+                @on-long-press="editOrderFun()"
+                @on-options-click="
+                  payload => optionsDialog(optionsInDialog, payload)
+                "
+              />
+            </div>
+          </Draggable>
+        </Container>
       </template>
     </template>
   </q-page>
@@ -56,25 +72,21 @@
 
 <script setup lang="ts">
 import GraphCard from 'src/pages/graphData/components/GraphCard.vue'
-import {
-  ref,
-  watchEffect,
-  computed,
-  onBeforeMount,
-  onMounted,
-  onUnmounted
-} from 'vue'
+import { ref, computed, onMounted, onUnmounted } from 'vue'
 import { emitter } from 'src/boot/mitt'
 import packageJson from '../../../package.json'
 import { useRefuelStore } from 'src/stores/refuelStore'
 import { useSettingsStore } from 'src/stores/settingsStore'
 import { useGraphDataStore } from './stores/graphDataStore'
-import { GraphData, Period } from 'src/pages/graphData/scripts/models'
+import { Period } from 'src/pages/graphData/scripts/models'
 import { optionsDialog } from 'src/components/dialogs/optionsDialog'
 import { useQuasar } from 'quasar'
 import { useRouter } from 'vue-router'
 import { useI18n } from 'vue-i18n'
 import messages from './i18n'
+import { Container, Draggable, DropResult } from 'vue3-smooth-dnd'
+import { App } from '@capacitor/app'
+import { initSettings } from 'src/scripts/initSettings'
 
 const $q = useQuasar()
 $q.dark.set('auto')
@@ -86,51 +98,33 @@ const settingsStore = useSettingsStore()
 const { t } = useI18n({ useScope: 'local', messages })
 
 const loading = ref(false)
+const editOrder = ref(false)
 const periods = ref<Period[]>([])
 const graphData = computed(() => graphDataStore.graphData)
 const vehiclesExits = computed(() => settingsStore.selectedVehicleId)
+const areaHeight = computed(() => `height: ${settingsStore.areaHeight}px`)
 const optionsInDialog = ref([
   {
-    text: computed(() => `${t('graphData.optionsInDialog.moveTop')}`),
-    icon: 'keyboard_double_arrow_up',
-    action: (data: unknown) =>
-      graphDataStore.moveGraphCard.moveTop((data as GraphData).uid)
-  },
-  {
-    text: computed(() => `${t('graphData.optionsInDialog.moveUp')}`),
-    icon: 'keyboard_arrow_up',
-    action: (data: unknown) =>
-      graphDataStore.moveGraphCard.moveUp((data as GraphData).uid)
-  },
-  {
-    text: computed(() => `${t('graphData.optionsInDialog.moveDown')}`),
-    icon: 'keyboard_arrow_down',
-    action: (data: unknown) =>
-      graphDataStore.moveGraphCard.moveDown((data as GraphData).uid)
-  },
-  {
-    text: computed(() => `${t('graphData.optionsInDialog.moveBottom')}`),
-    icon: 'keyboard_double_arrow_down',
-    action: (data: unknown) =>
-      graphDataStore.moveGraphCard.moveBottom((data as GraphData).uid)
+    text: computed(() => `${t('graphData.optionsInDialog.move')}`),
+    icon: 'swap_vert',
+    action: () => editOrderFun()
   }
 ])
 
-emitter.on('showGraphOptionsDialog', payload =>
-  optionsDialog(optionsInDialog.value, payload)
-)
+function editOrderFun() {
+  editOrder.value = true
+  emitter.emit('showSaveButton', true)
+  emitter.on('save', () => saveOrder())
+}
 
-emitter.on('selectedVehicleChanged', () =>
-  (() => {
-    graphDataStore
-      .readGraphData()
-      .then(() => setTimeout(() => (loading.value = false), 100))
-    loading.value = false
-  })()
-)
+function saveOrder() {
+  editOrder.value = false
+  graphDataStore.saveCardOrder()
+  emitter.off('save')
+  emitter.emit('showSaveButton', false)
+}
 
-watchEffect(() => {
-  // Emit inside watchEffect to catch window reloads
+function updateTitle() {
   emitter.emit(
     'updateTitle',
     (() => {
@@ -140,18 +134,25 @@ watchEffect(() => {
       return settingsStore.selectedVehicleName
     })()
   )
-})
+}
 
-onBeforeMount(async () => {
+function onDrop(dropResult: DropResult) {
+  graphDataStore.moveCard(dropResult)
+}
+
+onMounted(async () => {
+  const timeOut = setTimeout(() => (loading.value = true), 200)
+  await initSettings()
   periods.value = await refuelStore.getPeriods()
-})
-
-onMounted(() => {
+  updateTitle()
   graphDataStore.readGraphData()
+  App.addListener('backButton', () => (editOrder.value = false))
+  clearTimeout(timeOut)
+  loading.value = false
 })
 
 onUnmounted(() => {
-  emitter.off('showGraphOptionsDialog')
-  emitter.off('selectedVehicleChanged')
+  emitter.emit('showSaveButton', false)
+  emitter.off('save')
 })
 </script>

@@ -8,10 +8,7 @@ export default {
     moneySpent: 'Ausgegebenes Geld',
     refuelsMade: 'Anzahl Betankungen',
     optionsInDialog: {
-      moveTop: 'Ganz nach oben',
-      moveUp: 'Eins höher',
-      moveDown: 'Eins tiefer',
-      moveBottom: 'Ganz nach unten'
+      move: 'Verschieben'
     }
   }
 }

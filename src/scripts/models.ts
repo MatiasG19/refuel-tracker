@@ -18,7 +18,8 @@ export class SelectOption {
 export class Language {
   id?: number
   text!: string
-  code!: string
+  code!: 'en' | 'de'
+  codeString!: string
 }
 
 export const LanugageId = {

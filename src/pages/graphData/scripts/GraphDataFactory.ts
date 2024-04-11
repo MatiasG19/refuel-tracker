@@ -37,6 +37,7 @@ export class GraphDataFactory {
     settings: GraphSettings
   ): GraphData {
     const graphData: GraphData = new class_(this.vehicle)
+    graphData.id = settings.id
     graphData.uid = settings.uid
     graphData.sequence = settings.sequence
     graphData.visible = settings.visible

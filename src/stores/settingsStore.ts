@@ -14,79 +14,86 @@ export const useSettingsStore = defineStore('settingsStore', () => {
   const autoBackupPath = ref<string>('')
   const selectedColorThemeId = ref<number>(1)
   const selectedLanguageId = ref<number>(1)
+  const areaHeight = ref(0)
 
-  function changeDistanceUnit(distanceUnitId: number) {
-    ;(async () => {
-      const settings = await db.settings.toArray()
-      settings[0].distanceUnitId = distanceUnitId
-      await db.settings.put(settings[0])
-      selectedDistanceUnitId.value = distanceUnitId
-    })()
+  async function initSettings() {
+    const settings = await db.settings.toArray()
+    if (settings.length === 0) return Promise.resolve()
+
+    changeColorTheme(settings[0].colorThemeId)
+    changeLanguage(settings[0].languageId ?? 1)
+    changeDistanceUnit(settings[0].distanceUnitId)
+    if (settings[0].vehicleId) {
+      const vehicle = await db.vehicles
+        .where('id')
+        .equals(settings[0].vehicleId)
+        .first()
+      changeSelectedVehicle(vehicle ?? null)
+    }
+    togglePlateNumberInTitle(settings[0].plateNumberInTitleActive)
+  }
+
+  async function changeDistanceUnit(distanceUnitId: number) {
+    selectedDistanceUnitId.value = distanceUnitId
+    const settings = await db.settings.toArray()
+    settings[0].distanceUnitId = distanceUnitId
+    await db.settings.put(settings[0])
   }
 
   async function changeSelectedVehicle(vehicle: Vehicle | null) {
-    const settings = await db.settings.toArray()
     if (vehicle) {
-      settings[0].vehicleId = vehicle.id
-      await db.settings.put(settings[0])
       selectedVehicleId.value = vehicle.id
       selectedVehicleName.value = vehicle.name
       selectedVehiclePlateNumber.value = vehicle.plateNumber
+      const settings = await db.settings.toArray()
+      settings[0].vehicleId = vehicle.id
+      await db.settings.put(settings[0])
 
       emitter.emit('selectedVehicleChanged', true)
       return Promise.resolve()
     } else {
-      settings[0].vehicleId = null
-      db.settings.put(settings[0])
       selectedVehicleId.value = null
       selectedVehicleName.value = 'My Car'
       selectedVehiclePlateNumber.value = ''
+      const settings = await db.settings.toArray()
+      settings[0].vehicleId = null
+      db.settings.put(settings[0])
     }
   }
 
-  function togglePlateNumberInTitle(state: boolean) {
-    ;(async () => {
-      const settings = await db.settings.toArray()
-      settings[0].plateNumberInTitleActive = state
-      await db.settings.put(settings[0])
-      plateNumberInTitleActive.value = state
-    })()
+  async function togglePlateNumberInTitle(state: boolean) {
+    plateNumberInTitleActive.value = state
+    const settings = await db.settings.toArray()
+    settings[0].plateNumberInTitleActive = state
+    await db.settings.put(settings[0])
   }
 
-  function toggleAutoBackup(state: boolean) {
-    ;(async () => {
-      const settings = await db.settings.toArray()
-      settings[0].autoBackupActive = state
-      await db.settings.put(settings[0])
-      autoBackupActive.value = state
-    })()
+  async function toggleAutoBackup(state: boolean) {
+    autoBackupActive.value = state
+    const settings = await db.settings.toArray()
+    settings[0].autoBackupActive = state
+    await db.settings.put(settings[0])
   }
 
-  function setAutoBackupPath(path: string) {
-    ;(async () => {
-      const settings = await db.settings.toArray()
-      settings[0].autoBackupPath = path
-      await db.settings.put(settings[0])
-      autoBackupPath.value = path
-    })()
+  async function setAutoBackupPath(path: string) {
+    autoBackupPath.value = path
+    const settings = await db.settings.toArray()
+    settings[0].autoBackupPath = path
+    await db.settings.put(settings[0])
   }
 
-  function changeColorTheme(themeId: number) {
-    ;(async () => {
-      const settings = await db.settings.toArray()
-      settings[0].colorThemeId = themeId
-      await db.settings.put(settings[0])
-      selectedColorThemeId.value = themeId
-    })()
+  async function changeColorTheme(themeId: number) {
+    selectedColorThemeId.value = themeId
+    const settings = await db.settings.toArray()
+    settings[0].colorThemeId = themeId
+    await db.settings.put(settings[0])
   }
 
-  function changeLanguage(languageId: number) {
-    ;(async () => {
-      const settings = await db.settings.toArray()
-      settings[0].languageId = languageId
-      await db.settings.put(settings[0])
-      selectedLanguageId.value = languageId
-    })()
+  async function changeLanguage(languageId: number) {
+    selectedLanguageId.value = languageId
+    const settings = await db.settings.toArray()
+    settings[0].languageId = languageId
+    await db.settings.put(settings[0])
   }
 
   return {
@@ -99,6 +106,8 @@ export const useSettingsStore = defineStore('settingsStore', () => {
     autoBackupPath,
     selectedColorThemeId,
     selectedLanguageId,
+    areaHeight,
+    initSettings,
     changeDistanceUnit,
     changeSelectedVehicle,
     togglePlateNumberInTitle,
