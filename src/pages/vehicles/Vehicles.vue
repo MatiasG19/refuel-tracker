@@ -16,8 +16,8 @@
     </div>
     <template v-else>
       <vehicle-card
-        v-for="(vehicle, i) in vehicleData"
-        :key="i"
+        v-for="vehicle in vehicleData"
+        :key="vehicle.id"
         :vehicle="vehicle"
         class="q-pt-md q-pl-md q-pr-md"
         @click="selectVehicle(vehicle)"
