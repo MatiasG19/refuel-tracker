@@ -179,16 +179,14 @@ async function onSubmit() {
   const scrollToId = savedRefuel && savedRefuel.id ? savedRefuel.id : 0
 
   void router.push({
-    path: `/refuels/${scrollToId}`,
-    params: { id: scrollToId }
+    path: `/refuels/${scrollToId}`
   })
 }
 
 function onCancel() {
   if (refuel.value.id)
     router.push({
-      path: `/refuels/${refuel.value.id}`,
-      params: { id: refuel.value.id }
+      path: `/refuels/${refuel.value.id}`
     })
   else router.go(-1)
 }

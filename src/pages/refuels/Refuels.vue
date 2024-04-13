@@ -150,7 +150,7 @@ emitter.on('showRefuelOptionsDialog', id =>
       text: t('refuels.optionsDialog.edit'),
       icon: 'edit',
       action: () => {
-        router.push({ path: `/refuels/edit/${id}`, params: { id } })
+        router.push({ path: `/refuels/${id}/edit` })
       }
     },
     {
