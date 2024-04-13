@@ -1,5 +1,3 @@
-export * from './checkForUpdate'
-
 function replaceComma(value: string) {
   return value.replace(',', '.')
 }
