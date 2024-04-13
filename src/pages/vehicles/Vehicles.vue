@@ -69,7 +69,7 @@ emitter.on('showVehicleOptionsDialog', id =>
       text: t('vehicles.optionsDialog.edit'),
       icon: 'edit',
       action: () => {
-        router.push({ path: `/vehicles/edit/${id}`, params: { id } })
+        router.push({ path: `/vehicles/${id}/edit` })
       }
     },
     {
