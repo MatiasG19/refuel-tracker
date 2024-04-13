@@ -29,7 +29,7 @@
       <div class="row">
         <q-btn
           color="negative"
-          :label="t('form.cancel')"
+          :label="i18n.global.t('form.cancel')"
           no-caps
           class="btn"
           @click="$router.go(-1)"
@@ -37,7 +37,7 @@
         <q-space />
         <q-btn
           color="positive"
-          :label="t('form.confirm')"
+          :label="i18n.global.t('form.confirm')"
           type="submit"
           no-caps
           class="btn"
@@ -62,6 +62,7 @@ import { useSettingsStore } from 'src/stores/settingsStore'
 import { useRefuelStore } from 'src/stores/refuelStore'
 import { Vehicle } from 'src/scripts/libraries/refuel/models'
 import { useI18n } from 'vue-i18n'
+import { i18n } from 'src/boot/i18n'
 import messages from './i18n'
 
 const router = useRouter()

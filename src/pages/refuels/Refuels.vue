@@ -13,7 +13,7 @@
       </div>
       <q-btn
         color="accent"
-        :label="t('placeholders.addRefuel')"
+        :label="i18n.global.t('placeholders.addRefuel')"
         icon-right="add"
         unelevated
         no-caps
@@ -27,7 +27,7 @@
       </div>
       <q-btn
         color="accent"
-        :label="t('placeholders.addVehicle')"
+        :label="i18n.global.t('placeholders.addVehicle')"
         icon-right="add"
         unelevated
         no-caps
@@ -93,6 +93,7 @@ import { vehicleFuelConsumption } from 'src/scripts/libraries/refuel/functions/v
 import { QVirtualScroll } from 'quasar'
 import { useRefuelFilterStore } from './stores/refuelFilterStore'
 import { useI18n } from 'vue-i18n'
+import { i18n } from 'src/boot/i18n'
 import messages from './i18n'
 
 const router = useRouter()

@@ -38,7 +38,7 @@
       <div class="row">
         <q-btn
           color="negative"
-          :label="t('form.cancel')"
+          :label="i18n.global.t('form.cancel')"
           no-caps
           class="form-btn"
           @click="$router.push('/refuels')"
@@ -46,7 +46,7 @@
         <q-space />
         <q-btn
           color="positive"
-          :label="t('form.filter')"
+          :label="i18n.global.t('form.filter')"
           type="submit"
           no-caps
           class="form-btn"
@@ -65,6 +65,7 @@ import { requiredFieldRule } from 'src/scripts/libraries/validation'
 import { useRefuelFilterStore } from './stores/refuelFilterStore'
 import CInput from 'src/components/inputs/CInput.vue'
 import { useI18n } from 'vue-i18n'
+import { i18n } from 'src/boot/i18n'
 import messages from './i18n'
 
 const router = useRouter()

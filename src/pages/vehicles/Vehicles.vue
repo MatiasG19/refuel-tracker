@@ -6,7 +6,7 @@
       </div>
       <q-btn
         color="accent"
-        :label="t('placeholders.addVehicle')"
+        :label="i18n.global.t('placeholders.addVehicle')"
         icon-right="add"
         unelevated
         no-caps
@@ -38,6 +38,7 @@ import { useRefuelStore } from 'src/stores/refuelStore'
 import { Vehicle } from 'src/scripts/libraries/refuel/models'
 import { useQuasar } from 'quasar'
 import { useI18n } from 'vue-i18n'
+import { i18n } from 'src/boot/i18n'
 import messages from './i18n'
 
 const router = useRouter()
