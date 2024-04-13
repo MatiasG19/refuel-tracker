@@ -12,7 +12,6 @@
     "@capacitor/device": "^5.0.7",
     "@capacitor/filesystem": "^5.2.1",
     "@capacitor/keyboard": "^5.0.8",
-    "@capacitor/local-notifications": "^5.0.7",
     "@capacitor/splash-screen": "^5.0.7"
   }
 }
