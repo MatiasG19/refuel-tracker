@@ -143,7 +143,7 @@ let routePath = ''
 
 const props = defineProps({
   id: {
-    type: Number
+    type: String
   }
 })
 
@@ -203,8 +203,8 @@ onMounted(async () => {
     : settingsStore.selectedVehicleName
 
   refuel.value.vehicleId = settingsStore.selectedVehicleId ?? 0
-  if (props.id) {
-    const refuelToEdit = await refuelStore.getRefuel(props.id)
+  if (props.id && parseInt(props.id)) {
+    const refuelToEdit = await refuelStore.getRefuel(parseInt(props.id))
     if (refuelToEdit) {
       refuel.value.id = refuelToEdit.id
       refuel.value.payedAmount = refuelToEdit.payedAmount
