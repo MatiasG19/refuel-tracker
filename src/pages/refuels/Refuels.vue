@@ -13,7 +13,7 @@
       </div>
       <q-btn
         color="accent"
-        :label="t('placeholders.addRefuel')"
+        :label="i18n.global.t('placeholders.addRefuel')"
         icon-right="add"
         unelevated
         no-caps
@@ -27,7 +27,7 @@
       </div>
       <q-btn
         color="accent"
-        :label="t('placeholders.addVehicle')"
+        :label="i18n.global.t('placeholders.addVehicle')"
         icon-right="add"
         unelevated
         no-caps
@@ -93,6 +93,7 @@ import { vehicleFuelConsumption } from 'src/scripts/libraries/refuel/functions/v
 import { QVirtualScroll } from 'quasar'
 import { useRefuelFilterStore } from './stores/refuelFilterStore'
 import { useI18n } from 'vue-i18n'
+import { i18n } from 'src/boot/i18n'
 import messages from './i18n'
 
 const router = useRouter()
@@ -110,7 +111,7 @@ let scrollToIndex = ref(0)
 
 const props = defineProps({
   id: {
-    type: Number
+    type: String
   }
 })
 
@@ -150,7 +151,7 @@ emitter.on('showRefuelOptionsDialog', id =>
       text: t('refuels.optionsDialog.edit'),
       icon: 'edit',
       action: () => {
-        router.push({ path: `/refuels/edit/${id}`, params: { id } })
+        router.push({ path: `/refuels/${id}/edit` })
       }
     },
     {
@@ -161,7 +162,7 @@ emitter.on('showRefuelOptionsDialog', id =>
           t('refuels.optionsDialog.deleteRefuel'),
           (id: number) => {
             ;(async () =>
-              await refuelStore
+              refuelStore
                 .deleteRefuel(id)
                 .then(
                   async () =>
@@ -189,10 +190,13 @@ onBeforeMount(async () => {
     vehicle.value
 
   // Define to which index to scroll
-  if (props.id && props.id > 0)
-    scrollToIndex.value = refuelStore.refuels
-      .sort((a, b) => b.date.getTime() - a.date.getTime())
-      .findIndex(r => r.id == props.id)
+  if (props.id) {
+    const id = parseInt(props.id)
+    if (id)
+      scrollToIndex.value = refuelStore.refuels
+        .sort((a, b) => b.date.getTime() - a.date.getTime())
+        .findIndex(r => r.id == id)
+  }
 
   if (scrollToIndex.value < 0) scrollToIndex.value = 0
 

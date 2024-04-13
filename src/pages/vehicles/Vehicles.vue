@@ -6,7 +6,7 @@
       </div>
       <q-btn
         color="accent"
-        :label="t('placeholders.addVehicle')"
+        :label="i18n.global.t('placeholders.addVehicle')"
         icon-right="add"
         unelevated
         no-caps
@@ -16,8 +16,8 @@
     </div>
     <template v-else>
       <vehicle-card
-        v-for="(vehicle, i) in vehicleData"
-        :key="i"
+        v-for="vehicle in vehicleData"
+        :key="vehicle.id"
         :vehicle="vehicle"
         class="q-pt-md q-pl-md q-pr-md"
         @click="selectVehicle(vehicle)"
@@ -38,6 +38,7 @@ import { useRefuelStore } from 'src/stores/refuelStore'
 import { Vehicle } from 'src/scripts/libraries/refuel/models'
 import { useQuasar } from 'quasar'
 import { useI18n } from 'vue-i18n'
+import { i18n } from 'src/boot/i18n'
 import messages from './i18n'
 
 const router = useRouter()
@@ -69,7 +70,7 @@ emitter.on('showVehicleOptionsDialog', id =>
       text: t('vehicles.optionsDialog.edit'),
       icon: 'edit',
       action: () => {
-        router.push({ path: `/vehicles/edit/${id}`, params: { id } })
+        router.push({ path: `/vehicles/${id}/edit` })
       }
     },
     {

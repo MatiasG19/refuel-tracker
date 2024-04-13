@@ -7,7 +7,7 @@ import { emitter } from 'src/boot/mitt'
 export const useSettingsStore = defineStore('settingsStore', () => {
   const selectedDistanceUnitId = ref<number>(0)
   const selectedVehicleId = ref<number | null>(null)
-  const selectedVehicleName = ref<string>('My car')
+  const selectedVehicleName = ref<string>('')
   const selectedVehiclePlateNumber = ref<string>('')
   const plateNumberInTitleActive = ref<boolean>(false)
   const autoBackupActive = ref<boolean>(false)
@@ -53,7 +53,7 @@ export const useSettingsStore = defineStore('settingsStore', () => {
       return Promise.resolve()
     } else {
       selectedVehicleId.value = null
-      selectedVehicleName.value = 'My Car'
+      selectedVehicleName.value = ''
       selectedVehiclePlateNumber.value = ''
       const settings = await db.settings.toArray()
       settings[0].vehicleId = null

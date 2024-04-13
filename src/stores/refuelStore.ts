@@ -4,12 +4,14 @@ import { db } from '../boot/dexie'
 import { getFuelUnits as returnfuelUnits } from 'src/scripts/staticData/fuelUnits'
 import { getPeriods as returnPeriods } from 'src/scripts/staticData/periods'
 import {
+  FuelUnit,
   Refuel,
   Vehicle,
   VehicleData
 } from 'src/scripts/libraries/refuel/models'
 import { vehicleFuelConsumption } from 'src/scripts/libraries/refuel/functions/vehicle'
 import { useSettingsStore } from './settingsStore'
+import { Period } from 'src/pages/graphData/scripts/models'
 
 export const useRefuelStore = defineStore('refuelStore', () => {
   const settings = useSettingsStore()
@@ -20,12 +22,12 @@ export const useRefuelStore = defineStore('refuelStore', () => {
   async function readRefuels(vehicleId: number) {
     refuels.value = await getRefuels(vehicleId)
   }
-  async function getRefuels(vehicleId: number) {
+  async function getRefuels(vehicleId: number): Promise<Refuel[]> {
     return await db.refuels.where('vehicleId').equals(vehicleId).toArray()
   }
 
-  async function getRefuel(id: number) {
-    if (!settings.selectedVehicleId) return
+  async function getRefuel(id: number): Promise<Refuel | null> {
+    if (!settings.selectedVehicleId) return null
     const refuels = await getRefuels(settings.selectedVehicleId)
     return refuels.find(v => v.id == id) ?? null
   }
@@ -46,7 +48,7 @@ export const useRefuelStore = defineStore('refuelStore', () => {
     vehicles.value = await getVehicles()
   }
 
-  async function getVehicles() {
+  async function getVehicles(): Promise<Vehicle[]> {
     const vehicles = await db.vehicles.toArray()
     for (const v of vehicles) {
       const refuels = await getRefuels(v.id)
@@ -66,7 +68,7 @@ export const useRefuelStore = defineStore('refuelStore', () => {
     return v
   }
 
-  function getAllVehicleData() {
+  function getAllVehicleData(): VehicleData[] {
     const vehicleData = new Array<VehicleData>()
     vehicles.value.forEach(v =>
       vehicleData.push({
@@ -113,15 +115,15 @@ export const useRefuelStore = defineStore('refuelStore', () => {
     )
   }
 
-  async function getPeriods() {
+  async function getPeriods(): Promise<Period[]> {
     return await Promise.resolve(returnPeriods())
   }
 
-  async function getFuelUnits() {
+  async function getFuelUnits(): Promise<FuelUnit[]> {
     return await Promise.resolve(returnfuelUnits())
   }
 
-  async function getFuelUnit(id: number) {
+  async function getFuelUnit(id: number): Promise<FuelUnit> {
     return await Promise.resolve(returnfuelUnits().filter(u => u.id === id)[0])
   }
 

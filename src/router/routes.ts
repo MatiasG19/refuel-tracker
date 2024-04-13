@@ -23,7 +23,7 @@ const routes: RouteRecordRaw[] = [
             component: () => import('src/pages/refuels/RefuelForm.vue')
           },
           {
-            path: 'edit/:id',
+            path: 'edit',
             component: () => import('src/pages/refuels/RefuelForm.vue'),
             props: true
           },
@@ -34,7 +34,7 @@ const routes: RouteRecordRaw[] = [
         ]
       },
       {
-        path: '/vehicles',
+        path: '/vehicles/:id?',
         component: () => import('src/pages/vehicles/layouts/VehicleLayout.vue'),
         children: [
           {
@@ -46,7 +46,7 @@ const routes: RouteRecordRaw[] = [
             component: () => import('src/pages/vehicles/VehicleForm.vue')
           },
           {
-            path: 'edit/:id',
+            path: 'edit',
             component: () => import('src/pages/vehicles/VehicleForm.vue'),
             props: true
           }

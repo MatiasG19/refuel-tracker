@@ -9,7 +9,7 @@
       </div>
       <q-btn
         color="accent"
-        :label="t('placeholders.addRefuel')"
+        :label="i18n.global.t('placeholders.addRefuel')"
         icon-right="add"
         unelevated
         no-caps
@@ -24,7 +24,7 @@
       <q-btn
         class="row"
         color="accent"
-        :label="t('placeholders.addVehicle')"
+        :label="i18n.global.t('placeholders.addVehicle')"
         icon-right="add"
         unelevated
         no-caps
@@ -83,6 +83,7 @@ import { optionsDialog } from 'src/components/dialogs/optionsDialog'
 import { useQuasar } from 'quasar'
 import { useRouter } from 'vue-router'
 import { useI18n } from 'vue-i18n'
+import { i18n } from 'src/boot/i18n'
 import messages from './i18n'
 import { Container, Draggable, DropResult } from 'vue3-smooth-dnd'
 import { App } from '@capacitor/app'

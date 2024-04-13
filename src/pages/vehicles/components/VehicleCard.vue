@@ -29,12 +29,13 @@
 </template>
 
 <script setup lang="ts">
+import { PropType } from 'vue'
 import { VehicleData } from 'src/scripts/libraries/refuel/models'
 import { emitter } from 'src/boot/mitt'
 
 defineProps({
   vehicle: {
-    type: VehicleData,
+    type: Object as PropType<VehicleData>,
     required: true
   }
 })

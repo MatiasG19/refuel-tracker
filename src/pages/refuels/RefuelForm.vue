@@ -92,7 +92,7 @@
       <div class="row">
         <q-btn
           color="negative"
-          :label="t('form.cancel')"
+          :label="i18n.global.t('form.cancel')"
           no-caps
           class="form-btn"
           @click="onCancel"
@@ -100,7 +100,7 @@
         <q-space />
         <q-btn
           color="positive"
-          :label="t('form.confirm')"
+          :label="i18n.global.t('form.confirm')"
           type="submit"
           no-caps
           class="form-btn"
@@ -127,6 +127,7 @@ import { useRefuelStore } from 'src/stores/refuelStore'
 import { Refuel } from 'src/scripts/libraries/refuel/models'
 import { replaceComma } from 'src/scripts/libraries/utils'
 import { useI18n } from 'vue-i18n'
+import { i18n } from 'src/boot/i18n'
 import messages from './i18n'
 
 const router = useRouter()
@@ -143,7 +144,7 @@ let routePath = ''
 
 const props = defineProps({
   id: {
-    type: Number
+    type: String
   }
 })
 
@@ -179,16 +180,14 @@ async function onSubmit() {
   const scrollToId = savedRefuel && savedRefuel.id ? savedRefuel.id : 0
 
   void router.push({
-    path: `/refuels/${scrollToId}`,
-    params: { id: scrollToId }
+    path: `/refuels/${scrollToId}`
   })
 }
 
 function onCancel() {
   if (refuel.value.id)
     router.push({
-      path: `/refuels/${refuel.value.id}`,
-      params: { id: refuel.value.id }
+      path: `/refuels/${refuel.value.id}`
     })
   else router.go(-1)
 }
@@ -205,8 +204,8 @@ onMounted(async () => {
     : settingsStore.selectedVehicleName
 
   refuel.value.vehicleId = settingsStore.selectedVehicleId ?? 0
-  if (props.id) {
-    const refuelToEdit = await refuelStore.getRefuel(props.id)
+  if (props.id && parseInt(props.id)) {
+    const refuelToEdit = await refuelStore.getRefuel(parseInt(props.id))
     if (refuelToEdit) {
       refuel.value.id = refuelToEdit.id
       refuel.value.payedAmount = refuelToEdit.payedAmount
