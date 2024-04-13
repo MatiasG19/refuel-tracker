@@ -115,6 +115,7 @@ function editOrderFun(value = true) {
   editOrder.value = value
   emitter.emit('showSaveButton', value)
   if (value) emitter.on('save', () => saveOrder())
+  else graphDataStore.readGraphData()
 }
 
 function saveOrder() {
