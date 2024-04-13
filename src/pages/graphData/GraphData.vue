@@ -147,7 +147,9 @@ onMounted(async () => {
   periods.value = await refuelStore.getPeriods()
   updateTitle()
   graphDataStore.readGraphData()
+  App.removeAllListeners()
   App.addListener('backButton', () => {
+    if (!editOrder.value) App.exitApp()
     editOrderFun(false)
   })
   clearTimeout(timeOut)
