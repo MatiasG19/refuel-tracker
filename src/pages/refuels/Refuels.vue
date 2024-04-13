@@ -161,7 +161,7 @@ emitter.on('showRefuelOptionsDialog', id =>
           t('refuels.optionsDialog.deleteRefuel'),
           (id: number) => {
             ;(async () =>
-              await refuelStore
+              refuelStore
                 .deleteRefuel(id)
                 .then(
                   async () =>
