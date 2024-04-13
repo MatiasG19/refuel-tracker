@@ -59,6 +59,7 @@
 </template>
 
 <script setup lang="ts">
+import { PropType } from 'vue'
 import { Refuel, Vehicle } from 'src/scripts/libraries/refuel/models'
 import { date } from 'quasar'
 import { emitter } from 'src/boot/mitt'
@@ -66,11 +67,11 @@ import RefuelCardSkeleton from './RefuelCardSkeleton.vue'
 
 const props = defineProps({
   refuel: {
-    type: Refuel,
+    type: Object as PropType<Refuel>,
     required: true
   },
   vehicle: {
-    type: Vehicle,
+    type: Object as PropType<Vehicle>,
     required: true
   },
   fuelConsumption: {

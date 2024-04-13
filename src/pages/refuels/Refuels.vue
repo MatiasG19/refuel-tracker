@@ -110,7 +110,7 @@ let scrollToIndex = ref(0)
 
 const props = defineProps({
   id: {
-    type: Number
+    type: String
   }
 })
 
@@ -189,10 +189,13 @@ onBeforeMount(async () => {
     vehicle.value
 
   // Define to which index to scroll
-  if (props.id && props.id > 0)
-    scrollToIndex.value = refuelStore.refuels
-      .sort((a, b) => b.date.getTime() - a.date.getTime())
-      .findIndex(r => r.id == props.id)
+  if (props.id) {
+    const id = parseInt(props.id)
+    if (id)
+      scrollToIndex.value = refuelStore.refuels
+        .sort((a, b) => b.date.getTime() - a.date.getTime())
+        .findIndex(r => r.id == id)
+  }
 
   if (scrollToIndex.value < 0) scrollToIndex.value = 0
 
