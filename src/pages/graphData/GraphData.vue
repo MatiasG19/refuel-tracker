@@ -1,5 +1,6 @@
 <template>
   <q-page class="items-center">
+    <q-btn @click="() => router.push('graph')">chart</q-btn>
     <div
       v-if="vehiclesExits && graphData.length === 0"
       class="absolute-center items-center"
