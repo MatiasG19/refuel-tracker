@@ -1,6 +1,5 @@
 import { defineStore } from 'pinia'
 import { ref } from 'vue'
-import { db } from 'src/boot/dexie'
 import { GraphDataFactory } from 'src/pages/graphData/scripts/GraphDataFactory'
 import { GraphData } from 'src/pages/graphData/scripts/models'
 import { useSettingsStore } from 'src/pages/settings/stores/settingsStore'
@@ -8,6 +7,7 @@ import { useVehicleStore } from 'src/pages/vehicles/stores'
 import { DropResult } from 'vue3-smooth-dnd'
 import { getPeriods as returnPeriods } from 'src/scripts/staticData/periods'
 import { Period } from 'src/pages/graphData/scripts/models'
+import { graphSettingsRepository } from 'src/scripts/databaseRepositories'
 
 export const useGraphDataStore = defineStore('graphDataStore', () => {
   const graphData = ref<GraphData[]>([])
@@ -16,7 +16,7 @@ export const useGraphDataStore = defineStore('graphDataStore', () => {
   const vehicleStore = useVehicleStore()
 
   async function getGraphSettings() {
-    return await db.graphSettings.toArray()
+    return await graphSettingsRepository.getGraphSettings()
   }
 
   async function readGraphData() {
@@ -88,13 +88,7 @@ export const useGraphDataStore = defineStore('graphDataStore', () => {
 
   function saveCardOrder() {
     ;(async () => {
-      await db.transaction('rw', [db.graphSettings], async () => {
-        for (let j = 0; j < graphData.value.length; j++) {
-          await db.graphSettings.update(graphData.value[j].id as number, {
-            sequence: graphData.value[j].sequence
-          })
-        }
-      })
+      await graphSettingsRepository.saveCardOrder(graphData.value)
     })()
   }
 

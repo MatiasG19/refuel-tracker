@@ -14,7 +14,7 @@ export const useGraphRefuelFilterStore = defineStore(
 
     function setFilter() {
       ;(async () => {
-        const filter = await refuelFilterRepository.readFilterById(filterId)
+        const filter = await refuelFilterRepository.readFilter(filterId)
         if (!filter) return
         filter.name = filterName.value =
           date.formatDate(dateFrom.value, 'YYYY/MM/DD') +
@@ -29,7 +29,7 @@ export const useGraphRefuelFilterStore = defineStore(
 
     function removeFilter() {
       ;(async () => {
-        const filter = await refuelFilterRepository.readFilterById(filterId)
+        const filter = await refuelFilterRepository.readFilter(filterId)
         if (!filter) return
         filter.active = filterActive.value = false
         await refuelFilterRepository.setFilter(filter)
@@ -38,7 +38,7 @@ export const useGraphRefuelFilterStore = defineStore(
 
     function readFilter() {
       ;(async () => {
-        const filter = await refuelFilterRepository.readFilterById(filterId)
+        const filter = await refuelFilterRepository.readFilter(filterId)
         if (!filter) return
         filterName.value = filter.name
         filterActive.value = filter.active
