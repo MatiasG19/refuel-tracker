@@ -1,11 +1,12 @@
 import { defineStore } from 'pinia'
-import { ref } from 'vue'
+import { ref, toRaw } from 'vue'
 import { FuelUnit, Vehicle } from 'src/scripts/libraries/refuel/models'
 import { useSettingsStore } from 'src/pages/settings/stores'
 import {
   vehicleRepository,
   fuelUnitRepository
 } from 'src/scripts/databaseRepositories'
+import { vehicleFuelConsumption } from 'src/scripts/libraries/refuel/functions/vehicle'
 
 export const useVehicleStore = defineStore('vehicleStore', () => {
   const settingsStore = useSettingsStore()
@@ -44,9 +45,13 @@ export const useVehicleStore = defineStore('vehicleStore', () => {
   }
 
   async function updateVehicle(vehicle: Vehicle) {
-    const v = vehicles.value.filter(v => v.id === vehicle.id)
-    if (!v.length) v[0] = vehicle
-    await vehicleRepository.updateVehicle(vehicle)
+    if (vehicle.fuelConsumption === '')
+      vehicle.fuelConsumption = vehicleFuelConsumption({
+        ...toRaw(vehicle)
+      }).toFixed(2)
+    const i = vehicles.value.findIndex(v => v.id === vehicle.id)
+    vehicles.value[i] = toRaw(vehicle)
+    await vehicleRepository.updateVehicle(toRaw(vehicle))
   }
 
   async function deleteVehicle(id: number) {

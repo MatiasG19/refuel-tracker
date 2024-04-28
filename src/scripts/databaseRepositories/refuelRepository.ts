@@ -6,8 +6,6 @@ async function getRefuel(id: number): Promise<Refuel | null> {
 }
 
 async function getRefuels(vehicleId: number): Promise<Refuel[]> {
-  console.log('getRefuels')
-
   return await db.refuels.where('vehicleId').equals(vehicleId).toArray()
 }
 

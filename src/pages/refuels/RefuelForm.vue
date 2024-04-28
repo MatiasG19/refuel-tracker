@@ -173,7 +173,7 @@ function updateTime(event: string) {
 async function onSubmit() {
   let savedRefuel = refuel.value
   if (routePath.includes('/add'))
-    savedRefuel.id = await refuelStore.addRefuel({ ...refuel.value })
+    await refuelStore.addRefuel({ ...refuel.value })
   else if (routePath.includes('/edit'))
     await refuelStore.updateRefuel({ ...refuel.value })
 
@@ -203,25 +203,17 @@ onMounted(async () => {
     ? settingsStore.selectedVehiclePlateNumber
     : settingsStore.selectedVehicleName
 
+  await refuelStore.readData()
   refuel.value.vehicleId = refuelStore.vehicle.id
   if (props.id && parseInt(props.id)) {
-    const refuelToEdit = await refuelStore.getRefuel(parseInt(props.id))
-    if (refuelToEdit) {
-      refuel.value.id = refuelToEdit.id
-      refuel.value.payedAmount = refuelToEdit.payedAmount
-      refuel.value.refueledAmount = refuelToEdit.refueledAmount
-      refuel.value.distanceDriven = refuelToEdit.distanceDriven
-      if (routePath.includes('/edit')) {
-        refuel.value.date = refuelToEdit.date
-        refuelDate.value = QuasarDate.formatDate(
-          refuelToEdit.date,
-          'YYYY/MM/DD'
-        )
-        refuelTime.value = QuasarDate.formatDate(refuelToEdit.date, 'HH:mm')
-      }
-    } else console.error('Refuel not found!')
+    refuel.value =
+      (await refuelStore.getRefuel(parseInt(props.id))) ?? refuel.value
+    refuelDate.value = QuasarDate.formatDate(refuel.value.date, 'YYYY/MM/DD')
+    refuelTime.value = QuasarDate.formatDate(refuel.value.date, 'HH:mm')
   } else {
     refuel.value.date = new Date(Date.now())
+    refuelDate.value = QuasarDate.formatDate(refuel.value.date, 'YYYY/MM/DD')
+    refuelTime.value = QuasarDate.formatDate(refuel.value.date, 'HH:mm')
   }
 })
 </script>

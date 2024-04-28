@@ -121,7 +121,7 @@ const props = defineProps({
 let refuels = computed(() => {
   let items = []
   if (refuelFilterStore.filterActive)
-    items = [...refuelStore.refuels]
+    items = [...(refuelStore.vehicle?.refuels ?? [])]
       .filter(
         r =>
           r.date.getTime() >= refuelFilterStore.dateFrom.getTime() &&
@@ -129,7 +129,7 @@ let refuels = computed(() => {
       )
       .sort((a, b) => b.date.getTime() - a.date.getTime())
   else
-    items = [...refuelStore.refuels].sort(
+    items = [...(refuelStore.vehicle?.refuels ?? [])].sort(
       (a, b) => b.date.getTime() - a.date.getTime()
     )
 
@@ -184,8 +184,8 @@ onBeforeMount(async () => {
   if (props.id) {
     const id = parseInt(props.id)
     if (id)
-      scrollToIndex.value = refuelStore.refuels
-        .sort((a, b) => b.date.getTime() - a.date.getTime())
+      scrollToIndex.value = refuelStore.vehicle
+        .refuels!.sort((a, b) => b.date.getTime() - a.date.getTime())
         .findIndex(r => r.id == id)
   }
 
