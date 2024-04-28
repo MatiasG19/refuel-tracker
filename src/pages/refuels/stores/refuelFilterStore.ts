@@ -12,7 +12,7 @@ export const useRefuelFilterStore = defineStore('refuelFilterStore', () => {
 
   function setFilter() {
     ;(async () => {
-      const filter = await refuelFilterRepository.readFilterById(filterId)
+      const filter = await refuelFilterRepository.readFilter(filterId)
       if (!filter) return
       filter.name = filterName.value =
         date.formatDate(dateFrom.value, 'YYYY/MM/DD') +
@@ -27,7 +27,7 @@ export const useRefuelFilterStore = defineStore('refuelFilterStore', () => {
 
   function removeFilter() {
     ;(async () => {
-      const filter = await refuelFilterRepository.readFilterById(filterId)
+      const filter = await refuelFilterRepository.readFilter(filterId)
       if (!filter) return
       filter.active = filterActive.value = false
       await refuelFilterRepository.setFilter(filter)
@@ -36,7 +36,7 @@ export const useRefuelFilterStore = defineStore('refuelFilterStore', () => {
 
   function readFilter() {
     ;(async () => {
-      const filter = await refuelFilterRepository.readFilterById(filterId)
+      const filter = await refuelFilterRepository.readFilter(filterId)
       if (!filter) return
       filterName.value = filter.name
       filterActive.value = filter.active
