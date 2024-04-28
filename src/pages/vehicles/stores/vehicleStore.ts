@@ -24,7 +24,7 @@ export const useVehicleStore = defineStore('vehicleStore', () => {
   async function getVehicles(): Promise<Vehicle[]> {
     const vehicles = await vehicleRepository.getVehicles()
     for (const v of vehicles) {
-      const refuels = await refuelRepository.getRefuelsForVehicle(v.id)
+      const refuels = await refuelRepository.getRefuels(v.id)
       v.refuels = [...refuels]
       v.fuelUnit =
         (await fuelUnitRepository.getFuelUnit(v.fuelUnitId)) ?? undefined
