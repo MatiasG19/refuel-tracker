@@ -1,8 +1,6 @@
 import { defineStore } from 'pinia'
 import { ref } from 'vue'
-import { db } from 'src/boot/dexie'
 import { getFuelUnits as returnfuelUnits } from 'src/scripts/staticData/fuelUnits'
-
 import {
   FuelUnit,
   Vehicle,
@@ -24,7 +22,7 @@ export const useVehicleStore = defineStore('vehicleStore', () => {
   }
 
   async function getVehicles(): Promise<Vehicle[]> {
-    const vehicles = await db.vehicles.toArray()
+    const vehicles = await vehicleRepository.getVehicles()
     for (const v of vehicles) {
       const refuels = await refuelRepository.getRefuelsForVehicle(v.id)
       v.refuels = [...refuels]
@@ -55,7 +53,7 @@ export const useVehicleStore = defineStore('vehicleStore', () => {
     await vehicleRepository.addVehicle(vehicle)
 
     // Update settings
-    if ((await db.vehicles.count()) === 1)
+    if ((await vehicleRepository.getVehicles()).length > 0)
       settingsStore.changeSelectedVehicle(vehicle)
   }
 
