@@ -10,39 +10,33 @@ export const useRefuelFilterStore = defineStore('refuelFilterStore', () => {
   const dateUntil = ref<Date>(new Date())
   const filterId = 1
 
-  function setFilter() {
-    ;(async () => {
-      const filter = await refuelFilterRepository.readFilter(filterId)
-      if (!filter) return
-      filter.name = filterName.value =
-        date.formatDate(dateFrom.value, 'YYYY/MM/DD') +
-        ' - ' +
-        date.formatDate(dateUntil.value, 'YYYY/MM/DD')
-      filter.active = filterActive.value = true
-      filter.dateFrom = dateFrom.value
-      filter.dateUntil = dateUntil.value
-      await refuelFilterRepository.setFilter(filter)
-    })()
+  async function setFilter() {
+    const filter = await refuelFilterRepository.readFilter(filterId)
+    if (!filter) return
+    filter.name = filterName.value =
+      date.formatDate(dateFrom.value, 'YYYY/MM/DD') +
+      ' - ' +
+      date.formatDate(dateUntil.value, 'YYYY/MM/DD')
+    filter.active = filterActive.value = true
+    filter.dateFrom = dateFrom.value
+    filter.dateUntil = dateUntil.value
+    await refuelFilterRepository.setFilter(filter)
   }
 
-  function removeFilter() {
-    ;(async () => {
-      const filter = await refuelFilterRepository.readFilter(filterId)
-      if (!filter) return
-      filter.active = filterActive.value = false
-      await refuelFilterRepository.setFilter(filter)
-    })()
+  async function removeFilter() {
+    const filter = await refuelFilterRepository.readFilter(filterId)
+    if (!filter) return
+    filter.active = filterActive.value = false
+    await refuelFilterRepository.setFilter(filter)
   }
 
-  function readFilter() {
-    ;(async () => {
-      const filter = await refuelFilterRepository.readFilter(filterId)
-      if (!filter) return
-      filterName.value = filter.name
-      filterActive.value = filter.active
-      dateFrom.value = filter.dateFrom
-      dateUntil.value = filter.dateUntil
-    })()
+  async function readFilter() {
+    const filter = await refuelFilterRepository.readFilter(filterId)
+    if (!filter) return
+    filterName.value = filter.name
+    filterActive.value = filter.active
+    dateFrom.value = filter.dateFrom
+    dateUntil.value = filter.dateUntil
   }
 
   return {

@@ -50,7 +50,7 @@
           flat
           no-caps
           label=" "
-          @click="removeFilter"
+          @click="refuelFilterStore.removeFilter()"
           icon-right="delete_outline"
           >{{ refuelFilterStore.filterName }}</q-btn
         >
@@ -139,10 +139,6 @@ function getRefuels(from: number, size: number): ReadonlyArray<Refuel> {
     items.push(refuels.value[from + i])
   }
   return items
-}
-
-function removeFilter() {
-  refuelFilterStore.removeFilter()
 }
 
 emitter.on('showRefuelOptionsDialog', id =>
