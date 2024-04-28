@@ -1,9 +1,13 @@
 import { defineStore } from 'pinia'
-import { ref } from 'vue'
+import { ref, toRaw } from 'vue'
 import { Refuel, Vehicle } from 'src/scripts/libraries/refuel/models'
 import { useSettingsStore } from 'src/pages/settings/stores'
 import { useVehicleStore } from 'src/pages/vehicles/stores'
-import { refuelRepository } from 'src/scripts/databaseRepositories'
+import {
+  refuelRepository
+  // vehicleRepository
+} from 'src/scripts/databaseRepositories'
+import { vehicleFuelConsumption } from 'src/scripts/libraries/refuel/functions/vehicle'
 
 export const useRefuelStore = defineStore('refuelStore', () => {
   const settingsStore = useSettingsStore()
@@ -41,7 +45,13 @@ export const useRefuelStore = defineStore('refuelStore', () => {
   }
 
   async function updateVehicleFuelConsumption() {
-    //vehicleFuelConsumption(v).toFixed(2)
+    const v = vehicleStore.vehicles.find(v => v.id === vehicle.value.id)
+    if (!v) return
+    v.refuels = refuels.value
+    v.fuelConsumption = vehicleFuelConsumption(v).toFixed(2)
+    v.refuels.length = 0
+    vehicleStore.updateVehicle(toRaw(v))
+    await Promise.resolve()
   }
 
   return {

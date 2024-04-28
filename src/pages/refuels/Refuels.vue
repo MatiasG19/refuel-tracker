@@ -71,7 +71,10 @@
           :refuel="item"
           :vehicle="refuelStore.vehicle"
           :fuelConsumption="
-            vehicleFuelConsumption(refuelStore.vehicle, item).toFixed(2)
+            vehicleFuelConsumption(
+              toRaw(refuelStore.vehicle),
+              toRaw(item)
+            ).toFixed(2)
           "
           :loading="loading"
           class="q-pt-md q-pl-md q-pr-md"
@@ -83,7 +86,7 @@
 
 <script setup lang="ts">
 import RefuelCard from 'src/pages/refuels/components/RefuelCard.vue'
-import { computed, ref, onUnmounted, onBeforeMount } from 'vue'
+import { computed, ref, onUnmounted, onBeforeMount, toRaw } from 'vue'
 import { useRouter } from 'vue-router'
 import { emitter } from 'src/boot/mitt'
 import { optionsDialog } from 'src/components/dialogs/optionsDialog'

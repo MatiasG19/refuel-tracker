@@ -5,11 +5,15 @@ export function vehicleFuelConsumption(
   vehicle: Vehicle,
   refuel: Refuel | null = null
 ): number {
-  if (!vehicle.refuels || vehicle.refuels.length === 0) return 0
+  if (refuel) {
+    vehicle.refuels = []
+    vehicle.refuels.push(refuel)
+  }
+  if (!vehicle.refuels || !vehicle.refuels.length) return 0
 
   const func = FuelConsumptionFactory.get(vehicle.fuelUnitId.toString())
 
-  if (refuel == null) {
+  if (refuel === null) {
     let fuel = vehicle.refuels
       .map(re => re.refueledAmount)
       .reduce((total, current) => total + current)
