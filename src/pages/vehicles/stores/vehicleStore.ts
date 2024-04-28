@@ -1,6 +1,6 @@
 import { defineStore } from 'pinia'
 import { ref } from 'vue'
-import { getFuelUnits as returnfuelUnits } from 'src/scripts/staticData/fuelUnits'
+
 import {
   FuelUnit,
   Vehicle,
@@ -10,7 +10,8 @@ import { vehicleFuelConsumption } from 'src/scripts/libraries/refuel/functions/v
 import { useSettingsStore } from 'src/pages/settings/stores'
 import {
   refuelRepository,
-  vehicleRepository
+  vehicleRepository,
+  fuelUnitRepository
 } from 'src/scripts/databaseRepositories'
 
 export const useVehicleStore = defineStore('vehicleStore', () => {
@@ -26,7 +27,8 @@ export const useVehicleStore = defineStore('vehicleStore', () => {
     for (const v of vehicles) {
       const refuels = await refuelRepository.getRefuelsForVehicle(v.id)
       v.refuels = [...refuels]
-      v.fuelUnit = await getFuelUnit(v.fuelUnitId)
+      v.fuelUnit =
+        (await fuelUnitRepository.getFuelUnit(v.fuelUnitId)) ?? undefined
     }
     return vehicles
   }
@@ -73,11 +75,11 @@ export const useVehicleStore = defineStore('vehicleStore', () => {
   }
 
   async function getFuelUnits(): Promise<FuelUnit[]> {
-    return await Promise.resolve(returnfuelUnits())
+    return await fuelUnitRepository.getFuelUnits()
   }
 
-  async function getFuelUnit(id: number): Promise<FuelUnit> {
-    return await Promise.resolve(returnfuelUnits().filter(u => u.id === id)[0])
+  async function getFuelUnit(id: number): Promise<FuelUnit | null> {
+    return await fuelUnitRepository.getFuelUnit(id)
   }
 
   return {
