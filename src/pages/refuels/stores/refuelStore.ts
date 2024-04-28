@@ -16,9 +16,7 @@ export const useRefuelStore = defineStore('refuelStore', () => {
     vehicle.value =
       (await vehicleStore.getVehicle(settingsStore.selectedVehicleId)) ??
       vehicle.value
-    refuels.value = await refuelRepository.getRefuelsForVehicle(
-      vehicle.value.id
-    )
+    refuels.value = await refuelRepository.getRefuels(vehicle.value.id)
     await Promise.resolve()
   }
 
