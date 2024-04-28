@@ -76,7 +76,6 @@ import GraphCard from 'src/pages/graphData/components/GraphCard.vue'
 import { ref, computed, onMounted, onUnmounted } from 'vue'
 import { emitter } from 'src/boot/mitt'
 import packageJson from '../../../package.json'
-import { useRefuelStore } from 'src/stores/refuelStore'
 import { useSettingsStore } from 'src/pages/settings/stores/settingsStore'
 import { useGraphDataStore } from './stores/graphDataStore'
 import { Period } from 'src/pages/graphData/scripts/models'
@@ -94,7 +93,6 @@ const $q = useQuasar()
 $q.dark.set('auto')
 
 const router = useRouter()
-const refuelStore = useRefuelStore()
 const graphDataStore = useGraphDataStore()
 const settingsStore = useSettingsStore()
 const { t } = useI18n({ useScope: 'local', messages })
@@ -146,7 +144,7 @@ function onDrop(dropResult: DropResult) {
 onMounted(async () => {
   const timeOut = setTimeout(() => (loading.value = true), 200)
   await initSettings()
-  periods.value = await refuelStore.getPeriods()
+  periods.value = await graphDataStore.getPeriods()
   updateTitle()
   graphDataStore.readGraphData()
   App.removeAllListeners()

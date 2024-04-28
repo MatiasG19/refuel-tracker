@@ -4,26 +4,30 @@ import { db } from 'src/boot/dexie'
 import { GraphDataFactory } from 'src/pages/graphData/scripts/GraphDataFactory'
 import { GraphData } from 'src/pages/graphData/scripts/models'
 import { useSettingsStore } from 'src/pages/settings/stores/settingsStore'
-import { useRefuelStore } from 'src/stores/refuelStore'
+import { useVehicleStore } from 'src/pages/vehicles/stores'
 import { DropResult } from 'vue3-smooth-dnd'
+import { getPeriods as returnPeriods } from 'src/scripts/staticData/periods'
+import { Period } from 'src/pages/graphData/scripts/models'
 
 export const useGraphDataStore = defineStore('graphDataStore', () => {
   const graphData = ref<GraphData[]>([])
 
-  const settings = useSettingsStore()
-  const refuelStore = useRefuelStore()
+  const settingsStore = useSettingsStore()
+  const vehicleStore = useVehicleStore()
 
   async function getGraphSettings() {
     return await db.graphSettings.toArray()
   }
 
   async function readGraphData() {
-    if (!settings.selectedVehicleId) {
+    if (!settingsStore.selectedVehicleId) {
       graphData.value.length = 0
       return
     }
 
-    const vehicle = await refuelStore.getVehicle(settings.selectedVehicleId)
+    const vehicle = await vehicleStore.getVehicle(
+      settingsStore.selectedVehicleId
+    )
     if (vehicle && vehicle.refuels?.length) {
       graphData.value = new GraphDataFactory(vehicle).getAll(
         await getGraphSettings()
@@ -32,6 +36,10 @@ export const useGraphDataStore = defineStore('graphDataStore', () => {
     } else {
       graphData.value.length = 0
     }
+  }
+
+  async function getPeriods(): Promise<Period[]> {
+    return await Promise.resolve(returnPeriods())
   }
 
   function moveCard(dropResult: DropResult) {
@@ -94,6 +102,7 @@ export const useGraphDataStore = defineStore('graphDataStore', () => {
     graphData,
     getGraphSettings,
     readGraphData,
+    getPeriods,
     moveCard,
     saveCardOrder
   }
