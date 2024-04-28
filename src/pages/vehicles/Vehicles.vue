@@ -34,7 +34,7 @@ import { useRouter } from 'vue-router'
 import { computed, onMounted, onUnmounted } from 'vue'
 import { emitter } from 'src/boot/mitt'
 import { useSettingsStore } from 'src/pages/settings/stores/settingsStore'
-import { useRefuelStore } from 'src/stores/refuelStore'
+import { useVehicleStore } from './stores/vehicleStore'
 import { Vehicle } from 'src/scripts/libraries/refuel/models'
 import { useQuasar } from 'quasar'
 import { useI18n } from 'vue-i18n'
@@ -42,13 +42,13 @@ import { i18n } from 'src/boot/i18n'
 import messages from './i18n'
 
 const router = useRouter()
-const refuelStore = useRefuelStore()
+const vehicleStore = useVehicleStore()
 const settingsStore = useSettingsStore()
 const $q = useQuasar()
 const { t } = useI18n({ useScope: 'local', messages })
 
 const vehicleData = computed(() => {
-  if (refuelStore.vehicles) return refuelStore.getAllVehicleData()
+  if (vehicleStore.vehicles) return vehicleStore.getAllVehicleData()
   return []
 })
 
@@ -59,7 +59,7 @@ emitter.on('showVehicleOptionsDialog', id =>
       icon: 'local_gas_station',
       action: () => {
         ;(async () => {
-          const vehicle = await refuelStore.getVehicle(id)
+          const vehicle = await vehicleStore.getVehicle(id)
           // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
           await settingsStore.changeSelectedVehicle({ ...vehicle! })
           router.push('/refuels')
@@ -87,9 +87,9 @@ emitter.on('showVehicleOptionsDialog', id =>
               message: t('vehicles.optionsDialog.deletingVehicle')
             })
             ;(async () =>
-              await refuelStore
+              await vehicleStore
                 .deleteVehicle(id)
-                .then(async () => await refuelStore.readVehicles()))()
+                .then(async () => await vehicleStore.readVehicles()))()
             $q.loading.hide()
           },
           id
@@ -105,7 +105,7 @@ async function selectVehicle(vehicle: Vehicle) {
 
 onMounted(async () => {
   emitter.emit('updateTitle', t('vehicles.title'))
-  await refuelStore.readVehicles()
+  await vehicleStore.readVehicles()
 })
 
 onUnmounted(() => {
