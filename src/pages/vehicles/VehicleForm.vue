@@ -58,15 +58,15 @@ import {
   max50Characters
 } from 'src/scripts/libraries/validation'
 import { SelectOption } from 'src/scripts/models'
-import { useSettingsStore } from 'src/stores/settingsStore'
-import { useRefuelStore } from 'src/stores/refuelStore'
+import { useSettingsStore } from 'src/pages/settings/stores/settingsStore'
+import { useVehicleStore } from './stores'
 import { Vehicle } from 'src/scripts/libraries/refuel/models'
 import { useI18n } from 'vue-i18n'
 import { i18n } from 'src/boot/i18n'
 import messages from './i18n'
 
 const router = useRouter()
-const refuelStore = useRefuelStore()
+const vehicleStore = useVehicleStore()
 const settingsStore = useSettingsStore()
 const { t } = useI18n({ useScope: 'local', messages })
 
@@ -82,10 +82,10 @@ const props = defineProps({
 
 async function onSubmit() {
   if (routePath.includes('/add'))
-    await refuelStore.addVehicle({ ...vehicle.value })
+    await vehicleStore.addVehicle({ ...vehicle.value })
   else if (routePath.includes('/edit')) {
     await settingsStore.changeSelectedVehicle({ ...vehicle.value })
-    await refuelStore.updateVehicle({ ...vehicle.value })
+    await vehicleStore.updateVehicle({ ...vehicle.value })
   }
   void router.push('/vehicles')
 }
@@ -93,7 +93,7 @@ async function onSubmit() {
 onMounted(async () => {
   // Get vehicle to edit
   if (props.id) {
-    const vehicleToEdit = await refuelStore.getVehicle(props.id)
+    const vehicleToEdit = await vehicleStore.getVehicle(props.id)
     if (vehicleToEdit) {
       vehicle.value.id = vehicleToEdit.id
       vehicle.value.name = vehicleToEdit.name
@@ -104,7 +104,7 @@ onMounted(async () => {
   }
 
   // Get fuel units
-  const units = await refuelStore.getFuelUnits()
+  const units = await vehicleStore.getFuelUnits()
   units.forEach(u =>
     fuelUnits.value.push({
       label: u.fuelConsumptionUnit,

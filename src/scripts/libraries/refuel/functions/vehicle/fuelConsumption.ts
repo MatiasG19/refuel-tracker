@@ -11,13 +11,11 @@ export function vehicleFuelConsumption(
 
   if (refuel == null) {
     let fuel = vehicle.refuels
-      // .filter(r => (refuelId ? r.id === refuelId : true))
       .map(re => re.refueledAmount)
       .reduce((total, current) => total + current)
     fuel = fuel ? fuel : 0
 
     let distance = vehicle.refuels
-      // .filter(r => (refuelId ? r.id === refuelId : true))
       .map(re => re.distanceDriven)
       .reduce((total, current) => total + current)
     distance = distance ? distance : 0

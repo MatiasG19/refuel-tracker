@@ -1,29 +1,33 @@
 import { defineStore } from 'pinia'
 import { ref } from 'vue'
-import { db } from 'src/boot/dexie'
 import { GraphDataFactory } from 'src/pages/graphData/scripts/GraphDataFactory'
 import { GraphData } from 'src/pages/graphData/scripts/models'
-import { useSettingsStore } from 'src/stores/settingsStore'
-import { useRefuelStore } from 'src/stores/refuelStore'
+import { useSettingsStore } from 'src/pages/settings/stores/settingsStore'
+import { useVehicleStore } from 'src/pages/vehicles/stores'
 import { DropResult } from 'vue3-smooth-dnd'
+import { getPeriods as returnPeriods } from 'src/scripts/staticData/periods'
+import { Period } from 'src/pages/graphData/scripts/models'
+import { graphSettingsRepository } from 'src/scripts/databaseRepositories'
 
 export const useGraphDataStore = defineStore('graphDataStore', () => {
   const graphData = ref<GraphData[]>([])
 
-  const settings = useSettingsStore()
-  const refuelStore = useRefuelStore()
+  const settingsStore = useSettingsStore()
+  const vehicleStore = useVehicleStore()
 
   async function getGraphSettings() {
-    return await db.graphSettings.toArray()
+    return await graphSettingsRepository.getGraphSettings()
   }
 
   async function readGraphData() {
-    if (!settings.selectedVehicleId) {
+    if (!settingsStore.selectedVehicleId) {
       graphData.value.length = 0
       return
     }
 
-    const vehicle = await refuelStore.getVehicle(settings.selectedVehicleId)
+    const vehicle = await vehicleStore.getVehicle(
+      settingsStore.selectedVehicleId
+    )
     if (vehicle && vehicle.refuels?.length) {
       graphData.value = new GraphDataFactory(vehicle).getAll(
         await getGraphSettings()
@@ -32,6 +36,10 @@ export const useGraphDataStore = defineStore('graphDataStore', () => {
     } else {
       graphData.value.length = 0
     }
+  }
+
+  async function getPeriods(): Promise<Period[]> {
+    return await Promise.resolve(returnPeriods())
   }
 
   function moveCard(dropResult: DropResult) {
@@ -80,13 +88,7 @@ export const useGraphDataStore = defineStore('graphDataStore', () => {
 
   function saveCardOrder() {
     ;(async () => {
-      await db.transaction('rw', [db.graphSettings], async () => {
-        for (let j = 0; j < graphData.value.length; j++) {
-          await db.graphSettings.update(graphData.value[j].id as number, {
-            sequence: graphData.value[j].sequence
-          })
-        }
-      })
+      await graphSettingsRepository.saveCardOrder(graphData.value)
     })()
   }
 
@@ -94,6 +96,7 @@ export const useGraphDataStore = defineStore('graphDataStore', () => {
     graphData,
     getGraphSettings,
     readGraphData,
+    getPeriods,
     moveCard,
     saveCardOrder
   }

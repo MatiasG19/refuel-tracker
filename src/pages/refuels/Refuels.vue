@@ -50,7 +50,7 @@
           flat
           no-caps
           label=" "
-          @click="removeFilter"
+          @click="refuelFilterStore.removeFilter()"
           icon-right="delete_outline"
           >{{ refuelFilterStore.filterName }}</q-btn
         >
@@ -69,8 +69,10 @@
         <refuel-card
           :key="index"
           :refuel="item"
-          :vehicle="vehicle"
-          :fuelConsumption="vehicleFuelConsumption(vehicle, item).toFixed(2)"
+          :vehicle="refuelStore.vehicle"
+          :fuelConsumption="
+            vehicleFuelConsumption(refuelStore.vehicle, item).toFixed(2)
+          "
           :loading="loading"
           class="q-pt-md q-pl-md q-pr-md"
         />
@@ -86,23 +88,21 @@ import { useRouter } from 'vue-router'
 import { emitter } from 'src/boot/mitt'
 import { optionsDialog } from 'src/components/dialogs/optionsDialog'
 import { confirmDialog } from 'src/components/dialogs/confirmDialog'
-import { useSettingsStore } from 'src/stores/settingsStore'
-import { useRefuelStore } from 'src/stores/refuelStore'
-import { Refuel, Vehicle } from 'src/scripts/libraries/refuel/models'
+import { useSettingsStore } from 'src/pages/settings/stores/settingsStore'
+import { Refuel } from 'src/scripts/libraries/refuel/models'
 import { vehicleFuelConsumption } from 'src/scripts/libraries/refuel/functions/vehicle'
 import { QVirtualScroll } from 'quasar'
-import { useRefuelFilterStore } from './stores/refuelFilterStore'
+import { useRefuelStore, useRefuelFilterStore } from './stores'
 import { useI18n } from 'vue-i18n'
 import { i18n } from 'src/boot/i18n'
 import messages from './i18n'
 
 const router = useRouter()
-const refuelStore = useRefuelStore()
 const settingsStore = useSettingsStore()
+const refuelStore = useRefuelStore()
 const refuelFilterStore = useRefuelFilterStore()
 const { t } = useI18n({ useScope: 'local', messages })
 
-const vehicle = ref<Vehicle>(new Vehicle())
 const vehiclesExists = settingsStore.selectedVehicleId
 const vehicleName = ref<string>('')
 const loading = ref(true)
@@ -141,10 +141,6 @@ function getRefuels(from: number, size: number): ReadonlyArray<Refuel> {
   return items
 }
 
-function removeFilter() {
-  refuelFilterStore.removeFilter()
-}
-
 emitter.on('showRefuelOptionsDialog', id =>
   optionsDialog([
     {
@@ -164,12 +160,7 @@ emitter.on('showRefuelOptionsDialog', id =>
             ;(async () =>
               refuelStore
                 .deleteRefuel(id)
-                .then(
-                  async () =>
-                    await refuelStore.readRefuels(
-                      settingsStore.selectedVehicleId ?? 0
-                    )
-                ))()
+                .then(async () => await refuelStore.readData()))()
           },
           id
         )
@@ -184,10 +175,7 @@ onBeforeMount(async () => {
     ? settingsStore.selectedVehiclePlateNumber
     : settingsStore.selectedVehicleName
 
-  await refuelStore.readRefuels(settingsStore.selectedVehicleId ?? 0)
-  vehicle.value =
-    (await refuelStore.getVehicle(settingsStore.selectedVehicleId ?? 0)) ??
-    vehicle.value
+  await refuelStore.readData()
 
   // Define to which index to scroll
   if (props.id) {
