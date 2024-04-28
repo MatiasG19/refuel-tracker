@@ -76,7 +76,7 @@ let routePath = ''
 
 const props = defineProps({
   id: {
-    type: Number
+    type: String
   }
 })
 
@@ -93,14 +93,14 @@ async function onSubmit() {
 onMounted(async () => {
   // Get vehicle to edit
   if (props.id) {
-    const vehicleToEdit = await vehicleStore.getVehicle(props.id)
+    const vehicleToEdit = await vehicleStore.getVehicle(parseInt(props.id))
     if (vehicleToEdit) {
       vehicle.value.id = vehicleToEdit.id
       vehicle.value.name = vehicleToEdit.name
       vehicle.value.plateNumber = vehicleToEdit.plateNumber
       vehicle.value.fuelUnitId = vehicleToEdit.fuelUnitId
       vehicle.value.currencyUnit = vehicleToEdit.currencyUnit
-    } else console.error('Vehicle not found!')
+    } else console.error(`Vehicle with ID ${props.id} not found!`)
   }
 
   // Get fuel units

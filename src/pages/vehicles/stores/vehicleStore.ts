@@ -16,42 +16,46 @@ export const useVehicleStore = defineStore('vehicleStore', () => {
   }
 
   async function getVehicles(): Promise<Vehicle[]> {
-    const vehicles = await vehicleRepository.getVehicles()
-    for (const v of vehicles) {
+    if (vehicles.value.length > 0) return vehicles.value
+    const vs = await vehicleRepository.getVehicles()
+    for (const v of vs) {
       v.fuelUnit =
         (await fuelUnitRepository.getFuelUnit(v.fuelUnitId)) ?? undefined
     }
-    return vehicles
+    return vs
   }
 
   async function getVehicle(id: number): Promise<Vehicle | null> {
-    const vehicles = await getVehicles()
-    const v = vehicles.find(v => v.id === id) ?? null
+    const lv = vehicles.value.find(v => v.id === id)
+    if (lv) return lv
+    const vs = await getVehicles()
+    const v = vs.find(v => v.id === id) ?? null
     if (!v) return null
     return v
   }
 
   async function addVehicle(vehicle: Vehicle) {
+    vehicles.value.push(vehicle)
     await vehicleRepository.addVehicle(vehicle)
 
     // Update settings
-    if ((await vehicleRepository.getVehicles()).length > 0)
+    if (vehicles.value.length === 1)
       settingsStore.changeSelectedVehicle(vehicle)
   }
 
   async function updateVehicle(vehicle: Vehicle) {
+    const v = vehicles.value.filter(v => v.id === vehicle.id)
+    if (!v.length) v[0] = vehicle
     await vehicleRepository.updateVehicle(vehicle)
   }
 
   async function deleteVehicle(id: number) {
+    vehicles.value = [...vehicles.value.filter(v => v.id !== id)]
     await vehicleRepository.deleteVehicle(id)
     // Update settings
-    const vehicles = await vehicleRepository.getVehicles()
-    if (vehicles.length) {
-      settingsStore.changeSelectedVehicle(null)
-      return
-    }
-    settingsStore.changeSelectedVehicle(vehicles[0])
+    settingsStore.changeSelectedVehicle(
+      vehicles.value.length ? vehicles.value[0] : null
+    )
   }
 
   async function getFuelUnits(): Promise<FuelUnit[]> {
