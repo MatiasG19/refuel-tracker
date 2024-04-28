@@ -17,7 +17,10 @@ async function getFilteredRefuelsForVehicle(
   return await db.refuels
     .where('vehicleId')
     .equals(vehicleId)
-    .filter(r => r.date >= from && r.date <= to)
+    .filter(
+      r =>
+        r.date.getTime() >= from.getTime() && r.date.getTime() <= to.getTime()
+    )
     .toArray()
 }
 
