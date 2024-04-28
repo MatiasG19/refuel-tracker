@@ -1,3 +1,5 @@
+import vehicleRepository from './vehicleRepository'
+import refuelRepository from './refuelRepository'
 import refuelFilterRepository from './refuelFilterRepository'
 
-export { refuelFilterRepository }
+export { vehicleRepository, refuelRepository, refuelFilterRepository }
