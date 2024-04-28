@@ -3,7 +3,6 @@ import { ref } from 'vue'
 import { FuelUnit, Vehicle } from 'src/scripts/libraries/refuel/models'
 import { useSettingsStore } from 'src/pages/settings/stores'
 import {
-  refuelRepository,
   vehicleRepository,
   fuelUnitRepository
 } from 'src/scripts/databaseRepositories'
@@ -19,8 +18,6 @@ export const useVehicleStore = defineStore('vehicleStore', () => {
   async function getVehicles(): Promise<Vehicle[]> {
     const vehicles = await vehicleRepository.getVehicles()
     for (const v of vehicles) {
-      const refuels = await refuelRepository.getRefuels(v.id)
-      v.refuels = [...refuels]
       v.fuelUnit =
         (await fuelUnitRepository.getFuelUnit(v.fuelUnitId)) ?? undefined
     }
@@ -33,7 +30,6 @@ export const useVehicleStore = defineStore('vehicleStore', () => {
     if (!v) return null
     return v
   }
-  //vehicleFuelConsumption(v).toFixed(2)
 
   async function addVehicle(vehicle: Vehicle) {
     await vehicleRepository.addVehicle(vehicle)
