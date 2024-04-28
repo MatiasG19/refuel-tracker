@@ -26,15 +26,22 @@ export const useRefuelStore = defineStore('refuelStore', () => {
   }
 
   async function addRefuel(refuel: Refuel): Promise<number> {
+    updateVehicleFuelConsumption()
     return await refuelRepository.addRefuel(refuel)
   }
 
   async function updateRefuel(refuel: Refuel) {
+    updateVehicleFuelConsumption()
     await refuelRepository.updateRefuel(refuel)
   }
 
   async function deleteRefuel(id: number) {
+    updateVehicleFuelConsumption()
     await refuelRepository.deleteRefuel(id)
+  }
+
+  async function updateVehicleFuelConsumption() {
+    //vehicleFuelConsumption(v).toFixed(2)
   }
 
   return {
