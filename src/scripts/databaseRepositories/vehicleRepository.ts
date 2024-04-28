@@ -1,6 +1,10 @@
 import { db } from 'src/boot/dexie'
 import { Vehicle } from '../libraries/refuel/models'
 
+async function getVehicle(id: number): Promise<Vehicle | null> {
+  return (await db.vehicles.filter(v => v.id === id).first()) ?? null
+}
+
 async function getVehicles(): Promise<Vehicle[]> {
   return await db.vehicles.toArray()
 }
@@ -30,6 +34,7 @@ async function deleteVehicle(id: number) {
 }
 
 export default {
+  getVehicle,
   getVehicles,
   addVehicle,
   updateVehicle,
