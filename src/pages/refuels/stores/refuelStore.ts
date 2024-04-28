@@ -17,10 +17,16 @@ export const useRefuelStore = defineStore('refuelStore', () => {
 
   async function readData() {
     if (!settingsStore.selectedVehicleId) return
+    if (
+      vehicle.value.id !== settingsStore.selectedVehicleId ||
+      !refuels.value.length
+    )
+      refuels.value = await refuelRepository.getRefuels(
+        settingsStore.selectedVehicleId
+      )
     vehicle.value =
       (await vehicleStore.getVehicle(settingsStore.selectedVehicleId)) ??
       vehicle.value
-    refuels.value = await refuelRepository.getRefuels(vehicle.value.id)
   }
 
   async function getRefuel(id: number): Promise<Refuel | null> {
