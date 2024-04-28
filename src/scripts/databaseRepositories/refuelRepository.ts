@@ -9,20 +9,6 @@ async function getRefuels(vehicleId: number): Promise<Refuel[]> {
   return await db.refuels.where('vehicleId').equals(vehicleId).toArray()
 }
 
-async function getRefuelsOrderdByDate(
-  vehicleId: number,
-  offset: number,
-  limit: number
-): Promise<Refuel[]> {
-  return await db.refuels
-    // .orderBy('date')
-    .where('vehicleId')
-    .equals(vehicleId)
-    .offset(offset)
-    .limit(limit)
-    .toArray()
-}
-
 async function getFilteredRefuels(
   vehicleId: number,
   from: Date,
@@ -53,7 +39,6 @@ async function deleteRefuel(id: number) {
 export default {
   getRefuel,
   getRefuels,
-  getRefuelsOrderdByDate,
   getFilteredRefuels,
   addRefuel,
   updateRefuel,

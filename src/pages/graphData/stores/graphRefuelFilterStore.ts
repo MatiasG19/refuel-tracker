@@ -10,7 +10,7 @@ export const useGraphRefuelFilterStore = defineStore(
     const filterActive = ref<boolean>(false)
     const dateFrom = ref<Date>(new Date())
     const dateUntil = ref<Date>(new Date())
-    const filterId = 1
+    const filterId = 2
 
     async function setFilter() {
       const filter = await refuelFilterRepository.readFilter(filterId)
