@@ -45,7 +45,7 @@ export const useVehicleStore = defineStore('vehicleStore', () => {
   }
 
   async function updateVehicle(vehicle: Vehicle) {
-    if (vehicle.fuelConsumption === '')
+    if (!vehicle.fuelConsumption)
       vehicle.fuelConsumption = vehicleFuelConsumption({
         ...toRaw(vehicle)
       }).toFixed(2)
