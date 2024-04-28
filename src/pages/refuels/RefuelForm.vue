@@ -123,7 +123,7 @@ import {
   max50Characters
 } from 'src/scripts/libraries/validation'
 import { useSettingsStore } from 'src/pages/settings/stores/settingsStore'
-import { useRefuelStore } from 'src/stores/refuelStore'
+import { useRefuelStore } from './stores'
 import { Refuel } from 'src/scripts/libraries/refuel/models'
 import { replaceComma } from 'src/scripts/libraries/utils'
 import { useI18n } from 'vue-i18n'
@@ -203,7 +203,7 @@ onMounted(async () => {
     ? settingsStore.selectedVehiclePlateNumber
     : settingsStore.selectedVehicleName
 
-  refuel.value.vehicleId = settingsStore.selectedVehicleId ?? 0
+  refuel.value.vehicleId = refuelStore.vehicle.id
   if (props.id && parseInt(props.id)) {
     const refuelToEdit = await refuelStore.getRefuel(parseInt(props.id))
     if (refuelToEdit) {
