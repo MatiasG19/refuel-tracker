@@ -17,7 +17,6 @@ export const useRefuelStore = defineStore('refuelStore', () => {
       (await vehicleStore.getVehicle(settingsStore.selectedVehicleId)) ??
       vehicle.value
     refuels.value = await refuelRepository.getRefuels(vehicle.value.id)
-    await Promise.resolve()
   }
 
   async function getRefuel(id: number): Promise<Refuel | null> {
