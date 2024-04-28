@@ -1,11 +1,6 @@
 import { defineStore } from 'pinia'
 import { ref } from 'vue'
-import {
-  FuelUnit,
-  Vehicle,
-  VehicleData
-} from 'src/scripts/libraries/refuel/models'
-import { vehicleFuelConsumption } from 'src/scripts/libraries/refuel/functions/vehicle'
+import { FuelUnit, Vehicle } from 'src/scripts/libraries/refuel/models'
 import { useSettingsStore } from 'src/pages/settings/stores'
 import {
   refuelRepository,
@@ -38,17 +33,7 @@ export const useVehicleStore = defineStore('vehicleStore', () => {
     if (!v) return null
     return v
   }
-
-  function getAllVehicleData(): VehicleData[] {
-    const vehicleData = new Array<VehicleData>()
-    vehicles.value.forEach(v =>
-      vehicleData.push({
-        ...v,
-        fuelConsumption: (vehicleFuelConsumption(v).toFixed(2) || '').toString()
-      })
-    )
-    return vehicleData
-  }
+  //vehicleFuelConsumption(v).toFixed(2)
 
   async function addVehicle(vehicle: Vehicle) {
     await vehicleRepository.addVehicle(vehicle)
@@ -85,7 +70,6 @@ export const useVehicleStore = defineStore('vehicleStore', () => {
     vehicles,
     readVehicles,
     getVehicle,
-    getAllVehicleData,
     addVehicle,
     updateVehicle,
     deleteVehicle,
