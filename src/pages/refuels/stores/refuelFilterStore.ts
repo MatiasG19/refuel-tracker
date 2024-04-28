@@ -1,43 +1,47 @@
 import { defineStore } from 'pinia'
-import { db } from 'src/boot/dexie'
 import { ref } from 'vue'
 import { date } from 'quasar'
+import { refuelFilterRepository } from 'src/scripts/databaseRepositories'
 
 export const useRefuelFilterStore = defineStore('refuelFilterStore', () => {
   const filterName = ref<string>('')
   const filterActive = ref<boolean>(false)
   const dateFrom = ref<Date>(new Date())
   const dateUntil = ref<Date>(new Date())
+  const filterId = 1
 
   function setFilter() {
     ;(async () => {
-      const refuelFilters = await db.refuelFilters.toArray()
-      refuelFilters[0].name = filterName.value =
+      const filter = await refuelFilterRepository.readFilterById(filterId)
+      if (!filter) return
+      filter.name = filterName.value =
         date.formatDate(dateFrom.value, 'YYYY/MM/DD') +
         ' - ' +
         date.formatDate(dateUntil.value, 'YYYY/MM/DD')
-      refuelFilters[0].active = filterActive.value = true
-      refuelFilters[0].dateFrom = dateFrom.value
-      refuelFilters[0].dateUntil = dateUntil.value
-      await db.refuelFilters.put(refuelFilters[0])
+      filter.active = filterActive.value = true
+      filter.dateFrom = dateFrom.value
+      filter.dateUntil = dateUntil.value
+      await refuelFilterRepository.setFilter(filter)
     })()
   }
 
   function removeFilter() {
     ;(async () => {
-      const refuelFilters = await db.refuelFilters.toArray()
-      refuelFilters[0].active = filterActive.value = false
-      await db.refuelFilters.put(refuelFilters[0])
+      const filter = await refuelFilterRepository.readFilterById(filterId)
+      if (!filter) return
+      filter.active = filterActive.value = false
+      await refuelFilterRepository.setFilter(filter)
     })()
   }
 
   function readFilter() {
     ;(async () => {
-      const refuelFilters = await db.refuelFilters.toArray()
-      filterName.value = refuelFilters[0].name
-      filterActive.value = refuelFilters[0].active
-      dateFrom.value = refuelFilters[0].dateFrom
-      dateUntil.value = refuelFilters[0].dateUntil
+      const filter = await refuelFilterRepository.readFilterById(filterId)
+      if (!filter) return
+      filterName.value = filter.name
+      filterActive.value = filter.active
+      dateFrom.value = filter.dateFrom
+      dateUntil.value = filter.dateUntil
     })()
   }
 
