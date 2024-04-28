@@ -3,7 +3,7 @@ import { ref } from 'vue'
 import { db } from 'src/boot/dexie'
 import { GraphDataFactory } from 'src/pages/graphData/scripts/GraphDataFactory'
 import { GraphData } from 'src/pages/graphData/scripts/models'
-import { useSettingsStore } from 'src/stores/settingsStore'
+import { useSettingsStore } from 'src/pages/settings/stores/settingsStore'
 import { useRefuelStore } from 'src/stores/refuelStore'
 import { DropResult } from 'vue3-smooth-dnd'
 

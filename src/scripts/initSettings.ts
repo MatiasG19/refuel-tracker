@@ -1,4 +1,4 @@
-import { useSettingsStore } from 'src/stores/settingsStore'
+import { useSettingsStore } from 'src/pages/settings/stores/settingsStore'
 import { setI18nLanguage } from './libraries/utils/language'
 import { useRefuelFilterStore } from 'src/pages/refuels/stores/refuelFilterStore'
 import { registerGraphData } from 'src/pages/graphData/scripts/registerGraphData'

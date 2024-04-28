@@ -122,7 +122,7 @@ import {
   positiveNumbersRule,
   max50Characters
 } from 'src/scripts/libraries/validation'
-import { useSettingsStore } from 'src/stores/settingsStore'
+import { useSettingsStore } from 'src/pages/settings/stores/settingsStore'
 import { useRefuelStore } from 'src/stores/refuelStore'
 import { Refuel } from 'src/scripts/libraries/refuel/models'
 import { replaceComma } from 'src/scripts/libraries/utils'

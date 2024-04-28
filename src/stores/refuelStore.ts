@@ -10,7 +10,7 @@ import {
   VehicleData
 } from 'src/scripts/libraries/refuel/models'
 import { vehicleFuelConsumption } from 'src/scripts/libraries/refuel/functions/vehicle'
-import { useSettingsStore } from './settingsStore'
+import { useSettingsStore } from '../pages/settings/stores/settingsStore'
 import { Period } from 'src/pages/graphData/scripts/models'
 
 export const useRefuelStore = defineStore('refuelStore', () => {

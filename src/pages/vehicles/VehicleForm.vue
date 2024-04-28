@@ -58,7 +58,7 @@ import {
   max50Characters
 } from 'src/scripts/libraries/validation'
 import { SelectOption } from 'src/scripts/models'
-import { useSettingsStore } from 'src/stores/settingsStore'
+import { useSettingsStore } from 'src/pages/settings/stores/settingsStore'
 import { useRefuelStore } from 'src/stores/refuelStore'
 import { Vehicle } from 'src/scripts/libraries/refuel/models'
 import { useI18n } from 'vue-i18n'
