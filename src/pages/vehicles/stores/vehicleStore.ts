@@ -18,21 +18,13 @@ export const useVehicleStore = defineStore('vehicleStore', () => {
 
   async function getVehicles(): Promise<Vehicle[]> {
     if (vehicles.value.length > 0) return vehicles.value
-    const vs = await vehicleRepository.getVehicles()
-    for (const v of vs) {
-      v.fuelUnit =
-        (await fuelUnitRepository.getFuelUnit(v.fuelUnitId)) ?? undefined
-    }
-    return vs
+    return await vehicleRepository.getVehicles()
   }
 
   async function getVehicle(id: number): Promise<Vehicle | null> {
-    const lv = vehicles.value.find(v => v.id === id)
-    if (lv) return lv
-    const vs = await getVehicles()
-    const v = vs.find(v => v.id === id) ?? null
-    if (!v) return null
-    return v
+    const vehicle = vehicles.value.find(v => v.id === id)
+    if (vehicle) return vehicle
+    return vehicleRepository.getVehicle(id)
   }
 
   async function addVehicle(vehicle: Vehicle) {
