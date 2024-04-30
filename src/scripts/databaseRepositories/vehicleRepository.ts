@@ -1,12 +1,22 @@
 import { db } from 'src/boot/dexie'
 import { Vehicle } from '../libraries/refuel/models'
+import fuelUnitRepository from './fuelUnitRepository'
 
 async function getVehicle(id: number): Promise<Vehicle | null> {
-  return (await db.vehicles.filter(v => v.id === id).first()) ?? null
+  const vehicle = await db.vehicles.filter(v => v.id === id).first()
+  if (!vehicle) return null
+  vehicle.fuelUnit =
+    (await fuelUnitRepository.getFuelUnit(vehicle.fuelUnitId)) ?? undefined
+  return vehicle
 }
 
 async function getVehicles(): Promise<Vehicle[]> {
-  return await db.vehicles.toArray()
+  const vehicles = await db.vehicles.toArray()
+  for (const v of vehicles) {
+    v.fuelUnit =
+      (await fuelUnitRepository.getFuelUnit(v.fuelUnitId)) ?? undefined
+  }
+  return vehicles
 }
 
 async function addVehicle(vehicle: Vehicle): Promise<number> {
@@ -14,7 +24,7 @@ async function addVehicle(vehicle: Vehicle): Promise<number> {
 }
 
 async function updateVehicle(vehicle: Vehicle) {
-  await db.vehicles.put(vehicle)
+  await db.vehicles.update(vehicle.id, vehicle)
 }
 
 async function deleteVehicle(id: number) {

@@ -5,7 +5,7 @@
         <div class="row items-center no-wrap">
           <div class="col">
             <div class="text-subtitle2">
-              {{ vehicle.fuelConsumption }}
+              {{ vehicle.totalFuelConsumption }}
               {{ vehicle.fuelUnit?.fuelConsumptionUnit }}
             </div>
           </div>
@@ -30,12 +30,12 @@
 
 <script setup lang="ts">
 import { PropType } from 'vue'
-import { VehicleData } from 'src/scripts/libraries/refuel/models'
+import { Vehicle } from 'src/scripts/libraries/refuel/models'
 import { emitter } from 'src/boot/mitt'
 
 defineProps({
   vehicle: {
-    type: Object as PropType<VehicleData>,
+    type: Object as PropType<Vehicle>,
     required: true
   }
 })

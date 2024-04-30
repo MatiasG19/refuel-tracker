@@ -4,7 +4,7 @@
       v-if="
         vehiclesExists &&
         refuels.length === 0 &&
-        !refuelFilterStore.filterActive
+        !refuelFilterStore.filter?.active
       "
       class="absolute-center items-center"
     >
@@ -41,7 +41,7 @@
       </div>
 
       <div
-        v-if="vehiclesExists && refuelFilterStore.filterActive"
+        v-if="vehiclesExists && refuelFilterStore.filter?.active"
         class="q-pt-md text-center"
       >
         <q-btn
@@ -52,7 +52,7 @@
           label=" "
           @click="refuelFilterStore.removeFilter()"
           icon-right="delete_outline"
-          >{{ refuelFilterStore.filterName }}</q-btn
+          >{{ refuelFilterStore.filter?.title }}</q-btn
         >
       </div>
 
@@ -71,7 +71,10 @@
           :refuel="item"
           :vehicle="refuelStore.vehicle"
           :fuelConsumption="
-            vehicleFuelConsumption(refuelStore.vehicle, item).toFixed(2)
+            vehicleFuelConsumption(
+              toRaw(refuelStore.vehicle),
+              toRaw(item)
+            ).toFixed(2)
           "
           :loading="loading"
           class="q-pt-md q-pl-md q-pr-md"
@@ -83,7 +86,7 @@
 
 <script setup lang="ts">
 import RefuelCard from 'src/pages/refuels/components/RefuelCard.vue'
-import { computed, ref, onUnmounted, onBeforeMount } from 'vue'
+import { computed, ref, onUnmounted, onBeforeMount, toRaw } from 'vue'
 import { useRouter } from 'vue-router'
 import { emitter } from 'src/boot/mitt'
 import { optionsDialog } from 'src/components/dialogs/optionsDialog'
@@ -117,16 +120,16 @@ const props = defineProps({
 
 let refuels = computed(() => {
   let items = []
-  if (refuelFilterStore.filterActive)
-    items = [...refuelStore.refuels]
+  if (refuelFilterStore.filter && refuelFilterStore.filter.active) {
+    items = [...(refuelStore.vehicle?.refuels ?? [])]
       .filter(
         r =>
-          r.date.getTime() >= refuelFilterStore.dateFrom.getTime() &&
-          r.date.getTime() <= refuelFilterStore.dateUntil.getTime()
+          r.date.getTime() >= refuelFilterStore.filter!.dateFrom.getTime() &&
+          r.date.getTime() <= refuelFilterStore.filter!.dateUntil.getTime()
       )
       .sort((a, b) => b.date.getTime() - a.date.getTime())
-  else
-    items = [...refuelStore.refuels].sort(
+  } else
+    items = [...(refuelStore.vehicle?.refuels ?? [])].sort(
       (a, b) => b.date.getTime() - a.date.getTime()
     )
 
@@ -181,8 +184,8 @@ onBeforeMount(async () => {
   if (props.id) {
     const id = parseInt(props.id)
     if (id)
-      scrollToIndex.value = refuelStore.refuels
-        .sort((a, b) => b.date.getTime() - a.date.getTime())
+      scrollToIndex.value = refuelStore.vehicle
+        .refuels!.sort((a, b) => b.date.getTime() - a.date.getTime())
         .findIndex(r => r.id == id)
   }
 

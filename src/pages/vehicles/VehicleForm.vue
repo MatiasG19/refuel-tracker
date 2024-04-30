@@ -48,7 +48,7 @@
 </template>
 
 <script setup lang="ts">
-import { ref, onMounted } from 'vue'
+import { ref, onMounted, toRaw } from 'vue'
 import { useRouter } from 'vue-router'
 import CInput from 'src/components/inputs/CInput.vue'
 import CSelect from 'src/components/inputs/CSelect.vue'
@@ -64,6 +64,7 @@ import { Vehicle } from 'src/scripts/libraries/refuel/models'
 import { useI18n } from 'vue-i18n'
 import { i18n } from 'src/boot/i18n'
 import messages from './i18n'
+import { fuelUnitRepository } from 'src/scripts/databaseRepositories'
 
 const router = useRouter()
 const vehicleStore = useVehicleStore()
@@ -76,16 +77,19 @@ let routePath = ''
 
 const props = defineProps({
   id: {
-    type: Number
+    type: String
   }
 })
 
 async function onSubmit() {
+  vehicle.value.fuelUnit =
+    (await fuelUnitRepository.getFuelUnit(vehicle.value.fuelUnitId)) ??
+    undefined
   if (routePath.includes('/add'))
     await vehicleStore.addVehicle({ ...vehicle.value })
   else if (routePath.includes('/edit')) {
-    await settingsStore.changeSelectedVehicle({ ...vehicle.value })
-    await vehicleStore.updateVehicle({ ...vehicle.value })
+    await settingsStore.changeSelectedVehicle({ ...toRaw(vehicle.value) })
+    await vehicleStore.updateVehicle({ ...toRaw(vehicle.value) })
   }
   void router.push('/vehicles')
 }
@@ -93,14 +97,8 @@ async function onSubmit() {
 onMounted(async () => {
   // Get vehicle to edit
   if (props.id) {
-    const vehicleToEdit = await vehicleStore.getVehicle(props.id)
-    if (vehicleToEdit) {
-      vehicle.value.id = vehicleToEdit.id
-      vehicle.value.name = vehicleToEdit.name
-      vehicle.value.plateNumber = vehicleToEdit.plateNumber
-      vehicle.value.fuelUnitId = vehicleToEdit.fuelUnitId
-      vehicle.value.currencyUnit = vehicleToEdit.currencyUnit
-    } else console.error('Vehicle not found!')
+    vehicle.value =
+      (await vehicleStore.getVehicle(parseInt(props.id))) ?? vehicle.value
   }
 
   // Get fuel units
