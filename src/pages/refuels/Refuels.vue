@@ -4,7 +4,7 @@
       v-if="
         vehiclesExists &&
         refuels.length === 0 &&
-        !refuelFilterStore.filterActive
+        !refuelFilterStore.filter?.active
       "
       class="absolute-center items-center"
     >
@@ -41,7 +41,7 @@
       </div>
 
       <div
-        v-if="vehiclesExists && refuelFilterStore.filterActive"
+        v-if="vehiclesExists && refuelFilterStore.filter?.active"
         class="q-pt-md text-center"
       >
         <q-btn
@@ -52,7 +52,7 @@
           label=" "
           @click="refuelFilterStore.removeFilter()"
           icon-right="delete_outline"
-          >{{ refuelFilterStore.filterName }}</q-btn
+          >{{ refuelFilterStore.filter?.title }}</q-btn
         >
       </div>
 
@@ -120,15 +120,15 @@ const props = defineProps({
 
 let refuels = computed(() => {
   let items = []
-  if (refuelFilterStore.filterActive)
+  if (refuelFilterStore.filter && refuelFilterStore.filter.active) {
     items = [...(refuelStore.vehicle?.refuels ?? [])]
       .filter(
         r =>
-          r.date.getTime() >= refuelFilterStore.dateFrom.getTime() &&
-          r.date.getTime() <= refuelFilterStore.dateUntil.getTime()
+          r.date.getTime() >= refuelFilterStore.filter!.dateFrom.getTime() &&
+          r.date.getTime() <= refuelFilterStore.filter!.dateUntil.getTime()
       )
       .sort((a, b) => b.date.getTime() - a.date.getTime())
-  else
+  } else
     items = [...(refuelStore.vehicle?.refuels ?? [])].sort(
       (a, b) => b.date.getTime() - a.date.getTime()
     )

@@ -73,28 +73,30 @@ const refuelFilterStore = useRefuelFilterStore()
 const { t } = useI18n({ useScope: 'local', messages })
 
 const filterDateFrom = computed(() => {
-  return date.formatDate(refuelFilterStore.dateFrom, 'YYYY/MM/DD')
+  return date.formatDate(refuelFilterStore.filter?.dateFrom, 'YYYY/MM/DD')
 })
 const filterDateUntil = computed(() => {
-  return date.formatDate(refuelFilterStore.dateUntil, 'YYYY/MM/DD')
+  return date.formatDate(refuelFilterStore.filter?.dateUntil, 'YYYY/MM/DD')
 })
 
 function updateDateFrom(event: string) {
+  if (!refuelFilterStore.filter) return
   let d = new Date(event)
   d.setHours(0)
   d.setMinutes(0)
   d.setSeconds(0)
   d.setMilliseconds(0)
-  refuelFilterStore.dateFrom = d
+  refuelFilterStore.filter.dateFrom = d
 }
 
 function updateDateUntil(event: string) {
+  if (!refuelFilterStore.filter) return
   let d = new Date(event)
   d.setHours(23)
   d.setMinutes(59)
   d.setSeconds(59)
   d.setMilliseconds(999)
-  refuelFilterStore.dateUntil = d
+  refuelFilterStore.filter.dateUntil = d
 }
 
 function onSubmit() {
@@ -102,25 +104,26 @@ function onSubmit() {
   void router.push('/refuels')
 }
 
-onBeforeMount(() => {
-  if (refuelFilterStore.filterActive == false) {
-    refuelFilterStore.filterName =
-      date.formatDate(refuelFilterStore.dateFrom, 'YYYY/MM/DD') +
+onBeforeMount(async () => {
+  await refuelFilterStore.readFilter()
+  if (refuelFilterStore.filter && refuelFilterStore.filter.active === false) {
+    refuelFilterStore.filter.title =
+      date.formatDate(refuelFilterStore.filter.dateFrom, 'YYYY/MM/DD') +
       ' - ' +
-      date.formatDate(refuelFilterStore.dateUntil, 'YYYY/MM/DD')
+      date.formatDate(refuelFilterStore.filter.dateUntil, 'YYYY/MM/DD')
     let d = new Date()
     d.setDate(d.getDate() - 30) // Start 30 days in the past
     d.setHours(0)
     d.setMinutes(0)
     d.setSeconds(0)
     d.setMilliseconds(0)
-    refuelFilterStore.dateFrom = d
+    refuelFilterStore.filter.dateFrom = d
     d = new Date()
     d.setHours(23)
     d.setMinutes(59)
     d.setSeconds(59)
     d.setMilliseconds(999)
-    refuelFilterStore.dateUntil = d
+    refuelFilterStore.filter.dateUntil = d
   }
 })
 
