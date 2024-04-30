@@ -34,8 +34,8 @@ export const useVehicleStore = defineStore('vehicleStore', () => {
   }
 
   async function updateVehicle(vehicle: Vehicle) {
-    if (!vehicle.fuelConsumption)
-      vehicle.fuelConsumption = vehicleFuelConsumption({
+    if (!vehicle.totalFuelConsumption)
+      vehicle.totalFuelConsumption = vehicleFuelConsumption({
         ...toRaw(vehicle)
       }).toFixed(2)
     const i = vehicles.value.findIndex(v => v.id === vehicle.id)

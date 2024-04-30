@@ -15,7 +15,7 @@ export class RefuelTrackerDexie extends Dexie {
     super('RefuelTrackerDb')
     this.version(4).stores({
       graphSettings: '++id, uid, sequence, periodId, visible',
-      vehicles: '++id, name, plateNumber, fuelUnitId, fuelConsumption',
+      vehicles: '++id, name, plateNumber, fuelUnitId, totalFuelConsumption',
       refuels:
         '++id, date, refuelAmount, payedAmount, distanceDriven, vehicleId',
       settings:

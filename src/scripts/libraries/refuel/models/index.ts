@@ -6,7 +6,7 @@ export class Vehicle {
   fuelUnitId!: number
   fuelUnit?: FuelUnit
   refuels?: Refuel[]
-  fuelConsumption?: string
+  totalFuelConsumption?: string
 }
 
 export class Refuel {
