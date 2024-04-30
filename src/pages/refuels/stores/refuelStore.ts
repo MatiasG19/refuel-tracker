@@ -12,9 +12,7 @@ export const useRefuelStore = defineStore('refuelStore', () => {
 
   async function readData() {
     if (!settingsStore.selectedVehicleId) return
-    const v = vehicleStore.vehicles.find(
-      v => v.id === settingsStore.selectedVehicleId
-    )
+    const v = await vehicleStore.getVehicle(settingsStore.selectedVehicleId)
     if (v) vehicle.value = { ...toRaw(v) }
     if (
       vehicle.value.id !== settingsStore.selectedVehicleId ||
