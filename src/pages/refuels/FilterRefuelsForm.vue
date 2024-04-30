@@ -106,25 +106,6 @@ function onSubmit() {
 
 onBeforeMount(async () => {
   await refuelFilterStore.readFilter()
-  if (refuelFilterStore.filter && refuelFilterStore.filter.active === false) {
-    refuelFilterStore.filter.title =
-      date.formatDate(refuelFilterStore.filter.dateFrom, 'YYYY/MM/DD') +
-      ' - ' +
-      date.formatDate(refuelFilterStore.filter.dateUntil, 'YYYY/MM/DD')
-    let d = new Date()
-    d.setDate(d.getDate() - 30) // Start 30 days in the past
-    d.setHours(0)
-    d.setMinutes(0)
-    d.setSeconds(0)
-    d.setMilliseconds(0)
-    refuelFilterStore.filter.dateFrom = d
-    d = new Date()
-    d.setHours(23)
-    d.setMinutes(59)
-    d.setSeconds(59)
-    d.setMilliseconds(999)
-    refuelFilterStore.filter.dateUntil = d
-  }
 })
 
 onMounted(() => {
