@@ -1,7 +1,7 @@
 <template>
   <q-layout view="lHh Lpr lFf" class="bg-space-station">
-    <q-header ref="header">
-      <q-toolbar class="bg-space-station">
+    <q-header ref="header" class="bg-space-station">
+      <q-toolbar>
         <q-btn
           flat
           dense
@@ -37,6 +37,19 @@
           dense
         />
       </q-toolbar>
+
+      <div v-if="false" class="column items-center">
+        <div class="row q-gutter-xs q-pb-xs">
+          <q-btn
+            class="col justify-center q-px-sm"
+            color="negative"
+            icon="cancel"
+            size="sm"
+            dense
+            >filter
+          </q-btn>
+        </div>
+      </div>
     </q-header>
 
     <q-drawer
