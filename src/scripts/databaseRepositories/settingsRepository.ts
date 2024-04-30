@@ -6,7 +6,7 @@ async function getSettings(id: number): Promise<Settings | null> {
 }
 
 async function updateSettings(settings: Settings) {
-  await db.settings.put(settings)
+  await db.settings.update(settings.id ?? 0, settings)
 }
 
 export default { getSettings, updateSettings }

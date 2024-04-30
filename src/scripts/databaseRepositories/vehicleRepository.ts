@@ -24,7 +24,7 @@ async function addVehicle(vehicle: Vehicle): Promise<number> {
 }
 
 async function updateVehicle(vehicle: Vehicle) {
-  await db.vehicles.put(vehicle)
+  await db.vehicles.update(vehicle.id, vehicle)
 }
 
 async function deleteVehicle(id: number) {

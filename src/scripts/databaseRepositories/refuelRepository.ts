@@ -29,7 +29,7 @@ async function addRefuel(refuel: Refuel): Promise<number> {
 }
 
 async function updateRefuel(refuel: Refuel) {
-  await db.refuels.put(refuel)
+  await db.refuels.update(refuel.id, refuel)
 }
 
 async function deleteRefuel(id: number) {
