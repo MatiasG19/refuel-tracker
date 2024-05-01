@@ -87,6 +87,7 @@ import messages from './i18n'
 import { Container, Draggable, DropResult } from 'vue3-smooth-dnd'
 import { App } from '@capacitor/app'
 import { initSettings } from 'src/scripts/initSettings'
+import { SplashScreen } from '@capacitor/splash-screen'
 
 const $q = useQuasar()
 $q.dark.set('auto')
@@ -157,6 +158,7 @@ onMounted(async () => {
   })
   clearTimeout(timeOut)
   loading.value = false
+  SplashScreen.hide()
 })
 
 onUnmounted(() => {
