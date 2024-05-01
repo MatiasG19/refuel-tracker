@@ -4,7 +4,6 @@ import { Button } from '../models'
 
 export const useMainLayoutStore = defineStore('mainLayoutStore', () => {
   const titleText = ref('')
-  const badgesVisible = ref(false)
 
   const saveButton = ref<Button>({
     visible: false,
@@ -22,7 +21,6 @@ export const useMainLayoutStore = defineStore('mainLayoutStore', () => {
 
   return {
     titleText,
-    badgesVisible,
     saveButton,
     addButton,
     calculateAreaHeight
