@@ -1,6 +1,8 @@
 interface Button {
   visible: boolean
   disabled: boolean
+  icon: string
+  color: string
   action: Action
 }
 

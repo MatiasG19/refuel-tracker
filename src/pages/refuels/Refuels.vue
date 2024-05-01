@@ -61,7 +61,11 @@
 
       <Teleport to="#header-badges-left">
         <div class="q-px-md q-pb-xs q-gutter-md">
-          <q-badge>{{ vehicleName }}</q-badge>
+          <q-badge>{{
+            settingsStore.plateNumberInTitleActive
+              ? settingsStore.selectedVehiclePlateNumber
+              : settingsStore.selectedVehicleName
+          }}</q-badge>
         </div>
       </Teleport>
       <Teleport to="#header-badges-center">
@@ -114,7 +118,6 @@ const mainLayoutStore = useMainLayoutStore()
 const { t } = useI18n({ useScope: 'local', messages })
 
 const vehiclesExists = settingsStore.selectedVehicleId
-const vehicleName = ref<string>('')
 const loading = ref(true)
 const virtualListRef = ref(null)
 const areaHeight = computed(() => `height: ${settingsStore.areaHeight}px`)
@@ -181,12 +184,6 @@ emitter.on('showRefuelOptionsDialog', id =>
 
 onBeforeMount(async () => {
   mainLayoutStore.titleText = t('refuels.title')
-  mainLayoutStore.addButton.action = () => void router.push('/refuels/add')
-
-  vehicleName.value = settingsStore.plateNumberInTitleActive
-    ? settingsStore.selectedVehiclePlateNumber
-    : settingsStore.selectedVehicleName
-
   await refuelStore.readData()
 
   // Define to which index to scroll
@@ -214,10 +211,16 @@ watch(
 )
 
 onMounted(() => {
+  mainLayoutStore.showButton(
+    mainLayoutStore.headerButton,
+    () => void router.push('/refuels/filter'),
+    'filter_list'
+  )
   mainLayoutStore.calculateAreaHeight()
 })
 
 onUnmounted(() => {
+  mainLayoutStore.hideButton(mainLayoutStore.headerButton)
   emitter.off('showRefuelOptionsDialog')
 })
 </script>

@@ -16,23 +16,11 @@
         </q-toolbar-title>
 
         <q-btn
-          v-if="mainLayoutStore.saveButton.visible"
-          class="q-pt-xs q-pl-md q-mt-md q-mr-xs"
-          color="accent"
-          label=""
-          icon="save"
-          no-caps
-          unelevated
-          :disable="mainLayoutStore.saveButton.disabled"
-          @click="mainLayoutStore.saveButton.action()"
-        />
-
-        <q-btn
-          v-if="
-            routePath == '/refuels' || routePath.match('\/refuels\/[-0-9]+')
-          "
-          :to="'/refuels/filter'"
-          icon="filter_list"
+          v-if="mainLayoutStore.headerButton.visible"
+          @click="mainLayoutStore.headerButton.action()"
+          :icon="mainLayoutStore.headerButton.icon"
+          :color="mainLayoutStore.headerButton.color"
+          :disable="mainLayoutStore.headerButton.disabled"
           round
           flat
           dense
@@ -130,7 +118,6 @@ import { useI18n } from 'vue-i18n'
 const router = useRouter()
 const settingsStore = useSettingsStore()
 const mainLayoutStore = useMainLayoutStore()
-const routePath = computed(() => router.currentRoute.value.path)
 const { t } = useI18n()
 
 const linkList = ref([

@@ -113,15 +113,22 @@ const optionsInDialog = ref([
 
 function editOrderFun(value = true) {
   editOrder.value = value
-  mainLayoutStore.saveButton.visible = value
-  if (value) mainLayoutStore.saveButton.action = () => saveOrder()
+  mainLayoutStore.headerButton.visible = value
+  if (value)
+    mainLayoutStore.showButton(
+      mainLayoutStore.headerButton,
+      () => saveOrder(),
+      'save',
+      false,
+      'accent'
+    )
   else graphDataStore.readGraphData()
 }
 
 function saveOrder() {
   editOrder.value = false
   graphDataStore.saveCardOrder()
-  mainLayoutStore.saveButton.visible = false
+  mainLayoutStore.headerButton.visible = false
 }
 
 function updateTitle() {
@@ -142,7 +149,6 @@ onMounted(async () => {
   await initSettings()
   periods.value = await graphDataStore.getPeriods()
   updateTitle()
-  mainLayoutStore.addButton.action = () => void router.push('/refuels/add')
   graphDataStore.readGraphData()
   App.removeAllListeners()
   App.addListener('backButton', () => {
@@ -154,7 +160,7 @@ onMounted(async () => {
 })
 
 onUnmounted(() => {
-  mainLayoutStore.saveButton.visible = false
+  mainLayoutStore.hideButton(mainLayoutStore.headerButton)
   App.removeAllListeners()
 })
 </script>
