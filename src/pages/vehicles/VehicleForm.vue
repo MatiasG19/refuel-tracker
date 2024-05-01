@@ -52,7 +52,6 @@ import { ref, onMounted } from 'vue'
 import { useRouter } from 'vue-router'
 import CInput from 'src/components/inputs/CInput.vue'
 import CSelect from 'src/components/inputs/CSelect.vue'
-import { emitter } from 'src/boot/mitt'
 import {
   requiredFieldRule,
   max50Characters
@@ -64,10 +63,12 @@ import { Vehicle } from 'src/scripts/libraries/refuel/models'
 import { useI18n } from 'vue-i18n'
 import { i18n } from 'src/boot/i18n'
 import messages from './i18n'
+import { useMainLayoutStore } from 'src/layouts/stores'
 
 const router = useRouter()
 const vehicleStore = useVehicleStore()
 const settingsStore = useSettingsStore()
+const mainLayoutStore = useMainLayoutStore()
 const { t } = useI18n({ useScope: 'local', messages })
 
 const vehicle = ref<Vehicle>(new Vehicle())
@@ -115,9 +116,9 @@ onMounted(async () => {
   // Update title
   routePath = router.currentRoute.value.path.toLocaleLowerCase()
   if (routePath.includes('/add'))
-    emitter.emit('updateTitle', t('vehicleForm.titleAddVehicle'))
+    mainLayoutStore.titleText = t('vehicleForm.titleAddVehicle')
   else if (routePath.includes('/edit'))
-    emitter.emit('updateTitle', t('vehicleForm.titleEditVehicle'))
+    mainLayoutStore.titleText = t('vehicleForm.titleEditVehicle')
 })
 </script>
 

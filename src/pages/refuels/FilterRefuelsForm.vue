@@ -60,9 +60,9 @@
 import { onMounted, computed, onBeforeMount } from 'vue'
 import { date } from 'quasar'
 import { useRouter } from 'vue-router'
-import { emitter } from 'src/boot/mitt'
 import { requiredFieldRule } from 'src/scripts/libraries/validation'
 import { useRefuelFilterStore } from './stores'
+import { useMainLayoutStore } from 'src/layouts/stores'
 import CInput from 'src/components/inputs/CInput.vue'
 import { useI18n } from 'vue-i18n'
 import { i18n } from 'src/boot/i18n'
@@ -70,6 +70,7 @@ import messages from './i18n'
 
 const router = useRouter()
 const refuelFilterStore = useRefuelFilterStore()
+const mainLayoutStore = useMainLayoutStore()
 const { t } = useI18n({ useScope: 'local', messages })
 
 const filterDateFrom = computed(() => {
@@ -125,6 +126,6 @@ onBeforeMount(() => {
 })
 
 onMounted(() => {
-  emitter.emit('updateTitle', t('filterRefuelsForm.title'))
+  mainLayoutStore.titleText = t('filterRefuelsForm.title')
 })
 </script>

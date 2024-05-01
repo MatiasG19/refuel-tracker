@@ -12,7 +12,7 @@
         />
 
         <q-toolbar-title>
-          {{ title }}
+          {{ mainLayoutStore.titleText }}
         </q-toolbar-title>
 
         <q-btn
@@ -129,13 +129,15 @@ import EssentialLink from 'components/EssentialLink.vue'
 import { ref, computed, onMounted, onUnmounted } from 'vue'
 import { useRouter } from 'vue-router'
 import { emitter } from 'src/boot/mitt'
-import { useSettingsStore } from 'src/pages/settings/stores/settingsStore'
+import { useSettingsStore } from 'src/pages/settings/stores'
+import { useMainLayoutStore } from 'src/layouts/stores'
 import { Keyboard } from '@capacitor/keyboard'
 import { Platform } from 'quasar'
 import { useI18n } from 'vue-i18n'
 
 const router = useRouter()
 const settingsStore = useSettingsStore()
+const mainLayoutStore = useMainLayoutStore()
 const routePath = computed(() => router.currentRoute.value.path)
 const { t } = useI18n()
 const header = ref()
@@ -177,7 +179,6 @@ const linkList = ref([
 const footerVisible = ref(true)
 const saveButtonVisible = ref(false)
 const leftDrawerOpen = ref(false)
-const title = ref('')
 
 function addKeyboardListeners() {
   if (Platform.is.mobile) {
@@ -216,7 +217,6 @@ onMounted(() => {
     addKeyboardListeners()
   }
 
-  emitter.on('updateTitle', e => (title.value = e))
   emitter.on('showSaveButton', e => (saveButtonVisible.value = e))
 
   addEventListener('resize', () => {
@@ -226,7 +226,6 @@ onMounted(() => {
 })
 
 onUnmounted(() => {
-  emitter.off('updateTitle')
   emitter.off('showSaveButton')
   removeEventListener('resize', calculateAreaHeight)
 })

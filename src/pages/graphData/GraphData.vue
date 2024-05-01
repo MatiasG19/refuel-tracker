@@ -75,8 +75,9 @@ import GraphCard from 'src/pages/graphData/components/GraphCard.vue'
 import { ref, computed, onMounted, onUnmounted } from 'vue'
 import { emitter } from 'src/boot/mitt'
 import packageJson from '../../../package.json'
-import { useSettingsStore } from 'src/pages/settings/stores/settingsStore'
+import { useSettingsStore } from 'src/pages/settings/stores'
 import { useGraphDataStore } from './stores/graphDataStore'
+import { useMainLayoutStore } from 'src/layouts/stores'
 import { Period } from 'src/pages/graphData/scripts/models'
 import { optionsDialog } from 'src/components/dialogs/optionsDialog'
 import { useQuasar } from 'quasar'
@@ -94,6 +95,7 @@ $q.dark.set('auto')
 const router = useRouter()
 const graphDataStore = useGraphDataStore()
 const settingsStore = useSettingsStore()
+const mainLayoutStore = useMainLayoutStore()
 const { t } = useI18n({ useScope: 'local', messages })
 
 const loading = ref(false)
@@ -125,15 +127,12 @@ function saveOrder() {
 }
 
 function updateTitle() {
-  emitter.emit(
-    'updateTitle',
-    (() => {
-      if (!settingsStore.selectedVehicleId) return packageJson.productName
-      else if (settingsStore.plateNumberInTitleActive)
-        return settingsStore.selectedVehiclePlateNumber
-      return settingsStore.selectedVehicleName
-    })()
-  )
+  mainLayoutStore.titleText = (() => {
+    if (!settingsStore.selectedVehicleId) return packageJson.productName
+    else if (settingsStore.plateNumberInTitleActive)
+      return settingsStore.selectedVehiclePlateNumber
+    return settingsStore.selectedVehicleName
+  })()
 }
 
 function onDrop(dropResult: DropResult) {
