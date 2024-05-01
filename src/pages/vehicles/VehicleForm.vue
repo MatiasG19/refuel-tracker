@@ -48,7 +48,7 @@
 </template>
 
 <script setup lang="ts">
-import { ref, onMounted, toRaw } from 'vue'
+import { ref, onMounted, toRaw, onBeforeUnmount } from 'vue'
 import { useRouter } from 'vue-router'
 import CInput from 'src/components/inputs/CInput.vue'
 import CSelect from 'src/components/inputs/CSelect.vue'
@@ -117,6 +117,12 @@ onMounted(async () => {
     mainLayoutStore.titleText = t('vehicleForm.titleAddVehicle')
   else if (routePath.includes('/edit'))
     mainLayoutStore.titleText = t('vehicleForm.titleEditVehicle')
+
+  mainLayoutStore.addButton.disabled = true
+})
+
+onBeforeUnmount(() => {
+  mainLayoutStore.addButton.disabled = false
 })
 </script>
 

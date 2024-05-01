@@ -111,7 +111,7 @@
 </template>
 
 <script setup lang="ts">
-import { ref, onMounted } from 'vue'
+import { ref, onMounted, onBeforeUnmount } from 'vue'
 import { date as QuasarDate } from 'quasar'
 import { useRouter } from 'vue-router'
 import CInput from 'src/components/inputs/CInput.vue'
@@ -199,6 +199,7 @@ onMounted(async () => {
     mainLayoutStore.titleText = t('refuelsForm.titleAddRefuel')
   else if (routePath.includes('/edit'))
     mainLayoutStore.titleText = t('refuelsForm.titleEditRefuel')
+  mainLayoutStore.addButton.disabled = true
 
   vehicleName.value = settingsStore.plateNumberInTitleActive
     ? settingsStore.selectedVehiclePlateNumber
@@ -216,5 +217,9 @@ onMounted(async () => {
     refuelDate.value = QuasarDate.formatDate(refuel.value.date, 'YYYY/MM/DD')
     refuelTime.value = QuasarDate.formatDate(refuel.value.date, 'HH:mm')
   }
+})
+
+onBeforeUnmount(() => {
+  mainLayoutStore.addButton.disabled = false
 })
 </script>

@@ -175,6 +175,7 @@ emitter.on('showRefuelOptionsDialog', id =>
 
 onBeforeMount(async () => {
   mainLayoutStore.titleText = t('refuels.title')
+  mainLayoutStore.addButton.action = () => void router.push('/refuels/add')
 
   vehicleName.value = settingsStore.plateNumberInTitleActive
     ? settingsStore.selectedVehiclePlateNumber

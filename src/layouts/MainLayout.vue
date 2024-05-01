@@ -16,14 +16,15 @@
         </q-toolbar-title>
 
         <q-btn
-          v-if="mainLayoutStore.saveButtonVisible"
+          v-if="mainLayoutStore.saveButton.visible"
           class="q-pt-xs q-pl-md q-mt-md q-mr-xs"
           color="accent"
           label=""
           icon="save"
           no-caps
           unelevated
-          @click="mainLayoutStore.saveButtonAction()"
+          :disable="mainLayoutStore.saveButton.disabled"
+          @click="mainLayoutStore.saveButton.action()"
         />
 
         <q-btn
@@ -92,10 +93,10 @@
             dense
             icon="add"
             class="col"
-            @click="add()"
+            @click="mainLayoutStore.addButton.action()"
             :disable="
-              !settingsStore.selectedVehicleId &&
-              !routePath.includes('/vehicles')
+              !settingsStore.selectedVehicleId ||
+              mainLayoutStore.addButton.disabled
             "
           />
         </div>
@@ -194,13 +195,6 @@ function toggleLeftDrawer() {
   leftDrawerOpen.value = !leftDrawerOpen.value
 }
 
-function add() {
-  if (routePath.value.includes('/add') || routePath.value.includes('/edit'))
-    return
-  else if (routePath.value == '/vehicles') void router.push('/vehicles/add')
-  else void router.push('/refuels/add')
-}
-
 function calculateAreaHeight() {
   settingsStore.areaHeight =
     document.documentElement.clientHeight -
@@ -211,6 +205,10 @@ function calculateAreaHeight() {
 }
 
 onMounted(() => {
+  router.beforeEach(() => {
+    mainLayoutStore.addButton.action = () => void router.push('/refuels/add')
+  })
+
   if (Platform.is.mobile) {
     addKeyboardListeners()
   }
