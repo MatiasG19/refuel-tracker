@@ -1,6 +1,6 @@
 <template>
   <q-layout view="lHh Lpr lFf" class="bg-space-station">
-    <q-header ref="header" class="bg-space-station">
+    <q-header id="header" class="bg-space-station">
       <q-toolbar>
         <q-btn
           flat
@@ -39,17 +39,9 @@
         />
       </q-toolbar>
 
-      <div v-if="false" class="column items-center">
-        <div class="row q-gutter-xs q-pb-xs">
-          <q-btn
-            class="col justify-center q-px-sm"
-            color="negative"
-            icon="cancel"
-            size="sm"
-            dense
-            >filter
-          </q-btn>
-        </div>
+      <div id="header-badges-left" class="row q-gutter-xs"></div>
+      <div class="column items-center">
+        <div id="header-badges-center" class="row q-gutter-xs q-pb-xs"></div>
       </div>
     </q-header>
 
@@ -81,7 +73,7 @@
       </router-view>
     </q-page-container>
 
-    <q-footer v-if="footerVisible" class="bg-space-station" ref="footer">
+    <q-footer v-if="footerVisible" class="bg-space-station" id="footer">
       <q-toolbar class="q-gutter-xs text-center">
         <div class="col">
           <q-btn round flat dense icon="bar_chart" class="col" :to="'/'" />
@@ -140,8 +132,6 @@ const settingsStore = useSettingsStore()
 const mainLayoutStore = useMainLayoutStore()
 const routePath = computed(() => router.currentRoute.value.path)
 const { t } = useI18n()
-const header = ref()
-const footer = ref()
 
 const linkList = ref([
   {
@@ -196,12 +186,13 @@ function toggleLeftDrawer() {
 }
 
 function calculateAreaHeight() {
-  settingsStore.areaHeight =
-    document.documentElement.clientHeight -
-    // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access
-    header.value.heightHint -
-    // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access
-    footer.value.heightHint
+  var header = document.getElementById('header')
+  var footer = document.getElementById('footer')
+  if (header && footer)
+    settingsStore.areaHeight =
+      document.documentElement.clientHeight -
+      header.getBoundingClientRect().height -
+      footer.getBoundingClientRect().height
 }
 
 onMounted(() => {
@@ -217,6 +208,7 @@ onMounted(() => {
     calculateAreaHeight()
   })
   calculateAreaHeight()
+  mainLayoutStore.calculateAreaHeight = calculateAreaHeight
 })
 
 onUnmounted(() => {

@@ -18,10 +18,13 @@ export const useMainLayoutStore = defineStore('mainLayoutStore', () => {
     action: () => {}
   })
 
+  const calculateAreaHeight = () => {}
+
   return {
     titleText,
     badgesVisible,
     saveButton,
-    addButton
+    addButton,
+    calculateAreaHeight
   }
 })
