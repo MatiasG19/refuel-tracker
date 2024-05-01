@@ -1,6 +1,9 @@
 <template>
   <q-page>
-    <div v-if="vehicleData.length === 0" class="absolute-center items-center">
+    <div
+      v-if="vehicleStore.vehicles.length === 0"
+      class="absolute-center items-center"
+    >
       <div class="row">
         <q-icon class="col" name="img:directions_car.svg" size="100px" />
       </div>
@@ -16,7 +19,7 @@
     </div>
     <template v-else>
       <vehicle-card
-        v-for="vehicle in vehicleData"
+        v-for="vehicle in vehicleStore.vehicles"
         :key="vehicle.id"
         :vehicle="vehicle"
         class="q-pt-md q-pl-md q-pr-md"
@@ -31,7 +34,7 @@ import VehicleCard from 'src/pages/vehicles/components/VehicleCard.vue'
 import { optionsDialog } from 'src/components/dialogs/optionsDialog'
 import { confirmDialog } from 'src/components/dialogs/confirmDialog'
 import { useRouter } from 'vue-router'
-import { computed, onMounted, onUnmounted } from 'vue'
+import { onMounted, onUnmounted } from 'vue'
 import { emitter } from 'src/boot/mitt'
 import { useSettingsStore } from 'src/pages/settings/stores/settingsStore'
 import { useVehicleStore } from './stores/vehicleStore'
@@ -48,11 +51,6 @@ const settingsStore = useSettingsStore()
 const mainLayoutStore = useMainLayoutStore()
 const $q = useQuasar()
 const { t } = useI18n({ useScope: 'local', messages })
-
-const vehicleData = computed(() => {
-  if (vehicleStore.vehicles) return vehicleStore.getAllVehicleData()
-  return []
-})
 
 emitter.on('showVehicleOptionsDialog', id =>
   optionsDialog([

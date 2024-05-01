@@ -6,6 +6,7 @@ export class Vehicle {
   fuelUnitId!: number
   fuelUnit?: FuelUnit
   refuels?: Refuel[]
+  totalFuelConsumption?: string
 }
 
 export class Refuel {
@@ -25,8 +26,4 @@ export class FuelUnit {
   fuelConsumptionUnit!: string
   distanceConversion!: number
   fuelUnitConversion!: number
-}
-
-export class VehicleData extends Vehicle {
-  fuelConsumption!: string
 }

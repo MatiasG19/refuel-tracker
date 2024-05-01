@@ -6,7 +6,11 @@ async function readFilter(id: number): Promise<RefuelFilter | null> {
 }
 
 async function setFilter(filter: RefuelFilter) {
-  await db.refuelFilters.put(filter)
+  await db.refuelFilters.update(filter.id ?? 0, filter)
 }
 
-export default { readFilter, setFilter }
+async function removeFilter(id: number) {
+  await db.refuelFilters.update(id, { active: false })
+}
+
+export default { readFilter, setFilter, removeFilter }

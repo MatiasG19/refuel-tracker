@@ -7,7 +7,10 @@ import { useVehicleStore } from 'src/pages/vehicles/stores'
 import { DropResult } from 'vue3-smooth-dnd'
 import { getPeriods as returnPeriods } from 'src/scripts/staticData/periods'
 import { Period } from 'src/pages/graphData/scripts/models'
-import { graphSettingsRepository } from 'src/scripts/databaseRepositories'
+import {
+  graphSettingsRepository,
+  refuelRepository
+} from 'src/scripts/databaseRepositories'
 
 export const useGraphDataStore = defineStore('graphDataStore', () => {
   const graphData = ref<GraphData[]>([])
@@ -28,14 +31,19 @@ export const useGraphDataStore = defineStore('graphDataStore', () => {
     const vehicle = await vehicleStore.getVehicle(
       settingsStore.selectedVehicleId
     )
-    if (vehicle && vehicle.refuels?.length) {
-      graphData.value = new GraphDataFactory(vehicle).getAll(
-        await getGraphSettings()
-      )
-      graphData.value = graphData.value.sort((a, b) => a.sequence - b.sequence)
-    } else {
-      graphData.value.length = 0
+    if (vehicle) {
+      vehicle.refuels = await refuelRepository.getRefuels(vehicle.id)
+      if (vehicle.refuels.length) {
+        graphData.value = new GraphDataFactory(vehicle).getAll(
+          await getGraphSettings()
+        )
+        graphData.value = graphData.value.sort(
+          (a, b) => a.sequence - b.sequence
+        )
+        return
+      }
     }
+    graphData.value.length = 0
   }
 
   async function getPeriods(): Promise<Period[]> {

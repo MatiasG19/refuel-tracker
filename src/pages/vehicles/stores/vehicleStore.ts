@@ -1,17 +1,12 @@
 import { defineStore } from 'pinia'
-import { ref } from 'vue'
-import {
-  FuelUnit,
-  Vehicle,
-  VehicleData
-} from 'src/scripts/libraries/refuel/models'
-import { vehicleFuelConsumption } from 'src/scripts/libraries/refuel/functions/vehicle'
+import { ref, toRaw } from 'vue'
+import { FuelUnit, Vehicle } from 'src/scripts/libraries/refuel/models'
 import { useSettingsStore } from 'src/pages/settings/stores'
 import {
-  refuelRepository,
   vehicleRepository,
   fuelUnitRepository
 } from 'src/scripts/databaseRepositories'
+import { vehicleFuelConsumption } from 'src/scripts/libraries/refuel/functions/vehicle'
 
 export const useVehicleStore = defineStore('vehicleStore', () => {
   const settingsStore = useSettingsStore()
@@ -22,55 +17,39 @@ export const useVehicleStore = defineStore('vehicleStore', () => {
   }
 
   async function getVehicles(): Promise<Vehicle[]> {
-    const vehicles = await vehicleRepository.getVehicles()
-    for (const v of vehicles) {
-      const refuels = await refuelRepository.getRefuels(v.id)
-      v.refuels = [...refuels]
-      v.fuelUnit =
-        (await fuelUnitRepository.getFuelUnit(v.fuelUnitId)) ?? undefined
-    }
-    return vehicles
+    if (vehicles.value.length > 0) return vehicles.value
+    return await vehicleRepository.getVehicles()
   }
 
   async function getVehicle(id: number): Promise<Vehicle | null> {
-    const vehicles = await getVehicles()
-    const v = vehicles.find(v => v.id === id) ?? null
-    if (!v) return null
-    return v
-  }
-
-  function getAllVehicleData(): VehicleData[] {
-    const vehicleData = new Array<VehicleData>()
-    vehicles.value.forEach(v =>
-      vehicleData.push({
-        ...v,
-        fuelConsumption: (vehicleFuelConsumption(v).toFixed(2) || '').toString()
-      })
-    )
-    return vehicleData
+    const vehicle = vehicles.value.find(v => v.id === id)
+    if (vehicle) return vehicle
+    return vehicleRepository.getVehicle(id)
   }
 
   async function addVehicle(vehicle: Vehicle) {
+    vehicles.value.push(vehicle)
     await vehicleRepository.addVehicle(vehicle)
-
-    // Update settings
-    if ((await vehicleRepository.getVehicles()).length > 0)
-      settingsStore.changeSelectedVehicle(vehicle)
+    settingsStore.changeSelectedVehicle(vehicle)
   }
 
   async function updateVehicle(vehicle: Vehicle) {
-    await vehicleRepository.updateVehicle(vehicle)
+    if (!vehicle.totalFuelConsumption)
+      vehicle.totalFuelConsumption = vehicleFuelConsumption({
+        ...toRaw(vehicle)
+      }).toFixed(2)
+    const i = vehicles.value.findIndex(v => v.id === vehicle.id)
+    vehicles.value[i] = toRaw(vehicle)
+    await vehicleRepository.updateVehicle(toRaw(vehicle))
   }
 
   async function deleteVehicle(id: number) {
+    vehicles.value = [...vehicles.value.filter(v => v.id !== id)]
     await vehicleRepository.deleteVehicle(id)
     // Update settings
-    const vehicles = await vehicleRepository.getVehicles()
-    if (vehicles.length) {
-      settingsStore.changeSelectedVehicle(null)
-      return
-    }
-    settingsStore.changeSelectedVehicle(vehicles[0])
+    settingsStore.changeSelectedVehicle(
+      vehicles.value.length ? vehicles.value[0] : null
+    )
   }
 
   async function getFuelUnits(): Promise<FuelUnit[]> {
@@ -85,7 +64,6 @@ export const useVehicleStore = defineStore('vehicleStore', () => {
     vehicles,
     readVehicles,
     getVehicle,
-    getAllVehicleData,
     addVehicle,
     updateVehicle,
     deleteVehicle,
