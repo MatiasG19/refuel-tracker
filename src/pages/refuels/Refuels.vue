@@ -206,7 +206,7 @@ onBeforeMount(async () => {
 watch(
   () => refuelFilterStore.filter?.active,
   () => {
-    mainLayoutStore.calculateAreaHeight()
+    setTimeout(() => mainLayoutStore.calculateAreaHeight(), 10)
   }
 )
 

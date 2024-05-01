@@ -9,6 +9,9 @@
       "smallIcon": "ic_launcher",
       "iconColor": "#6E6B9D",
       "sound": ""
+    },
+    "SplashScreen": {
+      "launchAutoHide": false
     }
   },
   "server": {
