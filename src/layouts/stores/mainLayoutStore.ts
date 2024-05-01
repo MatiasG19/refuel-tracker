@@ -3,10 +3,14 @@ import { ref } from 'vue'
 
 export const useMainLayoutStore = defineStore('mainLayoutStore', () => {
   const titleText = ref('')
-  const showBadges = ref(false)
+  const badgesVisible = ref(false)
+  const saveButtonVisible = ref(false)
+  const saveButtonAction = () => {}
 
   return {
     titleText,
-    showBadges
+    badgesVisible,
+    saveButtonVisible,
+    saveButtonAction
   }
 })

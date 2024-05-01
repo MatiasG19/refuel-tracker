@@ -16,14 +16,14 @@
         </q-toolbar-title>
 
         <q-btn
-          v-if="saveButtonVisible"
+          v-if="mainLayoutStore.saveButtonVisible"
           class="q-pt-xs q-pl-md q-mt-md q-mr-xs"
           color="accent"
           label=""
           icon="save"
           no-caps
           unelevated
-          @click="emitter.emit('save', true)"
+          @click="mainLayoutStore.saveButtonAction()"
         />
 
         <q-btn
@@ -128,7 +128,6 @@
 import EssentialLink from 'components/EssentialLink.vue'
 import { ref, computed, onMounted, onUnmounted } from 'vue'
 import { useRouter } from 'vue-router'
-import { emitter } from 'src/boot/mitt'
 import { useSettingsStore } from 'src/pages/settings/stores'
 import { useMainLayoutStore } from 'src/layouts/stores'
 import { Keyboard } from '@capacitor/keyboard'
@@ -177,7 +176,6 @@ const linkList = ref([
 ])
 
 const footerVisible = ref(true)
-const saveButtonVisible = ref(false)
 const leftDrawerOpen = ref(false)
 
 function addKeyboardListeners() {
@@ -217,8 +215,6 @@ onMounted(() => {
     addKeyboardListeners()
   }
 
-  emitter.on('showSaveButton', e => (saveButtonVisible.value = e))
-
   addEventListener('resize', () => {
     calculateAreaHeight()
   })
@@ -226,7 +222,6 @@ onMounted(() => {
 })
 
 onUnmounted(() => {
-  emitter.off('showSaveButton')
   removeEventListener('resize', calculateAreaHeight)
 })
 </script>

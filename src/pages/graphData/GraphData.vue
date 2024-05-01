@@ -73,7 +73,6 @@
 <script setup lang="ts">
 import GraphCard from 'src/pages/graphData/components/GraphCard.vue'
 import { ref, computed, onMounted, onUnmounted } from 'vue'
-import { emitter } from 'src/boot/mitt'
 import packageJson from '../../../package.json'
 import { useSettingsStore } from 'src/pages/settings/stores'
 import { useGraphDataStore } from './stores/graphDataStore'
@@ -114,16 +113,15 @@ const optionsInDialog = ref([
 
 function editOrderFun(value = true) {
   editOrder.value = value
-  emitter.emit('showSaveButton', value)
-  if (value) emitter.on('save', () => saveOrder())
+  mainLayoutStore.saveButtonVisible = value
+  if (value) mainLayoutStore.saveButtonAction = () => saveOrder()
   else graphDataStore.readGraphData()
 }
 
 function saveOrder() {
   editOrder.value = false
   graphDataStore.saveCardOrder()
-  emitter.off('save')
-  emitter.emit('showSaveButton', false)
+  mainLayoutStore.saveButtonVisible = false
 }
 
 function updateTitle() {
@@ -155,8 +153,7 @@ onMounted(async () => {
 })
 
 onUnmounted(() => {
-  emitter.emit('showSaveButton', false)
-  emitter.off('save')
+  mainLayoutStore.saveButtonVisible = false
   App.removeAllListeners()
 })
 </script>
