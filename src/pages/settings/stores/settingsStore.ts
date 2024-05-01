@@ -1,7 +1,6 @@
 import { defineStore } from 'pinia'
 import { Vehicle } from 'src/scripts/libraries/refuel/models'
 import { ref } from 'vue'
-import { emitter } from 'src/boot/mitt'
 import {
   settingsRepository,
   vehicleRepository
@@ -51,8 +50,6 @@ export const useSettingsStore = defineStore('settingsStore', () => {
       if (!settings) return Promise.resolve()
       settings.vehicleId = vehicle.id
       await settingsRepository.updateSettings(settings)
-
-      emitter.emit('selectedVehicleChanged', true)
       return Promise.resolve()
     } else {
       selectedVehicleId.value = null
