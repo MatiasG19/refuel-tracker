@@ -113,18 +113,15 @@
 </template>
 
 <script setup lang="ts">
-import { onMounted, computed, ref } from 'vue'
-import { useRouter } from 'vue-router'
+import { onMounted, ref } from 'vue'
 import packageJson from '../../../package.json'
 import { openURL } from 'quasar'
-import { emitter } from '../../boot/mitt'
 import { useI18n } from 'vue-i18n'
 import messages from './i18n'
+import { useMainLayoutStore } from 'src/layouts/stores'
 
-const router = useRouter()
+const mainLayoutStore = useMainLayoutStore()
 const { t } = useI18n({ useScope: 'global', messages })
-
-const routePath = computed(() => router.currentRoute.value.path)
 const ratingModel = ref(3)
 const slide = ref('code')
 const repositoryLink = 'https://github.com/MatiasG19/refuel-tracker'
@@ -132,10 +129,7 @@ const licenseLink =
   'https://github.com/MatiasG19/refuel-tracker/blob/main/LICENSE'
 const issueLink = 'https://github.com/MatiasG19/refuel-tracker/issues/new'
 
-const emits = defineEmits(['update:title'])
-
 onMounted(() => {
-  emits('update:title', routePath.value)
-  emitter.emit('updateTitle', t('title'))
+  mainLayoutStore.titleText = t('title')
 })
 </script>

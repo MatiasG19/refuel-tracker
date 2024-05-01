@@ -73,10 +73,10 @@
 <script setup lang="ts">
 import GraphCard from 'src/pages/graphData/components/GraphCard.vue'
 import { ref, computed, onMounted, onUnmounted } from 'vue'
-import { emitter } from 'src/boot/mitt'
 import packageJson from '../../../package.json'
-import { useSettingsStore } from 'src/pages/settings/stores/settingsStore'
+import { useSettingsStore } from 'src/pages/settings/stores'
 import { useGraphDataStore } from './stores/graphDataStore'
+import { useMainLayoutStore } from 'src/layouts/stores'
 import { Period } from 'src/pages/graphData/scripts/models'
 import { optionsDialog } from 'src/components/dialogs/optionsDialog'
 import { useQuasar } from 'quasar'
@@ -94,6 +94,7 @@ $q.dark.set('auto')
 const router = useRouter()
 const graphDataStore = useGraphDataStore()
 const settingsStore = useSettingsStore()
+const mainLayoutStore = useMainLayoutStore()
 const { t } = useI18n({ useScope: 'local', messages })
 
 const loading = ref(false)
@@ -112,28 +113,31 @@ const optionsInDialog = ref([
 
 function editOrderFun(value = true) {
   editOrder.value = value
-  emitter.emit('showSaveButton', value)
-  if (value) emitter.on('save', () => saveOrder())
+  mainLayoutStore.headerButton.visible = value
+  if (value)
+    mainLayoutStore.showButton(
+      mainLayoutStore.headerButton,
+      () => saveOrder(),
+      'save',
+      false,
+      'accent'
+    )
   else graphDataStore.readGraphData()
 }
 
 function saveOrder() {
   editOrder.value = false
   graphDataStore.saveCardOrder()
-  emitter.off('save')
-  emitter.emit('showSaveButton', false)
+  mainLayoutStore.headerButton.visible = false
 }
 
 function updateTitle() {
-  emitter.emit(
-    'updateTitle',
-    (() => {
-      if (!settingsStore.selectedVehicleId) return packageJson.productName
-      else if (settingsStore.plateNumberInTitleActive)
-        return settingsStore.selectedVehiclePlateNumber
-      return settingsStore.selectedVehicleName
-    })()
-  )
+  mainLayoutStore.titleText = (() => {
+    if (!settingsStore.selectedVehicleId) return packageJson.productName
+    else if (settingsStore.plateNumberInTitleActive)
+      return settingsStore.selectedVehiclePlateNumber
+    return settingsStore.selectedVehicleName
+  })()
 }
 
 function onDrop(dropResult: DropResult) {
@@ -156,8 +160,7 @@ onMounted(async () => {
 })
 
 onUnmounted(() => {
-  emitter.emit('showSaveButton', false)
-  emitter.off('save')
+  mainLayoutStore.hideButton(mainLayoutStore.headerButton)
   App.removeAllListeners()
 })
 </script>

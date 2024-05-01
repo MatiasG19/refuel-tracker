@@ -43,10 +43,12 @@ import { useQuasar } from 'quasar'
 import { useI18n } from 'vue-i18n'
 import { i18n } from 'src/boot/i18n'
 import messages from './i18n'
+import { useMainLayoutStore } from 'src/layouts/stores'
 
 const router = useRouter()
 const vehicleStore = useVehicleStore()
 const settingsStore = useSettingsStore()
+const mainLayoutStore = useMainLayoutStore()
 const $q = useQuasar()
 const { t } = useI18n({ useScope: 'local', messages })
 
@@ -102,8 +104,9 @@ async function selectVehicle(vehicle: Vehicle) {
 }
 
 onMounted(async () => {
-  emitter.emit('updateTitle', t('vehicles.title'))
+  mainLayoutStore.titleText = t('vehicles.title')
   await vehicleStore.readVehicles()
+  mainLayoutStore.addButton.action = () => void router.push('/vehicles/add')
 })
 
 onUnmounted(() => {

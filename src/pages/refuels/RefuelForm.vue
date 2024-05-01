@@ -111,19 +111,19 @@
 </template>
 
 <script setup lang="ts">
-import { ref, onMounted } from 'vue'
+import { ref, onMounted, onBeforeUnmount } from 'vue'
 import { date as QuasarDate } from 'quasar'
 import { useRouter } from 'vue-router'
 import CInput from 'src/components/inputs/CInput.vue'
-import { emitter } from 'src/boot/mitt'
 import {
   requiredFieldRule,
   numbersOnlyRule,
   positiveNumbersRule,
   max50Characters
 } from 'src/scripts/libraries/validation'
-import { useSettingsStore } from 'src/pages/settings/stores/settingsStore'
+import { useSettingsStore } from 'src/pages/settings/stores'
 import { useRefuelStore } from './stores'
+import { useMainLayoutStore } from 'src/layouts/stores'
 import { Refuel } from 'src/scripts/libraries/refuel/models'
 import { replaceComma } from 'src/scripts/libraries/utils'
 import { useI18n } from 'vue-i18n'
@@ -133,6 +133,7 @@ import messages from './i18n'
 const router = useRouter()
 const refuelStore = useRefuelStore()
 const settingsStore = useSettingsStore()
+const mainLayoutStore = useMainLayoutStore()
 const { t } = useI18n({ useScope: 'local', messages })
 
 const refuel = ref<Refuel>(new Refuel())
@@ -195,9 +196,10 @@ function onCancel() {
 onMounted(async () => {
   routePath = router.currentRoute.value.path.toLocaleLowerCase()
   if (routePath.includes('/add'))
-    emitter.emit('updateTitle', t('refuelsForm.titleAddRefuel'))
+    mainLayoutStore.titleText = t('refuelsForm.titleAddRefuel')
   else if (routePath.includes('/edit'))
-    emitter.emit('updateTitle', t('refuelsForm.titleEditRefuel'))
+    mainLayoutStore.titleText = t('refuelsForm.titleEditRefuel')
+  mainLayoutStore.addButton.disabled = true
 
   vehicleName.value = settingsStore.plateNumberInTitleActive
     ? settingsStore.selectedVehiclePlateNumber
@@ -215,5 +217,9 @@ onMounted(async () => {
     refuelDate.value = QuasarDate.formatDate(refuel.value.date, 'YYYY/MM/DD')
     refuelTime.value = QuasarDate.formatDate(refuel.value.date, 'HH:mm')
   }
+})
+
+onBeforeUnmount(() => {
+  mainLayoutStore.addButton.disabled = false
 })
 </script>

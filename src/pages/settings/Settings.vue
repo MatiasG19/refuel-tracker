@@ -104,7 +104,6 @@
 <script setup lang="ts">
 import { ref, onMounted, onUnmounted } from 'vue'
 import CSelect from 'src/components/inputs/CSelect.vue'
-import { emitter } from 'src/boot/mitt'
 import { useSettingsStore } from 'src/pages/settings/stores/settingsStore'
 import { exportDB, importDB } from 'src/scripts/libraries/backup/backup'
 import { FilePicker } from 'src/plugins/capacitor-file-picker'
@@ -117,9 +116,11 @@ import {
   setI18nLanguage
 } from 'src/scripts/libraries/utils/language'
 import { LanugageId } from '../../scripts/models'
+import { useMainLayoutStore } from 'src/layouts/stores'
 
 const { t } = useI18n({ useScope: 'global', messages })
 const settingsStore = useSettingsStore()
+const mainLayoutStore = useMainLayoutStore()
 
 type GetContentResultAction = (result: { path: string }) => void
 let getContentResultAction: GetContentResultAction
@@ -152,19 +153,7 @@ const colorThemeOptions = [
   }
 ]
 
-// const distanceUnitOptions = [
-//   {
-//     label: 'km',
-//     value: 1
-//   },
-//   {
-//     label: 'miles',
-//     value: 2
-//   }
-// ]
-
 const colorTheme = ref(settingsStore.selectedColorThemeId)
-// const distanceUnit = ref(settingsStore.selectedDistanceUnitId)
 const plateNumberInTitle = ref(settingsStore.plateNumberInTitleActive)
 const autoBackup = ref(settingsStore.autoBackupActive)
 
@@ -175,12 +164,8 @@ function changeColorTheme(value: number) {
 async function changeLanguage(languageId: number) {
   settingsStore.changeLanguage(languageId)
   await setI18nLanguage(languageId)
-  emitter.emit('updateTitle', t('title'))
+  mainLayoutStore.titleText = t('title')
 }
-
-// function changeDistanceUnit(value: number) {
-//   settingsStore.changeDistanceUnit(value)
-// }
 
 function togglePlateNumberInTitle(value: boolean) {
   settingsStore.togglePlateNumberInTitle(value)
@@ -227,7 +212,7 @@ async function importBackup() {
 }
 
 onMounted(() => {
-  emitter.emit('updateTitle', t('title'))
+  mainLayoutStore.titleText = t('title')
   currentLanguage.value = settingsStore.selectedLanguageId
   if (Platform.is.mobile) {
     FilePicker.addListener('getContentResult', res => {
