@@ -183,6 +183,7 @@ function calculateAreaHeight() {
 }
 
 onMounted(() => {
+  mainLayoutStore.addButton.action = () => void router.push('/refuels/add')
   router.beforeEach(() => {
     mainLayoutStore.addButton.action = () => void router.push('/refuels/add')
   })
