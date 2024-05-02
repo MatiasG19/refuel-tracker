@@ -15,7 +15,6 @@
           positiveNumbersRule,
           max50Characters
         ]"
-        autofocus
       />
       <c-input
         type="tel"
