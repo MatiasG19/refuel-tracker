@@ -108,14 +108,12 @@
 <script setup lang="ts">
 import EssentialLink from 'components/EssentialLink.vue'
 import { ref, computed, onMounted, onUnmounted } from 'vue'
-import { useRouter } from 'vue-router'
 import { useSettingsStore } from 'src/pages/settings/stores'
 import { useMainLayoutStore } from 'src/layouts/stores'
 import { Keyboard } from '@capacitor/keyboard'
 import { Platform } from 'quasar'
 import { useI18n } from 'vue-i18n'
 
-const router = useRouter()
 const settingsStore = useSettingsStore()
 const mainLayoutStore = useMainLayoutStore()
 const { t } = useI18n()
@@ -183,11 +181,6 @@ function calculateAreaHeight() {
 }
 
 onMounted(() => {
-  mainLayoutStore.addButton.action = () => void router.push('/refuels/add')
-  router.beforeEach(() => {
-    mainLayoutStore.addButton.action = () => void router.push('/refuels/add')
-  })
-
   if (Platform.is.mobile) {
     addKeyboardListeners()
   }
