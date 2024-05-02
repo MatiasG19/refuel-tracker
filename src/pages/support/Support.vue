@@ -24,11 +24,7 @@
       height="300px"
       class="space-station text-white shadow-1 rounded-borders"
     >
-      <q-carousel-slide
-        v-if="false"
-        name="rate"
-        class="column no-wrap flex-center"
-      >
+      <q-carousel-slide name="rate" class="column no-wrap flex-center">
         <div class="q-mt-md text-center">
           <div class="column items-center">
             <div class="q-mb-md text-center">
@@ -36,10 +32,11 @@
             </div>
             <q-rating
               v-model="ratingModel"
-              size="3.5em"
+              size="3em"
               icon="star_border"
               icon-selected="star"
               class="accent-space-station"
+              @click="openURL(playStoreLink)"
             />
           </div>
         </div>
@@ -123,11 +120,13 @@ import { useMainLayoutStore } from 'src/layouts/stores'
 const mainLayoutStore = useMainLayoutStore()
 const { t } = useI18n({ useScope: 'global', messages })
 const ratingModel = ref(3)
-const slide = ref('code')
+const slide = ref('rate')
 const repositoryLink = 'https://github.com/MatiasG19/refuel-tracker'
 const licenseLink =
   'https://github.com/MatiasG19/refuel-tracker/blob/main/LICENSE'
 const issueLink = 'https://github.com/MatiasG19/refuel-tracker/issues/new'
+const playStoreLink =
+  'https://play.google.com/store/apps/details?id=capacitor.quasar.refueltracker'
 
 onMounted(() => {
   mainLayoutStore.titleText = t('title')
