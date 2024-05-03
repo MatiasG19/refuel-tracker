@@ -46,7 +46,7 @@
       >
         <refuel-card
           :key="index"
-          :refuel="item"
+          :refuel="item ? item : new Refuel()"
           :vehicle="refuelStore.vehicle"
           :fuelConsumption="
             vehicleFuelConsumption(
