@@ -46,7 +46,7 @@
       >
         <refuel-card
           :key="index"
-          :refuel="item"
+          :refuel="item ? item : new Refuel()"
           :vehicle="refuelStore.vehicle"
           :fuelConsumption="
             vehicleFuelConsumption(
@@ -171,10 +171,7 @@ emitter.on('showRefuelOptionsDialog', id =>
         confirmDialog(
           t('refuels.optionsDialog.deleteRefuel'),
           (id: number) => {
-            ;(async () =>
-              refuelStore
-                .deleteRefuel(id)
-                .then(async () => await refuelStore.readData()))()
+            ;(async () => refuelStore.deleteRefuel(id))()
           },
           id
         )

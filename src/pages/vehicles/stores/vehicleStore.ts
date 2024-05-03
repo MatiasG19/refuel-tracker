@@ -4,7 +4,8 @@ import { FuelUnit, Vehicle } from 'src/scripts/libraries/refuel/models'
 import { useSettingsStore } from 'src/pages/settings/stores'
 import {
   vehicleRepository,
-  fuelUnitRepository
+  fuelUnitRepository,
+  refuelRepository
 } from 'src/scripts/databaseRepositories'
 import { vehicleFuelConsumption } from 'src/scripts/libraries/refuel/functions/vehicle'
 
@@ -34,17 +35,21 @@ export const useVehicleStore = defineStore('vehicleStore', () => {
   }
 
   async function updateVehicle(vehicle: Vehicle) {
-    if (!vehicle.totalFuelConsumption)
-      vehicle.totalFuelConsumption = vehicleFuelConsumption({
-        ...toRaw(vehicle)
+    const v = { ...toRaw(vehicle) }
+    if (!v.totalFuelConsumption) {
+      v.refuels = await refuelRepository.getRefuels(v.id)
+      v.totalFuelConsumption = vehicleFuelConsumption({
+        ...toRaw(v)
       }).toFixed(2)
-    const i = vehicles.value.findIndex(v => v.id === vehicle.id)
-    vehicles.value[i] = toRaw(vehicle)
-    await vehicleRepository.updateVehicle(toRaw(vehicle))
+      v.refuels.length = 0
+    }
+    const i = vehicles.value.findIndex(v => v.id === v.id)
+    vehicles.value[i] = v
+    await vehicleRepository.updateVehicle(v)
   }
 
   async function deleteVehicle(id: number) {
-    vehicles.value = [...vehicles.value.filter(v => v.id !== id)]
+    vehicles.value = vehicles.value.filter(v => v.id !== id)
     await vehicleRepository.deleteVehicle(id)
     // Update settings
     settingsStore.changeSelectedVehicle(

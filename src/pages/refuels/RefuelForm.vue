@@ -110,7 +110,7 @@
 </template>
 
 <script setup lang="ts">
-import { ref, onMounted, onBeforeUnmount } from 'vue'
+import { ref, onMounted, onBeforeUnmount, toRaw } from 'vue'
 import { date as QuasarDate } from 'quasar'
 import { useRouter } from 'vue-router'
 import CInput from 'src/components/inputs/CInput.vue'
@@ -207,8 +207,8 @@ onMounted(async () => {
   await refuelStore.readData()
   refuel.value.vehicleId = refuelStore.vehicle.id
   if (props.id && parseInt(props.id)) {
-    refuel.value =
-      (await refuelStore.getRefuel(parseInt(props.id))) ?? refuel.value
+    const r = toRaw(await refuelStore.getRefuel(parseInt(props.id)))
+    if (r) refuel.value = { ...r }
     refuelDate.value = QuasarDate.formatDate(refuel.value.date, 'YYYY/MM/DD')
     refuelTime.value = QuasarDate.formatDate(refuel.value.date, 'HH:mm')
   } else {
