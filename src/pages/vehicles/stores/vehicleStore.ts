@@ -39,8 +39,9 @@ export const useVehicleStore = defineStore('vehicleStore', () => {
     if (!v.totalFuelConsumption) {
       v.refuels = await refuelRepository.getRefuels(v.id)
       v.totalFuelConsumption = vehicleFuelConsumption({
-        ...toRaw(vehicle)
+        ...toRaw(v)
       }).toFixed(2)
+      v.refuels.length = 0
     }
     const i = vehicles.value.findIndex(v => v.id === v.id)
     vehicles.value[i] = v
