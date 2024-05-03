@@ -3,6 +3,7 @@ import vehicleRepository from './vehicleRepository'
 import refuelRepository from './refuelRepository'
 import refuelFilterRepository from './refuelFilterRepository'
 import fuelUnitRepository from './fuelUnitRepository'
+import periodRepository from './periodRepository'
 import settingsRepository from './settingsRepository'
 
 export {
@@ -11,5 +12,6 @@ export {
   refuelRepository,
   refuelFilterRepository,
   fuelUnitRepository,
+  periodRepository,
   settingsRepository
 }
