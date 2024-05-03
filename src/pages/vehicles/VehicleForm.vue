@@ -97,8 +97,8 @@ async function onSubmit() {
 onMounted(async () => {
   // Get vehicle to edit
   if (props.id) {
-    vehicle.value =
-      (await vehicleStore.getVehicle(parseInt(props.id))) ?? vehicle.value
+    const v = toRaw(await vehicleStore.getVehicle(parseInt(props.id)))
+    if (v) vehicle.value = { ...v }
   }
 
   // Get fuel units
