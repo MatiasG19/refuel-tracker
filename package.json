@@ -23,7 +23,7 @@
     "@vueuse/core": "^10.9.0",
     "axios": "^1.6.8",
     "dexie": "^3.2.7",
-    "dexie-export-import": "^4.1.1",
+    "dexie-export-import": "^4.1.2",
     "mitt": "^3.0.1",
     "pinia": "^2.1.7",
     "quasar": "^2.15.4",
