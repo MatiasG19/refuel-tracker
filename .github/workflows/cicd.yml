@@ -79,6 +79,11 @@ jobs:
         if: ${{ github.event_name != 'release' }}
         run: npm run test
 
+      - name: Run E2E tests
+        uses: cypress-io/github-action@v6
+        with:
+          start: npm run dev
+
       - name: Set version in package.json
         if: ${{ github.event_name == 'release' || github.event_name == 'workflow_dispatch' }}
         run: node ./modifyPackageJson.mjs $TAG
