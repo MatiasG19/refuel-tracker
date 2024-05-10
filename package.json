@@ -9,6 +9,7 @@
     "lint": "eslint --ext .js,.ts,.vue ./",
     "check-format": "yarn prettier --check ./src",
     "test": "vitest run",
+    "cy:open": "cypress open",
     "dev": "quasar dev",
     "build": "quasar build",
     "mode": "quasar mode add capacitor",
