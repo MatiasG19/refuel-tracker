@@ -12,6 +12,6 @@
     "@capacitor/device": "^5.0.8",
     "@capacitor/filesystem": "^5.2.2",
     "@capacitor/keyboard": "^5.0.9",
-    "@capacitor/splash-screen": "^5.0.7"
+    "@capacitor/splash-screen": "^5.0.8"
   }
 }
