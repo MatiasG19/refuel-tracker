@@ -152,7 +152,7 @@ onMounted(async () => {
   updateTitle()
   graphDataStore.readGraphData()
   App.removeAllListeners()
-  App.addListener('backButton', () => {
+  await App.addListener('backButton', () => {
     if (!editOrder.value) App.exitApp()
     editOrderFun(false)
   })

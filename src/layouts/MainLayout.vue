@@ -156,11 +156,11 @@ const leftDrawerOpen = ref(false)
 
 function addKeyboardListeners() {
   if (Platform.is.mobile) {
-    Keyboard.addListener('keyboardDidShow', () => {
+    await Keyboard.addListener('keyboardDidShow', () => {
       footerVisible.value = false
     })
 
-    Keyboard.addListener('keyboardDidHide', () => {
+    await Keyboard.addListener('keyboardDidHide', () => {
       footerVisible.value = true
     })
   }
