@@ -211,22 +211,22 @@ async function importBackup() {
   }
 }
 
-onMounted(() => {
+onMounted(async () => {
   mainLayoutStore.titleText = t('title')
   currentLanguage.value = settingsStore.selectedLanguageId
   if (Platform.is.mobile) {
-    FilePicker.addListener('getContentResult', res => {
+    await FilePicker.addListener('getContentResult', res => {
       getContentResultAction(res)
     })
-    FilePicker.addListener('openDocumentTreeResult', res => {
+    await FilePicker.addListener('openDocumentTreeResult', res => {
       openDocumentTreeResultAction(res)
     })
   }
 })
 
-onUnmounted(() => {
+onUnmounted(async () => {
   if (Platform.is.mobile) {
-    FilePicker.removeAllListeners()
+    await FilePicker.removeAllListeners()
   }
 })
 </script>

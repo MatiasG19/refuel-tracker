@@ -22,11 +22,10 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
     }
-}
-
-repositories {
-    flatDir{
-        dirs '../capacitor-cordova-android-plugins/src/main/libs', 'libs'
+    sourceSets {
+      main {
+          jniLibs.srcDirs = ['../capacitor-cordova-android-plugins/src/main/libs','libs']
+      }
     }
 }
 

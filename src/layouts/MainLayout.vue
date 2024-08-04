@@ -154,14 +154,18 @@ const linkList = ref([
 const footerVisible = ref(true)
 const leftDrawerOpen = ref(false)
 
-function addKeyboardListeners() {
+async function addKeyboardListeners() {
   if (Platform.is.mobile) {
-    Keyboard.addListener('keyboardDidShow', () => {
+    await Keyboard.addListener('keyboardDidShow', () => {
       footerVisible.value = false
     })
 
-    Keyboard.addListener('keyboardDidHide', () => {
+    await Keyboard.addListener('keyboardDidHide', () => {
       footerVisible.value = true
+    })
+
+    await Keyboard.addListener('keyboardDidHide', () => {
+      calculateAreaHeight()
     })
   }
 }
@@ -180,9 +184,9 @@ function calculateAreaHeight() {
       footer.getBoundingClientRect().height
 }
 
-onMounted(() => {
+onMounted(async () => {
   if (Platform.is.mobile) {
-    addKeyboardListeners()
+    await addKeyboardListeners()
   }
 
   addEventListener('resize', () => {
