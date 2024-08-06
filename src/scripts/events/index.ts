@@ -16,7 +16,7 @@ async function refuelUpdatedEvent(): Promise<void> {
     )
 }
 
-async function refuelDeletededEvent(): Promise<void> {}
+async function refuelDeletedEvent(): Promise<void> {}
 
 async function vehicleAddedEvent(): Promise<void> {}
 
@@ -39,7 +39,7 @@ async function vehicleDeletededEvent(): Promise<void> {
 export {
   refuelAddedEvent,
   refuelUpdatedEvent,
-  refuelDeletededEvent,
+  refuelDeletedEvent,
   vehicleAddedEvent,
   vehicleUpdatedEvent,
   vehicleDeletededEvent

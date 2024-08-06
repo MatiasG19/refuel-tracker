@@ -6,7 +6,11 @@ import {
   refuelRepository,
   vehicleRepository
 } from 'src/scripts/databaseRepositories'
-import { refuelAddedEvent, refuelUpdatedEvent } from 'src/scripts/events'
+import {
+  refuelAddedEvent,
+  refuelDeletedEvent,
+  refuelUpdatedEvent
+} from 'src/scripts/events'
 
 export const useRefuelStore = defineStore('refuelStore', () => {
   const settingsStore = useSettingsStore()
@@ -55,7 +59,7 @@ export const useRefuelStore = defineStore('refuelStore', () => {
     vehicle.value.refuels = vehicle.value.refuels?.filter(r => r.id !== id)
     vehicle.value.totalFuelConsumption = ''
     await refuelRepository.deleteRefuel(id)
-    await refuelAddedEvent()
+    await refuelDeletedEvent()
   }
 
   return {
