@@ -55,9 +55,11 @@ export const useVehicleStore = defineStore('vehicleStore', () => {
   }
 
   async function updateVehicle(vehicle: Vehicle) {
-    if (!vehicle.totalFuelConsumption)
-      vehicle.totalFuelConsumption = vehicleFuelConsumption({
-        ...toRaw(vehicle)
+    const v = { ...toRaw(vehicle) }
+    if (!v.totalFuelConsumption) {
+      v.refuels = await refuelRepository.getRefuels(v.id)
+      v.totalFuelConsumption = vehicleFuelConsumption({
+        ...toRaw(v)
       }).toFixed(2)
     const i = vehicles.value.findIndex(v => v.id === vehicle.id)
     if (i > 0) vehicles.value[i] = toRaw(vehicle)
@@ -65,7 +67,7 @@ export const useVehicleStore = defineStore('vehicleStore', () => {
   }
 
   async function deleteVehicle(id: number) {
-    vehicles.value = [...vehicles.value.filter(v => v.id !== id)]
+    vehicles.value = vehicles.value.filter(v => v.id !== id)
     await vehicleRepository.deleteVehicle(id)
     // Update settings
     settingsStore.changeSelectedVehicle(

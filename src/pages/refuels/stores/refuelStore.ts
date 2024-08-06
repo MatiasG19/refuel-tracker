@@ -13,15 +13,17 @@ export const useRefuelStore = defineStore('refuelStore', () => {
   async function readData() {
     if (!settingsStore.selectedVehicleId) return
     const v = await vehicleStore.getVehicle(settingsStore.selectedVehicleId)
+    const refuels = vehicle.value.refuels
     if (v) vehicle.value = { ...toRaw(v) }
     if (
       vehicle.value.id !== settingsStore.selectedVehicleId ||
-      !vehicle.value.refuels ||
-      !vehicle.value.refuels.length
+      !refuels ||
+      !refuels.length
     )
       vehicle.value.refuels = await refuelRepository.getRefuels(
         settingsStore.selectedVehicleId
       )
+    else vehicle.value.refuels = refuels
   }
 
   async function getRefuel(id: number): Promise<Refuel | null> {
@@ -34,22 +36,22 @@ export const useRefuelStore = defineStore('refuelStore', () => {
     refuel.id = await refuelRepository.addRefuel(toRaw(refuel))
     vehicle.value.refuels?.push(refuel)
     vehicle.value.totalFuelConsumption = ''
-    vehicleStore.updateVehicle({ ...toRaw(vehicle.value) })
+    vehicleStore.updateVehicle(vehicle.value)
   }
 
   async function updateRefuel(refuel: Refuel) {
     const i = vehicle.value.refuels!.findIndex(r => r.id === refuel.id)
     vehicle.value.refuels![i] = toRaw(refuel)
     vehicle.value.totalFuelConsumption = ''
-    vehicleStore.updateVehicle({ ...toRaw(vehicle.value) })
     await refuelRepository.updateRefuel(toRaw(refuel))
+    vehicleStore.updateVehicle(vehicle.value)
   }
 
   async function deleteRefuel(id: number) {
     vehicle.value.refuels = vehicle.value.refuels?.filter(r => r.id !== id)
     vehicle.value.totalFuelConsumption = ''
-    vehicleStore.updateVehicle({ ...toRaw(vehicle.value) })
     await refuelRepository.deleteRefuel(id)
+    vehicleStore.updateVehicle(vehicle.value)
   }
 
   return {
