@@ -6,6 +6,8 @@ const graphDataStore = useGraphDataStore()
 const vehicleStore = useVehicleStore()
 const settingsStore = useSettingsStore()
 
+async function refuelAddedEvent(): Promise<void> {}
+
 async function refuelUpdatedEvent(): Promise<void> {
   graphDataStore.graphData.length = 0
   if (settingsStore.selectedVehicleId)
@@ -14,9 +16,26 @@ async function refuelUpdatedEvent(): Promise<void> {
     )
 }
 
+async function refuelDeletededEvent(): Promise<void> {}
+
+async function vehicleAddedEvent(): Promise<void> {}
+
 async function vehicleUpdatedEvent(): Promise<void> {
   graphDataStore.graphData.length = 0
   await Promise.resolve()
 }
 
-export { refuelUpdatedEvent, vehicleUpdatedEvent }
+async function vehicleDeletededEvent(): Promise<void> {
+  await settingsStore.changeSelectedVehicle(
+    vehicleStore.vehicles.length ? vehicleStore.vehicles[0] : null
+  )
+}
+
+export {
+  refuelAddedEvent,
+  refuelUpdatedEvent,
+  refuelDeletededEvent,
+  vehicleAddedEvent,
+  vehicleUpdatedEvent,
+  vehicleDeletededEvent
+}
