@@ -2,17 +2,21 @@ import { defineStore } from 'pinia'
 import { ref, toRaw } from 'vue'
 import { Refuel, Vehicle } from 'src/scripts/libraries/refuel/models'
 import { useSettingsStore } from 'src/pages/settings/stores'
-import { useVehicleStore } from 'src/pages/vehicles/stores'
-import { refuelRepository } from 'src/scripts/databaseRepositories'
+import {
+  refuelRepository,
+  vehicleRepository
+} from 'src/scripts/databaseRepositories'
+import { refuelUpdatedEvent } from 'src/scripts/events'
 
 export const useRefuelStore = defineStore('refuelStore', () => {
   const settingsStore = useSettingsStore()
-  const vehicleStore = useVehicleStore()
   const vehicle = ref<Vehicle>(new Vehicle())
 
   async function readData() {
     if (!settingsStore.selectedVehicleId) return
-    const v = await vehicleStore.getVehicle(settingsStore.selectedVehicleId)
+    const v = await vehicleRepository.getVehicle(
+      settingsStore.selectedVehicleId
+    )
     const refuels = vehicle.value.refuels
     if (v) vehicle.value = { ...toRaw(v) }
     if (
@@ -36,7 +40,7 @@ export const useRefuelStore = defineStore('refuelStore', () => {
     refuel.id = await refuelRepository.addRefuel(toRaw(refuel))
     vehicle.value.refuels?.push(refuel)
     vehicle.value.totalFuelConsumption = ''
-    vehicleStore.updateVehicle(vehicle.value)
+    await refuelUpdatedEvent()
   }
 
   async function updateRefuel(refuel: Refuel) {
@@ -44,14 +48,14 @@ export const useRefuelStore = defineStore('refuelStore', () => {
     vehicle.value.refuels![i] = toRaw(refuel)
     vehicle.value.totalFuelConsumption = ''
     await refuelRepository.updateRefuel(toRaw(refuel))
-    vehicleStore.updateVehicle(vehicle.value)
+    await refuelUpdatedEvent()
   }
 
   async function deleteRefuel(id: number) {
     vehicle.value.refuels = vehicle.value.refuels?.filter(r => r.id !== id)
     vehicle.value.totalFuelConsumption = ''
     await refuelRepository.deleteRefuel(id)
-    vehicleStore.updateVehicle(vehicle.value)
+    await refuelUpdatedEvent()
   }
 
   return {
