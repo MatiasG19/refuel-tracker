@@ -30,7 +30,7 @@ export const useVehicleStore = defineStore('vehicleStore', () => {
   async function getVehicle(id: number): Promise<Vehicle | null> {
     const vehicle = vehicles.value.find(v => v.id === id)
     if (vehicle) return vehicle
-    return vehicleRepository.getVehicle(id)
+    return await vehicleRepository.getVehicle(id)
   }
 
   async function addVehicle(vehicle: Vehicle) {
@@ -61,9 +61,10 @@ export const useVehicleStore = defineStore('vehicleStore', () => {
       v.totalFuelConsumption = vehicleFuelConsumption({
         ...toRaw(v)
       }).toFixed(2)
-    const i = vehicles.value.findIndex(v => v.id === vehicle.id)
-    if (i > 0) vehicles.value[i] = toRaw(vehicle)
-    await vehicleRepository.updateVehicle(toRaw(vehicle))
+      const i = vehicles.value.findIndex(v => v.id === vehicle.id)
+      if (i > 0) vehicles.value[i] = toRaw(vehicle)
+      await vehicleRepository.updateVehicle(toRaw(vehicle))
+    }
   }
 
   async function deleteVehicle(id: number) {
