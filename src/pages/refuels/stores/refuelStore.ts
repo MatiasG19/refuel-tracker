@@ -43,21 +43,18 @@ export const useRefuelStore = defineStore('refuelStore', () => {
   async function addRefuel(refuel: Refuel) {
     refuel.id = await refuelRepository.addRefuel(toRaw(refuel))
     vehicle.value.refuels?.push(refuel)
-    vehicle.value.totalFuelConsumption = ''
     await refuelAddedEvent()
   }
 
   async function updateRefuel(refuel: Refuel) {
     const i = vehicle.value.refuels!.findIndex(r => r.id === refuel.id)
     vehicle.value.refuels![i] = toRaw(refuel)
-    vehicle.value.totalFuelConsumption = ''
     await refuelRepository.updateRefuel(toRaw(refuel))
     await refuelUpdatedEvent()
   }
 
   async function deleteRefuel(id: number) {
     vehicle.value.refuels = vehicle.value.refuels?.filter(r => r.id !== id)
-    vehicle.value.totalFuelConsumption = ''
     await refuelRepository.deleteRefuel(id)
     await refuelDeletedEvent()
   }
