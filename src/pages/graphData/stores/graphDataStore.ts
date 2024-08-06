@@ -5,7 +5,6 @@ import { GraphData } from 'src/pages/graphData/scripts/models'
 import { useSettingsStore } from 'src/pages/settings/stores/settingsStore'
 import { useVehicleStore } from 'src/pages/vehicles/stores'
 import { DropResult } from 'vue3-smooth-dnd'
-
 import { Period } from 'src/pages/graphData/scripts/models'
 import {
   graphSettingsRepository,
