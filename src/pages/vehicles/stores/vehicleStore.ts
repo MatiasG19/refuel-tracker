@@ -8,7 +8,11 @@ import {
   refuelRepository
 } from 'src/scripts/databaseRepositories'
 import { vehicleFuelConsumption } from 'src/scripts/libraries/refuel/functions/vehicle'
-import { vehicleAddedEvent, vehicleUpdatedEvent } from 'src/scripts/events'
+import {
+  vehicleAddedEvent,
+  vehicleDeletedEvent,
+  vehicleUpdatedEvent
+} from 'src/scripts/events'
 
 export const useVehicleStore = defineStore('vehicleStore', () => {
   const settingsStore = useSettingsStore()
@@ -73,7 +77,7 @@ export const useVehicleStore = defineStore('vehicleStore', () => {
   async function deleteVehicle(id: number) {
     vehicles.value = vehicles.value.filter(v => v.id !== id)
     await vehicleRepository.deleteVehicle(id)
-    await vehicleUpdatedEvent()
+    await vehicleDeletedEvent()
   }
 
   async function getFuelUnits(): Promise<FuelUnit[]> {

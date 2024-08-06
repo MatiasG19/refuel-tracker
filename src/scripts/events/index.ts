@@ -27,7 +27,7 @@ async function vehicleUpdatedEvent(): Promise<void> {
   await Promise.resolve()
 }
 
-async function vehicleDeletededEvent(): Promise<void> {
+async function vehicleDeletedEvent(): Promise<void> {
   const vehicleStore = useVehicleStore()
   const settingsStore = useSettingsStore()
 
@@ -42,5 +42,5 @@ export {
   refuelDeletedEvent,
   vehicleAddedEvent,
   vehicleUpdatedEvent,
-  vehicleDeletededEvent
+  vehicleDeletedEvent
 }
