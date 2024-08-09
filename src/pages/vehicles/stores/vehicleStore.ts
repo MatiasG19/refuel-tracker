@@ -20,11 +20,18 @@ export const useVehicleStore = defineStore('vehicleStore', () => {
   const totalFuelConsumptionsToUpdate = new Set<number>()
 
   async function readVehicles() {
+    let updateAll = false
+    if (vehicles.value.length) updateAll = true
     vehicles.value = await getVehicles()
 
-    for (const id of totalFuelConsumptionsToUpdate) {
-      updateTotalFuelConsumption(id)
-    }
+    if (updateAll)
+      vehicles.value.forEach(v => {
+        updateTotalFuelConsumption(v.id)
+      })
+    else
+      for (const id of totalFuelConsumptionsToUpdate) {
+        updateTotalFuelConsumption(id)
+      }
   }
 
   async function getVehicles(): Promise<Vehicle[]> {

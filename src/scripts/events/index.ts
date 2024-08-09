@@ -4,7 +4,17 @@ import { useSettingsStore } from 'src/pages/settings/stores'
 import { useVehicleStore } from 'src/pages/vehicles/stores'
 import { Vehicle } from '../libraries/refuel/models'
 
-async function refuelAddedEvent(): Promise<void> {}
+async function refuelAddedEvent(): Promise<void> {
+  const settingsStore = useSettingsStore()
+  const graphDataStore = useGraphDataStore()
+  const vehicleStore = useVehicleStore()
+
+  graphDataStore.graphData.length = 0
+  if (settingsStore.selectedVehicleId)
+    await vehicleStore.updateTotalFuelConsumption(
+      settingsStore.selectedVehicleId
+    )
+}
 
 async function refuelUpdatedEvent(): Promise<void> {
   const graphDataStore = useGraphDataStore()
@@ -18,7 +28,17 @@ async function refuelUpdatedEvent(): Promise<void> {
     )
 }
 
-async function refuelDeletedEvent(): Promise<void> {}
+async function refuelDeletedEvent(): Promise<void> {
+  const settingsStore = useSettingsStore()
+  const graphDataStore = useGraphDataStore()
+  const vehicleStore = useVehicleStore()
+
+  graphDataStore.graphData.length = 0
+  if (settingsStore.selectedVehicleId)
+    await vehicleStore.updateTotalFuelConsumption(
+      settingsStore.selectedVehicleId
+    )
+}
 
 async function vehicleAddedEvent(vehicle: Vehicle): Promise<void> {
   const settingsStore = useSettingsStore()
