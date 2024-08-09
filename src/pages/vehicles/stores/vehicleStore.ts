@@ -42,7 +42,7 @@ export const useVehicleStore = defineStore('vehicleStore', () => {
     vehicles.value.push(vehicle)
     await vehicleRepository.addVehicle(vehicle)
     settingsStore.changeSelectedVehicle(vehicle)
-    await vehicleAddedEvent()
+    await vehicleAddedEvent(vehicle)
   }
 
   async function updateTotalFuelConsumption(id: number) {

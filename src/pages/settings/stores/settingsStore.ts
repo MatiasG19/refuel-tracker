@@ -5,6 +5,7 @@ import {
   settingsRepository,
   vehicleRepository
 } from 'src/scripts/databaseRepositories'
+import { vehicleChangedEvent } from 'src/scripts/events'
 
 export const useSettingsStore = defineStore('settingsStore', () => {
   const selectedDistanceUnitId = ref<number>(0)
@@ -18,8 +19,10 @@ export const useSettingsStore = defineStore('settingsStore', () => {
   const selectedLanguageId = ref<number>(1)
   const areaHeight = ref(0)
   const settingsId = 1
+  const initialized = ref(false)
 
   async function initSettings() {
+    if (initialized.value) return
     const settings = await settingsRepository.getSettings(settingsId)
     if (!settings) return Promise.resolve()
 
@@ -31,6 +34,7 @@ export const useSettingsStore = defineStore('settingsStore', () => {
       changeSelectedVehicle(vehicle ?? null)
     }
     togglePlateNumberInTitle(settings.plateNumberInTitleActive)
+    initialized.value = true
   }
 
   async function changeDistanceUnit(distanceUnitId: number) {
@@ -50,7 +54,6 @@ export const useSettingsStore = defineStore('settingsStore', () => {
       if (!settings) return Promise.resolve()
       settings.vehicleId = vehicle.id
       await settingsRepository.updateSettings(settings)
-      return Promise.resolve()
     } else {
       selectedVehicleId.value = null
       selectedVehicleName.value = ''
@@ -60,6 +63,7 @@ export const useSettingsStore = defineStore('settingsStore', () => {
       settings.vehicleId = null
       await settingsRepository.updateSettings(settings)
     }
+    await vehicleChangedEvent(vehicle)
   }
 
   async function togglePlateNumberInTitle(state: boolean) {
@@ -113,6 +117,7 @@ export const useSettingsStore = defineStore('settingsStore', () => {
     selectedColorThemeId,
     selectedLanguageId,
     areaHeight,
+    initialized,
     initSettings,
     changeDistanceUnit,
     changeSelectedVehicle,

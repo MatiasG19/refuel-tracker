@@ -23,10 +23,8 @@ export const useGraphDataStore = defineStore('graphDataStore', () => {
   }
 
   async function readGraphData() {
-    if (!settingsStore.selectedVehicleId) {
-      graphData.value.length = 0
-      return
-    }
+    if (!settingsStore.selectedVehicleId || graphData.value.length > 0)
+      return Promise.resolve()
 
     const vehicle = await vehicleStore.getVehicle(
       settingsStore.selectedVehicleId
@@ -40,10 +38,9 @@ export const useGraphDataStore = defineStore('graphDataStore', () => {
         graphData.value = graphData.value.sort(
           (a, b) => a.sequence - b.sequence
         )
-        return
+        return Promise.resolve()
       }
     }
-    graphData.value.length = 0
   }
 
   async function getPeriods(): Promise<Period[]> {
