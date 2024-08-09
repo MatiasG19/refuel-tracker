@@ -30,8 +30,9 @@ export const useSettingsStore = defineStore('settingsStore', () => {
     changeLanguage(settings.languageId ?? 1)
     changeDistanceUnit(settings.distanceUnitId)
     if (settings.vehicleId) {
-      const vehicle = await vehicleRepository.getVehicle(settings.vehicleId)
-      changeSelectedVehicle(vehicle ?? null)
+      await changeSelectedVehicle(
+        await vehicleRepository.getVehicle(settings.vehicleId)
+      )
     }
     togglePlateNumberInTitle(settings.plateNumberInTitleActive)
     initialized.value = true
