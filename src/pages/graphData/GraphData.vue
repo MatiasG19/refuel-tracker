@@ -150,7 +150,7 @@ onMounted(async () => {
   await initSettings()
   periods.value = await graphDataStore.getPeriods()
   updateTitle()
-  graphDataStore.readGraphData()
+  await graphDataStore.readGraphData()
   App.removeAllListeners()
   await App.addListener('backButton', () => {
     if (!editOrder.value) App.exitApp()

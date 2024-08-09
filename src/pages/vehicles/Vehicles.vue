@@ -86,10 +86,7 @@ emitter.on('showVehicleOptionsDialog', id =>
               messageColor: 'accent',
               message: t('vehicles.optionsDialog.deletingVehicle')
             })
-            ;(async () =>
-              await vehicleStore
-                .deleteVehicle(id)
-                .then(async () => await vehicleStore.readVehicles()))()
+            ;(async () => await vehicleStore.deleteVehicle(id))()
             $q.loading.hide()
           },
           id

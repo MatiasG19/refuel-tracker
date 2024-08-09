@@ -8,13 +8,25 @@ import {
   refuelRepository
 } from 'src/scripts/databaseRepositories'
 import { vehicleFuelConsumption } from 'src/scripts/libraries/refuel/functions/vehicle'
+import {
+  vehicleAddedEvent,
+  vehicleDeletedEvent,
+  vehicleUpdatedEvent
+} from 'src/scripts/events'
 
 export const useVehicleStore = defineStore('vehicleStore', () => {
   const settingsStore = useSettingsStore()
   const vehicles = ref<Vehicle[]>([])
 
   async function readVehicles() {
+    let updateAll = false
+    if (!vehicles.value.length) updateAll = true
     vehicles.value = await getVehicles()
+
+    if (updateAll)
+      vehicles.value.forEach(v => {
+        updateTotalFuelConsumption(v.id)
+      })
   }
 
   async function getVehicles(): Promise<Vehicle[]> {
@@ -25,13 +37,29 @@ export const useVehicleStore = defineStore('vehicleStore', () => {
   async function getVehicle(id: number): Promise<Vehicle | null> {
     const vehicle = vehicles.value.find(v => v.id === id)
     if (vehicle) return vehicle
-    return vehicleRepository.getVehicle(id)
+    return await vehicleRepository.getVehicle(id)
   }
 
   async function addVehicle(vehicle: Vehicle) {
     vehicles.value.push(vehicle)
     await vehicleRepository.addVehicle(vehicle)
     settingsStore.changeSelectedVehicle(vehicle)
+    await vehicleAddedEvent(vehicle)
+  }
+
+  async function updateTotalFuelConsumption(id: number) {
+    const vehicle = await getVehicle(id)
+    if (!vehicle) return
+    vehicle.refuels = await refuelRepository.getRefuels(id)
+    vehicle.totalFuelConsumption = vehicleFuelConsumption({
+      ...toRaw(vehicle)
+    }).toFixed(2)
+    const i = vehicles.value.findIndex(v => v.id === vehicle.id)
+    if (i > 0) vehicles.value[i] = toRaw(vehicle)
+    await vehicleRepository.updateTotalFuelConsumption(
+      id,
+      vehicle.totalFuelConsumption
+    )
   }
 
   async function updateVehicle(vehicle: Vehicle) {
@@ -41,20 +69,17 @@ export const useVehicleStore = defineStore('vehicleStore', () => {
       v.totalFuelConsumption = vehicleFuelConsumption({
         ...toRaw(v)
       }).toFixed(2)
-      v.refuels.length = 0
+      const i = vehicles.value.findIndex(v => v.id === vehicle.id)
+      if (i > 0) vehicles.value[i] = toRaw(vehicle)
+      await vehicleRepository.updateVehicle(toRaw(vehicle))
     }
-    const i = vehicles.value.findIndex(v => v.id === v.id)
-    vehicles.value[i] = v
-    await vehicleRepository.updateVehicle(v)
+    await vehicleUpdatedEvent()
   }
 
   async function deleteVehicle(id: number) {
     vehicles.value = vehicles.value.filter(v => v.id !== id)
     await vehicleRepository.deleteVehicle(id)
-    // Update settings
-    settingsStore.changeSelectedVehicle(
-      vehicles.value.length ? vehicles.value[0] : null
-    )
+    await vehicleDeletedEvent()
   }
 
   async function getFuelUnits(): Promise<FuelUnit[]> {
@@ -70,6 +95,7 @@ export const useVehicleStore = defineStore('vehicleStore', () => {
     readVehicles,
     getVehicle,
     addVehicle,
+    updateTotalFuelConsumption,
     updateVehicle,
     deleteVehicle,
     getFuelUnits,

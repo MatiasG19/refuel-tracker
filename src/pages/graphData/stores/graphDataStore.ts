@@ -5,10 +5,10 @@ import { GraphData } from 'src/pages/graphData/scripts/models'
 import { useSettingsStore } from 'src/pages/settings/stores/settingsStore'
 import { useVehicleStore } from 'src/pages/vehicles/stores'
 import { DropResult } from 'vue3-smooth-dnd'
-import { getPeriods as returnPeriods } from 'src/scripts/staticData/periods'
 import { Period } from 'src/pages/graphData/scripts/models'
 import {
   graphSettingsRepository,
+  periodRepository,
   refuelRepository
 } from 'src/scripts/databaseRepositories'
 
@@ -23,10 +23,8 @@ export const useGraphDataStore = defineStore('graphDataStore', () => {
   }
 
   async function readGraphData() {
-    if (!settingsStore.selectedVehicleId) {
-      graphData.value.length = 0
-      return
-    }
+    if (!settingsStore.selectedVehicleId || graphData.value.length > 0)
+      return Promise.resolve()
 
     const vehicle = await vehicleStore.getVehicle(
       settingsStore.selectedVehicleId
@@ -40,14 +38,13 @@ export const useGraphDataStore = defineStore('graphDataStore', () => {
         graphData.value = graphData.value.sort(
           (a, b) => a.sequence - b.sequence
         )
-        return
+        return Promise.resolve()
       }
     }
-    graphData.value.length = 0
   }
 
   async function getPeriods(): Promise<Period[]> {
-    return await Promise.resolve(returnPeriods())
+    return await Promise.resolve(periodRepository.getPeriods())
   }
 
   function moveCard(dropResult: DropResult) {

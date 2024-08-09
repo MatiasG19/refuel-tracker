@@ -27,6 +27,13 @@ async function updateVehicle(vehicle: Vehicle) {
   await db.vehicles.update(vehicle.id, vehicle)
 }
 
+async function updateTotalFuelConsumption(
+  id: number,
+  totalFuelConsumption: string
+) {
+  await db.vehicles.update(id, { totalFuelConsumption })
+}
+
 async function deleteVehicle(id: number) {
   await db.transaction(
     'rw',
@@ -48,5 +55,6 @@ export default {
   getVehicles,
   addVehicle,
   updateVehicle,
+  updateTotalFuelConsumption,
   deleteVehicle
 }
