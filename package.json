@@ -40,7 +40,7 @@
     "@capacitor/keyboard": "^6.0.2",
     "@capacitor/splash-screen": "^6.0.2",
     "@intlify/vite-plugin-vue-i18n": "^7.0.0",
-    "@quasar/app-vite": "^1.9.3",
+    "@quasar/app-vite": "^1.9.4",
     "@types/node": "^20.14.15",
     "@typescript-eslint/eslint-plugin": "^7.18.0",
     "@typescript-eslint/parser": "^7.18.0",
