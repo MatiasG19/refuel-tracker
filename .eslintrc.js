@@ -85,6 +85,7 @@ module.exports = {
     '@typescript-eslint/no-floating-promises': 'off',
     '@typescript-eslint/ban-ts-comment': 'off',
     '@typescript-eslint/unbound-method': 'off',
+    '@typescript-eslint/no-unused-vars': 'warn',
 
     // allow debugger during development only
     'no-debugger': process.env.NODE_ENV === 'production' ? 'error' : 'off',
