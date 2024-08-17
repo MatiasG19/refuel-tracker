@@ -19,7 +19,26 @@
         />
       </div>
       <div class="col q-px-xs">
-        <c-date v-model="dateFrom" :label="t('chart.from')" />
+        <c-date
+          :modelValue="dateFromString"
+          @update:modelValue="
+            evt => {
+              dateFrom = updateDateFrom(evt)
+            }
+          "
+          :label="t('chart.from')"
+        />
+      </div>
+      <div class="col q-px-xs">
+        <c-date
+          :modelValue="dateUntilString"
+          @update:modelValue="
+            evt => {
+              dateUntil = updateDateUntil(evt)
+            }
+          "
+          :label="t('chart.until')"
+        />
       </div>
     </div>
 
@@ -30,7 +49,7 @@
 </template>
 
 <script setup lang="ts">
-import { onMounted, ref } from 'vue'
+import { computed, onMounted, ref } from 'vue'
 import { useSettingsStore } from 'src/pages/settings/stores/settingsStore'
 import { useChartStore } from './stores'
 import { useMainLayoutStore } from 'src/layouts/stores'
@@ -47,15 +66,21 @@ import {
 import CSelect from 'src/components/inputs/CSelect.vue'
 import CDate from 'src/components/inputs/CDate.vue'
 import { date } from 'quasar'
-import { updateDateFrom } from 'src/scripts/libraries/utils/date'
+import {
+  updateDateFrom,
+  updateDateUntil
+} from 'src/scripts/libraries/utils/date'
 
 ChartJS.register(Title, BarElement, CategoryScale, LinearScale)
 
-function test(evt: string) {
-  console.log(evt)
-}
-
-const dateFrom = ref('2020/12/19')
+const dateFrom = ref(new Date())
+const dateFromString = computed(() =>
+  date.formatDate(dateFrom.value, 'YYYY/MM/DD')
+)
+const dateUntil = ref(new Date())
+const dateUntilString = computed(() =>
+  date.formatDate(dateUntil.value, 'YYYY/MM/DD')
+)
 
 const settingsStore = useSettingsStore()
 const chartStore = useChartStore()
