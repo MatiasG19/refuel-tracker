@@ -1,39 +1,18 @@
 <template>
   <div>
     <q-form @submit="onSubmit" class="q-px-md q-gutter-md">
-      <c-input
-        color="accent"
-        :value="filterDateFrom"
+      <c-date
+        :modelValue="filterDateFrom"
+        @update:modelValue="updateDateFromInStore($event)"
         :label="t('filterRefuelsForm.filterFrom')"
         :rules="[requiredFieldRule]"
-      >
-        <q-popup-proxy transition-show="scale" transition-hide="scale">
-          <q-date
-            :modelValue="filterDateFrom"
-            @update:modelValue="evt => updateDateFrom(evt)"
-          />
-          <div class="row items-center">
-            <q-btn v-close-popup label="Close" color="primary" flat />
-          </div>
-        </q-popup-proxy>
-      </c-input>
-
-      <c-input
-        color="accent"
-        :value="filterDateUntil"
+      />
+      <c-date
+        :modelValue="filterDateUntil"
+        @update:modelValue="updateDateUntilInStore($event)"
         :label="t('filterRefuelsForm.filterUntil')"
         :rules="[requiredFieldRule]"
-      >
-        <q-popup-proxy transition-show="scale" transition-hide="scale">
-          <q-date
-            :modelValue="filterDateUntil"
-            @update:modelValue="evt => updateDateUntil(evt)"
-          />
-          <div class="row items-center">
-            <q-btn v-close-popup label="Close" color="primary" flat />
-          </div>
-        </q-popup-proxy>
-      </c-input>
+      />
 
       <div class="row">
         <q-btn
@@ -63,10 +42,14 @@ import { useRouter } from 'vue-router'
 import { requiredFieldRule } from 'src/scripts/libraries/validation'
 import { useRefuelFilterStore } from './stores'
 import { useMainLayoutStore } from 'src/layouts/stores'
-import CInput from 'src/components/inputs/CInput.vue'
+import CDate from 'src/components/inputs/CDate.vue'
 import { useI18n } from 'vue-i18n'
 import { i18n } from 'src/boot/i18n'
 import messages from './i18n'
+import {
+  updateDateFrom,
+  updateDateUntil
+} from 'src/scripts/libraries/utils/date'
 
 const router = useRouter()
 const refuelFilterStore = useRefuelFilterStore()
@@ -80,24 +63,14 @@ const filterDateUntil = computed(() => {
   return date.formatDate(refuelFilterStore.filter?.dateUntil, 'YYYY/MM/DD')
 })
 
-function updateDateFrom(event: string) {
-  if (!refuelFilterStore.filter) return
-  let d = new Date(event)
-  d.setHours(0)
-  d.setMinutes(0)
-  d.setSeconds(0)
-  d.setMilliseconds(0)
-  refuelFilterStore.filter.dateFrom = d
+function updateDateFromInStore(event: string) {
+  if (refuelFilterStore.filter)
+    refuelFilterStore.filter.dateFrom = updateDateFrom(event)
 }
 
-function updateDateUntil(event: string) {
-  if (!refuelFilterStore.filter) return
-  let d = new Date(event)
-  d.setHours(23)
-  d.setMinutes(59)
-  d.setSeconds(59)
-  d.setMilliseconds(999)
-  refuelFilterStore.filter.dateUntil = d
+function updateDateUntilInStore(event: string) {
+  if (refuelFilterStore.filter)
+    refuelFilterStore.filter.dateUntil = updateDateUntil(event)
 }
 
 function onSubmit() {
