@@ -6,7 +6,7 @@ import {
 import { Refuel, Vehicle } from 'src/scripts/libraries/refuel/models'
 import { ref } from 'vue'
 
-export const useChartsStore = defineStore('chartsStore', () => {
+export const useChartStore = defineStore('chartStore', () => {
   const vehicle = ref<Vehicle | null>(null)
   const refuels = ref<Refuel[]>([])
 
