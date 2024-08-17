@@ -19,15 +19,7 @@
         />
       </div>
       <div class="col q-px-xs">
-        <c-date
-          :value="dateFrom"
-          @value="
-            evt => {
-              dateFrom = evt
-            }
-          "
-          :label="t('chart.from')"
-        />
+        <c-date v-model="dateFrom" :label="t('chart.from')" />
       </div>
     </div>
 
