@@ -18,6 +18,17 @@
           class="q-pb-md"
         />
       </div>
+      <div class="col q-px-xs">
+        <c-date
+          :value="dateFrom"
+          @value="
+            evt => {
+              dateFrom = evt
+            }
+          "
+          :label="t('chart.from')"
+        />
+      </div>
     </div>
 
     <div v-if="updated">
@@ -37,16 +48,22 @@ import { Bar } from 'vue-chartjs'
 import {
   Chart as ChartJS,
   Title,
-  Tooltip,
-  Legend,
   BarElement,
   CategoryScale,
-  LinearScale,
-  ChartData
+  LinearScale
 } from 'chart.js'
 import CSelect from 'src/components/inputs/CSelect.vue'
+import CDate from 'src/components/inputs/CDate.vue'
+import { date } from 'quasar'
+import { updateDateFrom } from 'src/scripts/libraries/utils/date'
 
 ChartJS.register(Title, BarElement, CategoryScale, LinearScale)
+
+function test(evt: string) {
+  console.log(evt)
+}
+
+const dateFrom = ref('2020/12/19')
 
 const settingsStore = useSettingsStore()
 const chartStore = useChartStore()

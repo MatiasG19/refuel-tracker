@@ -17,6 +17,6 @@ export default {
       moneySpent: 'Money spent'
     },
     from: 'From',
-    to: 'To'
+    until: 'Until'
   }
 }

@@ -17,6 +17,6 @@ export default {
       moneySpent: 'Ausgegebenes Geld'
     },
     from: 'Von',
-    to: 'Bis'
+    until: 'Bis'
   }
 }
