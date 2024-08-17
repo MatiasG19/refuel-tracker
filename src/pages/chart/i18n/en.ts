@@ -11,7 +11,7 @@ export default {
     dataSourceOptions: {
       fuelConsumption: 'Fuel consumption',
       distanceDriven: 'Distance driven',
-      fuelBurnt: 'fuelBurnt',
+      fuelBurnt: 'Fuel burnt',
       refuelsMade: 'Refuels made',
       fuelPricing: 'Fuel pricing',
       moneySpent: 'Money spent'
