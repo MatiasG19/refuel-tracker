@@ -65,7 +65,7 @@ import {
 } from 'chart.js'
 import CSelect from 'src/components/inputs/CSelect.vue'
 import CDate from 'src/components/inputs/CDate.vue'
-import { date } from 'quasar'
+import { date, Platform } from 'quasar'
 import {
   updateDateFrom,
   updateDateUntil
@@ -173,6 +173,7 @@ onMounted(async () => {
   // up()
   updated.value = true
   mainLayoutStore.titleText = t('chart.title')
-  await ScreenOrientation.lock({ orientation: 'landscape' })
+  if (Platform.is.mobile)
+    await ScreenOrientation.lock({ orientation: 'landscape' })
 })
 </script>
