@@ -1,14 +1,14 @@
 <template>
   <q-page>
-    <q-btn @click="test"> </q-btn>
-    <div class="absolute-center items-center">
+    <q-btn @click="up">Up</q-btn>
+    <div v-if="updated">
       <Bar id="my-chart-id" :options="chartOptions" :data="chartData" />
     </div>
   </q-page>
 </template>
 
 <script setup lang="ts">
-import { onMounted } from 'vue'
+import { onMounted, ref } from 'vue'
 import { useSettingsStore } from 'src/pages/settings/stores/settingsStore'
 import { useChartsStore } from './stores'
 // import { useMainLayoutStore } from 'src/layouts/stores'
@@ -23,7 +23,8 @@ import {
   Legend,
   BarElement,
   CategoryScale,
-  LinearScale
+  LinearScale,
+  ChartData
 } from 'chart.js'
 
 ChartJS.register(Title, Tooltip, Legend, BarElement, CategoryScale, LinearScale)
@@ -33,31 +34,36 @@ const chartsStore = useChartsStore()
 // const mainLayoutStore = useMainLayoutStore()
 // const { t } = useI18n({ useScope: 'local', messages })
 
-async function test() {
-  console.log(chartsStore.refuels)
-
-  await chartsStore.readData(
-    settingsStore.selectedVehicleId.value ?? 0,
-    new Date(),
-    new Date()
-  )
-}
-
-const chartData = {
-  labels: [],
-  datasets: [{ data: [40, 20, 12] }]
-}
-
+const updated = ref(false)
+const chartData = ref({
+  labels: [12, 1, 3],
+  datasets: [
+    {
+      label: 'My First dataset',
+      backgroundColor: '#f87979',
+      data: [2, 1, 3]
+    }
+  ]
+})
 const chartOptions = {
   responsive: true
 }
 
+function up() {
+  updated.value = false
+  chartData.value.labels = [2, 2, 2]
+  chartData.value.datasets[0].data = chartData.value.datasets[0].data.map(() =>
+    Math.floor(Math.random() * 100)
+  )
+
+  setTimeout(() => {
+    updated.value = true
+  }, 1)
+}
+
 onMounted(async () => {
-  // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
-  // chartData.labels = chartsStore.refuels.value.map(r => r.date.toString())
-  // chartData.datasets = [
-  //   { data: chartsStore.refuels.value.map(r => r.payedAmount.toString()) }
-  // ]
+  up()
+  updated.value = true
   // mainLayoutStore.titleText = t('chartsPage.title')
 })
 </script>

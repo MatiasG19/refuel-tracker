@@ -20,6 +20,8 @@ export const useChartsStore = defineStore('chartsStore', () => {
     )
   }
   return {
+    vehicle,
+    refuels,
     readData
   }
 })
