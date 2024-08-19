@@ -21,7 +21,7 @@
   "dependencies": {
     "@quasar/extras": "^1.16.12",
     "@vueuse/core": "^10.11.1",
-    "axios": "^1.7.3",
+    "axios": "^1.7.4",
     "dexie": "^3.2.7",
     "dexie-export-import": "^4.1.2",
     "mitt": "^3.0.1",
