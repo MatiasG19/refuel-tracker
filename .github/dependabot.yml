@@ -8,6 +8,10 @@ updates:
       - dependency-name: '*'
         update-types: ['version-update:semver-major']
     open-pull-requests-limit: 10
+    groups:
+      patch-dependencies:
+        update-types: 
+          - "patch"
     labels:
       - 'dependencies'
 
@@ -20,7 +24,9 @@ updates:
         update-types: ['version-update:semver-major']
     open-pull-requests-limit: 10
     groups:
-      update-types: patch
+      patch-dependencies:
+        update-types: 
+          - "patch"
     labels:
       - 'dependencies'
 
@@ -29,6 +35,8 @@ updates:
     schedule:
       interval: "weekly"
     groups:
-      update-types: patch
+      patch-dependencies:
+        update-types: 
+          - "patch"
     labels:
       - 'dependencies'
