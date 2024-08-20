@@ -1,6 +1,5 @@
 <template>
   <q-page class="q-pa-md">
-    <q-btn @click="up">Up</q-btn>
     <div class="row">
       <div class="col q-px-xs">
         <c-select
@@ -21,22 +20,14 @@
       <div class="col q-px-xs">
         <c-date
           :modelValue="dateFromString"
-          @update:modelValue="
-            evt => {
-              dateFrom = updateDateFrom(evt)
-            }
-          "
+          @update:modelValue="_updateDateFrom($event)"
           :label="t('chart.from')"
         />
       </div>
       <div class="col q-px-xs">
         <c-date
           :modelValue="dateUntilString"
-          @update:modelValue="
-            evt => {
-              dateUntil = updateDateUntil(evt)
-            }
-          "
+          @update:modelValue="_updateDateUntil($event)"
           :label="t('chart.until')"
         />
       </div>
@@ -133,22 +124,12 @@ const dataSourceOptions = [
 
 const updated = ref(true)
 const chartData = ref({
-  labels: [12, 1, 3],
+  labels: chartStore.refuels.map(r => r.date.toString()),
   datasets: [
     {
       label: 'My First dataset',
       backgroundColor: '#f87979',
-      data: [2, 1, 3]
-    },
-    {
-      label: 'My Second dataset',
-      backgroundColor: '#ffff88',
-      data: [1, 2, 5]
-    },
-    {
-      label: 'My Second dataset',
-      backgroundColor: '#11ff88',
-      data: [10, 12, 15]
+      data: chartStore.refuels.map(r => r.refueledAmount)
     }
   ]
 })
@@ -157,23 +138,42 @@ const chartOptions = {
   responsive: true
 }
 
-function up() {
-  updated.value = false
-  chartData.value.labels = [2, 2, 2]
-  chartData.value.datasets[0].data = chartData.value.datasets[0].data.map(() =>
-    Math.floor(Math.random() * 100)
-  )
+async function _updateDateFrom(date: string) {
+  dateFrom.value = updateDateFrom(date)
+  await updateChart()
+}
 
+async function _updateDateUntil(date: string) {
+  dateUntil.value = updateDateUntil(date)
+  await updateChart()
+}
+
+async function updateChart() {
+  if (settingsStore.selectedVehicleId)
+    await chartStore.readData(
+      settingsStore.selectedVehicleId,
+      dateFrom.value,
+      dateUntil.value
+    )
+
+  chartData.value.labels = chartStore.refuels.map(r =>
+    date.formatDate(r.date, 'YYYY/MM/DD')
+  )
+  chartData.value.datasets[0].data = chartStore.refuels.map(
+    r => r.refueledAmount
+  )
+  updated.value = false
   setTimeout(() => {
     updated.value = true
-  }, 1)
+  }, 100)
 }
 
 onMounted(async () => {
-  // up()
-  updated.value = true
-  mainLayoutStore.titleText = t('chart.title')
   if (Platform.is.mobile)
     await ScreenOrientation.lock({ orientation: 'landscape' })
+  updated.value = true
+  mainLayoutStore.titleText = t('chart.title')
+
+  updateChart()
 })
 </script>
