@@ -62,7 +62,7 @@ import {
   updateDateUntil
 } from 'src/scripts/libraries/utils/date'
 import { ScreenOrientation } from '@capacitor/screen-orientation'
-import { getGrouByOptions, getDataSourceOptions } from './staticData'
+import { getGrouByOptions, getDataSourceOptions } from './scripts/staticData'
 
 ChartJS.register(Title, BarElement, CategoryScale, LinearScale)
 
