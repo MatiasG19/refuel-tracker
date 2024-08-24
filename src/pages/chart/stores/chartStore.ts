@@ -9,19 +9,27 @@ import { ref } from 'vue'
 export const useChartStore = defineStore('chartStore', () => {
   const vehicle = ref<Vehicle | null>(null)
   const refuels = ref<Refuel[]>([])
+  const fromDate = ref<Date>(new Date())
+  const untilDate = ref<Date>(new Date())
+  const groupBy = ref(0)
+  const dataSource = ref(0)
 
-  async function readData(vehicleId: number, from: Date, to: Date) {
+  async function readData(vehicleId: number) {
     const v = await vehicleRepository.getVehicle(vehicleId)
     if (v) vehicle.value = v
     refuels.value = await refuelRepository.getFilteredRefuels(
       vehicleId,
-      from,
-      to
+      fromDate.value,
+      untilDate.value
     )
   }
   return {
     vehicle,
     refuels,
+    fromDate,
+    untilDate,
+    groupBy,
+    dataSource,
     readData
   }
 })

@@ -3,17 +3,17 @@
     <div class="row">
       <div class="col q-px-xs">
         <c-select
-          v-model="groupBy"
+          v-model="chartStore.groupBy"
           :label="t('chart.groupBy')"
-          :options="grouByOptions"
+          :options="getGrouByOptions()"
           class="q-pb-md"
         />
       </div>
       <div class="col q-px-xs">
         <c-select
-          v-model="dataSource"
+          v-model="chartStore.dataSource"
           :label="t('chart.dataSource')"
-          :options="dataSourceOptions"
+          :options="getDataSourceOptions()"
           class="q-pb-md"
         />
       </div>
@@ -62,66 +62,22 @@ import {
   updateDateUntil
 } from 'src/scripts/libraries/utils/date'
 import { ScreenOrientation } from '@capacitor/screen-orientation'
+import { getGrouByOptions, getDataSourceOptions } from './staticData'
 
 ChartJS.register(Title, BarElement, CategoryScale, LinearScale)
 
-const dateFrom = ref(new Date())
 const dateFromString = computed(() =>
-  date.formatDate(dateFrom.value, 'YYYY/MM/DD')
+  date.formatDate(chartStore.fromDate, 'YYYY/MM/DD')
 )
-const dateUntil = ref(new Date())
+
 const dateUntilString = computed(() =>
-  date.formatDate(dateUntil.value, 'YYYY/MM/DD')
+  date.formatDate(chartStore.untilDate, 'YYYY/MM/DD')
 )
 
 const settingsStore = useSettingsStore()
 const chartStore = useChartStore()
 const mainLayoutStore = useMainLayoutStore()
 const { t } = useI18n({ useScope: 'local', messages })
-const groupBy = ref(0)
-const grouByOptions = [
-  {
-    value: 0,
-    label: t('chart.groupByOptions.noGrouping')
-  },
-  {
-    value: 1,
-    label: t('chart.groupByOptions.year')
-  },
-  {
-    value: 2,
-    label: t('chart.groupByOptions.month')
-  }
-]
-
-const dataSource = ref(0)
-const dataSourceOptions = [
-  {
-    value: 0,
-    label: t('chart.dataSourceOptions.fuelConsumption')
-  },
-  {
-    value: 1,
-    label: t('chart.dataSourceOptions.distanceDriven')
-  },
-  {
-    value: 2,
-    label: t('chart.dataSourceOptions.fuelBurnt')
-  },
-  {
-    value: 3,
-    label: t('chart.dataSourceOptions.refuelsMade')
-  },
-  {
-    value: 4,
-    label: t('chart.dataSourceOptions.fuelPricing')
-  },
-  {
-    value: 5,
-    label: t('chart.dataSourceOptions.moneySpent')
-  }
-]
-
 const updated = ref(true)
 const chartData = ref({
   labels: chartStore.refuels.map(r => r.date.toString()),
@@ -139,22 +95,18 @@ const chartOptions = {
 }
 
 async function _updateDateFrom(date: string) {
-  dateFrom.value = updateDateFrom(date)
+  chartStore.fromDate = updateDateFrom(date)
   await updateChart()
 }
 
 async function _updateDateUntil(date: string) {
-  dateUntil.value = updateDateUntil(date)
+  chartStore.untilDate = updateDateUntil(date)
   await updateChart()
 }
 
 async function updateChart() {
   if (settingsStore.selectedVehicleId)
-    await chartStore.readData(
-      settingsStore.selectedVehicleId,
-      dateFrom.value,
-      dateUntil.value
-    )
+    await chartStore.readData(settingsStore.selectedVehicleId)
 
   chartData.value.labels = chartStore.refuels.map(r =>
     date.formatDate(r.date, 'YYYY/MM/DD')
