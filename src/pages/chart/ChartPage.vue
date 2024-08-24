@@ -63,6 +63,7 @@ import {
 } from 'src/scripts/libraries/utils/date'
 import { ScreenOrientation } from '@capacitor/screen-orientation'
 import { getGrouByOptions, getDataSourceOptions } from './scripts/staticData'
+import { initSettings } from 'src/scripts/initSettings'
 
 ChartJS.register(Title, BarElement, CategoryScale, LinearScale)
 
@@ -80,12 +81,12 @@ const mainLayoutStore = useMainLayoutStore()
 const { t } = useI18n({ useScope: 'local', messages })
 const updated = ref(true)
 const chartData = ref({
-  labels: chartStore.refuels.map(r => r.date.toString()),
+  labels: chartStore.getChartData().labels,
   datasets: [
     {
       label: 'My First dataset',
       backgroundColor: '#f87979',
-      data: chartStore.refuels.map(r => r.refueledAmount)
+      data: chartStore.getChartData().data
     }
   ]
 })
@@ -108,12 +109,8 @@ async function updateChart() {
   if (settingsStore.selectedVehicleId)
     await chartStore.readData(settingsStore.selectedVehicleId)
 
-  chartData.value.labels = chartStore.refuels.map(r =>
-    date.formatDate(r.date, 'YYYY/MM/DD')
-  )
-  chartData.value.datasets[0].data = chartStore.refuels.map(
-    r => r.refueledAmount
-  )
+  chartData.value.labels = chartStore.getChartData().labels
+  chartData.value.datasets[0].data = chartStore.getChartData().data
   updated.value = false
   setTimeout(() => {
     updated.value = true
@@ -121,6 +118,7 @@ async function updateChart() {
 }
 
 onMounted(async () => {
+  await initSettings() // TODO remove
   if (Platform.is.mobile)
     await ScreenOrientation.lock({ orientation: 'landscape' })
   updated.value = true

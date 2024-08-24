@@ -19,7 +19,6 @@ export class AbstractChartData implements IChartDataFun {
   constructor() {}
 
   getChartData(
-    dataSource: DataSource,
     groupBy: Group,
     vehicle: Vehicle,
     refuels: Refuel[]
@@ -34,10 +33,5 @@ export interface IChartData {
 }
 
 export interface IChartDataFun {
-  getChartData(
-    dataSource: DataSource,
-    groupBy: Group,
-    vehicle: Vehicle,
-    refuels: Refuel[]
-  ): IChartData
+  getChartData(groupBy: Group, vehicle: Vehicle, refuels: Refuel[]): IChartData
 }

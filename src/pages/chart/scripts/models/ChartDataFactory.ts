@@ -14,7 +14,7 @@ export class ChartDataFactory {
     ChartDataFactory.chartDataClasses.set(dataSource, chartDataFun)
   }
 
-  public get(
+  public static get(
     dataSource: DataSource,
     groupBy: Group,
     vehicle: Vehicle,
@@ -23,7 +23,7 @@ export class ChartDataFactory {
     const graphDataClass = ChartDataFactory.chartDataClasses.get(dataSource)
     if (graphDataClass) {
       const fun = new graphDataClass()
-      return fun.getChartData(dataSource, groupBy, vehicle, refuels)
+      return fun.getChartData(groupBy, vehicle, refuels)
     }
 
     return null

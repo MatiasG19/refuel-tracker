@@ -5,6 +5,7 @@ import { registerGraphData } from 'src/pages/graphData/scripts/registerGraphData
 import { registerFuelConsumption } from 'src/scripts/libraries/refuel/functions/fuelConsumption/registerFuelConsumption'
 import { useRouter } from 'vue-router'
 import { useMainLayoutStore } from 'src/layouts/stores'
+import { registerChartData } from 'src/pages/chart/scripts/models/registerChartData'
 
 export async function initSettings() {
   const settingsStore = useSettingsStore()
@@ -19,6 +20,7 @@ export async function initSettings() {
 
   registerGraphData()
   registerFuelConsumption()
+  registerChartData()
 
   mainLayoutStore.addButton.action = () => void router.push('/refuels/add')
   router.beforeEach(() => {
