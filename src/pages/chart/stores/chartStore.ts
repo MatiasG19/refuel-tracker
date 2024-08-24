@@ -5,7 +5,7 @@ import {
 } from 'src/scripts/databaseRepositories'
 import { Refuel, Vehicle } from 'src/scripts/libraries/refuel/models'
 import { ref } from 'vue'
-import { DataSource, Group } from '../models/models'
+import { DataSource, Group } from '../scripts/models'
 
 export const useChartStore = defineStore('chartStore', () => {
   const vehicle = ref<Vehicle | null>(null)
