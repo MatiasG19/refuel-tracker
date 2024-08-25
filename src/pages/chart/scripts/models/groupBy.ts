@@ -5,7 +5,7 @@ export interface GroupedRefuels {
   [key: string]: Refuel[]
 }
 
-function groupBy(refuels: Refuel[], groupBy: Group): GroupedRefuels {
+export function groupBy(refuels: Refuel[], groupBy: Group): GroupedRefuels {
   switch (groupBy) {
     case Group.Month:
       return groupByNoGrouping(refuels)
