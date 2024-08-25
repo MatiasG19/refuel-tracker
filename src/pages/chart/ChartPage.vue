@@ -6,6 +6,7 @@
           v-model="chartStore.groupBy"
           :label="t('chart.groupBy')"
           :options="getGrouByOptions()"
+          @update:modelValue="updateChart()"
           class="q-pb-md"
         />
       </div>
@@ -14,6 +15,7 @@
           v-model="chartStore.dataSource"
           :label="t('chart.dataSource')"
           :options="getDataSourceOptions()"
+          @update:modelValue="updateChart()"
           class="q-pb-md"
         />
       </div>
