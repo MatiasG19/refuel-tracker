@@ -1,4 +1,3 @@
-import { Interface } from 'readline'
 import { Refuel, Vehicle } from 'src/scripts/libraries/refuel/models'
 
 export enum Group {
@@ -35,11 +34,4 @@ export interface IChartData {
 
 export interface IChartDataFun {
   getChartData(groupBy: Group, vehicle: Vehicle, refuels: Refuel[]): IChartData
-}
-
-function groupBy(refuels: Refuel[], groupBy: Group): GroupedRefuels[] {}
-
-export interface GroupedRefuels {
-  label: string
-  refuels: Refuel[]
 }
