@@ -7,6 +7,8 @@
     :label="label"
     :rules="rules"
     :type="type"
+    :dark="true"
+    popup-content-class="bg-space-station"
   >
     <slot></slot>
   </q-input>
