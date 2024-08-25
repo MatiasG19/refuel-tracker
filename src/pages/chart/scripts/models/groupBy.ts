@@ -7,7 +7,7 @@ export interface GroupedRefuels {
 
 export function groupBy(refuels: Refuel[], groupBy: Group): GroupedRefuels {
   switch (groupBy) {
-    case Group.Month:
+    case Group.NoGrouping:
       return groupByNoGrouping(refuels)
     case Group.Month:
       return groupByMonth(refuels)
@@ -19,8 +19,8 @@ export function groupBy(refuels: Refuel[], groupBy: Group): GroupedRefuels {
 }
 
 function groupByNoGrouping(refuels: Refuel[]): GroupedRefuels {
-  return refuels.reduce((acc: GroupedRefuels, refuel) => {
-    const key = 'key'
+  return refuels.reduce((acc: GroupedRefuels, refuel, i) => {
+    const key = i.toString()
     if (!acc[key]) acc[key] = []
     acc[key].push(refuel)
     return acc
