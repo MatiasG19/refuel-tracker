@@ -4,10 +4,8 @@
       <q-badge>{{ vehicleName }}</q-badge>
       <c-input
         type="tel"
-        :value="refuel.payedAmount?.toString()"
-        @update:modelValue="
-          (evt: string) => (refuel.payedAmount = +replaceComma(evt))
-        "
+        :value="payedAmount"
+        @update:modelValue="(evt: string) => (payedAmount = replaceComma(evt))"
         :label="t('refuelsForm.payedAmount')"
         :rules="[
           requiredFieldRule,
@@ -18,9 +16,9 @@
       />
       <c-input
         type="tel"
-        :value="refuel.distanceDriven?.toString()"
+        :value="distanceDriven"
         @update:modelValue="
-          (evt: string) => (refuel.distanceDriven = +replaceComma(evt))
+          (evt: string) => (distanceDriven = replaceComma(evt))
         "
         :label="t('refuelsForm.distanceDriven')"
         :rules="[
@@ -32,9 +30,9 @@
       />
       <c-input
         type="tel"
-        :value="refuel.refueledAmount?.toString()"
+        :value="refueledAmount"
         @update:modelValue="
-          (evt: string) => (refuel.refueledAmount = +replaceComma(evt))
+          (evt: string) => (refueledAmount = replaceComma(evt))
         "
         :label="t('refuelsForm.refueledAmount')"
         :rules="[
@@ -136,6 +134,9 @@ const mainLayoutStore = useMainLayoutStore()
 const { t } = useI18n({ useScope: 'local', messages })
 
 const refuel = ref<Refuel>(new Refuel())
+const payedAmount = ref('')
+const distanceDriven = ref('')
+const refueledAmount = ref('')
 const refuelDate = ref(QuasarDate.formatDate(Date.now(), 'YYYY/MM/DD'))
 const refuelTime = ref(QuasarDate.formatDate(Date.now(), 'HH:mm'))
 const vehicleName = ref<string>('')
@@ -171,6 +172,9 @@ function updateTime(event: string) {
 }
 
 async function onSubmit() {
+  refuel.value.payedAmount = +payedAmount.value
+  refuel.value.distanceDriven = +distanceDriven.value
+  refuel.value.refueledAmount = +refueledAmount.value
   let savedRefuel = refuel.value
   if (routePath.includes('/add'))
     await refuelStore.addRefuel({ ...refuel.value })
@@ -211,6 +215,9 @@ onMounted(async () => {
     if (r) refuel.value = { ...r }
     refuelDate.value = QuasarDate.formatDate(refuel.value.date, 'YYYY/MM/DD')
     refuelTime.value = QuasarDate.formatDate(refuel.value.date, 'HH:mm')
+    payedAmount.value = refuel.value.payedAmount.toString()
+    distanceDriven.value = refuel.value.distanceDriven.toString()
+    refueledAmount.value = refuel.value.refueledAmount.toString()
   } else {
     refuel.value.date = new Date(Date.now())
     refuelDate.value = QuasarDate.formatDate(refuel.value.date, 'YYYY/MM/DD')
