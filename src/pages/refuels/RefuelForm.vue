@@ -4,9 +4,9 @@
       <q-badge>{{ vehicleName }}</q-badge>
       <c-input
         type="tel"
-        :value="refuel.payedAmount?.toString()"
+        :value="refuel.payedAmount"
         @update:modelValue="
-          (evt: string) => (refuel.payedAmount = +replaceComma(evt))
+          (evt: string) => (refuel.payedAmount = replaceComma(evt))
         "
         :label="t('refuelsForm.payedAmount')"
         :rules="[
@@ -18,9 +18,9 @@
       />
       <c-input
         type="tel"
-        :value="refuel.distanceDriven?.toString()"
+        :value="refuel.distanceDriven"
         @update:modelValue="
-          (evt: string) => (refuel.distanceDriven = +replaceComma(evt))
+          (evt: string) => (refuel.distanceDriven = replaceComma(evt))
         "
         :label="t('refuelsForm.distanceDriven')"
         :rules="[
@@ -32,9 +32,9 @@
       />
       <c-input
         type="tel"
-        :value="refuel.refueledAmount?.toString()"
+        :value="refuel.refueledAmount"
         @update:modelValue="
-          (evt: string) => (refuel.refueledAmount = +replaceComma(evt))
+          (evt: string) => (refuel.refueledAmount = replaceComma(evt))
         "
         :label="t('refuelsForm.refueledAmount')"
         :rules="[
@@ -46,13 +46,13 @@
       />
 
       <c-input
-        :value="refuelDate"
+        :value="refuel.refuelDate"
         :label="t('refuelsForm.refuelDate')"
         :rules="[requiredFieldRule]"
       >
         <q-popup-proxy transition-show="scale" transition-hide="scale">
           <q-date
-            :modelValue="refuelDate"
+            :modelValue="refuel.refuelDate"
             @update:modelValue="evt => updateDate(evt)"
           />
           <div class="row items-center justify-end">
@@ -67,13 +67,13 @@
       </c-input>
 
       <c-input
-        :value="refuelTime"
+        :value="refuel.refuelTime"
         :label="t('refuelsForm.refuelTime')"
         :rules="[requiredFieldRule]"
       >
         <q-popup-proxy transition-show="scale" transition-hide="scale">
           <q-time
-            :modelValue="refuelTime"
+            :modelValue="refuel.refuelTime"
             @update:modelValue="evt => updateTime(evt!)"
             format24h
           />
@@ -110,7 +110,7 @@
 </template>
 
 <script setup lang="ts">
-import { ref, onMounted, onBeforeUnmount, toRaw } from 'vue'
+import { ref, onMounted, onBeforeUnmount, toRaw, reactive } from 'vue'
 import { date as QuasarDate } from 'quasar'
 import { useRouter } from 'vue-router'
 import CInput from 'src/components/inputs/CInput.vue'
@@ -130,17 +130,22 @@ import { i18n } from 'src/boot/i18n'
 import messages from './i18n'
 
 const router = useRouter()
+let routePath = ''
 const refuelStore = useRefuelStore()
 const settingsStore = useSettingsStore()
 const mainLayoutStore = useMainLayoutStore()
 const { t } = useI18n({ useScope: 'local', messages })
 
-const refuel = ref<Refuel>(new Refuel())
-const refuelDate = ref(QuasarDate.formatDate(Date.now(), 'YYYY/MM/DD'))
-const refuelTime = ref(QuasarDate.formatDate(Date.now(), 'HH:mm'))
 const vehicleName = ref<string>('')
-
-let routePath = ''
+const refuel = reactive({
+  id: 0,
+  vehicleId: 0,
+  payedAmount: '',
+  distanceDriven: '',
+  refueledAmount: '',
+  refuelDate: QuasarDate.formatDate(Date.now(), 'YYYY/MM/DD'),
+  refuelTime: QuasarDate.formatDate(Date.now(), 'HH:mm')
+})
 
 const props = defineProps({
   id: {
@@ -150,44 +155,42 @@ const props = defineProps({
 
 function updateDate(event: string) {
   const date = new Date(event)
-  refuelDate.value = QuasarDate.formatDate(date, 'YYYY/MM/DD')
-  if (!refuel.value.date) refuel.value.date = date
-  refuel.value.date.setFullYear(date.getFullYear())
-  refuel.value.date.setMonth(date.getMonth())
-  refuel.value.date.setDate(date.getDate())
+  refuel.refuelDate = QuasarDate.formatDate(date, 'YYYY/MM/DD')
 }
 
 function updateTime(event: string) {
   const d = event.split(':')
-  const hours = parseInt(d[0])
-  const minutes = parseInt(d[1])
   const date = new Date(Date.now())
-  if (!refuel.value.date) refuel.value.date = date
-  date.setHours(hours)
-  date.setMinutes(minutes)
-  refuelTime.value = QuasarDate.formatDate(date, 'HH:mm')
-  refuel.value.date.setHours(hours)
-  refuel.value.date.setMinutes(minutes)
+  date.setHours(parseInt(d[0]))
+  date.setMinutes(parseInt(d[1]))
+  refuel.refuelTime = QuasarDate.formatDate(date, 'HH:mm')
 }
 
 async function onSubmit() {
-  let savedRefuel = refuel.value
-  if (routePath.includes('/add'))
-    await refuelStore.addRefuel({ ...refuel.value })
-  else if (routePath.includes('/edit'))
-    await refuelStore.updateRefuel({ ...refuel.value })
+  var r = new Refuel()
+  r.id = refuel.id
+  r.vehicleId = refuel.vehicleId
+  r.payedAmount = +refuel.payedAmount
+  r.distanceDriven = +refuel.distanceDriven
+  r.refueledAmount = +refuel.refueledAmount
+  r.date = new Date(refuel.refuelDate)
+  const d = refuel.refuelTime.split(':')
+  r.date.setHours(parseInt(d[0]))
+  r.date.setMinutes(parseInt(d[1]))
 
-  const scrollToId = savedRefuel && savedRefuel.id ? savedRefuel.id : 0
+  if (routePath.includes('/add')) await refuelStore.addRefuel(r)
+  else if (routePath.includes('/edit')) await refuelStore.updateRefuel(r)
 
+  const scrollToId = refuel && refuel.id ? refuel.id : 0
   void router.push({
     path: `/refuels/${scrollToId}`
   })
 }
 
 function onCancel() {
-  if (refuel.value.id)
+  if (refuel.id)
     router.push({
-      path: `/refuels/${refuel.value.id}`
+      path: `/refuels/${refuel.id}`
     })
   else router.go(-1)
 }
@@ -205,16 +208,16 @@ onMounted(async () => {
     : settingsStore.selectedVehicleName
 
   await refuelStore.readData()
-  refuel.value.vehicleId = refuelStore.vehicle.id
+  if (refuelStore.vehicle) refuel.vehicleId = refuelStore.vehicle.id
   if (props.id && parseInt(props.id)) {
     const r = toRaw(await refuelStore.getRefuel(parseInt(props.id)))
-    if (r) refuel.value = { ...r }
-    refuelDate.value = QuasarDate.formatDate(refuel.value.date, 'YYYY/MM/DD')
-    refuelTime.value = QuasarDate.formatDate(refuel.value.date, 'HH:mm')
-  } else {
-    refuel.value.date = new Date(Date.now())
-    refuelDate.value = QuasarDate.formatDate(refuel.value.date, 'YYYY/MM/DD')
-    refuelTime.value = QuasarDate.formatDate(refuel.value.date, 'HH:mm')
+    if (!r) return
+    refuel.id = r.id
+    refuel.refuelDate = QuasarDate.formatDate(r.date, 'YYYY/MM/DD')
+    refuel.refuelTime = QuasarDate.formatDate(r.date, 'HH:mm')
+    refuel.payedAmount = r.payedAmount.toString()
+    refuel.distanceDriven = r.distanceDriven.toString()
+    refuel.refueledAmount = r.refueledAmount.toString()
   }
 })
 
