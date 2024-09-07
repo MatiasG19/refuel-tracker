@@ -1,7 +1,12 @@
 <template>
   <q-page class="items-center">
     <q-btn @click="() => (showChart = !showChart)">Show Chart</q-btn>
-    <q-dialog v-model="showChart" maximized class="space-station">
+    <q-dialog
+      v-model="showChart"
+      maximized
+      class="space-station"
+      transition-duration="150"
+    >
       <div>
         <div class="column items-end">
           <div class="col">

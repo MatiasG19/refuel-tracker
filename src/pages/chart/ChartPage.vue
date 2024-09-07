@@ -65,7 +65,6 @@ import {
 } from 'src/scripts/libraries/utils/date'
 import { ScreenOrientation } from '@capacitor/screen-orientation'
 import { getGrouByOptions, getDataSourceOptions } from './scripts/staticData'
-import { initSettings } from 'src/scripts/initSettings'
 
 ChartJS.register(Title, BarElement, CategoryScale, LinearScale)
 
@@ -136,9 +135,10 @@ async function updateChart() {
 onMounted(async () => {
   if (Platform.is.mobile)
     await ScreenOrientation.lock({ orientation: 'landscape' })
-  updated.value = true
   mainLayoutStore.titleText = t('chart.title')
 
-  updateChart()
+  setTimeout(() => {
+    updateChart()
+  }, 200)
 })
 </script>
