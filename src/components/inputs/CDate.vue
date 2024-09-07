@@ -4,6 +4,7 @@
       <q-date
         :modelValue="modelValue"
         @update:modelValue="$emit('update:modelValue', $event)"
+        no-unset
       />
     </q-popup-proxy>
   </c-input>
