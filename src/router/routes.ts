@@ -7,7 +7,7 @@ const routes: RouteRecordRaw[] = [
     children: [
       {
         path: '/',
-        component: () => import('pages/chart/ChartPage.vue')
+        component: () => import('pages/graphData/GraphData.vue')
       },
       {
         path: '/refuels/:id?',

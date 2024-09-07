@@ -8,7 +8,8 @@ export default {
     moneySpent: 'Ausgegebenes Geld',
     refuelsMade: 'Anzahl Betankungen',
     optionsInDialog: {
-      move: 'Verschieben'
+      move: 'Verschieben',
+      chart: 'Diagramm'
     }
   }
 }

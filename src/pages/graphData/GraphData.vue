@@ -1,5 +1,16 @@
 <template>
   <q-page class="items-center">
+    <q-btn @click="() => (showChart = !showChart)">Show Chart</q-btn>
+    <q-dialog v-model="showChart" maximized class="space-station">
+      <div>
+        <div class="column items-end">
+          <div class="col">
+            <q-btn @click="() => (showChart = false)" icon="close" flat></q-btn>
+          </div>
+        </div>
+        <chart-page></chart-page>
+      </div>
+    </q-dialog>
     <div
       v-if="vehiclesExits && graphData.length === 0"
       class="absolute-center items-center"
@@ -88,6 +99,7 @@ import { Container, Draggable, DropResult } from 'vue3-smooth-dnd'
 import { App } from '@capacitor/app'
 import { initSettings } from 'src/scripts/initSettings'
 import { SplashScreen } from '@capacitor/splash-screen'
+import ChartPage from 'src/pages/chart/ChartPage.vue'
 
 const $q = useQuasar()
 $q.dark.set('auto')
@@ -98,6 +110,7 @@ const settingsStore = useSettingsStore()
 const mainLayoutStore = useMainLayoutStore()
 const { t } = useI18n({ useScope: 'local', messages })
 
+const showChart = ref(false)
 const loading = ref(false)
 const editOrder = ref(false)
 const periods = ref<Period[]>([])
@@ -109,6 +122,11 @@ const optionsInDialog = ref([
     text: computed(() => `${t('graphData.optionsInDialog.move')}`),
     icon: 'swap_vert',
     action: () => editOrderFun()
+  },
+  {
+    text: computed(() => `${t('graphData.optionsInDialog.chart')}`),
+    icon: 'bar_chart',
+    action: () => (showChart.value = true)
   }
 ])
 

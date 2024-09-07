@@ -58,7 +58,7 @@ import {
 } from 'chart.js'
 import CSelect from 'src/components/inputs/CSelect.vue'
 import CDate from 'src/components/inputs/CDate.vue'
-import { date, Platform } from 'quasar'
+import { date, Platform, colors } from 'quasar'
 import {
   updateDateFrom,
   updateDateUntil
@@ -69,6 +69,24 @@ import { initSettings } from 'src/scripts/initSettings'
 
 ChartJS.register(Title, BarElement, CategoryScale, LinearScale)
 
+const { getPaletteColor } = colors
+const settingsStore = useSettingsStore()
+const chartStore = useChartStore()
+const mainLayoutStore = useMainLayoutStore()
+const { t } = useI18n({ useScope: 'local', messages })
+const updated = ref(true)
+const chartData = ref({
+  labels: chartStore.getChartData().labels,
+
+  datasets: [
+    {
+      label: 'My First dataset',
+      backgroundColor: getPaletteColor('accent'),
+      data: chartStore.getChartData().data
+    }
+  ]
+})
+
 const dateFromString = computed(() =>
   date.formatDate(chartStore.fromDate, 'YYYY/MM/DD')
 )
@@ -77,24 +95,20 @@ const dateUntilString = computed(() =>
   date.formatDate(chartStore.untilDate, 'YYYY/MM/DD')
 )
 
-const settingsStore = useSettingsStore()
-const chartStore = useChartStore()
-const mainLayoutStore = useMainLayoutStore()
-const { t } = useI18n({ useScope: 'local', messages })
-const updated = ref(true)
-const chartData = ref({
-  labels: chartStore.getChartData().labels,
-  datasets: [
-    {
-      label: 'My First dataset',
-      backgroundColor: '#f87979',
-      data: chartStore.getChartData().data
-    }
-  ]
-})
-
 const chartOptions = {
-  responsive: true
+  responsive: true,
+  scales: {
+    x: {
+      ticks: {
+        color: getPaletteColor('secondary')
+      }
+    },
+    y: {
+      ticks: {
+        color: getPaletteColor('secondary')
+      }
+    }
+  }
 }
 
 async function _updateDateFrom(date: string) {
@@ -120,7 +134,6 @@ async function updateChart() {
 }
 
 onMounted(async () => {
-  await initSettings() // TODO remove
   if (Platform.is.mobile)
     await ScreenOrientation.lock({ orientation: 'landscape' })
   updated.value = true
