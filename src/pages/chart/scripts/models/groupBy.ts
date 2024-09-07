@@ -1,5 +1,6 @@
 import { Refuel } from 'src/scripts/libraries/refuel/models'
 import { Group } from '.'
+import { date as QuasarDate } from 'quasar'
 
 export interface GroupedRefuels {
   [key: string]: Refuel[]
@@ -20,7 +21,7 @@ export function groupBy(refuels: Refuel[], groupBy: Group): GroupedRefuels {
 
 function groupByNoGrouping(refuels: Refuel[]): GroupedRefuels {
   return refuels.reduce((acc: GroupedRefuels, refuel, i) => {
-    const key = i.toString()
+    const key = QuasarDate.formatDate(refuel.date, 'YYYY/MM/DD hh:mm')
     if (!acc[key]) acc[key] = []
     acc[key].push(refuel)
     return acc
