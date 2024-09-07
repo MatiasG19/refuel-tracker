@@ -1,8 +1,10 @@
 import { i18n } from 'src/boot/i18n'
 import { SelectOption } from 'src/scripts/models'
+import { useI18n } from 'vue-i18n'
+import messages from '../../i18n'
 
 export function getGrouByOptions(): SelectOption[] {
-  const { t } = i18n.global
+  const { t } = useI18n({ useScope: 'local', messages })
   return [
     {
       value: 0,
@@ -20,7 +22,7 @@ export function getGrouByOptions(): SelectOption[] {
 }
 
 export function getDataSourceOptions(): SelectOption[] {
-  const { t } = i18n.global
+  const { t } = useI18n({ useScope: 'local', messages })
   return [
     {
       value: 0,
