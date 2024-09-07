@@ -75,6 +75,11 @@ export const useSettingsStore = defineStore('settingsStore', () => {
     await settingsRepository.updateSettings(settings)
   }
 
+  function getVehicleName(): string {
+    if (plateNumberInTitleActive.value) return selectedVehiclePlateNumber.value
+    return selectedVehicleName.value
+  }
+
   async function toggleAutoBackup(state: boolean) {
     autoBackupActive.value = state
     const settings = await settingsRepository.getSettings(settingsId)
@@ -110,8 +115,6 @@ export const useSettingsStore = defineStore('settingsStore', () => {
   return {
     selectedDistanceUnitId,
     selectedVehicleId,
-    selectedVehicleName,
-    selectedVehiclePlateNumber,
     plateNumberInTitleActive,
     autoBackupActive,
     autoBackupPath,
@@ -123,6 +126,7 @@ export const useSettingsStore = defineStore('settingsStore', () => {
     changeDistanceUnit,
     changeSelectedVehicle,
     togglePlateNumberInTitle,
+    getVehicleName,
     toggleAutoBackup,
     setAutoBackupPath,
     changeColorTheme,

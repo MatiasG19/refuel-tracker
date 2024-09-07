@@ -1,7 +1,7 @@
 <template>
   <div>
     <q-form @submit="onSubmit" class="q-px-md q-gutter-md">
-      <q-badge>{{ vehicleName }}</q-badge>
+      <q-badge>{{ settingsStore.getVehicleName() }}</q-badge>
       <c-input
         type="tel"
         :value="refuel.payedAmount"
@@ -136,7 +136,6 @@ const settingsStore = useSettingsStore()
 const mainLayoutStore = useMainLayoutStore()
 const { t } = useI18n({ useScope: 'local', messages })
 
-const vehicleName = ref<string>('')
 const refuel = reactive({
   id: 0,
   vehicleId: 0,
@@ -202,10 +201,6 @@ onMounted(async () => {
   else if (routePath.includes('/edit'))
     mainLayoutStore.titleText = t('refuelsForm.titleEditRefuel')
   mainLayoutStore.addButton.disabled = true
-
-  vehicleName.value = settingsStore.plateNumberInTitleActive
-    ? settingsStore.selectedVehiclePlateNumber
-    : settingsStore.selectedVehicleName
 
   await refuelStore.readData()
   if (refuelStore.vehicle) refuel.vehicleId = refuelStore.vehicle.id
