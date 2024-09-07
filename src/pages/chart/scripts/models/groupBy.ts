@@ -21,7 +21,7 @@ export function groupBy(refuels: Refuel[], groupBy: Group): GroupedRefuels {
 
 function groupByNoGrouping(refuels: Refuel[]): GroupedRefuels {
   return refuels.reduce((acc: GroupedRefuels, refuel, i) => {
-    const key = QuasarDate.formatDate(refuel.date, 'YYYY/MM/DD hh:mm')
+    const key = QuasarDate.formatDate(refuel.date, 'YYYY/MM/DD HH:mm')
     if (!acc[key]) acc[key] = []
     acc[key].push(refuel)
     return acc
