@@ -150,7 +150,6 @@ onMounted(async () => {
 })
 
 onUnmounted(async () => {
-  if (Platform.is.mobile)
-    await ScreenOrientation.lock({ orientation: 'portrait' })
+  if (Platform.is.mobile) await ScreenOrientation.unlock()
 })
 </script>
