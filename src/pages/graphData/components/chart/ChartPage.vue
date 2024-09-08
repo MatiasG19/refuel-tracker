@@ -98,6 +98,7 @@ const dateUntilString = computed(() =>
 
 const chartOptions = {
   responsive: true,
+  maintainAspectRatio: false,
   scales: {
     x: {
       ticks: {
