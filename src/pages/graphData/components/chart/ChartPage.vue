@@ -3,16 +3,6 @@
     <div class="row">
       <div class="col q-px-xs">
         <c-select
-          v-model="chartStore.groupBy"
-          :label="t('chart.groupBy')"
-          :options="getGrouByOptions()"
-          @update:modelValue="updateChart()"
-          class="q-pb-md"
-          dense
-        />
-      </div>
-      <div class="col q-px-xs">
-        <c-select
           v-model="chartStore.dataSource"
           :label="t('chart.dataSource')"
           :options="getDataSourceOptions()"
@@ -21,6 +11,17 @@
           dense
         />
       </div>
+      <div class="col q-px-xs">
+        <c-select
+          v-model="chartStore.groupBy"
+          :label="t('chart.groupBy')"
+          :options="getGrouByOptions()"
+          @update:modelValue="updateChart()"
+          class="q-pb-md"
+          dense
+        />
+      </div>
+
       <div class="col q-px-xs">
         <c-date
           :modelValue="dateFromString"
