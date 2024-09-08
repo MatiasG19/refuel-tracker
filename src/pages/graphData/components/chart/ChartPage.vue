@@ -45,7 +45,6 @@
 import { computed, onMounted, onUnmounted, ref } from 'vue'
 import { useSettingsStore } from 'src/pages/settings/stores/settingsStore'
 import { useChartStore } from './stores'
-import { useMainLayoutStore } from 'src/layouts/stores'
 import { useI18n } from 'vue-i18n'
 import messages from './i18n'
 import { Bar } from 'vue-chartjs'
@@ -71,7 +70,6 @@ ChartJS.register(Title, BarElement, CategoryScale, LinearScale)
 const { getPaletteColor } = colors
 const settingsStore = useSettingsStore()
 const chartStore = useChartStore()
-const mainLayoutStore = useMainLayoutStore()
 const { t } = useI18n({ useScope: 'local', messages })
 const updated = ref(true)
 const chartData = ref({
