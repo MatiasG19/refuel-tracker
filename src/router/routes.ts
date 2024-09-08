@@ -59,10 +59,6 @@ const routes: RouteRecordRaw[] = [
       {
         path: '/support',
         component: () => import('pages/support/Support.vue')
-      },
-      {
-        path: '/charts',
-        component: () => import('pages/charts/ChartsPage.vue')
       }
     ]
   },
