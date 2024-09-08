@@ -1,5 +1,11 @@
 <template>
-  <c-input color="accent" :value="modelValue" :label="label" :rules="rules">
+  <c-input
+    color="accent"
+    :value="modelValue"
+    :label="label"
+    :rules="rules"
+    @mousedown.prevent
+  >
     <q-popup-proxy transition-show="scale" transition-hide="scale">
       <q-date
         :modelValue="modelValue"
