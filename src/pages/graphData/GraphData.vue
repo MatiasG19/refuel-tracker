@@ -157,9 +157,7 @@ function saveOrder() {
 function updateTitle() {
   mainLayoutStore.titleText = (() => {
     if (!settingsStore.selectedVehicleId) return packageJson.productName
-    else if (settingsStore.plateNumberInTitleActive)
-      return settingsStore.selectedVehiclePlateNumber
-    return settingsStore.selectedVehicleName
+    else return settingsStore.getVehicleName()
   })()
 }
 

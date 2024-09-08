@@ -61,11 +61,7 @@
 
       <Teleport to="#header-badges-left">
         <div class="q-px-md q-pb-xs q-gutter-md">
-          <q-badge>{{
-            settingsStore.plateNumberInTitleActive
-              ? settingsStore.selectedVehiclePlateNumber
-              : settingsStore.selectedVehicleName
-          }}</q-badge>
+          <q-badge>{{ settingsStore.getVehicleName() }}</q-badge>
         </div>
       </Teleport>
       <Teleport to="#header-badges-center">

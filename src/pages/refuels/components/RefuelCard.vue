@@ -5,7 +5,9 @@
         <q-card-section>
           <div class="row items-center no-wrap">
             <div class="col">
-              <div class="text-subtitle2">{{ refuelDate }}</div>
+              <div class="text-subtitle2">
+                {{ date.formatDate(props.refuel.date, 'YYYY-MMM-DD HH:mm') }}
+              </div>
             </div>
             <div class="col-auto space-station">
               <q-btn
@@ -82,6 +84,4 @@ const props = defineProps({
     type: Boolean
   }
 })
-
-const refuelDate = date.formatDate(props.refuel.date, 'YYYY-MMM-DD HH:mm')
 </script>
