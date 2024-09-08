@@ -8,6 +8,7 @@
           :options="getGrouByOptions()"
           @update:modelValue="updateChart()"
           class="q-pb-md"
+          dense
         />
       </div>
       <div class="col q-px-xs">
@@ -17,6 +18,7 @@
           :options="getDataSourceOptions()"
           @update:modelValue="updateChart()"
           class="q-pb-md"
+          dense
         />
       </div>
       <div class="col q-px-xs">
@@ -24,6 +26,7 @@
           :modelValue="dateFromString"
           @update:modelValue="_updateDateFrom($event)"
           :label="t('chart.from')"
+          dense
         />
       </div>
       <div class="col q-px-xs">
@@ -31,6 +34,7 @@
           :modelValue="dateUntilString"
           @update:modelValue="_updateDateUntil($event)"
           :label="t('chart.until')"
+          dense
         />
       </div>
     </div>
