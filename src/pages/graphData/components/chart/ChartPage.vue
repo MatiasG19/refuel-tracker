@@ -40,7 +40,12 @@
     </div>
 
     <div v-if="updated">
-      <Bar id="my-chart-id" :options="chartOptions" :data="chartData" />
+      <Bar
+        id="my-chart-id"
+        :options="chartOptions"
+        :data="chartData"
+        style="height: 65vh"
+      />
     </div>
   </q-page>
 </template>
