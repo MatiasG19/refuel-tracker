@@ -42,7 +42,7 @@
 </template>
 
 <script setup lang="ts">
-import { computed, onMounted, ref } from 'vue'
+import { computed, onMounted, onUnmounted, ref } from 'vue'
 import { useSettingsStore } from 'src/pages/settings/stores/settingsStore'
 import { useChartStore } from './stores'
 import { useMainLayoutStore } from 'src/layouts/stores'
@@ -135,10 +135,14 @@ async function updateChart() {
 onMounted(async () => {
   if (Platform.is.mobile)
     await ScreenOrientation.lock({ orientation: 'landscape' })
-  mainLayoutStore.titleText = t('chart.title')
 
   setTimeout(() => {
     updateChart()
   }, 200)
+})
+
+onUnmounted(async () => {
+  if (Platform.is.mobile)
+    await ScreenOrientation.lock({ orientation: 'portrait' })
 })
 </script>
