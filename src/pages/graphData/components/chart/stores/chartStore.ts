@@ -7,12 +7,18 @@ import { Refuel, Vehicle } from 'src/scripts/libraries/refuel/models'
 import { ref } from 'vue'
 import { IChartData } from '../scripts/models'
 import { ChartDataFactory } from '../scripts/models/ChartDataFactory'
+import {
+  updateDateFrom,
+  updateDateUntil
+} from 'src/scripts/libraries/utils/date'
 
 export const useChartStore = defineStore('chartStore', () => {
   const vehicle = ref<Vehicle | null>(null)
   const refuels = ref<Refuel[]>([])
-  const fromDate = ref<Date>(new Date())
-  const untilDate = ref<Date>(new Date())
+  const fromDate = ref<Date>(
+    updateDateFrom(new Date(new Date().setDate(new Date().getDate() - 30)))
+  )
+  const untilDate = ref<Date>(updateDateUntil(new Date()))
   const groupBy = ref(0)
   const dataSource = ref(0)
 

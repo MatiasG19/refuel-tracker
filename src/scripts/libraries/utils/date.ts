@@ -1,4 +1,4 @@
-export function updateDateFrom(date: string): Date {
+export function updateDateFrom(date: string | number | Date): Date {
   const d = new Date(date)
   d.setHours(0)
   d.setMinutes(0)
@@ -7,7 +7,7 @@ export function updateDateFrom(date: string): Date {
   return d
 }
 
-export function updateDateUntil(date: string): Date {
+export function updateDateUntil(date: string | number | Date): Date {
   const d = new Date(date)
   d.setHours(23)
   d.setMinutes(59)
