@@ -162,6 +162,9 @@ async function addKeyboardListeners() {
 
     await Keyboard.addListener('keyboardDidHide', () => {
       footerVisible.value = true
+    })
+
+    await Keyboard.addListener('keyboardDidHide', () => {
       calculateAreaHeight()
     })
   }
