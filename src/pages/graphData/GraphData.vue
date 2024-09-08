@@ -1,5 +1,15 @@
 <template>
   <q-page class="items-center">
+    <q-dialog v-model="showChart" maximized transition-duration="150">
+      <div class="bg-space-station">
+        <div class="column items-end">
+          <div class="col">
+            <q-btn @click="() => (showChart = false)" icon="close" flat></q-btn>
+          </div>
+        </div>
+        <chart-page />
+      </div>
+    </q-dialog>
     <div
       v-if="vehiclesExits && graphData.length === 0"
       class="absolute-center items-center"
@@ -72,6 +82,7 @@
 
 <script setup lang="ts">
 import GraphCard from 'src/pages/graphData/components/GraphCard.vue'
+import ChartPage from 'src/pages/graphData/components/chart/ChartPage.vue'
 import { ref, computed, onMounted, onUnmounted } from 'vue'
 import packageJson from '../../../package.json'
 import { useSettingsStore } from 'src/pages/settings/stores'
@@ -98,6 +109,7 @@ const settingsStore = useSettingsStore()
 const mainLayoutStore = useMainLayoutStore()
 const { t } = useI18n({ useScope: 'local', messages })
 
+const showChart = ref(false)
 const loading = ref(false)
 const editOrder = ref(false)
 const periods = ref<Period[]>([])
@@ -109,6 +121,11 @@ const optionsInDialog = ref([
     text: computed(() => `${t('graphData.optionsInDialog.move')}`),
     icon: 'swap_vert',
     action: () => editOrderFun()
+  },
+  {
+    text: computed(() => `${t('graphData.optionsInDialog.chart')}`),
+    icon: 'bar_chart',
+    action: () => (showChart.value = true)
   }
 ])
 
@@ -151,8 +168,9 @@ onMounted(async () => {
   await graphDataStore.readGraphData()
   App.removeAllListeners()
   await App.addListener('backButton', () => {
-    if (!editOrder.value) App.exitApp()
-    editOrderFun(false)
+    if (showChart.value) showChart.value = false
+    else if (!editOrder.value) App.exitApp()
+    else editOrderFun(false)
   })
   clearTimeout(timeOut)
   loading.value = false

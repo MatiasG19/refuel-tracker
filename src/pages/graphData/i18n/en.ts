@@ -8,7 +8,8 @@ export default {
     moneySpent: 'Money spent',
     refuelsMade: 'Refuels made',
     optionsInDialog: {
-      move: 'Move'
+      move: 'Move',
+      chart: 'Diagram'
     }
   }
 }

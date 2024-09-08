@@ -23,6 +23,7 @@
 		"DevicePlugin",
 		"FilesystemPlugin",
 		"KeyboardPlugin",
+		"ScreenOrientationPlugin",
 		"SplashScreenPlugin"
 	]
 }
