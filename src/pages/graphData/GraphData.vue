@@ -1,6 +1,5 @@
 <template>
   <q-page class="items-center">
-    <q-btn @click="() => (showChart = !showChart)">Show Chart</q-btn>
     <q-dialog
       v-model="showChart"
       maximized
