@@ -5,7 +5,7 @@ import { registerGraphData } from 'src/pages/graphData/scripts/registerGraphData
 import { registerFuelConsumption } from 'src/scripts/libraries/refuel/functions/fuelConsumption/registerFuelConsumption'
 import { useRouter } from 'vue-router'
 import { useMainLayoutStore } from 'src/layouts/stores'
-import { registerChartData } from 'src/pages/chart/scripts/models/registerChartData'
+import { registerChartData } from 'src/pages/graphData/components/chart/scripts/models/registerChartData'
 
 export async function initSettings() {
   const settingsStore = useSettingsStore()

@@ -1,4 +1,3 @@
-import { i18n } from 'src/boot/i18n'
 import { SelectOption } from 'src/scripts/models'
 import { useI18n } from 'vue-i18n'
 import messages from '../../i18n'

@@ -88,6 +88,7 @@
 
 <script setup lang="ts">
 import GraphCard from 'src/pages/graphData/components/GraphCard.vue'
+import ChartPage from 'src/pages/graphData/components/chart/ChartPage.vue'
 import { ref, computed, onMounted, onUnmounted } from 'vue'
 import packageJson from '../../../package.json'
 import { useSettingsStore } from 'src/pages/settings/stores'
@@ -104,7 +105,6 @@ import { Container, Draggable, DropResult } from 'vue3-smooth-dnd'
 import { App } from '@capacitor/app'
 import { initSettings } from 'src/scripts/initSettings'
 import { SplashScreen } from '@capacitor/splash-screen'
-import ChartPage from 'src/pages/chart/ChartPage.vue'
 
 const $q = useQuasar()
 $q.dark.set('auto')
