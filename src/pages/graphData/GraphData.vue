@@ -7,7 +7,7 @@
             <q-btn @click="() => (showChart = false)" icon="close" flat></q-btn>
           </div>
         </div>
-        <chart-page></chart-page>
+        <chart-page />
       </div>
     </q-dialog>
     <div
@@ -168,8 +168,9 @@ onMounted(async () => {
   await graphDataStore.readGraphData()
   App.removeAllListeners()
   await App.addListener('backButton', () => {
-    if (!editOrder.value) App.exitApp()
-    editOrderFun(false)
+    if (showChart.value) showChart.value = false
+    else if (!editOrder.value) App.exitApp()
+    else editOrderFun(false)
   })
   clearTimeout(timeOut)
   loading.value = false
