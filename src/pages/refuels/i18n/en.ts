@@ -15,7 +15,6 @@ export default {
     distanceDriven: 'Distance driven',
     refueledAmount: 'Refueled amount',
     refuelDate: 'Refuel date',
-    close: 'Close',
     refuelTime: 'Refuel time'
   },
   filterRefuelsForm: {

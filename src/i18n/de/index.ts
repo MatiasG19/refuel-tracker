@@ -31,6 +31,9 @@ export default {
         cancel: 'Abbrechen',
         confirm: 'Bestätigen'
       }
+    },
+    inputs: {
+      ok: 'OK'
     }
   },
   form: {

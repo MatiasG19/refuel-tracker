@@ -7,10 +7,10 @@
     @mousedown.prevent
   >
     <q-popup-proxy transition-show="scale" transition-hide="scale">
-      <q-date
+      <q-time
         :modelValue="modelValue"
         @update:modelValue="$emit('update:modelValue', $event)"
-        no-unset
+        format24h
       >
         <div class="row items-center justify-end">
           <q-btn
@@ -18,9 +18,8 @@
             color="primary"
             flat
             :label="t('components.inputs.ok')"
-          />
-        </div>
-      </q-date>
+          /></div
+      ></q-time>
     </q-popup-proxy>
   </c-input>
 </template>
@@ -42,6 +41,9 @@ defineProps({
   },
   rules: {
     type: null
+  },
+  format24h: {
+    type: Boolean
   }
 })
 
