@@ -20,7 +20,7 @@
           :label="i18n.global.t('form.cancel')"
           no-caps
           class="form-btn"
-          @click="$router.push('/refuels')"
+          @click="router.push('/refuels')"
         />
         <q-space />
         <q-btn

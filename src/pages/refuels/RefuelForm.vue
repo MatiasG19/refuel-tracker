@@ -44,50 +44,19 @@
           max50Characters
         ]"
       />
-
-      <c-input
-        :value="refuel.refuelDate"
+      <c-date
+        :modelValue="refuel.refuelDate"
+        @update:modelValue="(evt: string) => updateDate(evt)"
         :label="t('refuelsForm.refuelDate')"
         :rules="[requiredFieldRule]"
-      >
-        <q-popup-proxy transition-show="scale" transition-hide="scale">
-          <q-date
-            :modelValue="refuel.refuelDate"
-            @update:modelValue="evt => updateDate(evt)"
-          />
-          <div class="row items-center justify-end">
-            <q-btn
-              v-close-popup
-              :label="t('refuelsForm.close')"
-              color="primary"
-              flat
-            />
-          </div>
-        </q-popup-proxy>
-      </c-input>
-
-      <c-input
-        :value="refuel.refuelTime"
+      />
+      <c-time
+        :modelValue="refuel.refuelTime"
+        @update:modelValue="(evt: string) => updateTime(evt)"
         :label="t('refuelsForm.refuelTime')"
         :rules="[requiredFieldRule]"
-      >
-        <q-popup-proxy transition-show="scale" transition-hide="scale">
-          <q-time
-            :modelValue="refuel.refuelTime"
-            @update:modelValue="evt => updateTime(evt!)"
-            format24h
-          />
-          <div class="row items-center justify-end">
-            <q-btn
-              v-close-popup
-              :label="t('refuelsForm.close')"
-              color="primary"
-              flat
-            />
-          </div>
-        </q-popup-proxy>
-      </c-input>
-
+        format24h
+      />
       <div class="row">
         <q-btn
           color="negative"
@@ -114,6 +83,8 @@ import { onMounted, onBeforeUnmount, toRaw, reactive } from 'vue'
 import { date as QuasarDate } from 'quasar'
 import { useRouter } from 'vue-router'
 import CInput from 'src/components/inputs/CInput.vue'
+import CDate from 'src/components/inputs/CDate.vue'
+import CTime from 'src/components/inputs/CTime.vue'
 import {
   requiredFieldRule,
   numbersOnlyRule,
