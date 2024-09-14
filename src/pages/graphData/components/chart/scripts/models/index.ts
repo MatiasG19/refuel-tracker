@@ -2,8 +2,8 @@ import { Refuel, Vehicle } from 'src/scripts/libraries/refuel/models'
 
 export enum Group {
   NoGrouping,
-  Year,
-  Month
+  Month,
+  Year
 }
 
 export enum DataSource {

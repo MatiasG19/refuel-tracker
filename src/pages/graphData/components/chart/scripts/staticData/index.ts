@@ -11,11 +11,11 @@ export function getGrouByOptions(): SelectOption[] {
     },
     {
       value: 1,
-      label: t('chart.groupByOptions.year')
+      label: t('chart.groupByOptions.month')
     },
     {
       value: 2,
-      label: t('chart.groupByOptions.month')
+      label: t('chart.groupByOptions.year')
     }
   ]
 }
