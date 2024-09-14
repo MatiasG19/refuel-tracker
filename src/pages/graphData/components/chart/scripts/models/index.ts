@@ -19,8 +19,11 @@ export class AbstractChartData implements IChartDataFun {
   constructor() {}
 
   getChartData(
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     groupBy: Group,
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     vehicle: Vehicle,
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     refuels: Refuel[]
   ): IChartData {
     return { labels: [], data: [] }
