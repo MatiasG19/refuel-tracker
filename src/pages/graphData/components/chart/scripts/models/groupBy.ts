@@ -20,37 +20,43 @@ export function groupBy(refuels: Refuel[], groupBy: Group): GroupedRefuels {
 }
 
 function groupByNoGrouping(refuels: Refuel[]): GroupedRefuels {
-  return refuels.reduce((acc: GroupedRefuels, refuel) => {
-    const key = QuasarDate.formatDate(refuel.date, 'YYYY/MM/DD HH:mm')
-    if (!acc[key]) acc[key] = []
-    acc[key].push(refuel)
-    return acc
-  }, {})
+  return refuels
+    .sort((a, b) => a.date.getTime() - b.date.getTime())
+    .reduce((acc: GroupedRefuels, refuel) => {
+      const key = QuasarDate.formatDate(refuel.date, 'YYYY/MM/DD HH:mm')
+      if (!acc[key]) acc[key] = []
+      acc[key].push(refuel)
+      return acc
+    }, {})
 }
 
 function groupByMonth(refuels: Refuel[]): GroupedRefuels {
-  return refuels.reduce((acc: GroupedRefuels, refuel) => {
-    const year = refuel.date.getFullYear()
-    const month = refuel.date.getMonth() + 1 // getMonth() returns 0-based month
-    const key = `${year}-${month.toString().padStart(2, '0')}`
+  return refuels
+    .sort((a, b) => a.date.getTime() - b.date.getTime())
+    .reduce((acc: GroupedRefuels, refuel) => {
+      const year = refuel.date.getFullYear()
+      const month = refuel.date.getMonth() + 1 // getMonth() returns 0-based month
+      const key = `${year}-${month.toString().padStart(2, '0')}`
 
-    if (!acc[key]) acc[key] = []
+      if (!acc[key]) acc[key] = []
 
-    acc[key].push(refuel)
+      acc[key].push(refuel)
 
-    return acc
-  }, {})
+      return acc
+    }, {})
 }
 
 function groupByYear(refuels: Refuel[]): GroupedRefuels {
-  return refuels.reduce((acc: GroupedRefuels, refuel) => {
-    const year = refuel.date.getFullYear()
-    const key = year.toString()
+  return refuels
+    .sort((a, b) => a.date.getTime() - b.date.getTime())
+    .reduce((acc: GroupedRefuels, refuel) => {
+      const year = refuel.date.getFullYear()
+      const key = year.toString()
 
-    if (!acc[key]) acc[key] = []
+      if (!acc[key]) acc[key] = []
 
-    acc[key].push(refuel)
+      acc[key].push(refuel)
 
-    return acc
-  }, {})
+      return acc
+    }, {})
 }

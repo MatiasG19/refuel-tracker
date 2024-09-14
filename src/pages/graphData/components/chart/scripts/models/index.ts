@@ -2,8 +2,8 @@ import { Refuel, Vehicle } from 'src/scripts/libraries/refuel/models'
 
 export enum Group {
   NoGrouping,
-  Year,
-  Month
+  Month,
+  Year
 }
 
 export enum DataSource {
@@ -19,8 +19,11 @@ export class AbstractChartData implements IChartDataFun {
   constructor() {}
 
   getChartData(
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     groupBy: Group,
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     vehicle: Vehicle,
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     refuels: Refuel[]
   ): IChartData {
     return { labels: [], data: [] }
