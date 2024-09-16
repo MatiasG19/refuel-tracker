@@ -26,10 +26,10 @@
     "mitt": "^3.0.1",
     "pinia": "^2.2.2",
     "quasar": "^2.16.11",
-    "vue": "^3.5.3",
+    "vue": "^3.5.5",
     "vue-chartjs": "^5.3.1",
     "vue-i18n": "^9.14.0",
-    "vue-router": "^4.4.3",
+    "vue-router": "^4.4.5",
     "vue3-smooth-dnd": "^0.0.6"
   },
   "devDependencies": {
