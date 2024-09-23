@@ -25,7 +25,7 @@
     "dexie-export-import": "^4.1.2",
     "mitt": "^3.0.1",
     "pinia": "^2.2.2",
-    "quasar": "^2.16.11",
+    "quasar": "^2.17.0",
     "vue": "^3.5.8",
     "vue-chartjs": "^5.3.1",
     "vue-i18n": "^9.14.0",
