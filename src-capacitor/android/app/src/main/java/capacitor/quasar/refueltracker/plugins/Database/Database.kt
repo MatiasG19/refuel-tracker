@@ -15,10 +15,10 @@ class RefuelTrackerDb(private var applicationContext: Context) {
 
   fun getContext(): AppDatabase {
     if(db == null)
-    db = Room.databaseBuilder(
-      applicationContext,
-      AppDatabase::class.java, "RefuelTracker.db"
-    ).build()
+      db = Room.databaseBuilder(
+        applicationContext,
+        AppDatabase::class.java, "RefuelTracker.db"
+      ).build()
     return db!!
   }
 }
