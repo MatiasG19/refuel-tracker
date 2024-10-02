@@ -2,7 +2,6 @@ apply plugin: 'com.android.application'
 
 android {
     namespace "capacitor.quasar.refueltracker"
-    compileSdkVersion rootProject.ext.compileSdkVersion
     defaultConfig {
         applicationId "capacitor.quasar.refueltracker"
         minSdkVersion rootProject.ext.minSdkVersion
@@ -38,6 +37,9 @@ dependencies {
     androidTestImplementation "androidx.test.espresso:espresso-core:$androidxEspressoCoreVersion"
     implementation project(':capacitor-cordova-android-plugins')
     implementation "androidx.documentfile:documentfile:1.0.1"
+    def room_version = "2.6.1"
+    implementation "androidx.room:room-runtime:$room_version"
+    annotationProcessor "androidx.room:room-compiler:$room_version"
 }
 
 apply from: 'capacitor.build.gradle'
