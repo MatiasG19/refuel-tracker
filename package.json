@@ -20,7 +20,7 @@
     "splashicons": "icongenie generate --mode capacitor --filter splashscreen --splashscreen-icon-ratio 30 --theme-color 8488ff --skip-trim --icon ./.icons/icon.png"
   },
   "dependencies": {
-    "@quasar/extras": "^1.16.14",
+    "@quasar/extras": "^1.16.15",
     "@vueuse/core": "^10.11.1",
     "dexie": "^3.2.7",
     "dexie-export-import": "^4.1.4",
@@ -50,7 +50,7 @@
     "eslint": "^8.57.1",
     "eslint-config-prettier": "^9.1.0",
     "eslint-plugin-vue": "^9.32.0",
-    "prettier": "^3.4.1",
+    "prettier": "^3.4.2",
     "typescript": "^5.7.2",
     "vitest": "^1.6.0"
   },
