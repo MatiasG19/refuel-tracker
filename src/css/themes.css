@@ -1,0 +1,39 @@
+/* styles.css */
+:root {
+  --font-family: "Source Sans Pro", sans-serif;
+  --primary-color: #6E6B9D;
+  --secondary-color: #C7C4F7;
+  --accent-color: #60EFB3;
+  --dark-color: #3A395B;
+  --light-color: #c5c5dd;
+  --positive-color: #60EFB3;
+  --negative-color: #EF60CB;
+  --info-color: #31CCEC;
+  --warning-color: #ffd45d;
+}
+
+.theme-space-station {
+  --font-family: "Source Sans Pro", sans-serif;
+  --primary-color: #6E6B9D;
+  --secondary-color: #C7C4F7;
+  --accent-color: #60EFB3;
+  --dark-color: #3A395B;
+  --light-color: #c5c5dd;
+  --positive-color: #60EFB3;
+  --negative-color: #EF60CB;
+  --info-color: #31CCEC;
+  --warning-color: #ffd45d;
+}
+
+.theme-light {
+  --font-family: "Source Sans Pro", sans-serif;
+  --primary-color: #9d6b9d;
+  --secondary-color: #C7C4F7;
+  --accent-color: #60EFB3;
+  --dark-color: #3A395B;
+  --light-color: #c5ddc7;
+  --positive-color: #efe160;
+  --negative-color: #EF60CB;
+  --info-color: #31CCEC;
+  --warning-color: #ffd45d;
+}

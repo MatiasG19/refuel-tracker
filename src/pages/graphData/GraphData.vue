@@ -1,7 +1,8 @@
 <template>
   <q-page class="items-center">
+    <q-btn @click="toggleTheme">Toggle theme</q-btn>
     <q-dialog v-model="showChart" maximized transition-duration="150">
-      <div class="bg-space-station">
+      <div :class="currentTheme">
         <div class="column items-end">
           <div class="col">
             <q-btn @click="() => (showChart = false)" icon="close" flat></q-btn>
@@ -181,4 +182,12 @@ onUnmounted(() => {
   mainLayoutStore.hideButton(mainLayoutStore.headerButton)
   App.removeAllListeners()
 })
+
+const currentTheme = ref('theme-light')
+
+function toggleTheme() {
+  currentTheme.value =
+    currentTheme.value === 'theme-light' ? 'theme-space-station' : 'theme-light'
+  document.documentElement.className = currentTheme.value
+}
 </script>
