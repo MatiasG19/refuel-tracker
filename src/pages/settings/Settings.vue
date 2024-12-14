@@ -38,7 +38,7 @@
             <q-toggle
               v-model="plateNumberInTitle"
               @update:model-value="togglePlateNumberInTitle"
-              color="positive"
+              color="accent"
             />
           </q-item-section>
         </q-item>
@@ -59,7 +59,7 @@
               <q-toggle
                 v-model="autoBackup"
                 @update:model-value="toggleAutoBackup"
-                color="positive"
+                color="accent"
               />
             </q-item-section>
           </q-item>
@@ -73,7 +73,7 @@
             <q-item-section avatar>
               <q-btn
                 :label="t('sections.backup.change')"
-                color="positive"
+                color="accent"
                 :disable="!autoBackup"
                 @click="chooseAutoBackupFolder"
               />
@@ -89,7 +89,7 @@
           <q-item-section avatar>
             <q-btn
               :label="t('sections.backup.export')"
-              color="positive"
+              color="accent"
               @click="exportBackup"
             />
           </q-item-section>
@@ -104,7 +104,7 @@
           <q-item-section avatar>
             <q-btn
               :label="t('sections.backup.import')"
-              color="positive"
+              color="accent"
               @click="importBackup"
             />
           </q-item-section>
