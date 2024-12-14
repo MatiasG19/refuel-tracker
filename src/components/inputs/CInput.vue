@@ -9,6 +9,7 @@
     :type="type"
     :dark="true"
     popup-content-class="bg-space-station"
+    label-color="secondary"
   >
     <slot></slot>
   </q-input>

@@ -8,8 +8,9 @@
     :label="label"
     map-options
     emit-value
-    :dark="true"
+    :dark="false"
     popup-content-class="bg-space-station"
+    label-color="secondary"
   >
     <slot></slot>
   </q-select>
