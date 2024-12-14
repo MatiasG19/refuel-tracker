@@ -2,7 +2,7 @@
   <q-page class="items-center">
     <q-btn @click="toggleTheme">Toggle theme</q-btn>
     <q-dialog v-model="showChart" maximized transition-duration="150">
-      <div :class="currentTheme">
+      <div class="bg-space-station">
         <div class="column items-end">
           <div class="col">
             <q-btn @click="() => (showChart = false)" icon="close" flat></q-btn>

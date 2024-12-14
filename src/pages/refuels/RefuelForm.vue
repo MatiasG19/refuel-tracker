@@ -1,7 +1,9 @@
 <template>
   <div>
     <q-form @submit="onSubmit" class="q-px-md q-gutter-md">
-      <q-badge>{{ settingsStore.getVehicleName() }}</q-badge>
+      <q-badge class="space-station">{{
+        settingsStore.getVehicleName()
+      }}</q-badge>
       <c-input
         type="tel"
         :value="refuel.payedAmount"

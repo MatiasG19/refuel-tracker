@@ -1,9 +1,9 @@
 <template>
   <q-page class="q-pa-md">
     <h5 class="q-mt-md text-center">
-      <span style="color: #ef60cb">{{ t('greetingPart1') }}</span>
+      <span class="negative">{{ t('greetingPart1') }}</span>
       {{ t('greetingPart2') }}
-      <span style="color: #60efb3">{{ packageJson.productName }}</span
+      <span class="positive">{{ packageJson.productName }}</span
       >{{ t('greetingPart3') }}
       <q-icon name="rocket_launch" color="accent"></q-icon>
     </h5>

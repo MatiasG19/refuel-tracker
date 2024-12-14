@@ -1,29 +1,29 @@
 // space-station
 .space-station {
-    font-family: "Source Sans Pro", sans-serif;
+    font-family: var(--font-family);
     color: var(--light-color);
     background-color: var(--primary-color);
     opacity: 1.0;
 }
 
 .bg-space-station {
-    font-family: "Source Sans Pro", sans-serif;
-    color: #c5c5dd;
-    background-color: #3A395B;
+    font-family: var(--font-family);
+    color: var(--light-color);
+    background-color: var(--dark-color);
     opacity: 1.0;
 }
 
 .el-space-station {
-  font-family: "Source Sans Pro", sans-serif;
-  color: #3A395B;
-  background-color: #c5c5dd;
+  font-family: var(--font-family);
+  color: var(--dark-color);
+  background-color: var(--light-color);
   opacity: 1.0;
 }
 
 .accent-space-station {
-    font-family: "Source Sans Pro", sans-serif;
-    color: #60EFB3;
-    background-color: #6E6B9D;
+    font-family: var(--font-family);
+    color: var(--accent-color);
+    background-color: var(--primary-color);
 }
 
 /****************************/
