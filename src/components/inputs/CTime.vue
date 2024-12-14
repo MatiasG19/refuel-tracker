@@ -8,6 +8,7 @@
   >
     <q-popup-proxy transition-show="scale" transition-hide="scale">
       <q-time
+        text-color="secondary"
         :modelValue="modelValue"
         @update:modelValue="$emit('update:modelValue', $event)"
         format24h
