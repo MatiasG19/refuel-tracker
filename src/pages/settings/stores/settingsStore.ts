@@ -16,7 +16,7 @@ export const useSettingsStore = defineStore('settingsStore', () => {
   const plateNumberInTitleActive = ref<boolean>(false)
   const autoBackupActive = ref<boolean>(false)
   const autoBackupPath = ref<string>('')
-  const selectedColorThemeId = ref<number>(1)
+  const selectedColorThemeId = ref<number>(0)
   const selectedLanguageId = ref<number>(1)
   const areaHeight = ref(0)
   const settingsId = 1

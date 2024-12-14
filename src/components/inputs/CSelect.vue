@@ -8,7 +8,7 @@
     :label="label"
     map-options
     emit-value
-    :dark="false"
+    :dark="dark"
     popup-content-class="bg-space-station"
     label-color="secondary"
   >
@@ -17,6 +17,15 @@
 </template>
 
 <script setup lang="ts">
+import { useSettingsStore } from 'src/pages/settings/stores/settingsStore'
+import { getColorThemes } from 'src/scripts/staticData/colorThemes'
+import { computed } from 'vue'
+
+const settingsStore = useSettingsStore()
+const dark = computed(
+  () => getColorThemes()[settingsStore.selectedColorThemeId].dark
+)
+
 defineProps({
   value: {
     type: String,
