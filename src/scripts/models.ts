@@ -25,3 +25,10 @@ export class Language {
 export const LanugageId = {
   System: 1
 }
+
+export type ColorTheme = {
+  value: number
+  label: string
+  dark: boolean
+  className: string
+}

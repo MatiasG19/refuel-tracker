@@ -19,12 +19,11 @@
         />
 
         <c-select
-          v-if="false"
           class="q-pb-md"
           v-model="colorTheme"
           @update:model-value="changeColorTheme"
           :options="colorThemeOptions"
-          :label="t('sections.settings.colorTheme')"
+          :label="t('sections.settings.colorTheme.label')"
         />
 
         <q-item tag="label">
@@ -116,7 +115,7 @@
 </template>
 
 <script setup lang="ts">
-import { ref, onMounted, onUnmounted } from 'vue'
+import { ref, onMounted, onUnmounted, computed } from 'vue'
 import CSelect from 'src/components/inputs/CSelect.vue'
 import { useSettingsStore } from 'src/pages/settings/stores/settingsStore'
 import { exportDB, importDB } from 'src/scripts/libraries/backup/backup'
@@ -131,6 +130,7 @@ import {
 } from 'src/scripts/libraries/utils/language'
 import { LanugageId } from '../../scripts/models'
 import { useMainLayoutStore } from 'src/layouts/stores'
+import { getColorThemes } from 'src/scripts/staticData/colorThemes'
 
 const { t } = useI18n({ useScope: 'global', messages })
 const settingsStore = useSettingsStore()
@@ -144,34 +144,13 @@ let openDocumentTreeResultAction: OpenDocumentTreeResultAction
 
 const currentLanguage = ref(1)
 const languageOptions = ref<SelectOption[]>(getLanguageOptions())
-const colorThemeOptions = [
-  {
-    label: 'Space Station',
-    value: 1
-  },
-  {
-    label: 'Dark',
-    value: 2
-  },
-  {
-    label: 'Light',
-    value: 3
-  },
-  {
-    label: 'High Contrast',
-    value: 4
-  },
-  {
-    label: 'Red Green Weakness',
-    value: 5
-  }
-]
-
+const colorThemeOptions = computed(() => getColorThemes())
 const colorTheme = ref(settingsStore.selectedColorThemeId)
 const plateNumberInTitle = ref(settingsStore.plateNumberInTitleActive)
 const autoBackup = ref(settingsStore.autoBackupActive)
 
 function changeColorTheme(value: number) {
+  document.documentElement.className = colorThemeOptions.value[value].className
   settingsStore.changeColorTheme(value)
 }
 

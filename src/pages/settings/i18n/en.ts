@@ -4,7 +4,14 @@ export default {
     settings: {
       title: 'Settings',
       language: 'Language',
-      colorTheme: 'Color theme',
+      colorTheme: {
+        label: 'Color theme',
+        themes: {
+          spaceStation: 'Default',
+          light: 'Light',
+          dark: 'Dark'
+        }
+      },
       licensePlateInTitle: 'Show license plate in title'
     },
     backup: {
