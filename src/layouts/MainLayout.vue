@@ -40,9 +40,9 @@
       class="space-station"
     >
       <q-list>
-        <q-item-label header class="space-station">
-          Refuel Tracker
-        </q-item-label>
+        <q-item-label header
+          ><span class="space-station">Refuel Tracker</span></q-item-label
+        >
 
         <EssentialLink
           v-for="link in linkList"
