@@ -27,7 +27,7 @@
       <q-carousel-slide name="rate" class="column no-wrap flex-center">
         <div class="q-mt-md text-center">
           <div class="column items-center">
-            <div class="q-mb-md text-center">
+            <div class="q-mb-md text-center space-station">
               {{ t('slide4') }}
             </div>
             <q-rating
@@ -43,7 +43,7 @@
       </q-carousel-slide>
       <q-carousel-slide name="code" class="column no-wrap flex-center">
         <div class="q-mt-md text-center">
-          <div class="q-mb-md text-center">
+          <div class="q-mb-md text-center space-station">
             {{ packageJson.productName }}{{ t('slide1') }}
           </div>
           <q-btn
@@ -59,7 +59,7 @@
       <q-carousel-slide name="issue" class="column no-wrap flex-center">
         <div class="q-mt-md text-center">
           <div class="column items-center">
-            <div class="q-mb-md text-center">
+            <div class="q-mb-md text-center space-station">
               {{ t('slide2') }}
             </div>
             <q-btn
@@ -76,7 +76,7 @@
       <q-carousel-slide name="star" class="column no-wrap flex-center">
         <div class="q-mt-md text-center">
           <div class="column items-center">
-            <div class="q-mb-md text-center">
+            <div class="q-mb-md text-center space-station">
               {{ t('slide3') }}
             </div>
             <q-btn
