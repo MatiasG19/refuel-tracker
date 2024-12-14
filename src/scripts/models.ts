@@ -22,7 +22,7 @@ export class Language {
   codeString!: string
 }
 
-export const LanugageId = {
+export const LanguageId = {
   System: 1
 }
 

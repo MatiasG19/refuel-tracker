@@ -1,4 +1,4 @@
-import { LanugageId, SelectOption } from '../../models'
+import { LanguageId, SelectOption } from '../../models'
 import { Device } from '@capacitor/device'
 import { i18n } from 'src/boot/i18n'
 import { getLanguages } from 'src/scripts/staticData/languages'
@@ -16,7 +16,7 @@ export function getLanguageOptions(): SelectOption[] {
 export async function setI18nLanguage(languageId: number) {
   const locale = i18n.global.locale
   if (languageId) {
-    if (languageId === LanugageId.System) {
+    if (languageId === LanguageId.System) {
       const code = await Device.getLanguageCode()
       locale.value = getLanguages().filter(
         l => code.value === l.codeString

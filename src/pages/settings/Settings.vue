@@ -11,7 +11,7 @@
           v-model="currentLanguage"
           @update:model-value="changeLanguage"
           :options="[
-            { label: t('systemLanguage'), value: LanugageId.System },
+            { label: t('systemLanguage'), value: LanguageId.System },
             ...languageOptions
           ]"
           class="q-pb-md"
@@ -128,7 +128,7 @@ import {
   getLanguageOptions,
   setI18nLanguage
 } from 'src/scripts/libraries/utils/language'
-import { LanugageId } from '../../scripts/models'
+import { LanguageId } from '../../scripts/models'
 import { useMainLayoutStore } from 'src/layouts/stores'
 import { getColorThemes } from 'src/scripts/staticData/colorThemes'
 
