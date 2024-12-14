@@ -1,7 +1,11 @@
 <template>
   <div class="q-pa-md q-gutter-md">
     <q-list>
-      <q-item-label header>{{ t('sections.settings.title') }}</q-item-label>
+      <q-item-label header
+        ><span class="bg-space-station">{{
+          t('sections.settings.title')
+        }}</span></q-item-label
+      >
       <q-list class="q-pb-md">
         <c-select
           v-model="currentLanguage"
@@ -25,9 +29,11 @@
 
         <q-item tag="label">
           <q-item-section>
-            <q-item-label>{{
-              t('sections.settings.licensePlateInTitle')
-            }}</q-item-label>
+            <q-item-label
+              ><span class="bg-space-station">{{
+                t('sections.settings.licensePlateInTitle')
+              }}</span></q-item-label
+            >
           </q-item-section>
           <q-item-section avatar>
             <q-toggle
@@ -39,7 +45,11 @@
         </q-item>
       </q-list>
 
-      <q-item-label header>{{ t('sections.backup.title') }}</q-item-label>
+      <q-item-label header
+        ><span class="bg-space-station">{{
+          t('sections.backup.title')
+        }}</span></q-item-label
+      >
       <q-list class="q-pb-md">
         <template v-if="false">
           <q-item tag="label">
@@ -73,7 +83,9 @@
         </template>
         <q-item tag="label">
           <q-item-section>
-            <q-item-label>{{ t('sections.backup.export') }}</q-item-label>
+            <q-item-label class="bg-space-station">{{
+              t('sections.backup.export')
+            }}</q-item-label>
           </q-item-section>
           <q-item-section avatar>
             <q-btn
@@ -86,7 +98,9 @@
 
         <q-item tag="label">
           <q-item-section>
-            <q-item-label>{{ t('sections.backup.import') }}</q-item-label>
+            <q-item-label class="bg-space-station">{{
+              t('sections.backup.import')
+            }}</q-item-label>
           </q-item-section>
           <q-item-section avatar>
             <q-btn
