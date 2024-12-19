@@ -20,7 +20,12 @@ async function getVehicles(): Promise<Vehicle[]> {
 }
 
 async function addVehicle(vehicle: Vehicle): Promise<number> {
-  return (await db.vehicles.add(vehicle)) as number
+  return (await db.vehicles.add({
+    name: vehicle.name,
+    plateNumber: vehicle.plateNumber,
+    currencyUnit: vehicle.currencyUnit,
+    fuelUnitId: vehicle.fuelUnitId
+  } as Vehicle)) as number
 }
 
 async function updateVehicle(vehicle: Vehicle) {
