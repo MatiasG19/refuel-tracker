@@ -55,7 +55,7 @@ import {
   requiredFieldRule,
   max50Characters
 } from 'src/scripts/libraries/validation'
-import { SelectOption } from 'src/scripts/models'
+import { type SelectOption } from 'src/scripts/models'
 import { useSettingsStore } from 'src/pages/settings/stores'
 import { useVehicleStore } from './stores'
 import { useMainLayoutStore } from 'src/layouts/stores'

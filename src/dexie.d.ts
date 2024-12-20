@@ -1,6 +1,6 @@
-import ExportOptions from 'dexie'
-import ImportOptions from 'dexie'
-import StaticImportOptions from 'dexie'
+import type ExportOptions from 'dexie'
+import type ImportOptions from 'dexie'
+import type StaticImportOptions from 'dexie'
 
 declare module 'dexie' {
   // Extend methods on db

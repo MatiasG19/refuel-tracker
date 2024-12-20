@@ -1,4 +1,4 @@
-import { Refuel } from 'src/scripts/libraries/refuel/models'
+import type { Refuel } from 'src/scripts/libraries/refuel/models'
 import { Group } from '.'
 import { date as QuasarDate } from 'quasar'
 

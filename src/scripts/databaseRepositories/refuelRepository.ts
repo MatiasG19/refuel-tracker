@@ -1,5 +1,5 @@
 import { db } from 'src/boot/dexie'
-import { Refuel } from '../libraries/refuel/models'
+import type { Refuel } from '../libraries/refuel/models'
 
 async function getRefuel(id: number): Promise<Refuel | null> {
   return (await db.refuels.filter(r => r.id === id).first()) ?? null

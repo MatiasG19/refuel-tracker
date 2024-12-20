@@ -1,5 +1,5 @@
 import { db } from 'src/boot/dexie'
-import { GraphData } from 'src/pages/graphData/scripts/models'
+import type { GraphData } from 'src/pages/graphData/scripts/models'
 
 async function getGraphSettings() {
   return await db.graphSettings.toArray()

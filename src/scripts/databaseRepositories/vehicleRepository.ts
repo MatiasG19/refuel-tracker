@@ -1,5 +1,5 @@
 import { db } from 'src/boot/dexie'
-import { Vehicle } from '../libraries/refuel/models'
+import type { Vehicle } from '../libraries/refuel/models'
 import fuelUnitRepository from './fuelUnitRepository'
 
 async function getVehicle(id: number): Promise<Vehicle | null> {

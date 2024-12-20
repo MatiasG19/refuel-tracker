@@ -1,4 +1,4 @@
-import { Period } from 'src/pages/graphData/scripts/models'
+import type { Period } from 'src/pages/graphData/scripts/models'
 import { getPeriods as returnPeriods } from 'src/scripts/staticData/periods'
 
 async function getPeriods(): Promise<Period[]> {

@@ -38,7 +38,7 @@ import { onMounted, onUnmounted } from 'vue'
 import { emitter } from 'src/boot/mitt'
 import { useSettingsStore } from 'src/pages/settings/stores/settingsStore'
 import { useVehicleStore } from './stores/vehicleStore'
-import { Vehicle } from 'src/scripts/libraries/refuel/models'
+import { type Vehicle } from 'src/scripts/libraries/refuel/models'
 import { useQuasar } from 'quasar'
 import { useI18n } from 'vue-i18n'
 import { i18n } from 'src/boot/i18n'
@@ -60,7 +60,7 @@ emitter.on('showVehicleOptionsDialog', id =>
       action: () => {
         ;(async () => {
           const vehicle = await vehicleStore.getVehicle(id)
-          // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+
           await settingsStore.changeSelectedVehicle({ ...vehicle! })
           router.push('/refuels')
         })()

@@ -143,8 +143,8 @@ const refuels = computed(() => {
   return items
 })
 
-function getRefuels(from: number, size: number): ReadonlyArray<Refuel> {
-  const items = []
+function getRefuels(from: number, size: number): Array<Refuel> {
+  const items: Array<Refuel> = []
   for (let i = 0; i < size; i++) {
     items.push(refuels.value[from + i])
   }
