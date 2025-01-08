@@ -134,7 +134,7 @@ async function updateChart() {
     await chartStore.readData(settingsStore.selectedVehicleId)
 
   chartData.value.labels = chartStore.getChartData().labels
-  chartData.value.datasets[0].data = chartStore.getChartData().data
+  chartData.value.datasets[0]!.data = chartStore.getChartData().data
   updated.value = false
   setTimeout(() => {
     updated.value = true
