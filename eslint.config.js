@@ -81,10 +81,14 @@ export default [
     // add your custom rules here
     rules: {
       'prefer-promise-reject-errors': 'off',
-      '@typescript-eslint/consistent-type-imports': [
-        'error',
-        { prefer: 'type-imports' }
-      ],
+      // '@typescript-eslint/consistent-type-imports': [
+      //   'error',
+      //   { prefer: 'type-imports' }
+      // ],
+      '@typescript-eslint/consistent-type-imports': 'off',
+      'no-prototype-builtins': 'warn',
+      'vue/multi-word-component-names': 'warn',
+      '@typescript-eslint/no-empty-object-type': 'warn',
 
       // allow debugger during development only
       'no-debugger': process.env.NODE_ENV === 'production' ? 'error' : 'off'
