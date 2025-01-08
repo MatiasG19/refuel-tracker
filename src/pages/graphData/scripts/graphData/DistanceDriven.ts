@@ -3,7 +3,7 @@ import { Vehicle } from 'src/scripts/libraries/refuel/models'
 import { AbstractGraphData } from '../abstract/AbstractGraphData'
 
 export class DistanceDriven extends AbstractGraphData {
-  constructor(protected override  vehicle: Vehicle) {
+  constructor(protected override vehicle: Vehicle) {
     super(vehicle)
   }
 

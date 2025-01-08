@@ -7,7 +7,7 @@ export class MoneySpent extends AbstractGraphData {
     super(vehicle)
   }
 
-  protected override  setTitle(): string {
+  protected override setTitle(): string {
     return 'graphData.moneySpent'
   }
 
@@ -15,7 +15,7 @@ export class MoneySpent extends AbstractGraphData {
     return vehicleMoneySpent(vehicle).toFixedIfNotZero(2)
   }
 
-  protected override  getUnit(vehicle: Vehicle): string {
+  protected override getUnit(vehicle: Vehicle): string {
     return vehicle.currencyUnit
   }
 }

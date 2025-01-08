@@ -183,8 +183,8 @@ onBeforeMount(async () => {
   if (props.id) {
     const id = parseInt(props.id)
     if (id)
-      scrollToIndex.value = refuelStore.vehicle!
-        .refuels!.sort((a, b) => b.date.getTime() - a.date.getTime())
+      scrollToIndex.value = refuelStore
+        .vehicle!.refuels!.sort((a, b) => b.date.getTime() - a.date.getTime())
         .findIndex(r => r.id == id)
   }
 

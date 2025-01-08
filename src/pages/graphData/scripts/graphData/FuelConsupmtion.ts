@@ -7,7 +7,7 @@ export class FuelConsumption extends AbstractGraphData {
     super(vehicle)
   }
 
-  protected override  setTitle(): string {
+  protected override setTitle(): string {
     return 'graphData.fuelConsumption'
   }
 
@@ -15,7 +15,7 @@ export class FuelConsumption extends AbstractGraphData {
     return vehicleFuelConsumption(vehicle).toFixedIfNotZero(2)
   }
 
-  protected override  getUnit(vehicle: Vehicle): string {
+  protected override getUnit(vehicle: Vehicle): string {
     return vehicle.fuelUnit?.fuelConsumptionUnit ?? ''
   }
 }

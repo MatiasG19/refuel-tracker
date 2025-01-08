@@ -5,16 +5,14 @@ import fuelUnitRepository from './fuelUnitRepository'
 async function getVehicle(id: number): Promise<Vehicle | null> {
   const vehicle = await db.vehicles.filter(v => v.id === id).first()
   if (!vehicle) return null
-  vehicle.fuelUnit =
-    (await fuelUnitRepository.getFuelUnit(vehicle.fuelUnitId))!
+  vehicle.fuelUnit = (await fuelUnitRepository.getFuelUnit(vehicle.fuelUnitId))!
   return vehicle
 }
 
 async function getVehicles(): Promise<Vehicle[]> {
   const vehicles = await db.vehicles.toArray()
   for (const v of vehicles) {
-    v.fuelUnit =
-      (await fuelUnitRepository.getFuelUnit(v.fuelUnitId))!
+    v.fuelUnit = (await fuelUnitRepository.getFuelUnit(v.fuelUnitId))!
   }
   return vehicles
 }

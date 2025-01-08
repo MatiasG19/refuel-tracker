@@ -7,7 +7,7 @@ export class FuelPricing extends AbstractGraphData {
     super(vehicle)
   }
 
-  protected override  setTitle(): string {
+  protected override setTitle(): string {
     return 'graphData.fuelPricing'
   }
 
