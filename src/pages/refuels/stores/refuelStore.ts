@@ -48,7 +48,8 @@ export const useRefuelStore = defineStore('refuelStore', () => {
   }
 
   async function deleteRefuel(id: number) {
-    vehicle.value!.refuels = vehicle.value!.refuels?.filter(r => r.id !== id)
+    if (vehicle.value!.refuels)
+      vehicle.value!.refuels = vehicle.value!.refuels.filter(r => r.id !== id)
     await refuelRepository.deleteRefuel(id)
     await refuelDeletedEvent()
   }
