@@ -15,7 +15,7 @@ export class DistanceDriven extends AbstractChartData {
       chartData.labels.push(key)
       if (groupedData.hasOwnProperty(key)) {
         const v = { ...vehicle }
-        v.refuels = groupedData[key]
+        v.refuels = groupedData[key]!
         chartData.data.push(vehicleDistanceDriven(v).toFixedIfNotZero(1))
       }
     }

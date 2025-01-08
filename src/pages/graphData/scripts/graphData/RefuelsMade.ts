@@ -3,19 +3,19 @@ import { Vehicle } from 'src/scripts/libraries/refuel/models'
 import { AbstractGraphData } from '../abstract/AbstractGraphData'
 
 export class RefuelsMade extends AbstractGraphData {
-  constructor(protected vehicle: Vehicle) {
+  constructor(protected override vehicle: Vehicle) {
     super(vehicle)
   }
 
-  protected setTitle(): string {
+  protected override setTitle(): string {
     return 'graphData.refuelsMade'
   }
 
-  protected calculateValue(vehicle: Vehicle): string {
+  protected override calculateValue(vehicle: Vehicle): string {
     return vehicleRefuelsMade(vehicle).toString()
   }
 
-  protected getUnit(): string {
+  protected override getUnit(): string {
     return ''
   }
 }
