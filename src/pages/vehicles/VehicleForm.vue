@@ -82,9 +82,12 @@ const props = defineProps({
 })
 
 async function onSubmit() {
-  vehicle.value.fuelUnit =
-    (await fuelUnitRepository.getFuelUnit(vehicle.value.fuelUnitId)) ??
-    undefined
+  const fuelUnit = await fuelUnitRepository.getFuelUnit(
+    vehicle.value.fuelUnitId
+  )
+  if (!fuelUnit) return
+  vehicle.value.fuelUnit = fuelUnit
+
   if (routePath.includes('/add'))
     await vehicleStore.addVehicle({ ...vehicle.value })
   else if (routePath.includes('/edit')) {
