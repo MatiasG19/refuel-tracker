@@ -14,5 +14,8 @@
     "@capacitor/keyboard": "^6.0.3",
     "@capacitor/screen-orientation": "^6.0.3",
     "@capacitor/splash-screen": "^6.0.3"
+  },
+  "optionalDependencies": {
+    "sass-embedded-linux-x64": "^1.83.1"
   }
 }
