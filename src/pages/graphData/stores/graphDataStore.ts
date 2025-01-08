@@ -79,15 +79,15 @@ export const useGraphDataStore = defineStore('graphDataStore', () => {
     if (sign > 0) {
       for (let i = endIndex; i >= startIndex; i--) {
         const graph = graphDataValues.filter(g => g.sequence === i)[0]
-        graph.sequence += sign
+        graph!.sequence += sign
       }
     } else {
       for (let i = startIndex; i <= endIndex; i++) {
         const graph = graphDataValues.filter(g => g.sequence === i)[0]
-        graph.sequence += sign
+        graph!.sequence += sign
       }
     }
-    movedGraph.sequence = addedIndex + 1
+    movedGraph!.sequence = addedIndex + 1
     graphData.value = graphData.value.sort((a, b) => a.sequence - b.sequence)
   }
 
