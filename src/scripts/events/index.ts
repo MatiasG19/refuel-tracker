@@ -64,7 +64,7 @@ async function vehicleDeletedEvent(): Promise<void> {
   graphDataStore.graphData.length = 0
   refuelStore.vehicle = null
   await settingsStore.changeSelectedVehicle(
-    vehicleStore.vehicles.length ? vehicleStore.vehicles[0] : null
+    vehicleStore.vehicles.length ? vehicleStore.vehicles[0]! : null
   )
 }
 
