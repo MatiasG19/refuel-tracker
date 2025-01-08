@@ -146,7 +146,7 @@ const refuels = computed(() => {
 function getRefuels(from: number, size: number): Array<Refuel> {
   const items: Array<Refuel> = []
   for (let i = 0; i < size; i++) {
-    items.push(refuels.value[from + i])
+    items.push(refuels.value[from + i]!)
   }
   return items
 }
@@ -183,7 +183,7 @@ onBeforeMount(async () => {
   if (props.id) {
     const id = parseInt(props.id)
     if (id)
-      scrollToIndex.value = refuelStore.vehicle
+      scrollToIndex.value = refuelStore.vehicle!
         .refuels!.sort((a, b) => b.date.getTime() - a.date.getTime())
         .findIndex(r => r.id == id)
   }

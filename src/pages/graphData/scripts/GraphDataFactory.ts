@@ -20,7 +20,7 @@ export class GraphDataFactory {
       if (!uid) continue
       const settings = graphSettings.filter(gs => gs.uid === uid)
       if (!settings) continue
-      graphData.push(this.createGraphData(graphDataClass, settings[0]))
+      graphData.push(this.createGraphData(graphDataClass, settings[0]!))
     }
     return graphData
   }
