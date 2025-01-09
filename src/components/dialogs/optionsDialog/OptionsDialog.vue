@@ -38,7 +38,7 @@ const props = defineProps({
     required: true
   },
   data: {
-    type: undefined
+    type: null
   }
 })
 

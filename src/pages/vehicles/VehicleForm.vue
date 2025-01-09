@@ -55,7 +55,7 @@ import {
   requiredFieldRule,
   max50Characters
 } from 'src/scripts/libraries/validation'
-import { SelectOption } from 'src/scripts/models'
+import { type SelectOption } from 'src/scripts/models'
 import { useSettingsStore } from 'src/pages/settings/stores'
 import { useVehicleStore } from './stores'
 import { useMainLayoutStore } from 'src/layouts/stores'
@@ -82,9 +82,12 @@ const props = defineProps({
 })
 
 async function onSubmit() {
-  vehicle.value.fuelUnit =
-    (await fuelUnitRepository.getFuelUnit(vehicle.value.fuelUnitId)) ??
-    undefined
+  const fuelUnit = await fuelUnitRepository.getFuelUnit(
+    vehicle.value.fuelUnitId
+  )
+  if (!fuelUnit) return
+  vehicle.value.fuelUnit = fuelUnit
+
   if (routePath.includes('/add'))
     await vehicleStore.addVehicle({ ...vehicle.value })
   else if (routePath.includes('/edit')) {

@@ -1,6 +1,6 @@
 import { defineStore } from 'pinia'
 import { ref } from 'vue'
-import { Action, Button } from '../models'
+import type { Action, Button } from '../models'
 
 export const useMainLayoutStore = defineStore('mainLayoutStore', () => {
   const titleText = ref('')

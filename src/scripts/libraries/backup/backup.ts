@@ -34,14 +34,11 @@ async function writeBlob(blob: Blob, path: string) {
 }
 
 async function readBlob(path: string): Promise<Blob> {
-  // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment, @typescript-eslint/no-unsafe-member-access, @typescript-eslint/no-unsafe-call
   if (Platform.is.mobile) {
     const result = await Filesystem.readFile({
       path: path,
-      // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment, @typescript-eslint/no-unsafe-member-access
       encoding: Encoding.UTF8
     })
-    // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access
     return new Blob([result.data], {
       type: 'application/json'
     })

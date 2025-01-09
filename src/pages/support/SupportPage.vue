@@ -118,7 +118,7 @@ import messages from './i18n'
 import { useMainLayoutStore } from 'src/layouts/stores'
 
 const mainLayoutStore = useMainLayoutStore()
-const { t } = useI18n({ useScope: 'global', messages })
+const { t } = useI18n({ useScope: 'local', messages })
 const ratingModel = ref(3)
 const slide = ref('rate')
 const repositoryLink = 'https://github.com/MatiasG19/refuel-tracker'

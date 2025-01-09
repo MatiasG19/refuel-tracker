@@ -48,7 +48,7 @@
 </template>
 
 <script setup lang="ts">
-import { GraphData, Period } from '../scripts/models'
+import { type Period, GraphData } from '../scripts/models'
 import { useI18n } from 'vue-i18n'
 import messages from '../i18n'
 import { onLongPress } from '@vueuse/core'

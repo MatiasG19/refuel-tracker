@@ -108,7 +108,7 @@ import { useSettingsStore } from 'src/pages/settings/stores/settingsStore'
 import { exportDB, importDB } from 'src/scripts/libraries/backup/backup'
 import { FilePicker } from 'src/plugins/capacitor-file-picker'
 import { Notify, Platform } from 'quasar'
-import { SelectOption } from 'src/scripts/models'
+import { type SelectOption } from 'src/scripts/models'
 import { useI18n } from 'vue-i18n'
 import messages from './i18n'
 import {

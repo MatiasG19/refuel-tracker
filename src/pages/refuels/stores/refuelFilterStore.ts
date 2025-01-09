@@ -1,7 +1,7 @@
 import { defineStore } from 'pinia'
 import { ref, toRaw } from 'vue'
 import { refuelFilterRepository } from 'src/scripts/databaseRepositories'
-import { RefuelFilter } from '../models'
+import { type RefuelFilter } from '../models'
 import { date } from 'quasar'
 
 export const useRefuelFilterStore = defineStore('refuelFilterStore', () => {

@@ -137,7 +137,7 @@ function updateTime(event: string) {
 }
 
 async function onSubmit() {
-  var r = new Refuel()
+  const r = new Refuel()
   r.id = refuel.id
   r.vehicleId = refuel.vehicleId
   r.payedAmount = +refuel.payedAmount
