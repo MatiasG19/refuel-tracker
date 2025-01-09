@@ -13,11 +13,9 @@ export class RefuelsMade extends AbstractChartData {
     const chartData: IChartData = { labels: [], data: [] }
     for (const key in groupedData) {
       chartData.labels.push(key)
-      if (groupedData.hasOwnProperty(key)) {
-        const v = { ...vehicle }
-        v.refuels = groupedData[key]!
-        chartData.data.push(vehicleRefuelsMade(v).toString())
-      }
+      const v = { ...vehicle }
+      v.refuels = groupedData[key]!
+      chartData.data.push(vehicleRefuelsMade(v).toString())
     }
 
     return chartData
