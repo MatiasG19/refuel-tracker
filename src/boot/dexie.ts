@@ -31,7 +31,6 @@ export class RefuelTrackerDexie extends Dexie {
           .table('settings')
           .toCollection()
           .modify(setting => {
-            // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access
             delete setting.refuelFilterActive
           })
       })
