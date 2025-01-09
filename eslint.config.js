@@ -87,7 +87,6 @@ export default [
       // ],
       '@typescript-eslint/consistent-type-imports': 'off',
       'no-prototype-builtins': 'warn',
-      'vue/multi-word-component-names': 'warn',
       '@typescript-eslint/no-empty-object-type': 'warn',
 
       // allow debugger during development only
