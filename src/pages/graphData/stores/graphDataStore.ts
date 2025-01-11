@@ -1,11 +1,11 @@
 import { defineStore } from 'pinia'
 import { ref } from 'vue'
 import { GraphDataFactory } from 'src/pages/graphData/scripts/GraphDataFactory'
-import { GraphData } from 'src/pages/graphData/scripts/models'
+import type { GraphData } from 'src/pages/graphData/scripts/models'
 import { useSettingsStore } from 'src/pages/settings/stores/settingsStore'
 import { useVehicleStore } from 'src/pages/vehicles/stores'
-import { DropResult } from 'vue3-smooth-dnd'
-import { Period } from 'src/pages/graphData/scripts/models'
+import type { DropResult } from 'vue3-smooth-dnd'
+import type { Period } from 'src/pages/graphData/scripts/models'
 import {
   graphSettingsRepository,
   periodRepository,
@@ -79,15 +79,15 @@ export const useGraphDataStore = defineStore('graphDataStore', () => {
     if (sign > 0) {
       for (let i = endIndex; i >= startIndex; i--) {
         const graph = graphDataValues.filter(g => g.sequence === i)[0]
-        graph.sequence += sign
+        graph!.sequence += sign
       }
     } else {
       for (let i = startIndex; i <= endIndex; i++) {
         const graph = graphDataValues.filter(g => g.sequence === i)[0]
-        graph.sequence += sign
+        graph!.sequence += sign
       }
     }
-    movedGraph.sequence = addedIndex + 1
+    movedGraph!.sequence = addedIndex + 1
     graphData.value = graphData.value.sort((a, b) => a.sequence - b.sequence)
   }
 

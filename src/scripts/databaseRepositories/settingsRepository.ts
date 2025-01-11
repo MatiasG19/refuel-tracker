@@ -1,5 +1,5 @@
 import { db } from 'src/boot/dexie'
-import { Settings } from '../models'
+import type { Settings } from '../models'
 
 async function getSettings(id: number): Promise<Settings | null> {
   return (await db.settings.filter(s => s.id === id).first()) ?? null

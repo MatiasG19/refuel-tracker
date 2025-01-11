@@ -61,8 +61,8 @@
 </template>
 
 <script setup lang="ts">
-import { PropType } from 'vue'
-import { Refuel, Vehicle } from 'src/scripts/libraries/refuel/models'
+import type { PropType } from 'vue'
+import type { Refuel, Vehicle } from 'src/scripts/libraries/refuel/models'
 import { date } from 'quasar'
 import { emitter } from 'src/boot/mitt'
 import RefuelCardSkeleton from './RefuelCardSkeleton.vue'

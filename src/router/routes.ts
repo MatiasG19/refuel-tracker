@@ -1,4 +1,4 @@
-import { RouteRecordRaw } from 'vue-router'
+import type { RouteRecordRaw } from 'vue-router'
 
 const routes: RouteRecordRaw[] = [
   {
@@ -7,7 +7,7 @@ const routes: RouteRecordRaw[] = [
     children: [
       {
         path: '/',
-        component: () => import('pages/graphData/GraphData.vue')
+        component: () => import('pages/graphData/GraphDataPage.vue')
       },
       {
         path: '/refuels/:id?',
@@ -15,7 +15,7 @@ const routes: RouteRecordRaw[] = [
         children: [
           {
             path: '',
-            component: () => import('src/pages/refuels/Refuels.vue'),
+            component: () => import('src/pages/refuels/RefuelsPage.vue'),
             props: true
           },
           {
@@ -39,7 +39,7 @@ const routes: RouteRecordRaw[] = [
         children: [
           {
             path: '',
-            component: () => import('src/pages/vehicles/Vehicles.vue')
+            component: () => import('src/pages/vehicles/VehiclesPage.vue')
           },
           {
             path: 'add',
@@ -54,11 +54,11 @@ const routes: RouteRecordRaw[] = [
       },
       {
         path: '/settings',
-        component: () => import('pages/settings/Settings.vue')
+        component: () => import('pages/settings/SettingsPage.vue')
       },
       {
         path: '/support',
-        component: () => import('pages/support/Support.vue')
+        component: () => import('pages/support/SupportPage.vue')
       }
     ]
   },
@@ -67,7 +67,7 @@ const routes: RouteRecordRaw[] = [
   // but you can also remove it
   {
     path: '/:catchAll(.*)*',
-    component: () => import('pages/Error404.vue')
+    component: () => import('pages/ErrorNotFound.vue')
   }
 ]
 

@@ -1,6 +1,6 @@
 import { defineStore } from 'pinia'
 import { ref, toRaw } from 'vue'
-import { Refuel, Vehicle } from 'src/scripts/libraries/refuel/models'
+import type { Refuel, Vehicle } from 'src/scripts/libraries/refuel/models'
 import { useSettingsStore } from 'src/pages/settings/stores'
 import {
   refuelRepository,
@@ -48,7 +48,8 @@ export const useRefuelStore = defineStore('refuelStore', () => {
   }
 
   async function deleteRefuel(id: number) {
-    vehicle.value!.refuels = vehicle.value!.refuels?.filter(r => r.id !== id)
+    if (vehicle.value!.refuels)
+      vehicle.value!.refuels = vehicle.value!.refuels.filter(r => r.id !== id)
     await refuelRepository.deleteRefuel(id)
     await refuelDeletedEvent()
   }

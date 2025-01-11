@@ -1,4 +1,4 @@
-import { SelectOption } from 'src/scripts/models'
+import type { SelectOption } from 'src/scripts/models'
 import { useI18n } from 'vue-i18n'
 import messages from '../../i18n'
 

@@ -1,4 +1,4 @@
-import { Refuel, Vehicle } from 'src/scripts/libraries/refuel/models'
+import type { Refuel, Vehicle } from 'src/scripts/libraries/refuel/models'
 
 export enum Group {
   NoGrouping,

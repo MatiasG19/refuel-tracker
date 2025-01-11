@@ -1,5 +1,5 @@
-import { Refuel, Vehicle } from 'src/scripts/libraries/refuel/models'
-import { DataSource, Group, AbstractChartData, IChartData } from '.'
+import type { Refuel, Vehicle } from 'src/scripts/libraries/refuel/models'
+import type { DataSource, Group, AbstractChartData, IChartData } from '.'
 
 export class ChartDataFactory {
   public static chartDataClasses = new Map<

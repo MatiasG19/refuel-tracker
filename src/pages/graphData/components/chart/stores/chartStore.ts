@@ -3,9 +3,9 @@ import {
   refuelRepository,
   vehicleRepository
 } from 'src/scripts/databaseRepositories'
-import { Refuel, Vehicle } from 'src/scripts/libraries/refuel/models'
+import type { Refuel, Vehicle } from 'src/scripts/libraries/refuel/models'
 import { ref } from 'vue'
-import { IChartData } from '../scripts/models'
+import { type IChartData } from '../scripts/models'
 import { ChartDataFactory } from '../scripts/models/ChartDataFactory'
 import {
   updateDateFrom,

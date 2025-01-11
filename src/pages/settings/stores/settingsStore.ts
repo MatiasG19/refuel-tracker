@@ -1,5 +1,5 @@
 import { defineStore } from 'pinia'
-import { Vehicle } from 'src/scripts/libraries/refuel/models'
+import { type Vehicle } from 'src/scripts/libraries/refuel/models'
 import { ref } from 'vue'
 import {
   settingsRepository,

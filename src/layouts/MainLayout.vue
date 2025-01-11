@@ -175,8 +175,8 @@ function toggleLeftDrawer() {
 }
 
 function calculateAreaHeight() {
-  var header = document.getElementById('header')
-  var footer = document.getElementById('footer')
+  const header = document.getElementById('header')
+  const footer = document.getElementById('footer')
   if (header && footer)
     settingsStore.areaHeight =
       document.documentElement.clientHeight -

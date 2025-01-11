@@ -1,5 +1,5 @@
 import { getFuelUnits as returnfuelUnits } from 'src/scripts/staticData/fuelUnits'
-import { FuelUnit } from '../libraries/refuel/models'
+import type { FuelUnit } from '../libraries/refuel/models'
 
 async function getFuelUnits(): Promise<FuelUnit[]> {
   return await Promise.resolve(returnfuelUnits())
