@@ -23,12 +23,12 @@
     "splashicons": "icongenie generate --mode capacitor --filter splashscreen --splashscreen-icon-ratio 30 --theme-color 8488ff --skip-trim --icon ./.icons/icon.png"
   },
   "dependencies": {
-    "@quasar/extras": "^1.16.15",
+    "@quasar/extras": "^1.16.16",
     "@vueuse/core": "^10.11.1",
     "dexie": "^3.2.7",
     "dexie-export-import": "^4.1.4",
     "mitt": "^3.0.1",
-    "pinia": "^2.3.0",
+    "pinia": "^2.3.1",
     "quasar": "^2.17.7",
     "vue": "^3.5.13",
     "vue-chartjs": "^5.3.2",
@@ -46,7 +46,7 @@
     "@eslint/js": "9.18",
     "@intlify/unplugin-vue-i18n": "^6.0.3",
     "@quasar/app-vite": "^2.0.8",
-    "@types/node": "^20.17.14",
+    "@types/node": "^20.17.16",
     "@vue/eslint-config-prettier": "^10.2.0",
     "@vue/eslint-config-typescript": "^14.3.0",
     "autoprefixer": "^10.4.20",
