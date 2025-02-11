@@ -43,7 +43,7 @@
     "@capacitor/keyboard": "^6.0.3",
     "@capacitor/screen-orientation": "^6.0.3",
     "@capacitor/splash-screen": "^6.0.3",
-    "@eslint/js": "9.19",
+    "@eslint/js": "9.20",
     "@intlify/unplugin-vue-i18n": "^6.0.3",
     "@quasar/app-vite": "^2.0.8",
     "@types/node": "^20.17.17",
