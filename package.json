@@ -23,7 +23,7 @@
     "splashicons": "icongenie generate --mode capacitor --filter splashscreen --splashscreen-icon-ratio 30 --theme-color 8488ff --skip-trim --icon ./.icons/icon.png"
   },
   "dependencies": {
-    "@quasar/extras": "^1.16.16",
+    "@quasar/extras": "^1.16.17",
     "@vueuse/core": "^10.11.1",
     "dexie": "^3.2.7",
     "dexie-export-import": "^4.1.4",
@@ -46,21 +46,21 @@
     "@eslint/js": "9.20",
     "@intlify/unplugin-vue-i18n": "^6.0.3",
     "@quasar/app-vite": "^2.0.8",
-    "@types/node": "^20.17.17",
+    "@types/node": "^20.17.19",
     "@vue/eslint-config-prettier": "^10.2.0",
     "@vue/eslint-config-typescript": "^14.4.0",
     "autoprefixer": "^10.4.20",
     "eslint": "9.20",
     "eslint-plugin-vue": "^9.32.0",
     "globals": "^15.14.0",
-    "prettier": "^3.5.0",
+    "prettier": "^3.5.2",
     "typescript": "^5.7.3",
     "vite-plugin-checker": "^0.8.0",
     "vitest": "^2.1.9"
   },
   "optionalDependencies": {
     "@esbuild/linux-x64": "^0.25.0",
-    "@rollup/rollup-linux-x64-gnu": "4.34.6",
+    "@rollup/rollup-linux-x64-gnu": "4.34.8",
     "sass-embedded-linux-x64": "^1.83.4"
   },
   "engines": {
