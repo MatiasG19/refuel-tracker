@@ -30,7 +30,7 @@ async function addRefuel(refuel: Refuel): Promise<number> {
     refueledAmount: refuel.refueledAmount,
     payedAmount: refuel.payedAmount,
     distanceDriven: refuel.distanceDriven,
-    vehicleId: refuel.distanceDriven
+    vehicleId: refuel.vehicleId
   } as Refuel)) as number
 }
 
