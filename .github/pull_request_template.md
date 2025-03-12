@@ -1,6 +1,4 @@
-# [TITLE]
-
-[DESCRIPTION OF THE CHANGES]
+## Changes
 
 ## Checklist
 
