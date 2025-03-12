@@ -21,7 +21,7 @@ env:
 
 jobs:
   Format-Lint:
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-22.04
 
     steps:
       - name: Checkout
@@ -42,7 +42,7 @@ jobs:
         run: npm run lint
 
   Build-Test-Release:
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-22.04
 
     steps:
       - name: Set tag name
