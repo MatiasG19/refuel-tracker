@@ -4,6 +4,10 @@
   "description": "Tracks your refuels.",
   "author": "MatiasG19",
   "private": true,
+  "packageManager": "pnpm@10.6.3",
+  "scripts": {
+    "preinstall": "npx only-allow pnpm"
+  },
   "dependencies": {
     "@capacitor/android": "^6.2.0",
     "@capacitor/app": "^6.0.2",
