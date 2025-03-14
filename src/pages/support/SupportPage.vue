@@ -14,7 +14,7 @@
       transition-next="jump-left"
       swipeable
       animated
-      control-color="white"
+      control-color="accent"
       prev-icon="arrow_left"
       next-icon="arrow_right"
       navigation-icon="radio_button_unchecked"
