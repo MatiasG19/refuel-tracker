@@ -31,6 +31,9 @@ jobs:
         uses: actions/setup-node@v4
         with:
           node-version: 22.x
+      
+      - name: Setup pnpm
+        run: pnpm/action-setup@v4
 
       - name: Install app dependencies
         run: pnpm i --frozen-lockfile
@@ -67,6 +70,9 @@ jobs:
         uses: actions/setup-node@v4
         with:
           node-version: 22.x
+
+      - name: Setup pnpm
+        run: pnpm/action-setup@v4
 
       - name: Install app dependencies
         run: pnpm i --frozen-lockfile
