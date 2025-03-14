@@ -4,11 +4,9 @@
       v-if="
         vehiclesExists && !refuels.length && !refuelFilterStore.filter?.active
       "
-      class="absolute-center items-center"
+      class="column items-center absolute-center"
     >
-      <div class="row">
-        <q-icon class="col" name="img:local_gas_station.svg" size="100px" />
-      </div>
+      <q-icon name="local_gas_station" size="100px" color="accent" />
       <q-btn
         color="accent"
         :label="i18n.global.t('placeholders.addRefuel')"
@@ -19,10 +17,11 @@
         @click="router.push('/refuels/add')"
       />
     </div>
-    <div v-else-if="!vehiclesExists" class="absolute-center items-center">
-      <div class="row">
-        <q-icon class="col" name="img:local_gas_station.svg" size="100px" />
-      </div>
+    <div
+      v-else-if="!vehiclesExists"
+      class="column items-center absolute-center"
+    >
+      <q-icon name="local_gas_station" size="100px" color="accent" />
       <q-btn
         color="accent"
         :label="i18n.global.t('placeholders.addVehicle')"

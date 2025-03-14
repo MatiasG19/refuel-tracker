@@ -12,11 +12,9 @@
     </q-dialog>
     <div
       v-if="vehiclesExits && graphData.length === 0"
-      class="absolute-center items-center"
+      class="column items-center absolute-center"
     >
-      <div class="row">
-        <q-icon class="col" name="img:bar_chart.svg" size="100px" />
-      </div>
+      <q-icon name="bar_chart" size="100px" color="accent" />
       <q-btn
         color="accent"
         :label="i18n.global.t('placeholders.addRefuel')"
@@ -27,10 +25,8 @@
         @click="router.push('/refuels/add')"
       />
     </div>
-    <div v-else-if="!vehiclesExits" class="absolute-center">
-      <div class="row">
-        <q-icon class="col" name="img:bar_chart.svg" size="100px" />
-      </div>
+    <div v-else-if="!vehiclesExits" class="column items-center absolute-center">
+      <q-icon name="bar_chart" size="100px" color="accent" />
       <q-btn
         class="row"
         color="accent"
