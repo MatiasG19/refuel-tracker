@@ -27,19 +27,19 @@
 
       <div class="row">
         <q-btn
-          color="negative"
+          color="primary"
+          class="form-btn text-default"
           :label="i18n.global.t('form.cancel')"
           no-caps
-          class="btn"
           @click="$router.go(-1)"
         />
         <q-space />
         <q-btn
-          color="positive"
+          color="primary"
+          class="form-btn text-default"
           :label="i18n.global.t('form.confirm')"
           type="submit"
           no-caps
-          class="btn"
         />
       </div>
     </q-form>
@@ -127,9 +127,3 @@ onBeforeUnmount(() => {
   mainLayoutStore.addButton.disabled = false
 })
 </script>
-
-<style scoped>
-.btn {
-  width: 40%;
-}
-</style>
