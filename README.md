@@ -73,25 +73,25 @@
 Install dependencies
 
 ```bash
-npm install
+pnpm install
 ```
 
 Start in browser
 
 ```bash
-npm run dev
+pnpm run dev
 ```
 
 Start in Android Studio
 
 ```bash
-npm run appdev
+pnpm run appdev
 ```
 
 Create apk
 
 ```bash
-npm run appbuild
+pnpm run appbuild
 ```
 
 ## Contribute

@@ -20,7 +20,8 @@
     "appbuild": "quasar build -m capacitor -T android -- bundleRelease",
     "favicons": "icongenie generate --theme-color 8488ff --icon ./.icons/icon.png",
     "appicons": "icongenie generate --mode capacitor --theme-color 8488ff --skip-trim --icon ./.icons/appicon.png",
-    "splashicons": "icongenie generate --mode capacitor --filter splashscreen --splashscreen-icon-ratio 30 --theme-color 8488ff --skip-trim --icon ./.icons/icon.png"
+    "splashicons": "icongenie generate --mode capacitor --filter splashscreen --splashscreen-icon-ratio 30 --theme-color 8488ff --skip-trim --icon ./.icons/icon.png",
+    "preinstall": "npx only-allow pnpm"
   },
   "dependencies": {
     "@quasar/extras": "^1.16.17",
@@ -65,6 +66,6 @@
   },
   "engines": {
     "node": "^22",
-    "npm": ">= 11"
+    "pnpm": ">= 10"
   }
 }

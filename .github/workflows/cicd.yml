@@ -33,13 +33,13 @@ jobs:
           node-version: 22.x
 
       - name: Install app dependencies
-        run: npm ci
+        run: pnpm i --frozen-lockfile
 
       - name: Check format
-        run: npm run check-format
+        run: pnpm run check-format
 
       - name: Lint
-        run: npm run lint
+        run: pnpm run lint
 
   Build-Test-Release:
     runs-on: ubuntu-22.04
@@ -69,15 +69,15 @@ jobs:
           node-version: 22.x
 
       - name: Install app dependencies
-        run: npm ci
+        run: pnpm i --frozen-lockfile
 
       - name: Install capacitor dependencies
         working-directory: src-capacitor
-        run: npm ci
+        run: pnpm i --frozen-lockfile
 
       - name: Run tests
         if: ${{ github.event_name != 'release' }}
-        run: npm run test
+        run: pnpm run test
 
       - name: Set version in package.json
         if: ${{ github.event_name == 'release' || github.event_name == 'workflow_dispatch' }}
@@ -88,7 +88,7 @@ jobs:
         run: node ./modifyBuildGradle.mjs $TAG
 
       - name: Build apk and aab
-        run: npm run appbuild
+        run: pnpm run appbuild
 
       - name: Move AAB to APK release folder
         if: ${{ github.event_name == 'release' || github.event_name == 'workflow_dispatch' }}
