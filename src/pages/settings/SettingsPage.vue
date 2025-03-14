@@ -150,7 +150,9 @@ const plateNumberInTitle = ref(settingsStore.plateNumberInTitleActive)
 const autoBackup = ref(settingsStore.autoBackupActive)
 
 function changeColorTheme(value: number) {
-  document.documentElement.className = colorThemeOptions.value[value].className
+  if (colorThemeOptions.value[value]?.className)
+    document.documentElement.className =
+      colorThemeOptions.value[value].className
   settingsStore.changeColorTheme(value)
 }
 
