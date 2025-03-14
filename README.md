@@ -54,6 +54,7 @@
 - Display all your data in nice graphs
 - View and edit your refuels or add past ones
 - Backup data in text format
+- Dark and Light themes
 
 ## Languages
 

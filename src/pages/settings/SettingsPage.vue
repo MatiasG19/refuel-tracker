@@ -1,13 +1,17 @@
 <template>
   <div class="q-pa-md q-gutter-md">
     <q-list>
-      <q-item-label header>{{ t('sections.settings.title') }}</q-item-label>
+      <q-item-label header
+        ><span class="bg-space-station">{{
+          t('sections.settings.title')
+        }}</span></q-item-label
+      >
       <q-list class="q-pb-md">
         <c-select
           v-model="currentLanguage"
           @update:model-value="changeLanguage"
           :options="[
-            { label: t('systemLanguage'), value: LanugageId.System },
+            { label: t('systemLanguage'), value: LanguageId.System },
             ...languageOptions
           ]"
           class="q-pb-md"
@@ -15,31 +19,36 @@
         />
 
         <c-select
-          v-if="false"
           class="q-pb-md"
           v-model="colorTheme"
           @update:model-value="changeColorTheme"
           :options="colorThemeOptions"
-          :label="t('sections.settings.colorTheme')"
+          :label="t('sections.settings.colorTheme.label')"
         />
 
         <q-item tag="label">
           <q-item-section>
-            <q-item-label>{{
-              t('sections.settings.licensePlateInTitle')
-            }}</q-item-label>
+            <q-item-label
+              ><span class="bg-space-station">{{
+                t('sections.settings.licensePlateInTitle')
+              }}</span></q-item-label
+            >
           </q-item-section>
           <q-item-section avatar>
             <q-toggle
               v-model="plateNumberInTitle"
               @update:model-value="togglePlateNumberInTitle"
-              color="positive"
+              color="accent"
             />
           </q-item-section>
         </q-item>
       </q-list>
 
-      <q-item-label header>{{ t('sections.backup.title') }}</q-item-label>
+      <q-item-label header
+        ><span class="bg-space-station">{{
+          t('sections.backup.title')
+        }}</span></q-item-label
+      >
       <q-list class="q-pb-md">
         <template v-if="false">
           <q-item tag="label">
@@ -50,7 +59,8 @@
               <q-toggle
                 v-model="autoBackup"
                 @update:model-value="toggleAutoBackup"
-                color="positive"
+                color="primary"
+                class="text-default"
               />
             </q-item-section>
           </q-item>
@@ -64,7 +74,8 @@
             <q-item-section avatar>
               <q-btn
                 :label="t('sections.backup.change')"
-                color="positive"
+                color="primary"
+                class="text-default"
                 :disable="!autoBackup"
                 @click="chooseAutoBackupFolder"
               />
@@ -73,12 +84,15 @@
         </template>
         <q-item tag="label">
           <q-item-section>
-            <q-item-label>{{ t('sections.backup.export') }}</q-item-label>
+            <q-item-label class="bg-space-station">{{
+              t('sections.backup.export')
+            }}</q-item-label>
           </q-item-section>
           <q-item-section avatar>
             <q-btn
               :label="t('sections.backup.export')"
-              color="positive"
+              color="primary"
+              class="text-default"
               @click="exportBackup"
             />
           </q-item-section>
@@ -86,12 +100,15 @@
 
         <q-item tag="label">
           <q-item-section>
-            <q-item-label>{{ t('sections.backup.import') }}</q-item-label>
+            <q-item-label class="bg-space-station">{{
+              t('sections.backup.import')
+            }}</q-item-label>
           </q-item-section>
           <q-item-section avatar>
             <q-btn
               :label="t('sections.backup.import')"
-              color="positive"
+              color="primary"
+              class="text-default"
               @click="importBackup"
             />
           </q-item-section>
@@ -102,7 +119,7 @@
 </template>
 
 <script setup lang="ts">
-import { ref, onMounted, onUnmounted } from 'vue'
+import { ref, onMounted, onUnmounted, computed } from 'vue'
 import CSelect from 'src/components/inputs/CSelect.vue'
 import { useSettingsStore } from 'src/pages/settings/stores/settingsStore'
 import { exportDB, importDB } from 'src/scripts/libraries/backup/backup'
@@ -115,8 +132,9 @@ import {
   getLanguageOptions,
   setI18nLanguage
 } from 'src/scripts/libraries/utils/language'
-import { LanugageId } from '../../scripts/models'
+import { LanguageId } from '../../scripts/models'
 import { useMainLayoutStore } from 'src/layouts/stores'
+import { getColorThemes } from 'src/scripts/staticData/colorThemes'
 
 const { t } = useI18n({ useScope: 'global', messages })
 const settingsStore = useSettingsStore()
@@ -130,34 +148,15 @@ let openDocumentTreeResultAction: OpenDocumentTreeResultAction
 
 const currentLanguage = ref(1)
 const languageOptions = ref<SelectOption[]>(getLanguageOptions())
-const colorThemeOptions = [
-  {
-    label: 'Space Station',
-    value: 1
-  },
-  {
-    label: 'Dark',
-    value: 2
-  },
-  {
-    label: 'Light',
-    value: 3
-  },
-  {
-    label: 'High Contrast',
-    value: 4
-  },
-  {
-    label: 'Red Green Weakness',
-    value: 5
-  }
-]
-
+const colorThemeOptions = computed(() => getColorThemes())
 const colorTheme = ref(settingsStore.selectedColorThemeId)
 const plateNumberInTitle = ref(settingsStore.plateNumberInTitleActive)
 const autoBackup = ref(settingsStore.autoBackupActive)
 
 function changeColorTheme(value: number) {
+  if (colorThemeOptions.value[value]?.className)
+    document.documentElement.className =
+      colorThemeOptions.value[value].className
   settingsStore.changeColorTheme(value)
 }
 

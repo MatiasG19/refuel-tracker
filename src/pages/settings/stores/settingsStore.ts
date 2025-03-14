@@ -6,6 +6,7 @@ import {
   vehicleRepository
 } from 'src/scripts/databaseRepositories'
 import { vehicleChangedEvent } from 'src/scripts/events'
+import { getColorThemes } from 'src/scripts/staticData/colorThemes'
 
 export const useSettingsStore = defineStore('settingsStore', () => {
   const selectedDistanceUnitId = ref<number>(0)
@@ -15,7 +16,7 @@ export const useSettingsStore = defineStore('settingsStore', () => {
   const plateNumberInTitleActive = ref<boolean>(false)
   const autoBackupActive = ref<boolean>(false)
   const autoBackupPath = ref<string>('')
-  const selectedColorThemeId = ref<number>(1)
+  const selectedColorThemeId = ref<number>(0)
   const selectedLanguageId = ref<number>(1)
   const areaHeight = ref(0)
   const settingsId = 1
@@ -97,6 +98,7 @@ export const useSettingsStore = defineStore('settingsStore', () => {
   }
 
   async function changeColorTheme(themeId: number) {
+    document.documentElement.className = getColorThemes()[themeId].className
     selectedColorThemeId.value = themeId
     const settings = await settingsRepository.getSettings(settingsId)
     if (!settings) return Promise.resolve()

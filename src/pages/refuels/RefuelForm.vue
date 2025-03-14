@@ -1,7 +1,9 @@
 <template>
   <div>
     <q-form @submit="onSubmit" class="q-px-md q-gutter-md">
-      <q-badge>{{ settingsStore.getVehicleName() }}</q-badge>
+      <q-badge class="space-station">{{
+        settingsStore.getVehicleName()
+      }}</q-badge>
       <c-input
         type="tel"
         :value="refuel.payedAmount"
@@ -59,19 +61,19 @@
       />
       <div class="row">
         <q-btn
-          color="negative"
+          color="primary"
+          class="form-btn text-default"
           :label="i18n.global.t('form.cancel')"
           no-caps
-          class="form-btn"
           @click="onCancel"
         />
         <q-space />
         <q-btn
-          color="positive"
+          color="primary"
+          class="form-btn text-default"
           :label="i18n.global.t('form.confirm')"
           type="submit"
           no-caps
-          class="form-btn"
         />
       </div>
     </q-form>

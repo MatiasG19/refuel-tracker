@@ -2,11 +2,9 @@
   <q-page>
     <div
       v-if="vehicleStore.vehicles.length === 0"
-      class="absolute-center items-center"
+      class="column items-center absolute-center"
     >
-      <div class="row">
-        <q-icon class="col" name="img:directions_car.svg" size="100px" />
-      </div>
+      <q-icon name="drive_eta" size="100px" color="accent" />
       <q-btn
         color="accent"
         :label="i18n.global.t('placeholders.addVehicle')"

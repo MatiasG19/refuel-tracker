@@ -4,7 +4,14 @@ export default {
     settings: {
       title: 'Einstellungen',
       language: 'Sprache',
-      colorTheme: 'Farbthema',
+      colorTheme: {
+        label: 'Farbthema',
+        themes: {
+          spaceStation: 'Standard',
+          light: 'Hell',
+          dark: 'Dunkel'
+        }
+      },
       licensePlateInTitle: 'Kennzeichen im Titel anzeigen'
     },
     backup: {

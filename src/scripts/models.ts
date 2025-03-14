@@ -22,6 +22,13 @@ export class Language {
   codeString!: string
 }
 
-export const LanugageId = {
+export const LanguageId = {
   System: 1
+}
+
+export type ColorTheme = {
+  value: number
+  label: string
+  dark: boolean
+  className: string
 }

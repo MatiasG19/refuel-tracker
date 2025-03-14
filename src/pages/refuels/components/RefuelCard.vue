@@ -1,7 +1,7 @@
 <template>
   <div>
     <transition name="fadein">
-      <q-card class="space-station" v-if="!loading">
+      <q-card class="space-station shadow-none" v-if="!loading">
         <q-card-section>
           <div class="row items-center no-wrap">
             <div class="col">

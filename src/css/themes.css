@@ -1,0 +1,60 @@
+/* styles.css */
+:root {
+  --font-family: "Source Sans Pro", sans-serif;
+  --primary-color: #6E6B9D;
+  --secondary-color: #C7C4F7;
+  --accent-color: #60EFB3;
+  --dark-color: #3A395B;
+  --dark-page-color: #121212;
+  --light-color: #c5c5dd;
+  --positive-color: #60EFB3;
+  --negative-color: #EF60CB;
+  --info-color: #31CCEC;
+  --warning-color: #ffd45d;
+  --text-color: #ffffff;
+}
+
+.theme-space-station {
+  --font-family: "Source Sans Pro", sans-serif;
+  --primary-color: #6E6B9D;
+  --secondary-color: #C7C4F7;
+  --accent-color: #60EFB3;
+  --dark-color: #3A395B;
+  --dark-page-color: #121212;
+  --light-color: #c5c5dd;
+  --positive-color: #60EFB3;
+  --negative-color: #EF60CB;
+  --info-color: #31CCEC;
+  --warning-color: #ffd45d;
+  --text-color: #ffffff;
+}
+
+.theme-light {
+  --font-family: "Source Sans Pro", sans-serif;
+  --primary-color: #ffffff;
+  --secondary-color: #888888;
+  --accent-color: #000000;
+  --dark-color: #d9d9d9;
+  --dark-page-color: #121212;
+  --light-color: #787777;
+  --positive-color: #60EFB3;
+  --negative-color: #ed007e;
+  --info-color: #31CCEC;
+  --warning-color: #ffd45d;
+  --text-color: #000000;
+}
+
+.theme-dark {
+  --font-family: "Source Sans Pro", sans-serif;
+  --primary-color: #1f1f1f;
+  --secondary-color: #6d6d6d;
+  --accent-color: #ffffff;
+  --dark-color: #0f0f0f;
+  --dark-page-color: #000000;
+  --light-color: #979797;
+  --positive-color: #60EFB3;
+  --negative-color: #ed007e;
+  --info-color: #31CCEC;
+  --warning-color: #ffd45d;
+  --text-color: #ffffff;
+}

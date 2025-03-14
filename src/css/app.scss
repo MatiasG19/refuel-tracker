@@ -1,29 +1,47 @@
 // space-station
 .space-station {
-    font-family: "Source Sans Pro", sans-serif;
-    color: #c5c5dd;
-    background-color: #6E6B9D;
-    opacity: 1.0;
+  font-family: var(--font-family);
+  color: var(--light-color);
+  background-color: var(--primary-color);
 }
 
 .bg-space-station {
-    font-family: "Source Sans Pro", sans-serif;
-    color: #c5c5dd;
-    background-color: #3A395B;
-    opacity: 1.0;
+  font-family: var(--font-family);
+  color: var(--light-color);
+  background-color: var(--dark-color);
 }
 
 .el-space-station {
-  font-family: "Source Sans Pro", sans-serif;
-  color: #3A395B;
-  background-color: #c5c5dd;
+  font-family: var(--font-family);
+  color: var(--dark-color);
+  background-color: var(--light-color);
   opacity: 1.0;
 }
 
 .accent-space-station {
-    font-family: "Source Sans Pro", sans-serif;
-    color: #60EFB3;
-    background-color: #6E6B9D;
+  font-family: var(--font-family);
+  color: var(--accent-color);
+  background-color: var(--primary-color);
+}
+
+.text-default {
+  color: var(--text-color) !important
+}
+
+.text-positive {
+  color: var(--positive-color)
+}
+
+.text-negative {
+  color: var(--negative-color)
+}
+
+.form-btn {
+  width: 40%;
+}
+
+.shadow-none {
+  box-shadow: 0px 0px;
 }
 
 /****************************/
@@ -35,8 +53,4 @@
 
 .fadein-enter-from {
   opacity: 0;
-}
-
-.form-btn {
-  width: 40%;
 }

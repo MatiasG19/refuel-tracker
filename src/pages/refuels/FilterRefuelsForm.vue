@@ -16,19 +16,19 @@
 
       <div class="row">
         <q-btn
-          color="negative"
+          color="primary"
+          class="form-btn text-default"
           :label="i18n.global.t('form.cancel')"
           no-caps
-          class="form-btn"
           @click="router.push('/refuels')"
         />
         <q-space />
         <q-btn
-          color="positive"
+          color="primary"
+          class="form-btn text-default"
           :label="i18n.global.t('form.filter')"
           type="submit"
           no-caps
-          class="form-btn"
         />
       </div>
     </q-form>

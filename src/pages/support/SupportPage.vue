@@ -1,9 +1,9 @@
 <template>
   <q-page class="q-pa-md">
     <h5 class="q-mt-md text-center">
-      <span style="color: #ef60cb">{{ t('greetingPart1') }}</span>
+      <span class="text-negative">{{ t('greetingPart1') }}</span>
       {{ t('greetingPart2') }}
-      <span style="color: #60efb3">{{ packageJson.productName }}</span
+      <span class="text-positive">{{ packageJson.productName }}</span
       >{{ t('greetingPart3') }}
       <q-icon name="rocket_launch" color="accent"></q-icon>
     </h5>
@@ -14,7 +14,7 @@
       transition-next="jump-left"
       swipeable
       animated
-      control-color="white"
+      control-color="accent"
       prev-icon="arrow_left"
       next-icon="arrow_right"
       navigation-icon="radio_button_unchecked"
@@ -22,12 +22,12 @@
       padding
       arrows
       height="300px"
-      class="space-station text-white shadow-1 rounded-borders"
+      class="space-station text-white rounded-borders"
     >
       <q-carousel-slide name="rate" class="column no-wrap flex-center">
         <div class="q-mt-md text-center">
           <div class="column items-center">
-            <div class="q-mb-md text-center">
+            <div class="q-mb-md text-center space-station">
               {{ t('slide4') }}
             </div>
             <q-rating
@@ -43,7 +43,7 @@
       </q-carousel-slide>
       <q-carousel-slide name="code" class="column no-wrap flex-center">
         <div class="q-mt-md text-center">
-          <div class="q-mb-md text-center">
+          <div class="q-mb-md text-center space-station">
             {{ packageJson.productName }}{{ t('slide1') }}
           </div>
           <q-btn
@@ -59,7 +59,7 @@
       <q-carousel-slide name="issue" class="column no-wrap flex-center">
         <div class="q-mt-md text-center">
           <div class="column items-center">
-            <div class="q-mb-md text-center">
+            <div class="q-mb-md text-center space-station">
               {{ t('slide2') }}
             </div>
             <q-btn
@@ -76,7 +76,7 @@
       <q-carousel-slide name="star" class="column no-wrap flex-center">
         <div class="q-mt-md text-center">
           <div class="column items-center">
-            <div class="q-mb-md text-center">
+            <div class="q-mb-md text-center space-station">
               {{ t('slide3') }}
             </div>
             <q-btn
