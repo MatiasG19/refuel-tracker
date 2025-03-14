@@ -38,23 +38,23 @@
   --dark-page-color: #121212;
   --light-color: #787777;
   --positive-color: #60EFB3;
-  --negative-color: #EF60CB;
+  --negative-color: #ed007e;
   --info-color: #31CCEC;
   --warning-color: #ffd45d;
-  --text-color: #ffffff;
+  --text-color: #000000;
 }
 
 .theme-dark {
   --font-family: "Source Sans Pro", sans-serif;
-  --primary-color: #181515;
-  --secondary-color: #474747;
+  --primary-color: #1f1f1f;
+  --secondary-color: #6d6d6d;
   --accent-color: #ffffff;
-  --dark-color: #181515;
+  --dark-color: #0f0f0f;
   --dark-page-color: #000000;
   --light-color: #979797;
   --positive-color: #60EFB3;
-  --negative-color: #EF60CB;
+  --negative-color: #ed007e;
   --info-color: #31CCEC;
   --warning-color: #ffd45d;
-  --text-color: #181515;
+  --text-color: #ffffff;
 }

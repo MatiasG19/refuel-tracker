@@ -36,6 +36,10 @@
   color: var(--negative-color)
 }
 
+.form-btn {
+  width: 40%;
+}
+
 /****************************/
 // Transitions
 /****************************/
@@ -45,8 +49,4 @@
 
 .fadein-enter-from {
   opacity: 0;
-}
-
-.form-btn {
-  width: 40%;
 }
