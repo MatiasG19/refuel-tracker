@@ -60,6 +60,7 @@
                 v-model="autoBackup"
                 @update:model-value="toggleAutoBackup"
                 color="accent"
+                class="text-default"
               />
             </q-item-section>
           </q-item>
@@ -74,6 +75,7 @@
               <q-btn
                 :label="t('sections.backup.change')"
                 color="accent"
+                class="text-default"
                 :disable="!autoBackup"
                 @click="chooseAutoBackupFolder"
               />
@@ -90,6 +92,7 @@
             <q-btn
               :label="t('sections.backup.export')"
               color="accent"
+              class="text-default"
               @click="exportBackup"
             />
           </q-item-section>
@@ -105,6 +108,7 @@
             <q-btn
               :label="t('sections.backup.import')"
               color="accent"
+              class="text-default"
               @click="importBackup"
             />
           </q-item-section>

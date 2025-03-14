@@ -24,6 +24,10 @@
   background-color: var(--primary-color);
 }
 
+.text-default {
+  color: var(--text-color) !important
+}
+
 .text-positive {
   color: var(--positive-color)
 }

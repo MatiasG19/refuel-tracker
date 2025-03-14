@@ -11,6 +11,7 @@
   --negative-color: #EF60CB;
   --info-color: #31CCEC;
   --warning-color: #ffd45d;
+  --text-color: #ffffff;
 }
 
 .theme-space-station {
@@ -25,6 +26,7 @@
   --negative-color: #EF60CB;
   --info-color: #31CCEC;
   --warning-color: #ffd45d;
+  --text-color: #ffffff;
 }
 
 .theme-light {
@@ -39,4 +41,20 @@
   --negative-color: #EF60CB;
   --info-color: #31CCEC;
   --warning-color: #ffd45d;
+  --text-color: #ffffff;
+}
+
+.theme-dark {
+  --font-family: "Source Sans Pro", sans-serif;
+  --primary-color: #181515;
+  --secondary-color: #474747;
+  --accent-color: #ffffff;
+  --dark-color: #181515;
+  --dark-page-color: #000000;
+  --light-color: #979797;
+  --positive-color: #60EFB3;
+  --negative-color: #EF60CB;
+  --info-color: #31CCEC;
+  --warning-color: #ffd45d;
+  --text-color: #181515;
 }
