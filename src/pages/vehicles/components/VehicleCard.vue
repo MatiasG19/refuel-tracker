@@ -1,6 +1,6 @@
 <template>
   <div>
-    <q-card class="space-station">
+    <q-card class="space-station shadow-none">
       <q-card-section>
         <div class="row items-center no-wrap">
           <div class="col">

@@ -22,7 +22,7 @@
       padding
       arrows
       height="300px"
-      class="space-station text-white shadow-1 rounded-borders"
+      class="space-station text-white rounded-borders"
     >
       <q-carousel-slide name="rate" class="column no-wrap flex-center">
         <div class="q-mt-md text-center">
