@@ -6,6 +6,7 @@
   "author": "MatiasG19",
   "type": "module",
   "private": true,
+  "packageManager": "^pnpm@10.6.3",
   "scripts": {
     "lint": "eslint -c ./eslint.config.js \"./src*/**/*.{ts,js,cjs,mjs,vue}\"",
     "check-format": "prettier --check ./src",
@@ -65,7 +66,6 @@
     "sass-embedded-linux-x64": "^1.85.1"
   },
   "engines": {
-    "node": "^22",
-    "pnpm": ">= 10"
+    "node": "^22"
   }
 }
