@@ -5,23 +5,19 @@ import type {
   DashboardData,
   DashboardValueSettings
 } from 'src/pages/dashboard/scripts/models'
-import { useSettingsStore } from 'src/pages/settings/stores/settingsStore'
-import { useVehicleStore } from 'src/pages/vehicles/stores'
 import type { DropResult } from 'vue3-smooth-dnd'
 import type { Period } from 'src/pages/dashboard/scripts/models'
 import {
   dashboardSettingsRepository,
   periodRepository,
-  refuelRepository
+  refuelRepository,
+  vehicleRepository
 } from 'src/scripts/databaseRepositories'
 import dashboardRepository from 'src/scripts/databaseRepositories/dashboardRepository'
 
 export const useDashboardStore = defineStore('dashboardStore', () => {
   const dashboardData = ref<DashboardData[]>([])
   const dashboardValueSettings = ref<DashboardValueSettings[]>([])
-
-  const settingsStore = useSettingsStore()
-  const vehicleStore = useVehicleStore()
 
   async function getDashboards() {
     return await dashboardRepository.getDashboards()
@@ -49,29 +45,26 @@ export const useDashboardStore = defineStore('dashboardStore', () => {
       })
     })
 
-    if (!settingsStore.selectedVehicleId) return Promise.resolve()
-    const vehicle = await vehicleStore.getVehicle(
-      settingsStore.selectedVehicleId
-    )
-
-    if (vehicle) {
-      vehicle.refuels = await refuelRepository.getRefuels(vehicle.id)
-      if (vehicle.refuels.length) {
+    const vehicles = await vehicleRepository.getVehicles()
+    if (vehicles.length > 0) {
+      vehicles.forEach(async vehicle => {
+        vehicle.refuels = await refuelRepository.getRefuels(vehicle.id)
         const dashboard = dashboardData.value.find(
           d => d.vehicleId === vehicle.id
         )
-
         dashboard!.title = vehicle.name
         dashboard!.subtitle = vehicle.plateNumber
-        dashboard!.dashboardValues = new DashboardDataFactory(vehicle).getAll(
-          dashboardValueSettings.value
-        )
+        if (vehicle.refuels.length) {
+          dashboard!.dashboardValues = new DashboardDataFactory(vehicle).getAll(
+            dashboardValueSettings.value
+          )
 
-        dashboardData.value = dashboardData.value.sort(
-          (a, b) => a.sequence - b.sequence
-        )
-        return Promise.resolve()
-      }
+          dashboardData.value = dashboardData.value.sort(
+            (a, b) => a.sequence - b.sequence
+          )
+          return Promise.resolve()
+        }
+      })
     }
   }
 
@@ -79,7 +72,19 @@ export const useDashboardStore = defineStore('dashboardStore', () => {
     return await Promise.resolve(periodRepository.getPeriods())
   }
 
-  function moveCard(dropResult: DropResult) {
+  function createDashboard(vehicleId: number) {
+    dashboardRepository.createDashboard(vehicleId)
+  }
+
+  function deleteDashboardByVehicleId(vehicleId: number) {
+    dashboardRepository.deleteDashboardByVehicleId(vehicleId)
+  }
+
+  function toggleDashboardVisibility(id: number) {
+    dashboardRepository.toggleDashboardVisibility(id)
+  }
+
+  function moveDashboard(dropResult: DropResult) {
     const { removedIndex, addedIndex } = dropResult
     if (
       removedIndex === null ||
@@ -135,7 +140,10 @@ export const useDashboardStore = defineStore('dashboardStore', () => {
     dashboardData,
     readDashboardData,
     getPeriods,
-    moveCard,
+    createDashboard,
+    deleteDashboardByVehicleId,
+    toggleDashboardVisibility,
+    moveDashboard,
     saveDashboardOrder
   }
 })

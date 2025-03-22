@@ -42,26 +42,26 @@ async function refuelDeletedEvent(): Promise<void> {
 
 async function vehicleAddedEvent(vehicle: Vehicle): Promise<void> {
   const settingsStore = useSettingsStore()
+  const dashboardStore = useDashboardStore()
 
+  dashboardStore.createDashboard(vehicle.id)
   await settingsStore.changeSelectedVehicle(vehicle)
 }
 
 async function vehicleUpdatedEvent(): Promise<void> {
-  const dashboardStore = useDashboardStore()
   const refuelStore = useRefuelStore()
 
-  dashboardStore.dashboardData.length = 0
   refuelStore.vehicle = null
   await Promise.resolve()
 }
 
-async function vehicleDeletedEvent(): Promise<void> {
+async function vehicleDeletedEvent(id: number): Promise<void> {
   const vehicleStore = useVehicleStore()
   const dashboardStore = useDashboardStore()
   const refuelStore = useRefuelStore()
   const settingsStore = useSettingsStore()
 
-  dashboardStore.dashboardData.length = 0
+  dashboardStore.deleteDashboardByVehicleId(id)
   refuelStore.vehicle = null
   await settingsStore.changeSelectedVehicle(
     vehicleStore.vehicles.length ? vehicleStore.vehicles[0]! : null
@@ -70,10 +70,8 @@ async function vehicleDeletedEvent(): Promise<void> {
 
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 async function vehicleChangedEvent(vehicle: Vehicle | null): Promise<void> {
-  const dashboardStore = useDashboardStore()
   const refuelStore = useRefuelStore()
 
-  dashboardStore.dashboardData.length = 0
   refuelStore.vehicle = null
   await Promise.resolve()
 }

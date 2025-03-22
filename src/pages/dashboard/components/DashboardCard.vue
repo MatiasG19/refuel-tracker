@@ -36,14 +36,17 @@
           </div>
         </div>
         <div class="row q-mt-md">
-          <dashboard-value
-            v-for="data in [...dashboardData.dashboardValues].splice(3, 6)"
-            :key="data.uid"
-            :title="t(data.title)"
-            :value="data.value"
-            :subtitle="data.unit"
-            class="col q-pr-xl"
-          />
+          <template v-if="dashboardData.dashboardValues.length">
+            <dashboard-value
+              v-for="data in [...dashboardData.dashboardValues].splice(3, 6)"
+              :key="data.uid"
+              :title="t(data.title)"
+              :value="data.value"
+              :subtitle="data.unit"
+              class="col q-pr-xl"
+            />
+          </template>
+          <div v-else>{{ t('placeholders.noData') }}</div>
         </div>
       </q-card-section>
     </q-card>

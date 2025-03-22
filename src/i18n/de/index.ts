@@ -43,7 +43,8 @@ export default {
   },
   placeholders: {
     addRefuel: 'Betankung hinzufügen',
-    addVehicle: 'Fahrzeug hinzufügen'
+    addVehicle: 'Fahrzeug hinzufügen',
+    noData: 'Keine Daten'
   },
   drawer: {
     dashboardPage: 'Dashboard',

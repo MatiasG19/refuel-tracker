@@ -79,7 +79,7 @@ export const useVehicleStore = defineStore('vehicleStore', () => {
   async function deleteVehicle(id: number) {
     vehicles.value = vehicles.value.filter(v => v.id !== id)
     await vehicleRepository.deleteVehicle(id)
-    await vehicleDeletedEvent()
+    await vehicleDeletedEvent(id)
   }
 
   async function getFuelUnits(): Promise<FuelUnit[]> {

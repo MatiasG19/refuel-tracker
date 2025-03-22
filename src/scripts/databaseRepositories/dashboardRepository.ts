@@ -5,6 +5,24 @@ async function getDashboards() {
   return await db.dashboards.toArray()
 }
 
+async function createDashboard(vehicleId: number) {
+  return await db.dashboards.add({
+    vehicleId: vehicleId,
+    sequence: Number.MAX_VALUE,
+    visible: true
+  })
+}
+
+async function deleteDashboardByVehicleId(vehicleId: number) {
+  db.dashboards.where('vehicleId').equals(vehicleId).delete()
+}
+
+async function toggleDashboardVisibility(id: number) {
+  return await db.dashboards.update(id, {
+    visible: !(await db.dashboards.get(id))?.visible
+  })
+}
+
 async function saveDashboardOrder(dashboards: Dashboard[]) {
   await db.transaction('rw', [db.dashboards], async () => {
     for (let j = 0; j < dashboards.length; j++) {
@@ -15,4 +33,10 @@ async function saveDashboardOrder(dashboards: Dashboard[]) {
   })
 }
 
-export default { getDashboards, saveDashboardOrder }
+export default {
+  getDashboards,
+  createDashboard,
+  deleteDashboardByVehicleId,
+  toggleDashboardVisibility,
+  saveDashboardOrder
+}

@@ -43,7 +43,8 @@ export default {
   },
   placeholders: {
     addRefuel: 'Add refuel',
-    addVehicle: 'Add vehicle'
+    addVehicle: 'Add vehicle',
+    noData: 'No data'
   },
   drawer: {
     dashboardPage: 'Dashboard',
