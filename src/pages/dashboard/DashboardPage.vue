@@ -83,7 +83,10 @@ import { ref, computed, onMounted, onUnmounted } from 'vue'
 import { useSettingsStore } from 'src/pages/settings/stores'
 import { useDashboardStore } from './stores/dashboardStore'
 import { useMainLayoutStore } from 'src/layouts/stores'
-import { optionsDialog } from 'src/components/dialogs/optionsDialog'
+import {
+  OptionInDialog,
+  optionsDialog
+} from 'src/components/dialogs/optionsDialog'
 import { useQuasar } from 'quasar'
 import { useRouter } from 'vue-router'
 import { useI18n } from 'vue-i18n'
@@ -109,14 +112,14 @@ const editOrder = ref(false)
 const dashboardData = computed(() => dashboardStore.dashboardData)
 const vehiclesExits = computed(() => settingsStore.selectedVehicleId)
 const areaHeight = computed(() => `height: ${settingsStore.areaHeight}px`)
-const optionsInDialog = ref([
+const optionsInDialog = ref<OptionInDialog[]>([
   {
-    text: computed(() => `${t('dashboardData.optionsInDialog.move')}`),
+    text: t('dashboardData.optionsInDialog.move'),
     icon: 'swap_vert',
     action: () => editOrderFun()
   },
   {
-    text: computed(() => `${t('dashboardData.optionsInDialog.chart')}`),
+    text: t('dashboardData.optionsInDialog.chart'),
     icon: 'bar_chart',
     action: () => (showChart.value = true)
   }
