@@ -13,7 +13,6 @@ export const useSettingsStore = defineStore('settingsStore', () => {
   const selectedVehicleId = ref<number | null>(null)
   const selectedVehicleName = ref<string>('')
   const selectedVehiclePlateNumber = ref<string>('')
-  const plateNumberInTitleActive = ref<boolean>(false)
   const autoBackupActive = ref<boolean>(false)
   const autoBackupPath = ref<string>('')
   const selectedColorThemeId = ref<number>(0)
@@ -68,16 +67,7 @@ export const useSettingsStore = defineStore('settingsStore', () => {
     await vehicleChangedEvent(vehicle)
   }
 
-  async function togglePlateNumberInTitle(state: boolean) {
-    plateNumberInTitleActive.value = state
-    const settings = await settingsRepository.getSettings(settingsId)
-    if (!settings) return Promise.resolve()
-    settings.plateNumberInTitleActive = state
-    await settingsRepository.updateSettings(settings)
-  }
-
   function getVehicleName(): string {
-    if (plateNumberInTitleActive.value) return selectedVehiclePlateNumber.value
     return selectedVehicleName.value
   }
 
@@ -98,7 +88,8 @@ export const useSettingsStore = defineStore('settingsStore', () => {
   }
 
   async function changeColorTheme(themeId: number) {
-    document.documentElement.className = getColorThemes()[themeId].className
+    document.documentElement.className =
+      getColorThemes()[themeId]?.className ?? ''
     selectedColorThemeId.value = themeId
     const settings = await settingsRepository.getSettings(settingsId)
     if (!settings) return Promise.resolve()
@@ -117,7 +108,6 @@ export const useSettingsStore = defineStore('settingsStore', () => {
   return {
     selectedDistanceUnitId,
     selectedVehicleId,
-    plateNumberInTitleActive,
     autoBackupActive,
     autoBackupPath,
     selectedColorThemeId,
@@ -127,7 +117,6 @@ export const useSettingsStore = defineStore('settingsStore', () => {
     initSettings,
     changeDistanceUnit,
     changeSelectedVehicle,
-    togglePlateNumberInTitle,
     getVehicleName,
     toggleAutoBackup,
     setAutoBackupPath,

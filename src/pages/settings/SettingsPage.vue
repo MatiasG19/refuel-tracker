@@ -34,13 +34,6 @@
               }}</span></q-item-label
             >
           </q-item-section>
-          <q-item-section avatar>
-            <q-toggle
-              v-model="plateNumberInTitle"
-              @update:model-value="togglePlateNumberInTitle"
-              color="accent"
-            />
-          </q-item-section>
         </q-item>
       </q-list>
 
@@ -150,7 +143,6 @@ const currentLanguage = ref(1)
 const languageOptions = ref<SelectOption[]>(getLanguageOptions())
 const colorThemeOptions = computed(() => getColorThemes())
 const colorTheme = ref(settingsStore.selectedColorThemeId)
-const plateNumberInTitle = ref(settingsStore.plateNumberInTitleActive)
 const autoBackup = ref(settingsStore.autoBackupActive)
 
 function changeColorTheme(value: number) {
@@ -164,10 +156,6 @@ async function changeLanguage(languageId: number) {
   settingsStore.changeLanguage(languageId)
   await setI18nLanguage(languageId)
   mainLayoutStore.titleText = t('title')
-}
-
-function togglePlateNumberInTitle(value: boolean) {
-  settingsStore.togglePlateNumberInTitle(value)
 }
 
 async function toggleAutoBackup(value: boolean) {

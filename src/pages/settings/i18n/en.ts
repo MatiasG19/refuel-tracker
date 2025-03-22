@@ -11,8 +11,7 @@ export default {
           light: 'Light',
           dark: 'Dark'
         }
-      },
-      licensePlateInTitle: 'Show license plate in title'
+      }
     },
     backup: {
       title: 'Backup',
