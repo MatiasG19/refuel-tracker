@@ -56,11 +56,12 @@
           class="scroll"
           :style="areaHeight"
         >
-          <Draggable>
+          <Draggable
+            v-for="data in dashboardData"
+            :key="data.id ?? data.title + data.subtitle"
+          >
             <div :class="{ draggable: editOrder }">
               <dashboard-card
-                v-for="data in dashboardData"
-                :key="data.id ?? data.title + data.subtitle"
                 class="q-pt-md q-pl-md q-pr-md"
                 :dashboard-data="data"
                 :shake-animation="editOrder"
@@ -150,7 +151,7 @@ function saveOrder() {
 }
 
 function onDrop(dropResult: DropResult) {
-  dashboardStore.moveCard(dropResult)
+  dashboardStore.moveDashboard(dropResult)
 }
 
 onMounted(async () => {

@@ -6,9 +6,12 @@ async function getDashboards() {
 }
 
 async function createDashboard(vehicleId: number) {
+  const vehicles = await db.dashboards.reverse().sortBy('sequence')
+  if (vehicles.length == 0) return
+
   return await db.dashboards.add({
     vehicleId: vehicleId,
-    sequence: Number.MAX_VALUE,
+    sequence: vehicles[0]!.sequence + 1,
     visible: true
   })
 }
