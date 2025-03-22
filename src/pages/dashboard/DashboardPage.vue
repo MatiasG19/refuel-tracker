@@ -59,9 +59,10 @@
           <Draggable>
             <div :class="{ draggable: editOrder }">
               <dashboard-card
+                v-for="data in dashboardData"
+                :key="data.id ?? data.title + data.subtitle"
                 class="q-pt-md q-pl-md q-pr-md"
-                :title="settingsStore.getVehicleName()"
-                :dashboard-data="dashboardData"
+                :dashboard-data="data"
                 :shake-animation="editOrder"
                 @on-long-press="editOrderFun()"
                 @on-options-click="
@@ -96,6 +97,7 @@ import { Container, Draggable, type DropResult } from 'vue3-smooth-dnd'
 import { App } from '@capacitor/app'
 import { initSettings } from 'src/scripts/initSettings'
 import { SplashScreen } from '@capacitor/splash-screen'
+import { DashboardData } from './scripts/models'
 
 const $q = useQuasar()
 $q.dark.set('auto')
@@ -109,7 +111,9 @@ const { t } = useI18n({ useScope: 'local', messages })
 const showChart = ref(false)
 const loading = ref(false)
 const editOrder = ref(false)
-const dashboardData = computed(() => dashboardStore.dashboardData)
+const dashboardData = computed<DashboardData[]>(
+  () => dashboardStore.dashboardData
+)
 const vehiclesExits = computed(() => settingsStore.selectedVehicleId)
 const areaHeight = computed(() => `height: ${settingsStore.areaHeight}px`)
 const optionsInDialog = ref<OptionInDialog[]>([
@@ -141,7 +145,7 @@ function editOrderFun(value = true) {
 
 function saveOrder() {
   editOrder.value = false
-  dashboardStore.saveCardOrder()
+  dashboardStore.saveDashboardOrder()
   mainLayoutStore.headerButton.visible = false
 }
 

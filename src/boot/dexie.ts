@@ -1,11 +1,15 @@
 import { Dexie, type Table } from 'dexie'
 import { Settings } from '../scripts/models'
 import { Vehicle, Refuel } from 'src/scripts/libraries/refuel/models'
-import { type DashboardSettings } from 'src/pages/dashboard/scripts/models'
+import {
+  Dashboard,
+  type DashboardValueSettings
+} from 'src/pages/dashboard/scripts/models'
 import { RefuelFilter } from 'src/pages/refuels/models'
 
 export class RefuelTrackerDexie extends Dexie {
-  graphSettings!: Table<DashboardSettings>
+  dashboards!: Table<Dashboard>
+  graphSettings!: Table<DashboardValueSettings>
   vehicles!: Table<Vehicle>
   refuels!: Table<Refuel>
   refuelFilters!: Table<RefuelFilter>
@@ -13,13 +17,14 @@ export class RefuelTrackerDexie extends Dexie {
 
   constructor() {
     super('RefuelTrackerDb')
-    this.version(4).stores({
-      graphSettings: '++id, uid, sequence, periodId, visible',
+    this.version(5).stores({
+      graphSettings: '++id, uid, sequence, periodId, visible, title',
       vehicles: '++id, name, plateNumber, fuelUnitId, totalFuelConsumption',
       refuels:
         '++id, date, refuelAmount, payedAmount, distanceDriven, vehicleId',
       settings:
-        '++id, colorThemeId, distanceUnitId, vehicleId, plateNumberInTitleActive, autoBackupActive, autoBackupPath, lastUpdateCheck, languageId'
+        '++id, colorThemeId, distanceUnitId, vehicleId, plateNumberInTitleActive, autoBackupActive, autoBackupPath, lastUpdateCheck, languageId',
+      dashboards: '++id, vehicleId, sequence, visible'
     })
     this.version(2)
       .stores({
@@ -34,6 +39,9 @@ export class RefuelTrackerDexie extends Dexie {
             delete setting.refuelFilterActive
           })
       })
+    this.version(5).upgrade(async () => {
+      await this.insertDashboards()
+    })
 
     // Only called on very first database creation
     this.on('populate', () => {
@@ -41,11 +49,24 @@ export class RefuelTrackerDexie extends Dexie {
       this.insertDemoData()
       this.insertSettings()
       this.insertRefuelFilter()
+      this.insertDashboards()
     })
   }
 
+  insertDashboards() {
+    ;(async () => {
+      ;(await this.vehicles.toArray()).forEach((v, i) => {
+        this.dashboards.add({
+          vehicleId: v.id,
+          sequence: i + 1,
+          visible: true
+        })
+      })
+    })()
+  }
+
   insertDashboardSettings() {
-    const settings: DashboardSettings[] = [
+    const settings: DashboardValueSettings[] = [
       { uid: '1', sequence: 1, visible: true },
       { uid: '2', sequence: 2, visible: true },
       { uid: '3', sequence: 3, visible: true },

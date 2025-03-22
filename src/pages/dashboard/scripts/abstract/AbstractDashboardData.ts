@@ -1,7 +1,7 @@
 import { Vehicle } from 'src/scripts/libraries/refuel/models'
-import { DashboardData } from '../models'
+import { DashboardValue } from '../models'
 
-export class AbstractDashboardData extends DashboardData {
+export class AbstractDashboardData extends DashboardValue {
   constructor(protected vehicle: Vehicle) {
     super()
     this.title = this.setTitle()

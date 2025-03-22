@@ -1,7 +1,10 @@
 import { defineStore } from 'pinia'
 import { ref } from 'vue'
 import { DashboardDataFactory } from 'src/pages/dashboard/scripts/DashboardDataFactory'
-import type { DashboardData } from 'src/pages/dashboard/scripts/models'
+import type {
+  DashboardData,
+  DashboardValueSettings
+} from 'src/pages/dashboard/scripts/models'
 import { useSettingsStore } from 'src/pages/settings/stores/settingsStore'
 import { useVehicleStore } from 'src/pages/vehicles/stores'
 import type { DropResult } from 'vue3-smooth-dnd'
@@ -11,30 +14,59 @@ import {
   periodRepository,
   refuelRepository
 } from 'src/scripts/databaseRepositories'
+import dashboardRepository from 'src/scripts/databaseRepositories/dashboardRepository'
 
 export const useDashboardStore = defineStore('dashboardStore', () => {
   const dashboardData = ref<DashboardData[]>([])
+  const dashboardValueSettings = ref<DashboardValueSettings[]>([])
 
   const settingsStore = useSettingsStore()
   const vehicleStore = useVehicleStore()
 
-  async function getDashboardSettings() {
-    return await dashboardSettingsRepository.getDashboardSettings()
+  async function getDashboards() {
+    return await dashboardRepository.getDashboards()
+  }
+
+  async function readDashboardSettings() {
+    dashboardValueSettings.value =
+      await dashboardSettingsRepository.getDashboardSettings()
   }
 
   async function readDashboardData() {
-    if (!settingsStore.selectedVehicleId || dashboardData.value.length > 0)
-      return Promise.resolve()
+    await readDashboardSettings()
 
+    dashboardData.value = []
+    const dashboards = await getDashboards()
+    dashboards.forEach(dashboard => {
+      dashboardData.value.push({
+        id: dashboard.id ?? 0,
+        vehicleId: dashboard.vehicleId,
+        sequence: dashboard.sequence,
+        visible: dashboard.visible,
+        title: '',
+        subtitle: '',
+        dashboardValues: []
+      })
+    })
+
+    if (!settingsStore.selectedVehicleId) return Promise.resolve()
     const vehicle = await vehicleStore.getVehicle(
       settingsStore.selectedVehicleId
     )
+
     if (vehicle) {
       vehicle.refuels = await refuelRepository.getRefuels(vehicle.id)
       if (vehicle.refuels.length) {
-        dashboardData.value = new DashboardDataFactory(vehicle).getAll(
-          await getDashboardSettings()
+        const dashboard = dashboardData.value.find(
+          d => d.vehicleId === vehicle.id
         )
+
+        dashboard!.title = vehicle.name
+        dashboard!.subtitle = vehicle.plateNumber
+        dashboard!.dashboardValues = new DashboardDataFactory(vehicle).getAll(
+          dashboardValueSettings.value
+        )
+
         dashboardData.value = dashboardData.value.sort(
           (a, b) => a.sequence - b.sequence
         )
@@ -93,18 +125,17 @@ export const useDashboardStore = defineStore('dashboardStore', () => {
     )
   }
 
-  function saveCardOrder() {
+  function saveDashboardOrder() {
     ;(async () => {
-      await dashboardSettingsRepository.saveCardOrder(dashboardData.value)
+      await dashboardRepository.saveDashboardOrder(dashboardData.value)
     })()
   }
 
   return {
     dashboardData,
-    getDashboardSettings,
     readDashboardData,
     getPeriods,
     moveCard,
-    saveCardOrder
+    saveDashboardOrder
   }
 })
