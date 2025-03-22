@@ -61,7 +61,7 @@
     "vitest": "^3.0.8"
   },
   "optionalDependencies": {
-    "@esbuild/linux-x64": "^0.25.0",
+    "@esbuild/linux-x64": "^0.25.1",
     "@rollup/rollup-linux-x64-gnu": "4.35.0",
     "sass-embedded-linux-x64": "^1.85.1"
   },
