@@ -16,7 +16,7 @@
               round
               flat
               icon="more_vert"
-              @click.stop="emitter.emit('showVehicleOptionsDialog', vehicle.id)"
+              @click.stop="emit('onOptionsClick', vehicle.id)"
             />
           </div>
         </div>
@@ -31,7 +31,6 @@
 <script setup lang="ts">
 import { PropType } from 'vue'
 import { Vehicle } from 'src/scripts/libraries/refuel/models'
-import { emitter } from 'src/boot/mitt'
 
 defineProps({
   vehicle: {
@@ -39,4 +38,6 @@ defineProps({
     required: true
   }
 })
+
+const emit = defineEmits(['onOptionsClick'])
 </script>

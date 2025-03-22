@@ -95,8 +95,10 @@ import {
   watch
 } from 'vue'
 import { useRouter } from 'vue-router'
-import { emitter } from 'src/boot/mitt'
-import { optionsDialog } from 'src/components/dialogs/optionsDialog'
+import {
+  OptionInDialog,
+  optionsDialog
+} from 'src/components/dialogs/optionsDialog'
 import { confirmDialog } from 'src/components/dialogs/confirmDialog'
 import { useSettingsStore } from 'src/pages/settings/stores/settingsStore'
 import { Refuel } from 'src/scripts/libraries/refuel/models'
@@ -120,6 +122,25 @@ const loading = ref(true)
 const virtualListRef = ref(null)
 const areaHeight = computed(() => `height: ${settingsStore.areaHeight}px`)
 const scrollToIndex = ref(0)
+const optionsInDialog = ref<OptionInDialog[]>([
+  {
+    text: t('refuels.optionsDialog.edit'),
+    icon: 'edit',
+    action: (data: unknown) => router.push({ path: `/refuels/${data}/edit` })
+  },
+  {
+    text: t('refuels.optionsDialog.delete'),
+    icon: 'delete',
+    action: (data: unknown) =>
+      confirmDialog(
+        t('refuels.optionsDialog.deleteRefuel'),
+        (data: unknown) => {
+          ;(async () => refuelStore.deleteRefuel(data as number))()
+        },
+        data
+      )
+  }
+])
 
 const props = defineProps({
   id: {
@@ -152,50 +173,6 @@ function getRefuels(from: number, size: number): Array<Refuel> {
   }
   return items
 }
-
-const optionsInDialog = ref([
-  {
-    text: t('refuels.optionsDialog.edit'),
-    icon: 'edit',
-    action: (id: number) => router.push({ path: `/refuels/${id}/edit` })
-  },
-  {
-    text: t('refuels.optionsDialog.delete'),
-    icon: 'delete',
-    action: (id: number) =>
-      confirmDialog(
-        t('refuels.optionsDialog.deleteRefuel'),
-        (id: number) => {
-          ;(async () => refuelStore.deleteRefuel(id))()
-        },
-        id
-      )
-  }
-])
-
-// emitter.on('showRefuelOptionsDialog', id =>
-//   optionsDialog([
-//     {
-//       text: t('refuels.optionsDialog.edit'),
-//       icon: 'edit',
-//       action: () => {
-//         router.push({ path: `/refuels/${id}/edit` })
-//       }
-//     },
-//     {
-//       text: t('refuels.optionsDialog.delete'),
-//       icon: 'delete',
-//       action: () =>
-//         confirmDialog(
-//           t('refuels.optionsDialog.deleteRefuel'),
-//           (id: number) => {
-//             ;(async () => refuelStore.deleteRefuel(id))()
-//           },
-//           id
-//         )
-//     }
-//   ])
-// )
 
 onBeforeMount(async () => {
   mainLayoutStore.titleText = t('refuels.title')
@@ -236,6 +213,5 @@ onMounted(() => {
 
 onUnmounted(() => {
   mainLayoutStore.hideButton(mainLayoutStore.headerButton)
-  emitter.off('showRefuelOptionsDialog')
 })
 </script>
