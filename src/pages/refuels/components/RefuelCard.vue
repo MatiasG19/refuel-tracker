@@ -15,7 +15,7 @@
                 round
                 flat
                 icon="more_vert"
-                @click="emitter.emit('showRefuelOptionsDialog', refuel.id)"
+                @click="emit('onOptionsClick', refuel.id)"
               />
             </div>
           </div>
@@ -64,7 +64,6 @@
 import type { PropType } from 'vue'
 import type { Refuel, Vehicle } from 'src/scripts/libraries/refuel/models'
 import { date } from 'quasar'
-import { emitter } from 'src/boot/mitt'
 import RefuelCardSkeleton from './RefuelCardSkeleton.vue'
 
 const props = defineProps({
@@ -84,4 +83,6 @@ const props = defineProps({
     type: Boolean
   }
 })
+
+const emit = defineEmits(['onOptionsClick'])
 </script>

@@ -55,6 +55,7 @@
           "
           :loading="loading"
           class="q-pt-md q-pl-md q-pr-md"
+          @on-options-click="payload => optionsDialog(optionsInDialog, payload)"
         />
       </q-virtual-scroll>
 
@@ -152,29 +153,49 @@ function getRefuels(from: number, size: number): Array<Refuel> {
   return items
 }
 
-emitter.on('showRefuelOptionsDialog', id =>
-  optionsDialog([
-    {
-      text: t('refuels.optionsDialog.edit'),
-      icon: 'edit',
-      action: () => {
-        router.push({ path: `/refuels/${id}/edit` })
-      }
-    },
-    {
-      text: t('refuels.optionsDialog.delete'),
-      icon: 'delete',
-      action: () =>
-        confirmDialog(
-          t('refuels.optionsDialog.deleteRefuel'),
-          (id: number) => {
-            ;(async () => refuelStore.deleteRefuel(id))()
-          },
-          id
-        )
-    }
-  ])
-)
+const optionsInDialog = ref([
+  {
+    text: t('refuels.optionsDialog.edit'),
+    icon: 'edit',
+    action: (id: number) => router.push({ path: `/refuels/${id}/edit` })
+  },
+  {
+    text: t('refuels.optionsDialog.delete'),
+    icon: 'delete',
+    action: (id: number) =>
+      confirmDialog(
+        t('refuels.optionsDialog.deleteRefuel'),
+        (id: number) => {
+          ;(async () => refuelStore.deleteRefuel(id))()
+        },
+        id
+      )
+  }
+])
+
+// emitter.on('showRefuelOptionsDialog', id =>
+//   optionsDialog([
+//     {
+//       text: t('refuels.optionsDialog.edit'),
+//       icon: 'edit',
+//       action: () => {
+//         router.push({ path: `/refuels/${id}/edit` })
+//       }
+//     },
+//     {
+//       text: t('refuels.optionsDialog.delete'),
+//       icon: 'delete',
+//       action: () =>
+//         confirmDialog(
+//           t('refuels.optionsDialog.deleteRefuel'),
+//           (id: number) => {
+//             ;(async () => refuelStore.deleteRefuel(id))()
+//           },
+//           id
+//         )
+//     }
+//   ])
+// )
 
 onBeforeMount(async () => {
   mainLayoutStore.titleText = t('refuels.title')
