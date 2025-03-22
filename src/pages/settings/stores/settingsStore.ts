@@ -34,7 +34,6 @@ export const useSettingsStore = defineStore('settingsStore', () => {
         await vehicleRepository.getVehicle(settings.vehicleId)
       )
     }
-    togglePlateNumberInTitle(settings.plateNumberInTitleActive)
     initialized.value = true
   }
 
