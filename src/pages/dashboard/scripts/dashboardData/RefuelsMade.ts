@@ -1,14 +1,14 @@
 import { vehicleRefuelsMade } from 'src/scripts/libraries/refuel/functions/vehicle'
 import { Vehicle } from 'src/scripts/libraries/refuel/models'
-import { AbstractGraphData } from '../abstract/AbstractGraphData'
+import { AbstractDashboardData } from '../abstract/AbstractDashboardData'
 
-export class RefuelsMade extends AbstractGraphData {
+export class RefuelsMade extends AbstractDashboardData {
   constructor(protected override vehicle: Vehicle) {
     super(vehicle)
   }
 
   protected override setTitle(): string {
-    return 'graphData.refuelsMade'
+    return 'dashboardData.refuelsMade'
   }
 
   protected override calculateValue(vehicle: Vehicle): string {

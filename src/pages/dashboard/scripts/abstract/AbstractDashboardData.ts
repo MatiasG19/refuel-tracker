@@ -1,7 +1,7 @@
 import { Vehicle } from 'src/scripts/libraries/refuel/models'
-import { GraphData } from '../models'
+import { DashboardData } from '../models'
 
-export class AbstractGraphData extends GraphData {
+export class AbstractDashboardData extends DashboardData {
   constructor(protected vehicle: Vehicle) {
     super()
     this.title = this.setTitle()

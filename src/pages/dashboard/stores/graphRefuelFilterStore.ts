@@ -3,8 +3,8 @@ import { ref } from 'vue'
 import { date } from 'quasar'
 import { refuelFilterRepository } from 'src/scripts/databaseRepositories'
 
-export const useGraphRefuelFilterStore = defineStore(
-  'graphRefuelFilterStore',
+export const useDasboardRefuelFilterStore = defineStore(
+  'dashboardRefuelFilterStore',
   () => {
     const filterName = ref<string>('')
     const filterActive = ref<boolean>(false)

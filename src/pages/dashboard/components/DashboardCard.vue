@@ -14,14 +14,14 @@
               round
               flat
               :icon="shakeAnimation ? '' : 'more_vert'"
-              @click="emit('onOptionsClick', graphData)"
+              @click="emit('onOptionsClick', dashboardData)"
             />
           </div>
         </div>
 
         <div class="row q-mt-md">
           <dashboard-value
-            v-for="data in [...graphData].splice(0, 3)"
+            v-for="data in [...dashboardData].splice(0, 3)"
             :key="data.uid"
             :title="t(data.title)"
             :value="data.value"
@@ -34,7 +34,7 @@
         </div>
         <div class="row q-mt-md">
           <dashboard-value
-            v-for="data in [...graphData].splice(3, 6)"
+            v-for="data in [...dashboardData].splice(3, 6)"
             :key="data.uid"
             :title="t(data.title)"
             :value="data.value"
@@ -49,7 +49,7 @@
 
 <script setup lang="ts">
 import DashboardValue from './DashboardValue.vue'
-import { type GraphData } from '../scripts/models'
+import { type DashboardData } from '../scripts/models'
 import { useI18n } from 'vue-i18n'
 import messages from '../i18n'
 import { onLongPress } from '@vueuse/core'
@@ -60,8 +60,8 @@ defineProps({
     type: String,
     required: true
   },
-  graphData: {
-    type: Array<GraphData>,
+  dashboardData: {
+    type: Array<DashboardData>,
     required: true
   },
   shakeAnimation: {

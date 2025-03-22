@@ -1,6 +1,6 @@
 export default {
   title: 'Dashboard',
-  graphData: {
+  dashboardData: {
     distanceDriven: 'Distanz',
     fuelBurnt: 'Kraftstoff',
     fuelConsumption: 'Verbrauch',

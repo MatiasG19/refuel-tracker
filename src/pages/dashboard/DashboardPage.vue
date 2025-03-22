@@ -11,7 +11,7 @@
       </div>
     </q-dialog>
     <div
-      v-if="vehiclesExits && graphData.length === 0"
+      v-if="vehiclesExits && dashboardData.length === 0"
       class="column items-center absolute-center"
     >
       <q-icon name="bar_chart" size="100px" color="accent" />
@@ -61,7 +61,7 @@
               <dashboard-card
                 class="q-pt-md q-pl-md q-pr-md"
                 :title="settingsStore.getVehicleName()"
-                :graphData="graphData"
+                :dashboard-data="dashboardData"
                 :shake-animation="editOrder"
                 @on-long-press="editOrderFun()"
                 @on-options-click="
@@ -77,13 +77,12 @@
 </template>
 
 <script setup lang="ts">
-import DashboardCard from 'src/pages/graphData/components/DashboardCard.vue'
-import ChartPage from 'src/pages/graphData/components/chart/ChartPage.vue'
+import DashboardCard from 'src/pages/dashboard/components/DashboardCard.vue'
+import ChartPage from 'src/pages/dashboard/components/chart/ChartPage.vue'
 import { ref, computed, onMounted, onUnmounted } from 'vue'
 import { useSettingsStore } from 'src/pages/settings/stores'
-import { useGraphDataStore } from './stores/graphDataStore'
+import { useDashboardStore } from './stores/dashboardStore'
 import { useMainLayoutStore } from 'src/layouts/stores'
-import type { Period } from 'src/pages/graphData/scripts/models'
 import { optionsDialog } from 'src/components/dialogs/optionsDialog'
 import { useQuasar } from 'quasar'
 import { useRouter } from 'vue-router'
@@ -99,7 +98,7 @@ const $q = useQuasar()
 $q.dark.set('auto')
 
 const router = useRouter()
-const graphDataStore = useGraphDataStore()
+const dashboardStore = useDashboardStore()
 const settingsStore = useSettingsStore()
 const mainLayoutStore = useMainLayoutStore()
 const { t } = useI18n({ useScope: 'local', messages })
@@ -107,18 +106,17 @@ const { t } = useI18n({ useScope: 'local', messages })
 const showChart = ref(false)
 const loading = ref(false)
 const editOrder = ref(false)
-const periods = ref<Period[]>([])
-const graphData = computed(() => graphDataStore.graphData)
+const dashboardData = computed(() => dashboardStore.dashboardData)
 const vehiclesExits = computed(() => settingsStore.selectedVehicleId)
 const areaHeight = computed(() => `height: ${settingsStore.areaHeight}px`)
 const optionsInDialog = ref([
   {
-    text: computed(() => `${t('graphData.optionsInDialog.move')}`),
+    text: computed(() => `${t('dashboardData.optionsInDialog.move')}`),
     icon: 'swap_vert',
     action: () => editOrderFun()
   },
   {
-    text: computed(() => `${t('graphData.optionsInDialog.chart')}`),
+    text: computed(() => `${t('dashboardData.optionsInDialog.chart')}`),
     icon: 'bar_chart',
     action: () => (showChart.value = true)
   }
@@ -135,25 +133,24 @@ function editOrderFun(value = true) {
       false,
       'accent'
     )
-  else graphDataStore.readGraphData()
+  else dashboardStore.readDashboardData()
 }
 
 function saveOrder() {
   editOrder.value = false
-  graphDataStore.saveCardOrder()
+  dashboardStore.saveCardOrder()
   mainLayoutStore.headerButton.visible = false
 }
 
 function onDrop(dropResult: DropResult) {
-  graphDataStore.moveCard(dropResult)
+  dashboardStore.moveCard(dropResult)
 }
 
 onMounted(async () => {
   const timeOut = setTimeout(() => (loading.value = true), 200)
   await initSettings()
-  periods.value = await graphDataStore.getPeriods()
   mainLayoutStore.titleText = t('title')
-  await graphDataStore.readGraphData()
+  await dashboardStore.readDashboardData()
   App.removeAllListeners()
   await App.addListener('backButton', () => {
     if (showChart.value) showChart.value = false
