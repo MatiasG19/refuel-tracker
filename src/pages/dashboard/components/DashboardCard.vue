@@ -4,7 +4,7 @@
       <q-card-section>
         <div class="row items-center no-wrap">
           <div class="col">
-            <div class="text-subtitle2">{{ t(`${graphData.title}`) }}</div>
+            <div class="text-h6">{{ t(`${title}`) }}</div>
           </div>
 
           <div class="col-auto space-station">
@@ -14,53 +14,54 @@
               round
               flat
               :icon="shakeAnimation ? '' : 'more_vert'"
-              @click="emit('onOptionsClick', graphData)"
+              @click="emit('onOptionsClick', dashboardData)"
             />
           </div>
         </div>
-        <div>
-          <div class="row">
-            <div class="col text-h4 accent-space-station">
-              {{ graphData.value }}
-            </div>
-            <div class="col-auto cursor-pointer">
-              <q-icon v-if="shakeAnimation" name="drag_indicator" size="md" />
-            </div>
+
+        <div class="row q-mt-md">
+          <dashboard-value
+            v-for="data in [...dashboardData].splice(0, 3)"
+            :key="data.uid"
+            :title="t(data.title)"
+            :value="data.value"
+            :subtitle="data.unit"
+            class="col q-pr-xl"
+          />
+          <div class="col-auto cursor-pointer">
+            <q-icon v-if="shakeAnimation" name="drag_indicator" size="md" />
           </div>
-          <div class="text-subtitle1">{{ graphData.unit }}</div>
+        </div>
+        <div class="row q-mt-md">
+          <dashboard-value
+            v-for="data in [...dashboardData].splice(3, 6)"
+            :key="data.uid"
+            :title="t(data.title)"
+            :value="data.value"
+            :subtitle="data.unit"
+            class="col q-pr-xl"
+          />
         </div>
       </q-card-section>
-
-      <q-card-section class="accent-space-station" v-if="false">
-        Graph-Graph-Graph-Graph-Graph-Graph-Graph
-      </q-card-section>
-
-      <q-card-actions v-if="false">
-        <div v-for="(period, i) in periods" :key="i" class="col text-center">
-          <q-btn :ripple="false" dense flat no-caps class="space-station">{{
-            period.name
-          }}</q-btn>
-          <q-separator vertical />
-        </div>
-      </q-card-actions>
     </q-card>
   </div>
 </template>
 
 <script setup lang="ts">
-import { type Period, GraphData } from '../scripts/models'
+import DashboardValue from './DashboardValue.vue'
+import { type DashboardData } from '../scripts/models'
 import { useI18n } from 'vue-i18n'
 import messages from '../i18n'
 import { onLongPress } from '@vueuse/core'
 import { ref } from 'vue'
 
 defineProps({
-  graphData: {
-    type: GraphData,
+  title: {
+    type: String,
     required: true
   },
-  periods: {
-    type: Array<Period>,
+  dashboardData: {
+    type: Array<DashboardData>,
     required: true
   },
   shakeAnimation: {

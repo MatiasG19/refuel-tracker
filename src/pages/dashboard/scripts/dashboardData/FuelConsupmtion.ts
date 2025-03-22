@@ -1,14 +1,14 @@
 import { vehicleFuelConsumption } from 'src/scripts/libraries/refuel/functions/vehicle'
 import { Vehicle } from 'src/scripts/libraries/refuel/models'
-import { AbstractGraphData } from '../abstract/AbstractGraphData'
+import { AbstractDashboardData } from '../abstract/AbstractDashboardData'
 
-export class FuelConsumption extends AbstractGraphData {
+export class FuelConsumption extends AbstractDashboardData {
   constructor(protected override vehicle: Vehicle) {
     super(vehicle)
   }
 
   protected override setTitle(): string {
-    return 'graphData.fuelConsumption'
+    return 'dashboardData.fuelConsumption'
   }
 
   protected override calculateValue(vehicle: Vehicle): string {

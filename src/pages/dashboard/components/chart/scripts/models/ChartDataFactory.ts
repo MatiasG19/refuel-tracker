@@ -20,9 +20,9 @@ export class ChartDataFactory {
     vehicle: Vehicle,
     refuels: Refuel[]
   ): IChartData | null {
-    const graphDataClass = ChartDataFactory.chartDataClasses.get(dataSource)
-    if (graphDataClass) {
-      const fun = new graphDataClass()
+    const dashboardDataClass = ChartDataFactory.chartDataClasses.get(dataSource)
+    if (dashboardDataClass) {
+      const fun = new dashboardDataClass()
       return fun.getChartData(groupBy, vehicle, refuels)
     }
 

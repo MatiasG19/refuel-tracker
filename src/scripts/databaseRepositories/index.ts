@@ -1,4 +1,4 @@
-import graphSettingsRepository from './graphSettingsRepository'
+import dashboardSettingsRepository from './dashboardSettingsRepository'
 import vehicleRepository from './vehicleRepository'
 import refuelRepository from './refuelRepository'
 import refuelFilterRepository from './refuelFilterRepository'
@@ -7,7 +7,7 @@ import periodRepository from './periodRepository'
 import settingsRepository from './settingsRepository'
 
 export {
-  graphSettingsRepository,
+  dashboardSettingsRepository,
   vehicleRepository,
   refuelRepository,
   refuelFilterRepository,

@@ -1,11 +1,11 @@
 import { Dexie, type Table } from 'dexie'
 import { Settings } from '../scripts/models'
 import { Vehicle, Refuel } from 'src/scripts/libraries/refuel/models'
-import { type GraphSettings } from 'src/pages/graphData/scripts/models'
+import { type DashboardSettings } from 'src/pages/dashboard/scripts/models'
 import { RefuelFilter } from 'src/pages/refuels/models'
 
 export class RefuelTrackerDexie extends Dexie {
-  graphSettings!: Table<GraphSettings>
+  graphSettings!: Table<DashboardSettings>
   vehicles!: Table<Vehicle>
   refuels!: Table<Refuel>
   refuelFilters!: Table<RefuelFilter>
@@ -37,15 +37,15 @@ export class RefuelTrackerDexie extends Dexie {
 
     // Only called on very first database creation
     this.on('populate', () => {
-      this.insertGraphSettings()
+      this.insertDashboardSettings()
       this.insertDemoData()
       this.insertSettings()
       this.insertRefuelFilter()
     })
   }
 
-  insertGraphSettings() {
-    const settings: GraphSettings[] = [
+  insertDashboardSettings() {
+    const settings: DashboardSettings[] = [
       { uid: '1', sequence: 1, visible: true },
       { uid: '2', sequence: 2, visible: true },
       { uid: '3', sequence: 3, visible: true },

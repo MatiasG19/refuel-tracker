@@ -1,29 +1,29 @@
 import { defineStore } from 'pinia'
 import { ref } from 'vue'
-import { GraphDataFactory } from 'src/pages/graphData/scripts/GraphDataFactory'
-import type { GraphData } from 'src/pages/graphData/scripts/models'
+import { DashboardDataFactory } from 'src/pages/dashboard/scripts/DashboardDataFactory'
+import type { DashboardData } from 'src/pages/dashboard/scripts/models'
 import { useSettingsStore } from 'src/pages/settings/stores/settingsStore'
 import { useVehicleStore } from 'src/pages/vehicles/stores'
 import type { DropResult } from 'vue3-smooth-dnd'
-import type { Period } from 'src/pages/graphData/scripts/models'
+import type { Period } from 'src/pages/dashboard/scripts/models'
 import {
-  graphSettingsRepository,
+  dashboardSettingsRepository,
   periodRepository,
   refuelRepository
 } from 'src/scripts/databaseRepositories'
 
-export const useGraphDataStore = defineStore('graphDataStore', () => {
-  const graphData = ref<GraphData[]>([])
+export const useDashboardStore = defineStore('dashboardStore', () => {
+  const dashboardData = ref<DashboardData[]>([])
 
   const settingsStore = useSettingsStore()
   const vehicleStore = useVehicleStore()
 
-  async function getGraphSettings() {
-    return await graphSettingsRepository.getGraphSettings()
+  async function getDashboardSettings() {
+    return await dashboardSettingsRepository.getDashboardSettings()
   }
 
-  async function readGraphData() {
-    if (!settingsStore.selectedVehicleId || graphData.value.length > 0)
+  async function readDashboardData() {
+    if (!settingsStore.selectedVehicleId || dashboardData.value.length > 0)
       return Promise.resolve()
 
     const vehicle = await vehicleStore.getVehicle(
@@ -32,10 +32,10 @@ export const useGraphDataStore = defineStore('graphDataStore', () => {
     if (vehicle) {
       vehicle.refuels = await refuelRepository.getRefuels(vehicle.id)
       if (vehicle.refuels.length) {
-        graphData.value = new GraphDataFactory(vehicle).getAll(
-          await getGraphSettings()
+        dashboardData.value = new DashboardDataFactory(vehicle).getAll(
+          await getDashboardSettings()
         )
-        graphData.value = graphData.value.sort(
+        dashboardData.value = dashboardData.value.sort(
           (a, b) => a.sequence - b.sequence
         )
         return Promise.resolve()
@@ -56,7 +56,7 @@ export const useGraphDataStore = defineStore('graphDataStore', () => {
     )
       return
 
-    const movedGraph = graphData.value.filter(
+    const movedDashboard = dashboardData.value.filter(
       g => g.sequence === removedIndex + 1
     )[0]
 
@@ -71,36 +71,38 @@ export const useGraphDataStore = defineStore('graphDataStore', () => {
       sign = 1
     }
 
-    const graphDataValues = graphData.value.filter(
+    const dashboardValues = dashboardData.value.filter(
       g => g.sequence >= startIndex && g.sequence <= endIndex
     )
 
     // Move up
     if (sign > 0) {
       for (let i = endIndex; i >= startIndex; i--) {
-        const graph = graphDataValues.filter(g => g.sequence === i)[0]
-        graph!.sequence += sign
+        const dashboard = dashboardValues.filter(g => g.sequence === i)[0]
+        dashboard!.sequence += sign
       }
     } else {
       for (let i = startIndex; i <= endIndex; i++) {
-        const graph = graphDataValues.filter(g => g.sequence === i)[0]
-        graph!.sequence += sign
+        const dashboard = dashboardValues.filter(g => g.sequence === i)[0]
+        dashboard!.sequence += sign
       }
     }
-    movedGraph!.sequence = addedIndex + 1
-    graphData.value = graphData.value.sort((a, b) => a.sequence - b.sequence)
+    movedDashboard!.sequence = addedIndex + 1
+    dashboardData.value = dashboardData.value.sort(
+      (a, b) => a.sequence - b.sequence
+    )
   }
 
   function saveCardOrder() {
     ;(async () => {
-      await graphSettingsRepository.saveCardOrder(graphData.value)
+      await dashboardSettingsRepository.saveCardOrder(dashboardData.value)
     })()
   }
 
   return {
-    graphData,
-    getGraphSettings,
-    readGraphData,
+    dashboardData,
+    getDashboardSettings,
+    readDashboardData,
     getPeriods,
     moveCard,
     saveCardOrder

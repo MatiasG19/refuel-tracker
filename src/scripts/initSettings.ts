@@ -1,11 +1,11 @@
 import { useSettingsStore } from 'src/pages/settings/stores/settingsStore'
 import { setI18nLanguage } from './libraries/utils/language'
 import { useRefuelFilterStore } from 'src/pages/refuels/stores/refuelFilterStore'
-import { registerGraphData } from 'src/pages/graphData/scripts/registerGraphData'
+import { registerDashboardData } from 'src/pages/dashboard/scripts/registerDashboardData'
 import { registerFuelConsumption } from 'src/scripts/libraries/refuel/functions/fuelConsumption/registerFuelConsumption'
 import { useRouter } from 'vue-router'
 import { useMainLayoutStore } from 'src/layouts/stores'
-import { registerChartData } from 'src/pages/graphData/components/chart/scripts/models/registerChartData'
+import { registerChartData } from 'src/pages/dashboard/components/chart/scripts/models/registerChartData'
 
 export async function initSettings() {
   const settingsStore = useSettingsStore()
@@ -18,7 +18,7 @@ export async function initSettings() {
   const refuelFilterStore = useRefuelFilterStore()
   refuelFilterStore.readFilter()
 
-  registerGraphData()
+  registerDashboardData()
   registerFuelConsumption()
   registerChartData()
 

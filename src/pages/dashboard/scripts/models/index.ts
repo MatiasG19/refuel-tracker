@@ -1,4 +1,4 @@
-export class GraphData {
+export class DashboardData {
   id?: number
   uid!: string
   title!: string
@@ -10,7 +10,7 @@ export class GraphData {
   visible!: boolean
 }
 
-export class GraphSettings {
+export class DashboardSettings {
   id?: number
   uid!: string
   sequence!: number
