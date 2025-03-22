@@ -5,17 +5,17 @@
       <q-card-actions>
         <q-btn
           @click="onDialogCancel"
-          class="column btn"
+          class="column form-btn text-default"
           no-caps
-          color="negative"
+          color="primary"
           :label="t('components.dialogs.confirmDialog.cancel')"
         />
         <q-space />
         <q-btn
           @click="onOkClick"
-          class="column btn"
+          class="column form-btn text-default"
           no-caps
-          color="positive"
+          color="primary"
           :label="t('components.dialogs.confirmDialog.confirm')"
         />
       </q-card-actions>
@@ -47,9 +47,3 @@ function onOkClick() {
   onDialogOK()
 }
 </script>
-
-<style scoped>
-.btn {
-  width: 40%;
-}
-</style>
