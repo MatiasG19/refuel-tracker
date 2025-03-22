@@ -1,12 +1,12 @@
 export default {
+  title: 'Dashboard',
   graphData: {
-    title: 'Graphs',
-    distanceDriven: 'Distance driven',
-    fuelBurnt: 'Fuel burnt',
+    distanceDriven: 'Distance',
+    fuelBurnt: 'Fuel',
     fuelConsumption: 'Fuel consumption',
     fuelPricing: 'Fuel pricing',
     moneySpent: 'Money spent',
-    refuelsMade: 'Refuels made',
+    refuelsMade: 'Refuels',
     optionsInDialog: {
       move: 'Move',
       chart: 'Diagram'

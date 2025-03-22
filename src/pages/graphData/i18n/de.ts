@@ -1,12 +1,12 @@
 export default {
+  title: 'Dashboard',
   graphData: {
-    title: 'Graphen',
-    distanceDriven: 'Gefahrene Distanz',
-    fuelBurnt: 'Verbrauchter Kraftstoff',
+    distanceDriven: 'Distanz',
+    fuelBurnt: 'Kraftstoff',
     fuelConsumption: 'Verbrauch',
     fuelPricing: 'Kraftstoffpreis',
-    moneySpent: 'Ausgegebenes Geld',
-    refuelsMade: 'Anzahl Betankungen',
+    moneySpent: 'Kosten',
+    refuelsMade: 'Betankungen',
     optionsInDialog: {
       move: 'Verschieben',
       chart: 'Diagramm'

@@ -120,7 +120,7 @@ const { t } = useI18n()
 
 const linkList = ref([
   {
-    title: computed(() => `${t('drawer.graphPage')}`),
+    title: computed(() => `${t('drawer.dashboardPage')}`),
     caption: '',
     icon: 'bar_chart',
     link: '/'

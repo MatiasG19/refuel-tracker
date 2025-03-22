@@ -56,12 +56,12 @@
           class="scroll"
           :style="areaHeight"
         >
-          <Draggable v-for="data in graphData" :key="data.uid">
+          <Draggable>
             <div :class="{ draggable: editOrder }">
-              <graph-card
+              <dashboard-card
                 class="q-pt-md q-pl-md q-pr-md"
-                :graphData="data"
-                :periods="periods"
+                :title="settingsStore.getVehicleName()"
+                :graphData="graphData"
                 :shake-animation="editOrder"
                 @on-long-press="editOrderFun()"
                 @on-options-click="
@@ -77,10 +77,9 @@
 </template>
 
 <script setup lang="ts">
-import GraphCard from 'src/pages/graphData/components/GraphCard.vue'
+import DashboardCard from 'src/pages/graphData/components/DashboardCard.vue'
 import ChartPage from 'src/pages/graphData/components/chart/ChartPage.vue'
 import { ref, computed, onMounted, onUnmounted } from 'vue'
-import packageJson from '../../../package.json'
 import { useSettingsStore } from 'src/pages/settings/stores'
 import { useGraphDataStore } from './stores/graphDataStore'
 import { useMainLayoutStore } from 'src/layouts/stores'
@@ -145,13 +144,6 @@ function saveOrder() {
   mainLayoutStore.headerButton.visible = false
 }
 
-function updateTitle() {
-  mainLayoutStore.titleText = (() => {
-    if (!settingsStore.selectedVehicleId) return packageJson.productName
-    else return settingsStore.getVehicleName()
-  })()
-}
-
 function onDrop(dropResult: DropResult) {
   graphDataStore.moveCard(dropResult)
 }
@@ -160,7 +152,7 @@ onMounted(async () => {
   const timeOut = setTimeout(() => (loading.value = true), 200)
   await initSettings()
   periods.value = await graphDataStore.getPeriods()
-  updateTitle()
+  mainLayoutStore.titleText = t('title')
   await graphDataStore.readGraphData()
   App.removeAllListeners()
   await App.addListener('backButton', () => {

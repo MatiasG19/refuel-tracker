@@ -46,7 +46,7 @@ export default {
     addVehicle: 'Fahrzeug hinzufügen'
   },
   drawer: {
-    graphPage: 'Graphen',
+    dashboardPage: 'Dashboard',
     vehiclesPage: 'Fahrzeuge',
     refuelsPage: 'Betankungen',
     settingsPage: 'Einstellungen',
