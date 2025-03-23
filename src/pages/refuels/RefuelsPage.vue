@@ -165,7 +165,7 @@ const optionsInDialog = ref<OptionInDialog[]>([
 ])
 
 const props = defineProps({
-  id: {
+  refuelId: {
     type: String
   }
 })
@@ -199,14 +199,10 @@ function getRefuels(from: number, size: number): Array<Refuel> {
 onBeforeMount(async () => {
   mainLayoutStore.titleText = t('refuels.title')
   await refuelStore.readData(parseInt(route.params.vehicleId as string))
-  vehicles.value = await vehicleRepository.getVehicles()
-  vehicleOptions.value = vehicles.value.map(v => ({
-    label: v.name,
-    value: v.id
-  }))
+
   // Define to which index to scroll
-  if (props.id) {
-    const id = parseInt(props.id)
+  if (props.refuelId) {
+    const id = parseInt(props.refuelId)
     if (id)
       scrollToIndex.value = refuelStore
         .vehicle!.refuels!.sort((a, b) => b.date.getTime() - a.date.getTime())
@@ -237,7 +233,13 @@ onMounted(async () => {
   )
   mainLayoutStore.calculateAreaHeight()
 
-  if (!refuelStore.vehicle || vehicles.value.length == 0)
+  vehicles.value = await vehicleRepository.getVehicles()
+  vehicleOptions.value = vehicles.value.map(v => ({
+    label: v.name,
+    value: v.id
+  }))
+
+  if (!refuelStore.vehicle || vehicles.value.length === 0)
     mainLayoutStore.addButton.disabled = true
 })
 
