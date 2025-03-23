@@ -1,6 +1,7 @@
 export default {
   refuels: {
     title: 'Refuels',
+    selectVehicle: 'Select vehicle',
     optionsDialog: {
       edit: 'Edit',
       delete: 'Delete',

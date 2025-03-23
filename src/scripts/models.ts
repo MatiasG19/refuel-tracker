@@ -10,11 +10,6 @@ export class Settings {
   languageId = 1
 }
 
-export class SelectOption {
-  label!: string
-  value!: number
-}
-
 export class Language {
   id?: number
   text!: string

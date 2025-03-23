@@ -2,8 +2,7 @@
   <q-select
     outlined
     color="accent"
-    :model-value="value"
-    @input="$emit('value', $event)"
+    v-model="model"
     :options="options"
     :label="label"
     map-options
@@ -20,19 +19,18 @@
 import { useSettingsStore } from 'src/pages/settings/stores/settingsStore'
 import { getColorThemes } from 'src/scripts/staticData/colorThemes'
 import { computed } from 'vue'
+import { SelectOption } from './types'
 
 const settingsStore = useSettingsStore()
 const dark = computed(
   () => getColorThemes()[settingsStore.selectedColorThemeId].dark
 )
 
+const model = defineModel({ required: true })
+
 defineProps({
-  value: {
-    type: String,
-    reqired: true
-  },
   options: {
-    type: Array,
+    type: Array<SelectOption>,
     required: false
   },
   label: {
@@ -40,6 +38,4 @@ defineProps({
     default: 'Input'
   }
 })
-
-defineEmits(['value'])
 </script>

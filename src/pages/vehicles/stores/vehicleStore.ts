@@ -17,14 +17,11 @@ export const useVehicleStore = defineStore('vehicleStore', () => {
   const vehicles = ref<Vehicle[]>([])
 
   async function readVehicles() {
-    let updateAll = false
-    if (!vehicles.value.length) updateAll = true
     vehicles.value = await getVehicles()
 
-    if (updateAll)
-      vehicles.value.forEach(v => {
-        updateTotalFuelConsumption(v.id)
-      })
+    vehicles.value.forEach(v => {
+      updateTotalFuelConsumption(v.id)
+    })
   }
 
   async function getVehicles(): Promise<Vehicle[]> {

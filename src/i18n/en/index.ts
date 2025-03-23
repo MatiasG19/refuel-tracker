@@ -39,7 +39,8 @@ export default {
   form: {
     cancel: 'Cancel',
     confirm: 'Confirm',
-    filter: 'Filter'
+    filter: 'Filter',
+    ok: 'OK'
   },
   placeholders: {
     addRefuel: 'Add refuel',

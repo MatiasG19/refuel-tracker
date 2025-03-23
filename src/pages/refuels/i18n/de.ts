@@ -1,6 +1,7 @@
 export default {
   refuels: {
     title: 'Betankungen',
+    selectVehicle: 'Fahrzeug auswählen',
     optionsDialog: {
       edit: 'Bearbeiten',
       delete: 'Löschen',

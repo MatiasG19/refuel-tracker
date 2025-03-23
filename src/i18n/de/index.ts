@@ -39,7 +39,8 @@ export default {
   form: {
     cancel: 'Abbrechen',
     confirm: 'Bestätigen',
-    filter: 'Filtern'
+    filter: 'Filtern',
+    ok: 'OK'
   },
   placeholders: {
     addRefuel: 'Betankung hinzufügen',

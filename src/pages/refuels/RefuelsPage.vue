@@ -77,7 +77,19 @@
     </template>
     <Teleport to="#header-badges-left" v-if="refuelStore.vehicle">
       <div class="q-px-md q-pb-xs q-gutter-md">
-        <q-badge class="space-station">{{ refuelStore.vehicle?.name }}</q-badge>
+        <q-badge
+          class="space-station"
+          @click="
+            selectDialog(
+              t('refuels.selectVehicle'),
+              vehicleOptions,
+              (id: number) => {
+                refuelStore.readData(id)
+              }
+            )
+          "
+          >{{ refuelStore.vehicle?.name }}</q-badge
+        >
       </div>
     </Teleport>
   </q-page>
@@ -101,7 +113,7 @@ import {
 } from 'src/components/dialogs/optionsDialog'
 import { confirmDialog } from 'src/components/dialogs/confirmDialog'
 import { useSettingsStore } from 'src/pages/settings/stores/settingsStore'
-import { Refuel } from 'src/scripts/libraries/refuel/models'
+import { Refuel, Vehicle } from 'src/scripts/libraries/refuel/models'
 import { vehicleFuelConsumption } from 'src/scripts/libraries/refuel/functions/vehicle'
 import { QVirtualScroll } from 'quasar'
 import { useRefuelStore, useRefuelFilterStore } from './stores'
@@ -110,6 +122,8 @@ import { useI18n } from 'vue-i18n'
 import { i18n } from 'src/boot/i18n'
 import messages from './i18n'
 import { vehicleRepository } from 'src/scripts/databaseRepositories'
+import { selectDialog } from 'src/components/dialogs/selectDialog'
+import { SelectOption } from 'src/components/inputs/types'
 
 const router = useRouter()
 const route = useRoute()
@@ -123,11 +137,14 @@ const loading = ref(true)
 const virtualListRef = ref(null)
 const areaHeight = computed(() => `height: ${settingsStore.areaHeight}px`)
 const scrollToIndex = ref(0)
+const vehicles = ref<Vehicle[]>([])
+const vehicleOptions = ref<SelectOption[]>([])
 const optionsInDialog = ref<OptionInDialog[]>([
   {
     text: t('refuels.optionsDialog.edit'),
     icon: 'edit',
-    action: (data: unknown) => router.push({ path: `/refuels/${data}/edit` })
+    action: (data: unknown) =>
+      router.push({ path: `/vehicles/refuels/${data}/edit` })
   },
   {
     text: t('refuels.optionsDialog.delete'),
@@ -136,7 +153,10 @@ const optionsInDialog = ref<OptionInDialog[]>([
       confirmDialog(
         t('refuels.optionsDialog.deleteRefuel'),
         (data: unknown) => {
-          ;(async () => refuelStore.deleteRefuel(data as number))()
+          ;(async () => {
+            await refuelStore.deleteRefuel(data as number)
+            await refuelStore.readData(refuelStore.vehicle!.id)
+          })()
         },
         data
       )
@@ -178,7 +198,11 @@ function getRefuels(from: number, size: number): Array<Refuel> {
 onBeforeMount(async () => {
   mainLayoutStore.titleText = t('refuels.title')
   await refuelStore.readData(parseInt(route.params.vehicleId as string))
-
+  vehicles.value = await vehicleRepository.getVehicles()
+  vehicleOptions.value = vehicles.value.map(v => ({
+    label: v.name,
+    value: v.id
+  }))
   // Define to which index to scroll
   if (props.id) {
     const id = parseInt(props.id)
@@ -211,10 +235,8 @@ onMounted(async () => {
     'filter_list'
   )
   mainLayoutStore.calculateAreaHeight()
-  if (
-    !refuelStore.vehicle ||
-    (await vehicleRepository.getVehicles()).length == 0
-  )
+
+  if (!refuelStore.vehicle || vehicles.value.length == 0)
     mainLayoutStore.addButton.disabled = true
 })
 

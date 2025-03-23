@@ -34,7 +34,7 @@ const { dialogRef, onDialogOK } = useDialogPluginComponent()
 
 const props = defineProps({
   options: {
-    type: Array,
+    type: Array<OptionInDialog>,
     required: true
   },
   data: {
