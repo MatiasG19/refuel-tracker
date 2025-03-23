@@ -39,7 +39,7 @@
 import { onMounted, computed, onBeforeMount } from 'vue'
 import { date } from 'quasar'
 import { useRouter } from 'vue-router'
-import { requiredFieldRule } from 'src/scripts/libraries/validation'
+import { useFormValidation } from 'src/scripts/libraries/validation'
 import { useRefuelFilterStore } from './stores'
 import { useMainLayoutStore } from 'src/layouts/stores'
 import CDate from 'src/components/inputs/CDate.vue'
@@ -52,6 +52,7 @@ import {
 } from 'src/scripts/libraries/utils/date'
 
 const router = useRouter()
+const { requiredFieldRule } = useFormValidation()
 const refuelFilterStore = useRefuelFilterStore()
 const mainLayoutStore = useMainLayoutStore()
 const { t } = useI18n({ useScope: 'local', messages })
