@@ -22,7 +22,7 @@
 
           <div class="row">
             <div class="col-3">
-              <div class="text-h5 accent-space-station">
+              <div class="text-h6 accent-space-station">
                 {{ fuelConsumption }}
               </div>
               <div class="text-subtitle1">
@@ -31,7 +31,7 @@
             </div>
 
             <div class="col-3">
-              <div class="text-h5 accent-space-station">
+              <div class="text-h6 accent-space-station">
                 {{ refuel.distanceDriven }}
               </div>
               <div class="text-subtitle1">
@@ -39,13 +39,13 @@
               </div>
             </div>
             <div class="col-3">
-              <div class="text-h5 accent-space-station">
+              <div class="text-h6 accent-space-station">
                 {{ refuel.payedAmount }}
               </div>
               <div class="text-subtitle1">{{ vehicle.currencyUnit }}</div>
             </div>
             <div class="col-3">
-              <div class="text-h5 accent-space-station">
+              <div class="text-h6 accent-space-station">
                 {{ refuel.refueledAmount }}
               </div>
               <div class="text-subtitle1">
