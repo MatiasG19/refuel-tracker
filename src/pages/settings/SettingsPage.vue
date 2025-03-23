@@ -25,16 +25,6 @@
           :options="colorThemeOptions"
           :label="t('sections.settings.colorTheme.label')"
         />
-
-        <q-item tag="label">
-          <q-item-section>
-            <q-item-label
-              ><span class="bg-space-station">{{
-                t('sections.settings.licensePlateInTitle')
-              }}</span></q-item-label
-            >
-          </q-item-section>
-        </q-item>
       </q-list>
 
       <q-item-label header
