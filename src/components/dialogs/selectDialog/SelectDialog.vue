@@ -1,7 +1,7 @@
 <template>
   <div>
     <q-dialog ref="dialogRef" position="standard" full-width>
-      <q-card class="q-ma-md shadow-none">
+      <q-card class="q-ma-md shadow-none bg-primary">
         <q-card-actions>
           <c-select
             class="text-default"

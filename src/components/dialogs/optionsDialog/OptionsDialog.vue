@@ -1,7 +1,7 @@
 <template>
   <div>
     <q-dialog ref="dialogRef" position="bottom" full-width>
-      <q-card class="q-ma-md shadow-none border">
+      <q-card class="q-ma-md shadow-none bg-primary">
         <q-card-actions
           v-for="(option, i) in options as OptionInDialog[]"
           :key="i"
