@@ -20,7 +20,7 @@
           class="form-btn text-default"
           :label="i18n.global.t('form.cancel')"
           no-caps
-          @click="router.push('/refuels')"
+          @click="router.go(-1)"
         />
         <q-space />
         <q-btn
@@ -75,7 +75,7 @@ function updateDateUntilInStore(event: string) {
 
 function onSubmit() {
   refuelFilterStore.setFilter()
-  void router.push('/refuels')
+  void router.go(-1)
 }
 
 onBeforeMount(async () => {

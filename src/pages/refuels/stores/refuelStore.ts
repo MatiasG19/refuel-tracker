@@ -1,7 +1,6 @@
 import { defineStore } from 'pinia'
 import { ref, toRaw } from 'vue'
 import type { Refuel, Vehicle } from 'src/scripts/libraries/refuel/models'
-import { useSettingsStore } from 'src/pages/settings/stores'
 import {
   refuelRepository,
   vehicleRepository
@@ -13,19 +12,20 @@ import {
 } from 'src/scripts/events'
 
 export const useRefuelStore = defineStore('refuelStore', () => {
-  const settingsStore = useSettingsStore()
   const vehicle = ref<Vehicle | null>(null)
 
-  async function readData() {
-    if (vehicle.value || !settingsStore.selectedVehicleId) return
-    const v = await vehicleRepository.getVehicle(
-      settingsStore.selectedVehicleId
-    )
+  async function readData(vehicleId?: number) {
+    console.log('readData', vehicleId)
+
+    let v: Vehicle | null = null
+    if (vehicleId) v = await vehicleRepository.getVehicle(vehicleId)
+    else {
+      const vehicles = await vehicleRepository.getVehicles()
+      if (vehicles.length > 0) v = vehicles[0] ?? null
+    }
     if (!v) return
     vehicle.value = v
-    vehicle.value.refuels = await refuelRepository.getRefuels(
-      settingsStore.selectedVehicleId
-    )
+    vehicle.value.refuels = await refuelRepository.getRefuels(v.id)
   }
 
   async function getRefuel(id: number): Promise<Refuel | null> {

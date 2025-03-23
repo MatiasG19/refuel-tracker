@@ -14,7 +14,7 @@
         unelevated
         no-caps
         outline
-        @click="router.push('/refuels/add')"
+        @click="router.push(`/vehicles/${route.params.vehicleId}/refuels/add`)"
       />
     </div>
     <div
@@ -46,7 +46,7 @@
         <refuel-card
           :key="index"
           :refuel="item ? item : new Refuel()"
-          :vehicle="refuelStore.vehicle"
+          :vehicle="refuelStore.vehicle!"
           :fuelConsumption="
             vehicleFuelConsumption(
               toRaw(refuelStore.vehicle),
@@ -62,7 +62,7 @@
       <Teleport to="#header-badges-left">
         <div class="q-px-md q-pb-xs q-gutter-md">
           <q-badge class="space-station">{{
-            settingsStore.getVehicleName()
+            refuelStore.vehicle?.name
           }}</q-badge>
         </div>
       </Teleport>
@@ -94,7 +94,7 @@ import {
   onMounted,
   watch
 } from 'vue'
-import { useRouter } from 'vue-router'
+import { useRoute, useRouter } from 'vue-router'
 import {
   OptionInDialog,
   optionsDialog
@@ -111,6 +111,7 @@ import { i18n } from 'src/boot/i18n'
 import messages from './i18n'
 
 const router = useRouter()
+const route = useRoute()
 const settingsStore = useSettingsStore()
 const refuelStore = useRefuelStore()
 const refuelFilterStore = useRefuelFilterStore()
@@ -176,7 +177,7 @@ function getRefuels(from: number, size: number): Array<Refuel> {
 
 onBeforeMount(async () => {
   mainLayoutStore.titleText = t('refuels.title')
-  await refuelStore.readData()
+  await refuelStore.readData(parseInt(route.params.vehicleId))
 
   // Define to which index to scroll
   if (props.id) {
@@ -205,7 +206,8 @@ watch(
 onMounted(() => {
   mainLayoutStore.showButton(
     mainLayoutStore.headerButton,
-    () => void router.push('/refuels/filter'),
+    () =>
+      void router.push(`/vehicles/${refuelStore.vehicle?.id}/refuels/filter`),
     'filter_list'
   )
   mainLayoutStore.calculateAreaHeight()

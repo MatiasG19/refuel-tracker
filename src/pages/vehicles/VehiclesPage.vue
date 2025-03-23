@@ -58,10 +58,9 @@ const optionsInDialog = ref<OptionInDialog[]>([
     icon: 'local_gas_station',
     action: (data: unknown) => {
       ;(async () => {
-        const vehicle = await vehicleStore.getVehicle(data as number)
-
-        await settingsStore.changeSelectedVehicle({ ...vehicle! })
-        router.push('/refuels')
+        router.push({
+          path: `/vehicles/${data}/refuels`
+        })
       })()
     }
   },

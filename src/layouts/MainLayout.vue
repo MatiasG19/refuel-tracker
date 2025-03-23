@@ -97,7 +97,7 @@
             dense
             icon="local_gas_station"
             class="col"
-            :to="'/refuels'"
+            :to="'/vehicles/refuels'"
           />
         </div>
       </q-toolbar>
@@ -135,7 +135,7 @@ const linkList = ref([
     title: computed(() => `${t('drawer.refuelsPage')}`),
     caption: '',
     icon: 'local_gas_station',
-    link: '/refuels'
+    link: '/vehicles/refuels'
   },
   {
     title: computed(() => `${t('drawer.settingsPage')}`),

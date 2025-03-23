@@ -10,31 +10,7 @@ const routes: RouteRecordRaw[] = [
         component: () => import('pages/dashboard/DashboardPage.vue')
       },
       {
-        path: '/refuels/:id?',
-        component: () => import('src/pages/refuels/layouts/RefuelLayout.vue'),
-        children: [
-          {
-            path: '',
-            component: () => import('src/pages/refuels/RefuelsPage.vue'),
-            props: true
-          },
-          {
-            path: 'add',
-            component: () => import('src/pages/refuels/RefuelForm.vue')
-          },
-          {
-            path: 'edit',
-            component: () => import('src/pages/refuels/RefuelForm.vue'),
-            props: true
-          },
-          {
-            path: 'filter',
-            component: () => import('src/pages/refuels/FilterRefuelsForm.vue')
-          }
-        ]
-      },
-      {
-        path: '/vehicles/:id?',
+        path: '/vehicles/:vehicleId?',
         component: () => import('src/pages/vehicles/layouts/VehicleLayout.vue'),
         children: [
           {
@@ -49,6 +25,32 @@ const routes: RouteRecordRaw[] = [
             path: 'edit',
             component: () => import('src/pages/vehicles/VehicleForm.vue'),
             props: true
+          },
+          {
+            path: 'refuels/:refuelid?',
+            component: () =>
+              import('src/pages/refuels/layouts/RefuelLayout.vue'),
+            children: [
+              {
+                path: '',
+                component: () => import('src/pages/refuels/RefuelsPage.vue'),
+                props: true
+              },
+              {
+                path: 'add',
+                component: () => import('src/pages/refuels/RefuelForm.vue')
+              },
+              {
+                path: 'edit',
+                component: () => import('src/pages/refuels/RefuelForm.vue'),
+                props: true
+              },
+              {
+                path: 'filter',
+                component: () =>
+                  import('src/pages/refuels/FilterRefuelsForm.vue')
+              }
+            ]
           }
         ]
       },
