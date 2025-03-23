@@ -2,7 +2,9 @@
   <q-page>
     <div
       v-if="
-        vehiclesExists && !refuels.length && !refuelFilterStore.filter?.active
+        refuelStore.vehicle &&
+        !refuels.length &&
+        !refuelFilterStore.filter?.active
       "
       class="column items-center absolute-center"
     >
@@ -18,7 +20,7 @@
       />
     </div>
     <div
-      v-else-if="!vehiclesExists"
+      v-else-if="!refuelStore.vehicle"
       class="column items-center absolute-center"
     >
       <q-icon name="local_gas_station" size="100px" color="accent" />
@@ -49,7 +51,7 @@
           :vehicle="refuelStore.vehicle!"
           :fuelConsumption="
             vehicleFuelConsumption(
-              toRaw(refuelStore.vehicle),
+              toRaw(refuelStore.vehicle!),
               toRaw(item)
             ).toFixed(2)
           "
@@ -118,7 +120,6 @@ const refuelFilterStore = useRefuelFilterStore()
 const mainLayoutStore = useMainLayoutStore()
 const { t } = useI18n({ useScope: 'local', messages })
 
-const vehiclesExists = settingsStore.selectedVehicleId
 const loading = ref(true)
 const virtualListRef = ref(null)
 const areaHeight = computed(() => `height: ${settingsStore.areaHeight}px`)

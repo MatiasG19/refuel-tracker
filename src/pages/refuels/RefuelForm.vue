@@ -1,9 +1,7 @@
 <template>
   <div>
     <q-form @submit="onSubmit" class="q-px-md q-gutter-md">
-      <q-badge class="space-station">{{
-        settingsStore.getVehicleName()
-      }}</q-badge>
+      <q-badge class="space-station">{{ refuelStore.vehicle?.name }}</q-badge>
       <c-input
         type="tel"
         :value="refuel.payedAmount"
@@ -93,7 +91,6 @@ import {
   positiveNumbersRule,
   max50Characters
 } from 'src/scripts/libraries/validation'
-import { useSettingsStore } from 'src/pages/settings/stores'
 import { useRefuelStore } from './stores'
 import { useMainLayoutStore } from 'src/layouts/stores'
 import { Refuel } from 'src/scripts/libraries/refuel/models'
@@ -105,7 +102,6 @@ import messages from './i18n'
 const router = useRouter()
 let routePath = ''
 const refuelStore = useRefuelStore()
-const settingsStore = useSettingsStore()
 const mainLayoutStore = useMainLayoutStore()
 const { t } = useI18n({ useScope: 'local', messages })
 

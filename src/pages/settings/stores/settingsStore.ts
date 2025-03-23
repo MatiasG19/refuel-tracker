@@ -1,18 +1,10 @@
 import { defineStore } from 'pinia'
-import { type Vehicle } from 'src/scripts/libraries/refuel/models'
 import { ref } from 'vue'
-import {
-  settingsRepository,
-  vehicleRepository
-} from 'src/scripts/databaseRepositories'
-import { vehicleChangedEvent } from 'src/scripts/events'
+import { settingsRepository } from 'src/scripts/databaseRepositories'
 import { getColorThemes } from 'src/scripts/staticData/colorThemes'
 
 export const useSettingsStore = defineStore('settingsStore', () => {
   const selectedDistanceUnitId = ref<number>(0)
-  const selectedVehicleId = ref<number | null>(null)
-  const selectedVehicleName = ref<string>('')
-  const selectedVehiclePlateNumber = ref<string>('')
   const autoBackupActive = ref<boolean>(false)
   const autoBackupPath = ref<string>('')
   const selectedColorThemeId = ref<number>(0)
@@ -29,11 +21,6 @@ export const useSettingsStore = defineStore('settingsStore', () => {
     changeColorTheme(settings.colorThemeId)
     changeLanguage(settings.languageId ?? 1)
     changeDistanceUnit(settings.distanceUnitId)
-    if (settings.vehicleId) {
-      await changeSelectedVehicle(
-        await vehicleRepository.getVehicle(settings.vehicleId)
-      )
-    }
     initialized.value = true
   }
 
@@ -43,31 +30,6 @@ export const useSettingsStore = defineStore('settingsStore', () => {
     if (!settings) return Promise.resolve()
     settings.distanceUnitId = distanceUnitId
     await settingsRepository.updateSettings(settings)
-  }
-
-  async function changeSelectedVehicle(vehicle: Vehicle | null) {
-    if (vehicle) {
-      selectedVehicleId.value = vehicle.id
-      selectedVehicleName.value = vehicle.name
-      selectedVehiclePlateNumber.value = vehicle.plateNumber
-      const settings = await settingsRepository.getSettings(settingsId)
-      if (!settings) return Promise.resolve()
-      settings.vehicleId = vehicle.id
-      await settingsRepository.updateSettings(settings)
-    } else {
-      selectedVehicleId.value = null
-      selectedVehicleName.value = ''
-      selectedVehiclePlateNumber.value = ''
-      const settings = await settingsRepository.getSettings(settingsId)
-      if (!settings) return Promise.resolve()
-      settings.vehicleId = null
-      await settingsRepository.updateSettings(settings)
-    }
-    await vehicleChangedEvent(vehicle)
-  }
-
-  function getVehicleName(): string {
-    return selectedVehicleName.value
   }
 
   async function toggleAutoBackup(state: boolean) {
@@ -106,7 +68,6 @@ export const useSettingsStore = defineStore('settingsStore', () => {
 
   return {
     selectedDistanceUnitId,
-    selectedVehicleId,
     autoBackupActive,
     autoBackupPath,
     selectedColorThemeId,
@@ -115,8 +76,6 @@ export const useSettingsStore = defineStore('settingsStore', () => {
     initialized,
     initSettings,
     changeDistanceUnit,
-    changeSelectedVehicle,
-    getVehicleName,
     toggleAutoBackup,
     setAutoBackupPath,
     changeColorTheme,

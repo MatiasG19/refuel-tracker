@@ -56,7 +56,6 @@ import {
   max50Characters
 } from 'src/scripts/libraries/validation'
 import { type SelectOption } from 'src/scripts/models'
-import { useSettingsStore } from 'src/pages/settings/stores'
 import { useVehicleStore } from './stores'
 import { useMainLayoutStore } from 'src/layouts/stores'
 import { Vehicle } from 'src/scripts/libraries/refuel/models'
@@ -67,7 +66,6 @@ import { fuelUnitRepository } from 'src/scripts/databaseRepositories'
 
 const router = useRouter()
 const vehicleStore = useVehicleStore()
-const settingsStore = useSettingsStore()
 const mainLayoutStore = useMainLayoutStore()
 const { t } = useI18n({ useScope: 'local', messages })
 
@@ -91,7 +89,6 @@ async function onSubmit() {
   if (routePath.includes('/add'))
     await vehicleStore.addVehicle({ ...vehicle.value })
   else if (routePath.includes('/edit')) {
-    await settingsStore.changeSelectedVehicle({ ...toRaw(vehicle.value) })
     await vehicleStore.updateVehicle({ ...toRaw(vehicle.value) })
   }
   void router.push('/vehicles')

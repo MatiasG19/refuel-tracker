@@ -10,22 +10,11 @@
         <chart-page :vehicle-id="chartVehicleId" />
       </div>
     </q-dialog>
+
     <div
-      v-if="vehiclesExits && dashboardData.length === 0"
+      v-if="dashboardData.length === 0"
       class="column items-center absolute-center"
     >
-      <q-icon name="bar_chart" size="100px" color="accent" />
-      <q-btn
-        color="accent"
-        :label="i18n.global.t('placeholders.addRefuel')"
-        icon-right="add"
-        unelevated
-        no-caps
-        outline
-        @click="router.push('/refuels/add')"
-      />
-    </div>
-    <div v-else-if="!vehiclesExits" class="column items-center absolute-center">
       <q-icon name="bar_chart" size="100px" color="accent" />
       <q-btn
         class="row"
@@ -115,7 +104,6 @@ const editOrder = ref(false)
 const dashboardData = computed<DashboardData[]>(
   () => dashboardStore.dashboardData
 )
-const vehiclesExits = computed(() => settingsStore.selectedVehicleId)
 const areaHeight = computed(() => `height: ${settingsStore.areaHeight}px`)
 const chartVehicleId = ref(0)
 const optionsInDialog = ref<OptionInDialog[]>([
