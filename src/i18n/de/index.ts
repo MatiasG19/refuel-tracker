@@ -53,5 +53,12 @@ export default {
     refuelsPage: 'Betankungen',
     settingsPage: 'Einstellungen',
     supportPage: 'Hilfe and Support'
+  },
+  validation: {
+    requiredField: 'Pflichtfeld',
+    numbersOnly: 'Nur Zahlen',
+    positiveNumbers: 'Nur positive Zahlen',
+    max50Characters: 'Maximal 50 Zeichen',
+    nothingSelected: 'Bitte wählen Sie einen Wert'
   }
 }

@@ -52,11 +52,6 @@ import { ref, onMounted, toRaw, onBeforeUnmount } from 'vue'
 import { useRouter } from 'vue-router'
 import CInput from 'src/components/inputs/CInput.vue'
 import CSelect from 'src/components/inputs/CSelect.vue'
-import {
-  requiredFieldRule,
-  max50Characters,
-  nothingSelected
-} from 'src/scripts/libraries/validation'
 import { useVehicleStore } from './stores'
 import { useMainLayoutStore } from 'src/layouts/stores'
 import { Vehicle } from 'src/scripts/libraries/refuel/models'
@@ -65,8 +60,11 @@ import { i18n } from 'src/boot/i18n'
 import messages from './i18n'
 import { fuelUnitRepository } from 'src/scripts/databaseRepositories'
 import { SelectOption } from 'src/components/inputs/types'
+import { useFormValidation } from 'src/scripts/libraries/validation'
 
 const router = useRouter()
+const { requiredFieldRule, max50Characters, nothingSelected } =
+  useFormValidation()
 const vehicleStore = useVehicleStore()
 const mainLayoutStore = useMainLayoutStore()
 const { t } = useI18n({ useScope: 'local', messages })

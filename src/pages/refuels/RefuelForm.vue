@@ -93,13 +93,7 @@ import CInput from 'src/components/inputs/CInput.vue'
 import CSelect from 'src/components/inputs/CSelect.vue'
 import CDate from 'src/components/inputs/CDate.vue'
 import CTime from 'src/components/inputs/CTime.vue'
-import {
-  requiredFieldRule,
-  numbersOnlyRule,
-  positiveNumbersRule,
-  max50Characters,
-  nothingSelected
-} from 'src/scripts/libraries/validation'
+import { useFormValidation } from 'src/scripts/libraries/validation'
 import { useRefuelStore } from './stores'
 import { useMainLayoutStore } from 'src/layouts/stores'
 import { Refuel } from 'src/scripts/libraries/refuel/models'
@@ -111,6 +105,13 @@ import { vehicleRepository } from 'src/scripts/databaseRepositories'
 import { SelectOption } from 'src/components/inputs/types'
 
 const router = useRouter()
+const {
+  requiredFieldRule,
+  numbersOnlyRule,
+  positiveNumbersRule,
+  max50Characters,
+  nothingSelected
+} = useFormValidation()
 let routePath = ''
 const refuelStore = useRefuelStore()
 const mainLayoutStore = useMainLayoutStore()
