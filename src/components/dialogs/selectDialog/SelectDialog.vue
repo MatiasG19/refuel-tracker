@@ -1,11 +1,10 @@
 <template>
   <div>
-    <q-dialog ref="dialogRef" position="bottom" full-width>
-      <q-card class="q-ma-md el-space-station">
+    <q-dialog ref="dialogRef" position="standard" full-width>
+      <q-card class="q-ma-md shadow-none">
         <q-card-actions>
           <c-select
-            outlined
-            class="q-pb-md"
+            class="text-default"
             v-model="option"
             :options="props.options"
             :label="props.label"
