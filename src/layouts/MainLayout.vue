@@ -74,10 +74,7 @@
             icon="add"
             class="col"
             @click="mainLayoutStore.addButton.action()"
-            :disable="
-              !settingsStore.selectedVehicleId ||
-              mainLayoutStore.addButton.disabled
-            "
+            :disable="mainLayoutStore.addButton.disabled"
           />
         </div>
         <div class="col">
