@@ -81,6 +81,7 @@
           class="space-station"
           @click="
             selectDialog(
+              refuelStore.vehicle!.id,
               t('refuels.selectVehicle'),
               vehicleOptions,
               (id: number) => {
