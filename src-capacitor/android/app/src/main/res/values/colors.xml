@@ -3,4 +3,12 @@
   <color tools:ignore="UnusedResources" name="colorPrimary">#6E6B9D</color>
   <color tools:ignore="UnusedResources" name="colorPrimaryDark">#3A395B</color>
   <color tools:ignore="UnusedResources" name="colorAccent">#60EFB3</color>
+
+  <color tools:ignore="UnusedResources" name="colorPrimary_dark">#1f1f1f</color>
+  <color tools:ignore="UnusedResources" name="colorPrimaryDark_dark">#0f0f0f</color>
+  <color tools:ignore="UnusedResources" name="colorAccent_dark">#ffffff</color>
+
+  <color tools:ignore="UnusedResources" name="colorPrimary_light">#ffffff</color>
+  <color tools:ignore="UnusedResources" name="colorPrimaryDark_light">#d9d9d9</color>
+  <color tools:ignore="UnusedResources" name="colorAccent_light">#000000</color>
 </resources>
