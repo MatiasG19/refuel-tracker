@@ -10,6 +10,7 @@
     :dark="dark"
     popup-content-class="bg-space-station"
     label-color="secondary"
+    @update="emits('update')"
   >
     <slot></slot>
   </q-select>
@@ -23,7 +24,7 @@ import { SelectOption } from './types'
 
 const settingsStore = useSettingsStore()
 const dark = computed(
-  () => getColorThemes()[settingsStore.selectedColorThemeId].dark
+  () => getColorThemes()[settingsStore.selectedColorThemeId]?.dark
 )
 
 const model = defineModel({ required: true })
@@ -38,4 +39,6 @@ defineProps({
     default: 'Input'
   }
 })
+
+const emits = defineEmits(['update'])
 </script>

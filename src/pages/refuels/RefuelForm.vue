@@ -107,8 +107,8 @@ import { replaceComma } from 'src/scripts/libraries/utils'
 import { useI18n } from 'vue-i18n'
 import { i18n } from 'src/boot/i18n'
 import messages from './i18n'
-import { SelectOption } from 'src/scripts/models'
 import { vehicleRepository } from 'src/scripts/databaseRepositories'
+import { SelectOption } from 'src/components/inputs/types'
 
 const router = useRouter()
 let routePath = ''
@@ -137,7 +137,7 @@ const refuel = reactive<RefuelModel>({
 })
 
 const props = defineProps({
-  id: {
+  refuelId: {
     type: String
   }
 })
@@ -208,8 +208,8 @@ onMounted(async () => {
 
   await refuelStore.readData()
   if (refuelStore.vehicle) refuel.vehicleId = refuelStore.vehicle.id
-  if (props.id && parseInt(props.id)) {
-    const r = toRaw(await refuelStore.getRefuel(parseInt(props.id)))
+  if (props.refuelId && parseInt(props.refuelId)) {
+    const r = toRaw(await refuelStore.getRefuel(parseInt(props.refuelId)))
     if (!r) return
     refuel.id = r.id
     refuel.refuelDate = QuasarDate.formatDate(r.date, 'YYYY/MM/DD')

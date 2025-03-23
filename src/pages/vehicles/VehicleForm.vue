@@ -57,7 +57,6 @@ import {
   max50Characters,
   nothingSelected
 } from 'src/scripts/libraries/validation'
-import { type SelectOption } from 'src/scripts/models'
 import { useVehicleStore } from './stores'
 import { useMainLayoutStore } from 'src/layouts/stores'
 import { Vehicle } from 'src/scripts/libraries/refuel/models'
@@ -65,6 +64,7 @@ import { useI18n } from 'vue-i18n'
 import { i18n } from 'src/boot/i18n'
 import messages from './i18n'
 import { fuelUnitRepository } from 'src/scripts/databaseRepositories'
+import { SelectOption } from 'src/components/inputs/types'
 
 const router = useRouter()
 const vehicleStore = useVehicleStore()
@@ -76,7 +76,7 @@ const fuelUnits = ref<SelectOption[]>([])
 let routePath = ''
 
 const props = defineProps({
-  id: {
+  vehicleId: {
     type: String
   }
 })
@@ -98,8 +98,9 @@ async function onSubmit() {
 
 onMounted(async () => {
   // Get vehicle to edit
-  if (props.id) {
-    const v = toRaw(await vehicleStore.getVehicle(parseInt(props.id)))
+  console.log(props.vehicleId)
+  if (props.vehicleId) {
+    const v = toRaw(await vehicleStore.getVehicle(parseInt(props.vehicleId)))
     if (v) vehicle.value = { ...v }
   }
 
