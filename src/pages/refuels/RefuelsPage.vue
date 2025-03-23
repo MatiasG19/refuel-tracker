@@ -16,7 +16,7 @@
         unelevated
         no-caps
         outline
-        @click="router.push(`/vehicles/${route.params.vehicleId}/refuels/add`)"
+        @click="router.push(`/vehicles/refuels/add`)"
       />
     </div>
     <div
