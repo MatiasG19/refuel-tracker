@@ -17,6 +17,7 @@
         v-model="vehicle.fuelUnitId"
         :options="fuelUnits"
         :label="t('vehicleForm.fuelUnit')"
+        :rules="[nothingSelected]"
       />
       <c-input
         class="q-pb-md"
@@ -53,7 +54,8 @@ import CInput from 'src/components/inputs/CInput.vue'
 import CSelect from 'src/components/inputs/CSelect.vue'
 import {
   requiredFieldRule,
-  max50Characters
+  max50Characters,
+  nothingSelected
 } from 'src/scripts/libraries/validation'
 import { type SelectOption } from 'src/scripts/models'
 import { useVehicleStore } from './stores'

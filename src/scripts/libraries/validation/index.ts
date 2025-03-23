@@ -7,3 +7,6 @@ export const positiveNumbersRule = (v: string) =>
 
 export const max50Characters = (v: string) =>
   v.length <= 50 ? 1 : 'Maximum 50 characters'
+
+export const nothingSelected = (v: string) =>
+  parseInt(v) > 0 ? 1 : 'Select a value'

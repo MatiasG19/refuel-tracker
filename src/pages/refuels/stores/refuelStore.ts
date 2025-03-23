@@ -17,6 +17,7 @@ export const useRefuelStore = defineStore('refuelStore', () => {
   async function readData(vehicleId?: number) {
     let v: Vehicle | null = null
     if (vehicleId) v = await vehicleRepository.getVehicle(vehicleId)
+    else if (vehicle.value) v = vehicle.value
     else {
       const vehicles = await vehicleRepository.getVehicles()
       if (vehicles.length > 0) v = vehicles[0] ?? null
@@ -34,22 +35,18 @@ export const useRefuelStore = defineStore('refuelStore', () => {
 
   async function addRefuel(refuel: Refuel) {
     refuel.id = await refuelRepository.addRefuel(toRaw(refuel))
-    vehicle.value!.refuels?.push(refuel)
-    await refuelAddedEvent(vehicle.value!)
+    await refuelAddedEvent(refuel.vehicleId)
   }
 
   async function updateRefuel(refuel: Refuel) {
-    const i = vehicle.value!.refuels!.findIndex(r => r.id === refuel.id)
-    vehicle.value!.refuels![i] = toRaw(refuel)
     await refuelRepository.updateRefuel(toRaw(refuel))
-    await refuelUpdatedEvent(vehicle.value!)
+    await refuelUpdatedEvent(refuel.vehicleId)
   }
 
   async function deleteRefuel(id: number) {
-    if (vehicle.value!.refuels)
-      vehicle.value!.refuels = vehicle.value!.refuels.filter(r => r.id !== id)
+    const refuel = await refuelRepository.getRefuel(id)
     await refuelRepository.deleteRefuel(id)
-    await refuelDeletedEvent(vehicle.value!)
+    if (refuel) await refuelDeletedEvent(refuel.vehicleId)
   }
 
   return {

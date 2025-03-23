@@ -61,13 +61,6 @@
         />
       </q-virtual-scroll>
 
-      <Teleport to="#header-badges-left">
-        <div class="q-px-md q-pb-xs q-gutter-md">
-          <q-badge class="space-station">{{
-            refuelStore.vehicle?.name
-          }}</q-badge>
-        </div>
-      </Teleport>
       <Teleport to="#header-badges-center">
         <div v-if="refuelFilterStore.filter?.active">
           <q-btn
@@ -82,6 +75,11 @@
         </div>
       </Teleport>
     </template>
+    <Teleport to="#header-badges-left" v-if="refuelStore.vehicle">
+      <div class="q-px-md q-pb-xs q-gutter-md">
+        <q-badge class="space-station">{{ refuelStore.vehicle?.name }}</q-badge>
+      </div>
+    </Teleport>
   </q-page>
 </template>
 
@@ -111,6 +109,7 @@ import { useMainLayoutStore } from 'src/layouts/stores'
 import { useI18n } from 'vue-i18n'
 import { i18n } from 'src/boot/i18n'
 import messages from './i18n'
+import { vehicleRepository } from 'src/scripts/databaseRepositories'
 
 const router = useRouter()
 const route = useRoute()
@@ -204,7 +203,7 @@ watch(
   }
 )
 
-onMounted(() => {
+onMounted(async () => {
   mainLayoutStore.showButton(
     mainLayoutStore.headerButton,
     () =>
@@ -212,9 +211,15 @@ onMounted(() => {
     'filter_list'
   )
   mainLayoutStore.calculateAreaHeight()
+  if (
+    !refuelStore.vehicle ||
+    (await vehicleRepository.getVehicles()).length == 0
+  )
+    mainLayoutStore.addButton.disabled = true
 })
 
 onUnmounted(() => {
   mainLayoutStore.hideButton(mainLayoutStore.headerButton)
+  mainLayoutStore.addButton.disabled = false
 })
 </script>

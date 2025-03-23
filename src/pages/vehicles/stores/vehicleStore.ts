@@ -1,7 +1,6 @@
 import { defineStore } from 'pinia'
 import { ref, toRaw } from 'vue'
 import { FuelUnit, Vehicle } from 'src/scripts/libraries/refuel/models'
-import { useSettingsStore } from 'src/pages/settings/stores'
 import {
   vehicleRepository,
   fuelUnitRepository,
@@ -15,7 +14,6 @@ import {
 } from 'src/scripts/events'
 
 export const useVehicleStore = defineStore('vehicleStore', () => {
-  const settingsStore = useSettingsStore()
   const vehicles = ref<Vehicle[]>([])
 
   async function readVehicles() {
@@ -41,9 +39,7 @@ export const useVehicleStore = defineStore('vehicleStore', () => {
   }
 
   async function addVehicle(vehicle: Vehicle) {
-    vehicles.value.push(vehicle)
     vehicle.id = await vehicleRepository.addVehicle(vehicle)
-    settingsStore.changeSelectedVehicle(vehicle)
     await vehicleAddedEvent(vehicle)
   }
 

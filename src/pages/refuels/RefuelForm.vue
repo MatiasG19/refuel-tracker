@@ -1,7 +1,14 @@
 <template>
   <div>
     <q-form @submit="onSubmit" class="q-px-md q-gutter-md">
-      <q-badge class="space-station">{{ refuelStore.vehicle?.name }}</q-badge>
+      <c-select
+        outlined
+        class="q-pb-md"
+        v-model="refuel.vehicleId"
+        :options="vehicleOptions"
+        :label="t('refuelsForm.vehicle')"
+        :rules="[nothingSelected]"
+      />
       <c-input
         type="tel"
         :value="refuel.payedAmount"
@@ -79,17 +86,19 @@
 </template>
 
 <script setup lang="ts">
-import { onMounted, onBeforeUnmount, toRaw, reactive } from 'vue'
+import { onMounted, onBeforeUnmount, toRaw, reactive, ref } from 'vue'
 import { date as QuasarDate } from 'quasar'
 import { useRouter } from 'vue-router'
 import CInput from 'src/components/inputs/CInput.vue'
+import CSelect from 'src/components/inputs/CSelect.vue'
 import CDate from 'src/components/inputs/CDate.vue'
 import CTime from 'src/components/inputs/CTime.vue'
 import {
   requiredFieldRule,
   numbersOnlyRule,
   positiveNumbersRule,
-  max50Characters
+  max50Characters,
+  nothingSelected
 } from 'src/scripts/libraries/validation'
 import { useRefuelStore } from './stores'
 import { useMainLayoutStore } from 'src/layouts/stores'
@@ -98,6 +107,8 @@ import { replaceComma } from 'src/scripts/libraries/utils'
 import { useI18n } from 'vue-i18n'
 import { i18n } from 'src/boot/i18n'
 import messages from './i18n'
+import { SelectOption } from 'src/scripts/models'
+import { vehicleRepository } from 'src/scripts/databaseRepositories'
 
 const router = useRouter()
 let routePath = ''
@@ -105,9 +116,19 @@ const refuelStore = useRefuelStore()
 const mainLayoutStore = useMainLayoutStore()
 const { t } = useI18n({ useScope: 'local', messages })
 
-const refuel = reactive({
+type RefuelModel = {
+  id: number
+  vehicleId: number | undefined
+  payedAmount: string
+  distanceDriven: string
+  refueledAmount: string
+  refuelDate: string
+  refuelTime: string
+}
+
+const refuel = reactive<RefuelModel>({
   id: 0,
-  vehicleId: 0,
+  vehicleId: undefined,
   payedAmount: '',
   distanceDriven: '',
   refueledAmount: '',
@@ -120,6 +141,8 @@ const props = defineProps({
     type: String
   }
 })
+
+const vehicleOptions = ref<SelectOption[]>([])
 
 function updateDate(event: string) {
   const date = new Date(event)
@@ -135,35 +158,47 @@ function updateTime(event: string) {
 }
 
 async function onSubmit() {
-  const r = new Refuel()
-  r.id = refuel.id
-  r.vehicleId = refuel.vehicleId
-  r.payedAmount = +refuel.payedAmount
-  r.distanceDriven = +refuel.distanceDriven
-  r.refueledAmount = +refuel.refueledAmount
-  r.date = new Date(refuel.refuelDate)
   const d = refuel.refuelTime.split(':')
-  r.date.setHours(parseInt(d[0]))
-  r.date.setMinutes(parseInt(d[1]))
+  const submitRefuel = new Refuel()
+  submitRefuel.id = refuel.id
+  submitRefuel.vehicleId = refuel.vehicleId!
+  submitRefuel.payedAmount = +refuel.payedAmount
+  submitRefuel.distanceDriven = +refuel.distanceDriven
+  submitRefuel.refueledAmount = +refuel.refueledAmount
+  submitRefuel.date = new Date(refuel.refuelDate)
+  submitRefuel.date.setHours(parseInt(d[0]))
+  submitRefuel.date.setMinutes(parseInt(d[1]))
 
-  if (routePath.includes('/add')) await refuelStore.addRefuel(r)
-  else if (routePath.includes('/edit')) await refuelStore.updateRefuel(r)
+  if (routePath.includes('/add')) await refuelStore.addRefuel(submitRefuel)
+  else if (routePath.includes('/edit'))
+    await refuelStore.updateRefuel(submitRefuel)
 
-  const scrollToId = refuel && refuel.id ? refuel.id : 0
-  void router.push({
-    path: `/refuels/${scrollToId}`
-  })
+  if (refuel && refuel.id)
+    void router.push({
+      path: `/vehicles/${refuel.vehicleId}/refuels/${refuel.id}`
+    })
+  else
+    void router.push({
+      path: `/vehicles/${refuel.vehicleId}/refuels`
+    })
 }
 
 function onCancel() {
   if (refuel.id)
     router.push({
-      path: `/refuels/${refuel.id}`
+      path: `/vehicles/${refuel.vehicleId}/refuels/${refuel.id}`
     })
   else router.go(-1)
 }
 
 onMounted(async () => {
+  ;(await vehicleRepository.getVehicles()).forEach(v => {
+    vehicleOptions.value.push({
+      label: v.name,
+      value: v.id
+    })
+  })
+
   routePath = router.currentRoute.value.path.toLocaleLowerCase()
   if (routePath.includes('/add'))
     mainLayoutStore.titleText = t('refuelsForm.titleAddRefuel')

@@ -11,6 +11,7 @@ export default {
   refuelsForm: {
     titleAddRefuel: 'Betankung hinzufügen',
     titleEditRefuel: 'Betankung bearbeiten',
+    vehicle: 'Fahrzeug',
     payedAmount: 'Gezahlter Betrag',
     distanceDriven: 'Gefahrene Distanz',
     refueledAmount: 'Getankte Menge',

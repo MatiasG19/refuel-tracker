@@ -3,22 +3,22 @@ import { useRefuelStore } from 'src/pages/refuels/stores'
 import { useVehicleStore } from 'src/pages/vehicles/stores'
 import { Vehicle } from '../libraries/refuel/models'
 
-async function refuelAddedEvent(vehicle: Vehicle): Promise<void> {
+async function refuelAddedEvent(vehicleId: number): Promise<void> {
   const vehicleStore = useVehicleStore()
 
-  await vehicleStore.updateTotalFuelConsumption(vehicle.id)
+  await vehicleStore.updateTotalFuelConsumption(vehicleId)
 }
 
-async function refuelUpdatedEvent(vehicle: Vehicle): Promise<void> {
+async function refuelUpdatedEvent(vehicleId: number): Promise<void> {
   const vehicleStore = useVehicleStore()
 
-  await vehicleStore.updateTotalFuelConsumption(vehicle.id)
+  await vehicleStore.updateTotalFuelConsumption(vehicleId)
 }
 
-async function refuelDeletedEvent(vehicle: Vehicle): Promise<void> {
+async function refuelDeletedEvent(vehicleId: number): Promise<void> {
   const vehicleStore = useVehicleStore()
 
-  await vehicleStore.updateTotalFuelConsumption(vehicle.id)
+  await vehicleStore.updateTotalFuelConsumption(vehicleId)
 }
 
 async function vehicleAddedEvent(vehicle: Vehicle): Promise<void> {

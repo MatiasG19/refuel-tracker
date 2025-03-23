@@ -11,6 +11,7 @@ export default {
   refuelsForm: {
     titleAddRefuel: 'Add refuel',
     titleEditRefuel: 'Edit refuel',
+    vehicle: 'Vehicle',
     payedAmount: 'Payed amount',
     distanceDriven: 'Distance driven',
     refueledAmount: 'Refueled amount',
