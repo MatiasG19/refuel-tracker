@@ -53,7 +53,6 @@
 
 <script setup lang="ts">
 import { computed, onMounted, onUnmounted, ref } from 'vue'
-import { useSettingsStore } from 'src/pages/settings/stores/settingsStore'
 import { useChartStore } from './stores'
 import { useI18n } from 'vue-i18n'
 import messages from './i18n'
@@ -77,8 +76,14 @@ import { getGrouByOptions, getDataSourceOptions } from './scripts/staticData'
 
 ChartJS.register(Title, BarElement, CategoryScale, LinearScale)
 
+const props = defineProps({
+  vehicleId: {
+    type: Number,
+    required: true
+  }
+})
+
 const { getPaletteColor } = colors
-const settingsStore = useSettingsStore()
 const chartStore = useChartStore()
 const { t } = useI18n({ useScope: 'local', messages })
 const updated = ref(true)
@@ -130,8 +135,7 @@ async function _updateDateUntil(date: string) {
 }
 
 async function updateChart() {
-  if (settingsStore.selectedVehicleId)
-    await chartStore.readData(settingsStore.selectedVehicleId)
+  await chartStore.readData(props.vehicleId)
 
   chartData.value.labels = chartStore.getChartData().labels
   chartData.value.datasets[0]!.data = chartStore.getChartData().data

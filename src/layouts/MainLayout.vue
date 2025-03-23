@@ -74,10 +74,7 @@
             icon="add"
             class="col"
             @click="mainLayoutStore.addButton.action()"
-            :disable="
-              !settingsStore.selectedVehicleId ||
-              mainLayoutStore.addButton.disabled
-            "
+            :disable="mainLayoutStore.addButton.disabled"
           />
         </div>
         <div class="col">
@@ -97,7 +94,7 @@
             dense
             icon="local_gas_station"
             class="col"
-            :to="'/refuels'"
+            :to="'/vehicles/refuels'"
           />
         </div>
       </q-toolbar>
@@ -135,7 +132,7 @@ const linkList = ref([
     title: computed(() => `${t('drawer.refuelsPage')}`),
     caption: '',
     icon: 'local_gas_station',
-    link: '/refuels'
+    link: '/vehicles/refuels'
   },
   {
     title: computed(() => `${t('drawer.settingsPage')}`),

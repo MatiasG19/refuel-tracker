@@ -1,6 +1,6 @@
 <template>
   <q-dialog ref="dialogRef" no-backdrop-dismiss position="bottom" full-width>
-    <q-card class="q-ma-md el-space-station">
+    <q-card class="q-ma-md el-space-station shadow-none">
       <q-card-section class="text-center">{{ promptMessage }}</q-card-section>
       <q-card-actions>
         <q-btn

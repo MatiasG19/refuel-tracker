@@ -1,6 +1,7 @@
 export default {
   refuels: {
     title: 'Refuels',
+    selectVehicle: 'Select vehicle',
     optionsDialog: {
       edit: 'Edit',
       delete: 'Delete',
@@ -11,6 +12,7 @@ export default {
   refuelsForm: {
     titleAddRefuel: 'Add refuel',
     titleEditRefuel: 'Edit refuel',
+    vehicle: 'Vehicle',
     payedAmount: 'Payed amount',
     distanceDriven: 'Distance driven',
     refueledAmount: 'Refueled amount',

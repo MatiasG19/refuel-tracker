@@ -1,9 +1,25 @@
-export const requiredFieldRule = (v: string) => !!v || 'Required field'
+import { useI18n } from 'vue-i18n'
+export function useFormValidation() {
+  const { t } = useI18n()
 
-export const numbersOnlyRule = (v: string) => +v || 'Numbers only'
+  const requiredFieldRule = (v: string) => !!v || t('validation.requiredField')
 
-export const positiveNumbersRule = (v: string) =>
-  +v > 0 ? +v : 'Positive numbers only'
+  const numbersOnlyRule = (v: string) => +v || t('validation.numbersOnly')
 
-export const max50Characters = (v: string) =>
-  v.length <= 50 ? 1 : 'Maximum 50 characters'
+  const positiveNumbersRule = (v: string) =>
+    +v > 0 ? +v : t('validation.positiveNumbers')
+
+  const max50Characters = (v: string) =>
+    v.length <= 50 ? 1 : t('validation.max50Characters')
+
+  const nothingSelected = (v: string) =>
+    parseInt(v) > 0 ? 1 : t('validation.nothingSelected')
+
+  return {
+    requiredFieldRule,
+    numbersOnlyRule,
+    positiveNumbersRule,
+    max50Characters,
+    nothingSelected
+  }
+}

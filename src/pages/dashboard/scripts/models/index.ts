@@ -1,4 +1,11 @@
-export class DashboardData {
+export class Dashboard {
+  id?: number
+  vehicleId!: number
+  sequence!: number
+  visible!: boolean
+}
+
+export class DashboardValue {
   id?: number
   uid!: string
   title!: string
@@ -10,13 +17,22 @@ export class DashboardData {
   visible!: boolean
 }
 
-export class DashboardSettings {
+export class DashboardView extends Dashboard {
+  title!: string
+  subtitle!: string
+}
+
+export class DashboardData extends DashboardView {
+  dashboardValues: DashboardValue[] = []
+}
+export class DashboardValueSettings {
   id?: number
   uid!: string
   sequence!: number
   periodId?: number
   perdiod?: Period
   visible!: boolean
+  title?: string
 }
 
 export class Period {

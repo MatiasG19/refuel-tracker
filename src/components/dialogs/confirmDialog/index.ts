@@ -1,5 +1,5 @@
 import { Dialog } from 'quasar'
-import ConfirmDialog from 'src/components/dialogs/confirmDialog/ConfirmDialog.vue'
+import ConfirmDialog from './ConfirmDialog.vue'
 
 export function confirmDialog(
   promptMessage: string,

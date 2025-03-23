@@ -1,6 +1,7 @@
 export default {
   refuels: {
     title: 'Betankungen',
+    selectVehicle: 'Fahrzeug auswählen',
     optionsDialog: {
       edit: 'Bearbeiten',
       delete: 'Löschen',
@@ -11,6 +12,7 @@ export default {
   refuelsForm: {
     titleAddRefuel: 'Betankung hinzufügen',
     titleEditRefuel: 'Betankung bearbeiten',
+    vehicle: 'Fahrzeug',
     payedAmount: 'Gezahlter Betrag',
     distanceDriven: 'Gefahrene Distanz',
     refueledAmount: 'Getankte Menge',

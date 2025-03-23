@@ -1,7 +1,6 @@
 import { defineStore } from 'pinia'
 import { ref, toRaw } from 'vue'
 import { FuelUnit, Vehicle } from 'src/scripts/libraries/refuel/models'
-import { useSettingsStore } from 'src/pages/settings/stores'
 import {
   vehicleRepository,
   fuelUnitRepository,
@@ -15,22 +14,17 @@ import {
 } from 'src/scripts/events'
 
 export const useVehicleStore = defineStore('vehicleStore', () => {
-  const settingsStore = useSettingsStore()
   const vehicles = ref<Vehicle[]>([])
 
   async function readVehicles() {
-    let updateAll = false
-    if (!vehicles.value.length) updateAll = true
     vehicles.value = await getVehicles()
 
-    if (updateAll)
-      vehicles.value.forEach(v => {
-        updateTotalFuelConsumption(v.id)
-      })
+    vehicles.value.forEach(v => {
+      updateTotalFuelConsumption(v.id)
+    })
   }
 
   async function getVehicles(): Promise<Vehicle[]> {
-    if (vehicles.value.length > 0) return vehicles.value
     return await vehicleRepository.getVehicles()
   }
 
@@ -41,9 +35,7 @@ export const useVehicleStore = defineStore('vehicleStore', () => {
   }
 
   async function addVehicle(vehicle: Vehicle) {
-    vehicles.value.push(vehicle)
     vehicle.id = await vehicleRepository.addVehicle(vehicle)
-    settingsStore.changeSelectedVehicle(vehicle)
     await vehicleAddedEvent(vehicle)
   }
 
@@ -79,7 +71,7 @@ export const useVehicleStore = defineStore('vehicleStore', () => {
   async function deleteVehicle(id: number) {
     vehicles.value = vehicles.value.filter(v => v.id !== id)
     await vehicleRepository.deleteVehicle(id)
-    await vehicleDeletedEvent()
+    await vehicleDeletedEvent(id)
   }
 
   async function getFuelUnits(): Promise<FuelUnit[]> {

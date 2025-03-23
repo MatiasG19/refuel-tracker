@@ -7,25 +7,14 @@
             <q-btn @click="() => (showChart = false)" icon="close" flat></q-btn>
           </div>
         </div>
-        <chart-page />
+        <chart-page :vehicle-id="chartVehicleId" />
       </div>
     </q-dialog>
+
     <div
-      v-if="vehiclesExits && dashboardData.length === 0"
+      v-if="dashboardData.length === 0"
       class="column items-center absolute-center"
     >
-      <q-icon name="bar_chart" size="100px" color="accent" />
-      <q-btn
-        color="accent"
-        :label="i18n.global.t('placeholders.addRefuel')"
-        icon-right="add"
-        unelevated
-        no-caps
-        outline
-        @click="router.push('/refuels/add')"
-      />
-    </div>
-    <div v-else-if="!vehiclesExits" class="column items-center absolute-center">
       <q-icon name="bar_chart" size="100px" color="accent" />
       <q-btn
         class="row"
@@ -56,12 +45,14 @@
           class="scroll"
           :style="areaHeight"
         >
-          <Draggable>
+          <Draggable
+            v-for="data in dashboardData"
+            :key="data.id ?? data.title + data.subtitle"
+          >
             <div :class="{ draggable: editOrder }">
               <dashboard-card
                 class="q-pt-md q-pl-md q-pr-md"
-                :title="settingsStore.getVehicleName()"
-                :dashboard-data="dashboardData"
+                :dashboard-data="data"
                 :shake-animation="editOrder"
                 @on-long-press="editOrderFun()"
                 @on-options-click="
@@ -96,6 +87,7 @@ import { Container, Draggable, type DropResult } from 'vue3-smooth-dnd'
 import { App } from '@capacitor/app'
 import { initSettings } from 'src/scripts/initSettings'
 import { SplashScreen } from '@capacitor/splash-screen'
+import { DashboardData } from './scripts/models'
 
 const $q = useQuasar()
 $q.dark.set('auto')
@@ -109,9 +101,11 @@ const { t } = useI18n({ useScope: 'local', messages })
 const showChart = ref(false)
 const loading = ref(false)
 const editOrder = ref(false)
-const dashboardData = computed(() => dashboardStore.dashboardData)
-const vehiclesExits = computed(() => settingsStore.selectedVehicleId)
+const dashboardData = computed<DashboardData[]>(
+  () => dashboardStore.dashboardData
+)
 const areaHeight = computed(() => `height: ${settingsStore.areaHeight}px`)
+const chartVehicleId = ref(0)
 const optionsInDialog = ref<OptionInDialog[]>([
   {
     text: t('dashboardData.optionsInDialog.move'),
@@ -121,7 +115,10 @@ const optionsInDialog = ref<OptionInDialog[]>([
   {
     text: t('dashboardData.optionsInDialog.chart'),
     icon: 'bar_chart',
-    action: () => (showChart.value = true)
+    action: (data: unknown) => {
+      chartVehicleId.value = (data as DashboardData).vehicleId
+      showChart.value = true
+    }
   }
 ])
 
@@ -141,12 +138,12 @@ function editOrderFun(value = true) {
 
 function saveOrder() {
   editOrder.value = false
-  dashboardStore.saveCardOrder()
+  dashboardStore.saveDashboardOrder()
   mainLayoutStore.headerButton.visible = false
 }
 
 function onDrop(dropResult: DropResult) {
-  dashboardStore.moveCard(dropResult)
+  dashboardStore.moveDashboard(dropResult)
 }
 
 onMounted(async () => {

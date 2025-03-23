@@ -39,11 +39,13 @@ export default {
   form: {
     cancel: 'Cancel',
     confirm: 'Confirm',
-    filter: 'Filter'
+    filter: 'Filter',
+    ok: 'OK'
   },
   placeholders: {
     addRefuel: 'Add refuel',
-    addVehicle: 'Add vehicle'
+    addVehicle: 'Add vehicle',
+    noData: 'No data'
   },
   drawer: {
     dashboardPage: 'Dashboard',
@@ -51,5 +53,12 @@ export default {
     refuelsPage: 'Refuels',
     settingsPage: 'Settings',
     supportPage: 'Help and Support'
+  },
+  validation: {
+    requiredField: 'Required field',
+    numbersOnly: 'Numbers only',
+    positiveNumbers: 'Positive numbers only',
+    max50Characters: 'Maximum 50 characters',
+    nothingSelected: 'Select a value'
   }
 }

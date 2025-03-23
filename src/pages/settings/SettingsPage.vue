@@ -25,23 +25,6 @@
           :options="colorThemeOptions"
           :label="t('sections.settings.colorTheme.label')"
         />
-
-        <q-item tag="label">
-          <q-item-section>
-            <q-item-label
-              ><span class="bg-space-station">{{
-                t('sections.settings.licensePlateInTitle')
-              }}</span></q-item-label
-            >
-          </q-item-section>
-          <q-item-section avatar>
-            <q-toggle
-              v-model="plateNumberInTitle"
-              @update:model-value="togglePlateNumberInTitle"
-              color="accent"
-            />
-          </q-item-section>
-        </q-item>
       </q-list>
 
       <q-item-label header
@@ -125,7 +108,6 @@ import { useSettingsStore } from 'src/pages/settings/stores/settingsStore'
 import { exportDB, importDB } from 'src/scripts/libraries/backup/backup'
 import { FilePicker } from 'src/plugins/capacitor-file-picker'
 import { Notify, Platform } from 'quasar'
-import { type SelectOption } from 'src/scripts/models'
 import { useI18n } from 'vue-i18n'
 import messages from './i18n'
 import {
@@ -135,6 +117,7 @@ import {
 import { LanguageId } from '../../scripts/models'
 import { useMainLayoutStore } from 'src/layouts/stores'
 import { getColorThemes } from 'src/scripts/staticData/colorThemes'
+import { SelectOption } from 'src/components/inputs/types'
 
 const { t } = useI18n({ useScope: 'global', messages })
 const settingsStore = useSettingsStore()
@@ -150,7 +133,6 @@ const currentLanguage = ref(1)
 const languageOptions = ref<SelectOption[]>(getLanguageOptions())
 const colorThemeOptions = computed(() => getColorThemes())
 const colorTheme = ref(settingsStore.selectedColorThemeId)
-const plateNumberInTitle = ref(settingsStore.plateNumberInTitleActive)
 const autoBackup = ref(settingsStore.autoBackupActive)
 
 function changeColorTheme(value: number) {
@@ -164,10 +146,6 @@ async function changeLanguage(languageId: number) {
   settingsStore.changeLanguage(languageId)
   await setI18nLanguage(languageId)
   mainLayoutStore.titleText = t('title')
-}
-
-function togglePlateNumberInTitle(value: boolean) {
-  settingsStore.togglePlateNumberInTitle(value)
 }
 
 async function toggleAutoBackup(value: boolean) {

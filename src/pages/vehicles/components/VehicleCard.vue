@@ -21,7 +21,7 @@
           </div>
         </div>
 
-        <div class="text-h4 accent-space-station">{{ vehicle.name }}</div>
+        <div class="text-h6 accent-space-station">{{ vehicle.name }}</div>
         <div class="text-subtitle1">{{ vehicle.plateNumber }}</div>
       </q-card-section>
     </q-card>

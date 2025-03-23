@@ -4,7 +4,10 @@
       <q-card-section>
         <div class="row items-center no-wrap">
           <div class="col">
-            <div class="text-h6">{{ t(`${title}`) }}</div>
+            <div class="text-h6">{{ t(`${dashboardData.title}`) }}</div>
+            <div class="text-subtitle1">
+              {{ t(`${dashboardData.subtitle}`) }}
+            </div>
           </div>
 
           <div class="col-auto space-station">
@@ -21,7 +24,7 @@
 
         <div class="row q-mt-md">
           <dashboard-value
-            v-for="data in [...dashboardData].splice(0, 3)"
+            v-for="data in [...dashboardData.dashboardValues].splice(0, 3)"
             :key="data.uid"
             :title="t(data.title)"
             :value="data.value"
@@ -33,14 +36,17 @@
           </div>
         </div>
         <div class="row q-mt-md">
-          <dashboard-value
-            v-for="data in [...dashboardData].splice(3, 6)"
-            :key="data.uid"
-            :title="t(data.title)"
-            :value="data.value"
-            :subtitle="data.unit"
-            class="col q-pr-xl"
-          />
+          <template v-if="dashboardData.dashboardValues.length">
+            <dashboard-value
+              v-for="data in [...dashboardData.dashboardValues].splice(3, 6)"
+              :key="data.uid"
+              :title="t(data.title)"
+              :value="data.value"
+              :subtitle="data.unit"
+              class="col q-pr-xl"
+            />
+          </template>
+          <div v-else>{{ t('placeholders.noData') }}</div>
         </div>
       </q-card-section>
     </q-card>
@@ -53,15 +59,11 @@ import { type DashboardData } from '../scripts/models'
 import { useI18n } from 'vue-i18n'
 import messages from '../i18n'
 import { onLongPress } from '@vueuse/core'
-import { ref } from 'vue'
+import { PropType, ref } from 'vue'
 
 defineProps({
-  title: {
-    type: String,
-    required: true
-  },
   dashboardData: {
-    type: Array<DashboardData>,
+    type: Object as PropType<DashboardData>,
     required: true
   },
   shakeAnimation: {

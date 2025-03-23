@@ -1,5 +1,5 @@
 import { Dialog } from 'quasar'
-import OptionsDialog from 'src/components/dialogs/optionsDialog/OptionsDialog.vue'
+import OptionsDialog from './OptionsDialog.vue'
 
 export class OptionInDialog {
   text!: string

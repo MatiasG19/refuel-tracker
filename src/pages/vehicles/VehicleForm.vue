@@ -17,6 +17,7 @@
         v-model="vehicle.fuelUnitId"
         :options="fuelUnits"
         :label="t('vehicleForm.fuelUnit')"
+        :rules="[nothingSelected]"
       />
       <c-input
         class="q-pb-md"
@@ -51,12 +52,6 @@ import { ref, onMounted, toRaw, onBeforeUnmount } from 'vue'
 import { useRouter } from 'vue-router'
 import CInput from 'src/components/inputs/CInput.vue'
 import CSelect from 'src/components/inputs/CSelect.vue'
-import {
-  requiredFieldRule,
-  max50Characters
-} from 'src/scripts/libraries/validation'
-import { type SelectOption } from 'src/scripts/models'
-import { useSettingsStore } from 'src/pages/settings/stores'
 import { useVehicleStore } from './stores'
 import { useMainLayoutStore } from 'src/layouts/stores'
 import { Vehicle } from 'src/scripts/libraries/refuel/models'
@@ -64,10 +59,13 @@ import { useI18n } from 'vue-i18n'
 import { i18n } from 'src/boot/i18n'
 import messages from './i18n'
 import { fuelUnitRepository } from 'src/scripts/databaseRepositories'
+import { SelectOption } from 'src/components/inputs/types'
+import { useFormValidation } from 'src/scripts/libraries/validation'
 
 const router = useRouter()
+const { requiredFieldRule, max50Characters, nothingSelected } =
+  useFormValidation()
 const vehicleStore = useVehicleStore()
-const settingsStore = useSettingsStore()
 const mainLayoutStore = useMainLayoutStore()
 const { t } = useI18n({ useScope: 'local', messages })
 
@@ -76,7 +74,7 @@ const fuelUnits = ref<SelectOption[]>([])
 let routePath = ''
 
 const props = defineProps({
-  id: {
+  vehicleId: {
     type: String
   }
 })
@@ -91,7 +89,6 @@ async function onSubmit() {
   if (routePath.includes('/add'))
     await vehicleStore.addVehicle({ ...vehicle.value })
   else if (routePath.includes('/edit')) {
-    await settingsStore.changeSelectedVehicle({ ...toRaw(vehicle.value) })
     await vehicleStore.updateVehicle({ ...toRaw(vehicle.value) })
   }
   void router.push('/vehicles')
@@ -99,8 +96,9 @@ async function onSubmit() {
 
 onMounted(async () => {
   // Get vehicle to edit
-  if (props.id) {
-    const v = toRaw(await vehicleStore.getVehicle(parseInt(props.id)))
+  console.log(props.vehicleId)
+  if (props.vehicleId) {
+    const v = toRaw(await vehicleStore.getVehicle(parseInt(props.vehicleId)))
     if (v) vehicle.value = { ...v }
   }
 

@@ -1,6 +1,6 @@
 import { Vehicle } from 'src/scripts/libraries/refuel/models'
 import { AbstractDashboardData } from './abstract/AbstractDashboardData'
-import { DashboardSettings, DashboardData } from './models'
+import { DashboardValueSettings, DashboardValue } from './models'
 
 export class DashboardDataFactory {
   public static dashboardDataClasses = new Map<
@@ -17,8 +17,8 @@ export class DashboardDataFactory {
     DashboardDataFactory.dashboardDataClasses.set(uid, dashboardDataType)
   }
 
-  public getAll(dashboardSettings: DashboardSettings[]): DashboardData[] {
-    const dashboardData: DashboardData[] = []
+  public getAll(dashboardSettings: DashboardValueSettings[]): DashboardValue[] {
+    const dashboardData: DashboardValue[] = []
     for (const entry of DashboardDataFactory.dashboardDataClasses.entries()) {
       const uid = entry[0]
       const dashboardDataClass = entry[1]
@@ -35,8 +35,8 @@ export class DashboardDataFactory {
 
   public get(
     uid: string,
-    dashboardSettings: DashboardSettings
-  ): DashboardData | null {
+    dashboardSettings: DashboardValueSettings
+  ): DashboardValue | null {
     const dashboardDataClass =
       DashboardDataFactory.dashboardDataClasses.get(uid)
     if (dashboardDataClass)
@@ -46,9 +46,9 @@ export class DashboardDataFactory {
 
   private createDashboardData(
     class_: typeof AbstractDashboardData,
-    settings: DashboardSettings
-  ): DashboardData {
-    const dashboardData: DashboardData = new class_(this.vehicle)
+    settings: DashboardValueSettings
+  ): DashboardValue {
+    const dashboardData: DashboardValue = new class_(this.vehicle)
     dashboardData.id = settings.id ?? 0
     dashboardData.uid = settings.uid
     dashboardData.sequence = settings.sequence

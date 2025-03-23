@@ -2,7 +2,9 @@
   <q-page>
     <div
       v-if="
-        vehiclesExists && !refuels.length && !refuelFilterStore.filter?.active
+        refuelStore.vehicle &&
+        !refuels.length &&
+        !refuelFilterStore.filter?.active
       "
       class="column items-center absolute-center"
     >
@@ -14,11 +16,11 @@
         unelevated
         no-caps
         outline
-        @click="router.push('/refuels/add')"
+        @click="router.push(`/vehicles/refuels/add`)"
       />
     </div>
     <div
-      v-else-if="!vehiclesExists"
+      v-else-if="!refuelStore.vehicle"
       class="column items-center absolute-center"
     >
       <q-icon name="local_gas_station" size="100px" color="accent" />
@@ -46,10 +48,10 @@
         <refuel-card
           :key="index"
           :refuel="item ? item : new Refuel()"
-          :vehicle="refuelStore.vehicle"
+          :vehicle="refuelStore.vehicle!"
           :fuelConsumption="
             vehicleFuelConsumption(
-              toRaw(refuelStore.vehicle),
+              toRaw(refuelStore.vehicle!),
               toRaw(item)
             ).toFixed(2)
           "
@@ -59,13 +61,6 @@
         />
       </q-virtual-scroll>
 
-      <Teleport to="#header-badges-left">
-        <div class="q-px-md q-pb-xs q-gutter-md">
-          <q-badge class="space-station">{{
-            settingsStore.getVehicleName()
-          }}</q-badge>
-        </div>
-      </Teleport>
       <Teleport to="#header-badges-center">
         <div v-if="refuelFilterStore.filter?.active">
           <q-btn
@@ -80,6 +75,24 @@
         </div>
       </Teleport>
     </template>
+    <Teleport to="#header-badges-left" v-if="refuelStore.vehicle">
+      <div class="q-px-md q-pb-xs q-gutter-md">
+        <q-badge
+          class="space-station"
+          @click="
+            selectDialog(
+              refuelStore.vehicle!.id,
+              t('refuels.selectVehicle'),
+              vehicleOptions,
+              (id: number) => {
+                refuelStore.readData(id)
+              }
+            )
+          "
+          >{{ refuelStore.vehicle?.name }}</q-badge
+        >
+      </div>
+    </Teleport>
   </q-page>
 </template>
 
@@ -94,14 +107,14 @@ import {
   onMounted,
   watch
 } from 'vue'
-import { useRouter } from 'vue-router'
+import { useRoute, useRouter } from 'vue-router'
 import {
   OptionInDialog,
   optionsDialog
 } from 'src/components/dialogs/optionsDialog'
 import { confirmDialog } from 'src/components/dialogs/confirmDialog'
 import { useSettingsStore } from 'src/pages/settings/stores/settingsStore'
-import { Refuel } from 'src/scripts/libraries/refuel/models'
+import { Refuel, Vehicle } from 'src/scripts/libraries/refuel/models'
 import { vehicleFuelConsumption } from 'src/scripts/libraries/refuel/functions/vehicle'
 import { QVirtualScroll } from 'quasar'
 import { useRefuelStore, useRefuelFilterStore } from './stores'
@@ -109,24 +122,30 @@ import { useMainLayoutStore } from 'src/layouts/stores'
 import { useI18n } from 'vue-i18n'
 import { i18n } from 'src/boot/i18n'
 import messages from './i18n'
+import { vehicleRepository } from 'src/scripts/databaseRepositories'
+import { selectDialog } from 'src/components/dialogs/selectDialog'
+import { SelectOption } from 'src/components/inputs/types'
 
 const router = useRouter()
+const route = useRoute()
 const settingsStore = useSettingsStore()
 const refuelStore = useRefuelStore()
 const refuelFilterStore = useRefuelFilterStore()
 const mainLayoutStore = useMainLayoutStore()
 const { t } = useI18n({ useScope: 'local', messages })
 
-const vehiclesExists = settingsStore.selectedVehicleId
 const loading = ref(true)
 const virtualListRef = ref(null)
 const areaHeight = computed(() => `height: ${settingsStore.areaHeight}px`)
 const scrollToIndex = ref(0)
+const vehicles = ref<Vehicle[]>([])
+const vehicleOptions = ref<SelectOption[]>([])
 const optionsInDialog = ref<OptionInDialog[]>([
   {
     text: t('refuels.optionsDialog.edit'),
     icon: 'edit',
-    action: (data: unknown) => router.push({ path: `/refuels/${data}/edit` })
+    action: (data: unknown) =>
+      router.push({ path: `/vehicles/refuels/${data}/edit` })
   },
   {
     text: t('refuels.optionsDialog.delete'),
@@ -135,7 +154,10 @@ const optionsInDialog = ref<OptionInDialog[]>([
       confirmDialog(
         t('refuels.optionsDialog.deleteRefuel'),
         (data: unknown) => {
-          ;(async () => refuelStore.deleteRefuel(data as number))()
+          ;(async () => {
+            await refuelStore.deleteRefuel(data as number)
+            await refuelStore.readData(refuelStore.vehicle!.id)
+          })()
         },
         data
       )
@@ -143,7 +165,7 @@ const optionsInDialog = ref<OptionInDialog[]>([
 ])
 
 const props = defineProps({
-  id: {
+  refuelId: {
     type: String
   }
 })
@@ -176,11 +198,11 @@ function getRefuels(from: number, size: number): Array<Refuel> {
 
 onBeforeMount(async () => {
   mainLayoutStore.titleText = t('refuels.title')
-  await refuelStore.readData()
+  await refuelStore.readData(parseInt(route.params.vehicleId as string))
 
   // Define to which index to scroll
-  if (props.id) {
-    const id = parseInt(props.id)
+  if (props.refuelId) {
+    const id = parseInt(props.refuelId)
     if (id)
       scrollToIndex.value = refuelStore
         .vehicle!.refuels!.sort((a, b) => b.date.getTime() - a.date.getTime())
@@ -202,16 +224,27 @@ watch(
   }
 )
 
-onMounted(() => {
+onMounted(async () => {
   mainLayoutStore.showButton(
     mainLayoutStore.headerButton,
-    () => void router.push('/refuels/filter'),
+    () =>
+      void router.push(`/vehicles/${refuelStore.vehicle?.id}/refuels/filter`),
     'filter_list'
   )
   mainLayoutStore.calculateAreaHeight()
+
+  vehicles.value = await vehicleRepository.getVehicles()
+  vehicleOptions.value = vehicles.value.map(v => ({
+    label: v.name,
+    value: v.id
+  }))
+
+  if (!refuelStore.vehicle || vehicles.value.length === 0)
+    mainLayoutStore.addButton.disabled = true
 })
 
 onUnmounted(() => {
   mainLayoutStore.hideButton(mainLayoutStore.headerButton)
+  mainLayoutStore.addButton.disabled = false
 })
 </script>

@@ -11,8 +11,7 @@ export default {
           light: 'Hell',
           dark: 'Dunkel'
         }
-      },
-      licensePlateInTitle: 'Kennzeichen im Titel anzeigen'
+      }
     },
     backup: {
       title: 'Backup',

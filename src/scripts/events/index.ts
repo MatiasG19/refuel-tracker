@@ -1,81 +1,45 @@
 import { useDashboardStore } from 'src/pages/dashboard/stores/dashboardStore'
 import { useRefuelStore } from 'src/pages/refuels/stores'
-import { useSettingsStore } from 'src/pages/settings/stores'
 import { useVehicleStore } from 'src/pages/vehicles/stores'
 import { Vehicle } from '../libraries/refuel/models'
 
-async function refuelAddedEvent(): Promise<void> {
-  const settingsStore = useSettingsStore()
-  const dashboardStore = useDashboardStore()
+async function refuelAddedEvent(vehicleId: number): Promise<void> {
   const vehicleStore = useVehicleStore()
 
-  dashboardStore.dashboardData.length = 0
-  if (settingsStore.selectedVehicleId)
-    await vehicleStore.updateTotalFuelConsumption(
-      settingsStore.selectedVehicleId
-    )
+  await vehicleStore.updateTotalFuelConsumption(vehicleId)
 }
 
-async function refuelUpdatedEvent(): Promise<void> {
-  const dashboardStore = useDashboardStore()
-  const settingsStore = useSettingsStore()
+async function refuelUpdatedEvent(vehicleId: number): Promise<void> {
   const vehicleStore = useVehicleStore()
 
-  dashboardStore.dashboardData.length = 0
-  if (settingsStore.selectedVehicleId)
-    await vehicleStore.updateTotalFuelConsumption(
-      settingsStore.selectedVehicleId
-    )
+  await vehicleStore.updateTotalFuelConsumption(vehicleId)
 }
 
-async function refuelDeletedEvent(): Promise<void> {
-  const settingsStore = useSettingsStore()
-  const dashboardStore = useDashboardStore()
+async function refuelDeletedEvent(vehicleId: number): Promise<void> {
   const vehicleStore = useVehicleStore()
 
-  dashboardStore.dashboardData.length = 0
-  if (settingsStore.selectedVehicleId)
-    await vehicleStore.updateTotalFuelConsumption(
-      settingsStore.selectedVehicleId
-    )
+  await vehicleStore.updateTotalFuelConsumption(vehicleId)
 }
 
 async function vehicleAddedEvent(vehicle: Vehicle): Promise<void> {
-  const settingsStore = useSettingsStore()
+  const dashboardStore = useDashboardStore()
 
-  await settingsStore.changeSelectedVehicle(vehicle)
+  dashboardStore.createDashboard(vehicle.id)
 }
 
 async function vehicleUpdatedEvent(): Promise<void> {
-  const dashboardStore = useDashboardStore()
   const refuelStore = useRefuelStore()
 
-  dashboardStore.dashboardData.length = 0
   refuelStore.vehicle = null
   await Promise.resolve()
 }
 
-async function vehicleDeletedEvent(): Promise<void> {
-  const vehicleStore = useVehicleStore()
-  const dashboardStore = useDashboardStore()
-  const refuelStore = useRefuelStore()
-  const settingsStore = useSettingsStore()
-
-  dashboardStore.dashboardData.length = 0
-  refuelStore.vehicle = null
-  await settingsStore.changeSelectedVehicle(
-    vehicleStore.vehicles.length ? vehicleStore.vehicles[0]! : null
-  )
-}
-
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
-async function vehicleChangedEvent(vehicle: Vehicle | null): Promise<void> {
+async function vehicleDeletedEvent(id: number): Promise<void> {
   const dashboardStore = useDashboardStore()
   const refuelStore = useRefuelStore()
 
-  dashboardStore.dashboardData.length = 0
+  dashboardStore.deleteDashboardByVehicleId(id)
   refuelStore.vehicle = null
-  await Promise.resolve()
 }
 
 export {
@@ -84,6 +48,5 @@ export {
   refuelDeletedEvent,
   vehicleAddedEvent,
   vehicleUpdatedEvent,
-  vehicleDeletedEvent,
-  vehicleChangedEvent
+  vehicleDeletedEvent
 }

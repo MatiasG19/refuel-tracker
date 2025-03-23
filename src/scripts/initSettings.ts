@@ -22,8 +22,10 @@ export async function initSettings() {
   registerFuelConsumption()
   registerChartData()
 
-  mainLayoutStore.addButton.action = () => void router.push('/refuels/add')
+  mainLayoutStore.addButton.action = () =>
+    void router.push('/vehicles/refuels/add')
   router.beforeEach(() => {
-    mainLayoutStore.addButton.action = () => void router.push('/refuels/add')
+    mainLayoutStore.addButton.action = () =>
+      void router.push('/vehicles/refuels/add')
   })
 }
