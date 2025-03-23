@@ -3,9 +3,9 @@ export default {
   dashboardData: {
     distanceDriven: 'Distance',
     fuelBurnt: 'Fuel',
-    fuelConsumption: 'Fuel consumption',
-    fuelPricing: 'Fuel pricing',
-    moneySpent: 'Money spent',
+    fuelConsumption: 'Consumption',
+    fuelPricing: 'Pricing',
+    moneySpent: 'Spent',
     refuelsMade: 'Refuels',
     optionsInDialog: {
       move: 'Move',
