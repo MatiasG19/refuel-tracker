@@ -7,7 +7,7 @@
             <q-btn @click="() => (showChart = false)" icon="close" flat></q-btn>
           </div>
         </div>
-        <chart-page />
+        <chart-page :vehicle-id="chartVehicleId" />
       </div>
     </q-dialog>
     <div
@@ -117,6 +117,7 @@ const dashboardData = computed<DashboardData[]>(
 )
 const vehiclesExits = computed(() => settingsStore.selectedVehicleId)
 const areaHeight = computed(() => `height: ${settingsStore.areaHeight}px`)
+const chartVehicleId = ref(0)
 const optionsInDialog = ref<OptionInDialog[]>([
   {
     text: t('dashboardData.optionsInDialog.move'),
@@ -126,7 +127,10 @@ const optionsInDialog = ref<OptionInDialog[]>([
   {
     text: t('dashboardData.optionsInDialog.chart'),
     icon: 'bar_chart',
-    action: () => (showChart.value = true)
+    action: (data: unknown) => {
+      chartVehicleId.value = (data as DashboardData).vehicleId
+      showChart.value = true
+    }
   }
 ])
 
