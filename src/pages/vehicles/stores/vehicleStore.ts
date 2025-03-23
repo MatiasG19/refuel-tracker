@@ -25,7 +25,6 @@ export const useVehicleStore = defineStore('vehicleStore', () => {
   }
 
   async function getVehicles(): Promise<Vehicle[]> {
-    if (vehicles.value.length > 0) return vehicles.value
     return await vehicleRepository.getVehicles()
   }
 
