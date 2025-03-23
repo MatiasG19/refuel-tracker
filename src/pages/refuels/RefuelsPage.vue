@@ -178,7 +178,7 @@ function getRefuels(from: number, size: number): Array<Refuel> {
 
 onBeforeMount(async () => {
   mainLayoutStore.titleText = t('refuels.title')
-  await refuelStore.readData(parseInt(route.params.vehicleId))
+  await refuelStore.readData(parseInt(route.params.vehicleId as string))
 
   // Define to which index to scroll
   if (props.id) {
