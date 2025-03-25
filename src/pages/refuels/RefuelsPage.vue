@@ -76,7 +76,7 @@
       </Teleport>
     </template>
     <Teleport to="#header-badges-left" v-if="refuelStore.vehicle">
-      <div class="q-px-md q-pb-xs q-gutter-md">
+      <div class="q-px-md cursor-pointer">
         <q-badge
           class="space-station"
           @click="
@@ -89,8 +89,9 @@
               }
             )
           "
-          >{{ refuelStore.vehicle?.name }}</q-badge
-        >
+          >{{ refuelStore.vehicle?.name }}
+          <q-icon name="arrow_drop_down" class="q-ml-xs"
+        /></q-badge>
       </div>
     </Teleport>
   </q-page>
