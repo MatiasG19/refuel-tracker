@@ -2,6 +2,8 @@ import { defineStore } from 'pinia'
 import { ref } from 'vue'
 import { settingsRepository } from 'src/scripts/databaseRepositories'
 import { getColorThemes } from 'src/scripts/staticData/colorThemes'
+import { ThemeSetter } from 'src/plugins/capacitor-theme-setter'
+import { Platform } from 'quasar'
 
 export const useSettingsStore = defineStore('settingsStore', () => {
   const selectedDistanceUnitId = ref<number>(0)
@@ -56,6 +58,7 @@ export const useSettingsStore = defineStore('settingsStore', () => {
     if (!settings) return Promise.resolve()
     settings.colorThemeId = themeId
     await settingsRepository.updateSettings(settings)
+    if (Platform.is.mobile) await ThemeSetter.setTheme({ themeId })
   }
 
   async function changeLanguage(languageId: number) {
