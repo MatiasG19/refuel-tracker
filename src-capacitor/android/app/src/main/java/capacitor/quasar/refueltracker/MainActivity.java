@@ -13,7 +13,4 @@ public class MainActivity extends BridgeActivity {
     registerPlugin(ThemeSetterPlugin.class);
     super.onCreate(savedInstanceState);
   }
-
-
-
 }
