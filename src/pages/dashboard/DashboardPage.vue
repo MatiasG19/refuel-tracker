@@ -88,6 +88,7 @@ import { App } from '@capacitor/app'
 import { initSettings } from 'src/scripts/initSettings'
 import { SplashScreen } from '@capacitor/splash-screen'
 import { DashboardData } from './scripts/models'
+import { ThemeSetter } from 'src/plugins/capacitor-theme-setter'
 
 const $q = useQuasar()
 $q.dark.set('auto')
@@ -160,6 +161,14 @@ onMounted(async () => {
   clearTimeout(timeOut)
   loading.value = false
   SplashScreen.hide()
+  // Workaround for native theme not working on first load
+  setTimeout(
+    async () =>
+      await ThemeSetter.setTheme({
+        themeId: settingsStore.selectedColorThemeId
+      }),
+    100
+  )
 })
 
 onUnmounted(() => {
