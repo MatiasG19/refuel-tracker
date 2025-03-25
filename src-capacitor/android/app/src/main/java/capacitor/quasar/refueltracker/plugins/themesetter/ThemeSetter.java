@@ -34,22 +34,28 @@ public class ThemeSetter {
       Window window = app.getWindow();
       WindowInsetsControllerCompat windowInsetsControllerCompat = WindowCompat.getInsetsController(window, window.getDecorView());
       if(themeId == R.style.Theme_Light) {
-        windowInsetsControllerCompat.setAppearanceLightNavigationBars(true);
         windowInsetsControllerCompat.setAppearanceLightStatusBars(true);
-        if(Build.VERSION.SDK_INT <= Build.VERSION_CODES.UPSIDE_DOWN_CAKE)
+        windowInsetsControllerCompat.setAppearanceLightNavigationBars(true);
+        if(Build.VERSION.SDK_INT <= Build.VERSION_CODES.UPSIDE_DOWN_CAKE) {
+          window.setStatusBarColor(ContextCompat.getColor(app.getApplicationContext(), R.color.colorPrimary_light));
           window.setNavigationBarColor(ContextCompat.getColor(app.getApplicationContext(), R.color.colorPrimary_light));
+        }
       }
       else if(themeId == R.style.Theme_Dark) {
-        windowInsetsControllerCompat.setAppearanceLightNavigationBars(false);
         windowInsetsControllerCompat.setAppearanceLightStatusBars(false);
-        if(Build.VERSION.SDK_INT <= Build.VERSION_CODES.UPSIDE_DOWN_CAKE)
+        windowInsetsControllerCompat.setAppearanceLightNavigationBars(false);
+        if(Build.VERSION.SDK_INT <= Build.VERSION_CODES.UPSIDE_DOWN_CAKE) {
+          window.setStatusBarColor(ContextCompat.getColor(app.getApplicationContext(), R.color.colorPrimary_dark));
           window.setNavigationBarColor(ContextCompat.getColor(app.getApplicationContext(), R.color.colorPrimary_dark));
+        }
       }
       else {
-        windowInsetsControllerCompat.setAppearanceLightNavigationBars(false);
         windowInsetsControllerCompat.setAppearanceLightStatusBars(false);
-        if(Build.VERSION.SDK_INT <= Build.VERSION_CODES.UPSIDE_DOWN_CAKE)
+        windowInsetsControllerCompat.setAppearanceLightNavigationBars(false);
+        if(Build.VERSION.SDK_INT <= Build.VERSION_CODES.UPSIDE_DOWN_CAKE) {
+          window.setStatusBarColor(ContextCompat.getColor(app.getApplicationContext(), R.color.colorPrimary));
           window.setNavigationBarColor(ContextCompat.getColor(app.getApplicationContext(), R.color.colorPrimary));
+        }
       }
     });
   }
