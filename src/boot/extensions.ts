@@ -11,6 +11,7 @@ declare global {
 Number.prototype.toFixedIfNotZero = function (fractionGigits: number) {
   const n = Number(this)
   const trunc = Math.trunc(n)
-  if (((n - trunc) * 10 * fractionGigits) % 2 === 0) return trunc.toString()
-  return n.toFixed(fractionGigits)
+  if (n - trunc > 0 && (n - trunc) * 10 * fractionGigits > 0)
+    return n.toFixed(fractionGigits)
+  return trunc.toString()
 }

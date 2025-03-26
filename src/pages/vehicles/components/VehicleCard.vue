@@ -5,7 +5,11 @@
         <div class="row items-center no-wrap">
           <div class="col">
             <div class="text-subtitle2">
-              {{ vehicle.totalFuelConsumption }}
+              {{
+                parseFloat(
+                  vehicle.totalFuelConsumption ?? '0'
+                ).toFixedIfNotZero(2)
+              }}
               {{ vehicle.fuelUnit?.fuelConsumptionUnit }}
             </div>
           </div>
