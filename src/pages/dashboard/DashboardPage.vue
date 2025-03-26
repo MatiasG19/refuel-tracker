@@ -78,7 +78,7 @@ import {
   OptionInDialog,
   optionsDialog
 } from 'src/components/dialogs/optionsDialog'
-import { useQuasar } from 'quasar'
+import { Platform, useQuasar } from 'quasar'
 import { useRouter } from 'vue-router'
 import { useI18n } from 'vue-i18n'
 import { i18n } from 'src/boot/i18n'
@@ -162,13 +162,12 @@ onMounted(async () => {
   loading.value = false
   SplashScreen.hide()
   // Workaround for native theme not working on first load
-  setTimeout(
-    async () =>
+  setTimeout(async () => {
+    if (Platform.is.android || Platform.is.mobile)
       await ThemeSetter.setTheme({
         themeId: settingsStore.selectedColorThemeId
-      }),
-    300
-  )
+      })
+  }, 300)
 })
 
 onUnmounted(() => {
