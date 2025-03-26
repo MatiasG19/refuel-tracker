@@ -1,6 +1,8 @@
 package capacitor.quasar.refueltracker.plugins.themesetter;
 
+import android.graphics.drawable.ColorDrawable;
 import android.os.Build;
+import android.view.View;
 import android.view.Window;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.ContextCompat;
@@ -18,44 +20,28 @@ public class ThemeSetter {
   public void setTheme(int themeId) {
     switch (themeId) {
       case 0:
-        changeTheme(R.style.AppTheme);
+        changeTheme(R.color.colorPrimary, false);
         break;
       case 1:
-        changeTheme(R.style.Theme_Light);
+        changeTheme(R.color.colorPrimary_light, true);
         break;
       case 2:
-        changeTheme(R.style.Theme_Dark);
+        changeTheme(R.color.colorPrimary_dark, false);
         break;
     }
   }
 
-  public void changeTheme(int themeId) {
+  public void changeTheme(int color, boolean light) {
     app.runOnUiThread(() -> {
-      Window window = app.getWindow();
-      WindowInsetsControllerCompat windowInsetsControllerCompat = WindowCompat.getInsetsController(window, window.getDecorView());
-      if(themeId == R.style.Theme_Light) {
-        windowInsetsControllerCompat.setAppearanceLightStatusBars(true);
-        windowInsetsControllerCompat.setAppearanceLightNavigationBars(true);
-        if(Build.VERSION.SDK_INT <= Build.VERSION_CODES.UPSIDE_DOWN_CAKE) {
-          window.setStatusBarColor(ContextCompat.getColor(app.getApplicationContext(), R.color.colorPrimary_light));
-          window.setNavigationBarColor(ContextCompat.getColor(app.getApplicationContext(), R.color.colorPrimary_light));
-        }
-      }
-      else if(themeId == R.style.Theme_Dark) {
-        windowInsetsControllerCompat.setAppearanceLightStatusBars(false);
-        windowInsetsControllerCompat.setAppearanceLightNavigationBars(false);
-        if(Build.VERSION.SDK_INT <= Build.VERSION_CODES.UPSIDE_DOWN_CAKE) {
-          window.setStatusBarColor(ContextCompat.getColor(app.getApplicationContext(), R.color.colorPrimary_dark));
-          window.setNavigationBarColor(ContextCompat.getColor(app.getApplicationContext(), R.color.colorPrimary_dark));
-        }
-      }
-      else {
-        windowInsetsControllerCompat.setAppearanceLightStatusBars(false);
-        windowInsetsControllerCompat.setAppearanceLightNavigationBars(false);
-        if(Build.VERSION.SDK_INT <= Build.VERSION_CODES.UPSIDE_DOWN_CAKE) {
-          window.setStatusBarColor(ContextCompat.getColor(app.getApplicationContext(), R.color.colorPrimary));
-          window.setNavigationBarColor(ContextCompat.getColor(app.getApplicationContext(), R.color.colorPrimary));
-        }
+      try {
+        Window window = app.getWindow();
+        WindowInsetsControllerCompat windowInsetsControllerCompat = WindowCompat.getInsetsController(window, window.getDecorView());
+        windowInsetsControllerCompat.setAppearanceLightStatusBars(light);
+        windowInsetsControllerCompat.setAppearanceLightNavigationBars(light);
+        window.setStatusBarColor(ContextCompat.getColor(app.getApplicationContext(), color));
+        window.setNavigationBarColor(ContextCompat.getColor(app.getApplicationContext(), color));
+      } catch (Exception e) {
+        System.out.println("ThemeSetter::Failed to set navigation and status bar color.");
       }
     });
   }
