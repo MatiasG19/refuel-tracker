@@ -167,7 +167,7 @@ onMounted(async () => {
       await ThemeSetter.setTheme({
         themeId: settingsStore.selectedColorThemeId
       }),
-    100
+    300
   )
 })
 
