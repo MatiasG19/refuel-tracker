@@ -53,7 +53,7 @@
             vehicleFuelConsumption(
               toRaw(refuelStore.vehicle!),
               toRaw(item)
-            ).toFixed(2)
+            ).toFixedIfNotZero(2)
           "
           :loading="loading"
           class="q-pt-md q-pl-md q-pr-md"
