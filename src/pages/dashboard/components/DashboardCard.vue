@@ -6,7 +6,11 @@
           <div class="col">
             <div class="text-h6">{{ t(`${dashboardData.title}`) }}</div>
             <div class="text-subtitle1">
-              {{ t(`${dashboardData.subtitle}`) }}
+              <q-badge
+                color="secondary"
+                class="text-primary"
+                :label="t(`${dashboardData.subtitle}`)"
+              />
             </div>
           </div>
 
@@ -22,7 +26,7 @@
           </div>
         </div>
 
-        <div class="row q-mt-md">
+        <div class="row q-mt-xs">
           <dashboard-value
             v-for="data in [...dashboardData.dashboardValues].splice(0, 3)"
             :key="data.uid"
