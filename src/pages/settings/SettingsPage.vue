@@ -135,11 +135,8 @@ const colorThemeOptions = computed(() => getColorThemes())
 const colorTheme = ref(settingsStore.selectedColorThemeId)
 const autoBackup = ref(settingsStore.autoBackupActive)
 
-function changeColorTheme(value: number) {
-  if (colorThemeOptions.value[value]?.className)
-    document.documentElement.className =
-      colorThemeOptions.value[value].className
-  settingsStore.changeColorTheme(value)
+async function changeColorTheme(value: number) {
+  await settingsStore.changeColorTheme(value)
 }
 
 async function changeLanguage(languageId: number) {

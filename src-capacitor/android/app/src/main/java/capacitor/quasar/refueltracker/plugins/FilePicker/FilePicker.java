@@ -26,7 +26,7 @@ public class FilePicker {
   private final ActivityResultLauncher<String> createDocumentActivityLauncher;
   private final ActivityResultLauncher<String[]> openDocumentActivityLauncher;
 
-  private AppCompatActivity app;
+  private final AppCompatActivity app;
 
   public FilePicker(AppCompatActivity activity) {
 
