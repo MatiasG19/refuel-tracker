@@ -61,22 +61,23 @@
         />
       </q-virtual-scroll>
 
-      <Teleport to="#header-badges-center">
-        <div v-if="refuelFilterStore.filter?.active">
-          <q-btn
-            class="col justify-center q-px-sm"
+      <Teleport to="#header-badges-left">
+        <div
+          v-if="refuelFilterStore.filter?.active"
+          class="q-pl-md cursor-pointer"
+        >
+          <q-badge
             color="negative"
-            icon="cancel"
-            size="md"
             dense
             @click="refuelFilterStore.removeFilter()"
             >{{ refuelFilterStore.filter.title }}
-          </q-btn>
+            <q-icon name="cancel" class="q-ml-xs" />
+          </q-badge>
         </div>
       </Teleport>
     </template>
     <Teleport to="#header-badges-left" v-if="refuelStore.vehicle">
-      <div class="q-px-md cursor-pointer">
+      <div class="q-pl-md cursor-pointer">
         <q-badge
           class="space-station"
           @click="
