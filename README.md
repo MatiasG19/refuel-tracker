@@ -34,9 +34,9 @@
 
 <div align="center" style="display: flex; justify-content: center; align-items: center;">
  <p>
-    <img src=".screenshots/MainPage.png" alt="Screenshot" width="270" height="490">
-    <img src=".screenshots/Vehicles.png" alt="Screenshot" width="270" height="490">
+    <img src=".screenshots/Dashboard.png" alt="Screenshot" width="270" height="490">
     <img src=".screenshots/Refuels.png" alt="Screenshot" width="270" height="490">
+    <img src=".screenshots/Dashboard_light_dark.png" alt="Screenshot" width="270" height="490">
   </p>
 </div>
 <div align="center" style="display: flex; justify-content: center; align-items: center;">
