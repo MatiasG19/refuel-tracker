@@ -18,10 +18,6 @@ export const useVehicleStore = defineStore('vehicleStore', () => {
 
   async function readVehicles() {
     vehicles.value = await getVehicles()
-
-    vehicles.value.forEach(v => {
-      updateTotalFuelConsumption(v.id)
-    })
   }
 
   async function getVehicles(): Promise<Vehicle[]> {
@@ -29,8 +25,6 @@ export const useVehicleStore = defineStore('vehicleStore', () => {
   }
 
   async function getVehicle(id: number): Promise<Vehicle | null> {
-    const vehicle = vehicles.value.find(v => v.id === id)
-    if (vehicle) return vehicle
     return await vehicleRepository.getVehicle(id)
   }
 
@@ -46,8 +40,6 @@ export const useVehicleStore = defineStore('vehicleStore', () => {
     vehicle.totalFuelConsumption = vehicleFuelConsumption({
       ...toRaw(vehicle)
     }).toFixed(2)
-    const i = vehicles.value.findIndex(v => v.id === vehicle.id)
-    if (i > 0) vehicles.value[i] = toRaw(vehicle)
     await vehicleRepository.updateTotalFuelConsumption(
       id,
       vehicle.totalFuelConsumption
@@ -55,16 +47,7 @@ export const useVehicleStore = defineStore('vehicleStore', () => {
   }
 
   async function updateVehicle(vehicle: Vehicle) {
-    const v = { ...toRaw(vehicle) }
-    if (!v.totalFuelConsumption) {
-      v.refuels = await refuelRepository.getRefuels(v.id)
-      v.totalFuelConsumption = vehicleFuelConsumption({
-        ...toRaw(v)
-      }).toFixed(2)
-      const i = vehicles.value.findIndex(v => v.id === vehicle.id)
-      if (i > 0) vehicles.value[i] = toRaw(vehicle)
-      await vehicleRepository.updateVehicle(toRaw(vehicle))
-    }
+    await vehicleRepository.updateVehicle({ ...toRaw(vehicle) })
     await vehicleUpdatedEvent()
   }
 
