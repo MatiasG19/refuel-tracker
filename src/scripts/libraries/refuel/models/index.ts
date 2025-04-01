@@ -27,3 +27,12 @@ export class FuelUnit {
   distanceConversion!: number
   fuelUnitConversion!: number
 }
+
+export class Expense {
+  id!: number
+  description!: string
+  payedAmount!: number
+  date!: Date
+  vehicleId!: number
+  vehicle?: Vehicle
+}

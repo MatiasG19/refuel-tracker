@@ -1,6 +1,6 @@
 import { Dexie, type Table } from 'dexie'
 import { Settings } from '../scripts/models'
-import { Vehicle, Refuel } from 'src/scripts/libraries/refuel/models'
+import { Vehicle, Refuel, Expense } from 'src/scripts/libraries/refuel/models'
 import {
   Dashboard,
   type DashboardValueSettings
@@ -14,17 +14,19 @@ export class RefuelTrackerDexie extends Dexie {
   refuels!: Table<Refuel>
   refuelFilters!: Table<RefuelFilter>
   settings!: Table<Settings>
+  expenses!: Table<Expense>
 
   constructor() {
     super('RefuelTrackerDb')
-    this.version(5).stores({
+    this.version(6).stores({
       graphSettings: '++id, uid, sequence, periodId, visible, title',
       vehicles: '++id, name, plateNumber, fuelUnitId, totalFuelConsumption',
       refuels:
         '++id, date, refuelAmount, payedAmount, distanceDriven, vehicleId',
       settings:
         '++id, colorThemeId, distanceUnitId, vehicleId, plateNumberInTitleActive, autoBackupActive, autoBackupPath, lastUpdateCheck, languageId',
-      dashboards: '++id, vehicleId, sequence, visible'
+      dashboards: '++id, vehicleId, sequence, visible',
+      expenses: '++id, description, payedAmount, date, vehicleId'
     })
     this.version(2)
       .stores({
