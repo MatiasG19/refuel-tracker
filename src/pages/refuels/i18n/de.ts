@@ -10,6 +10,8 @@ export default {
     }
   },
   refuelsForm: {
+    titleAddExpense: 'Ausgabe hinzufügen',
+    titleEditExpense: 'Ausgabe bearbeiten',
     titleAddRefuel: 'Betankung hinzufügen',
     titleEditRefuel: 'Betankung bearbeiten',
     vehicle: 'Fahrzeug',

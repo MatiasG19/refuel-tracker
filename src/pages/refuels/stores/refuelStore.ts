@@ -1,6 +1,10 @@
 import { defineStore } from 'pinia'
 import { ref, toRaw } from 'vue'
-import { type Vehicle, type Refuel } from 'src/scripts/libraries/refuel/models'
+import {
+  type Vehicle,
+  type Refuel,
+  Expense
+} from 'src/scripts/libraries/refuel/models'
 import {
   refuelRepository,
   vehicleRepository
@@ -11,6 +15,7 @@ import {
   refuelUpdatedEvent
 } from 'src/scripts/events'
 import { ExpenseViewModel, VehicleViewModel } from '../models'
+import expenseRepository from 'src/scripts/databaseRepositories/expenseRepository'
 
 export const useRefuelStore = defineStore('refuelStore', () => {
   const vehicle = ref<VehicleViewModel | null>(null)
@@ -20,7 +25,6 @@ export const useRefuelStore = defineStore('refuelStore', () => {
     if (vehicleId) v = await vehicleRepository.getVehicle(vehicleId)
     else if (vehicle.value) return
     else {
-      // TODO optimize vehicleRepository.vehiclesExist()
       const vehicles = await vehicleRepository.getVehicles()
       if (vehicles.length > 0) v = vehicles[0] ?? null
     }
@@ -66,12 +70,38 @@ export const useRefuelStore = defineStore('refuelStore', () => {
     if (refuel) await refuelDeletedEvent(refuel.vehicleId)
   }
 
+  async function getExpense(id: number): Promise<Expense | null> {
+    const r = vehicle.value!.expenses?.find(r => r.id === id)
+    if (!r) return await expenseRepository.getExpense(id)
+    return Promise.resolve(r)
+  }
+
+  async function addExpense(expense: Expense) {
+    expense.id = await expenseRepository.addExpense(toRaw(expense))
+    await refuelAddedEvent(expense.vehicleId)
+  }
+
+  async function updateExpense(expense: Expense) {
+    await expenseRepository.updateExpense(toRaw(expense))
+    await refuelUpdatedEvent(expense.vehicleId)
+  }
+
+  async function deleteExpense(id: number) {
+    const refuel = await expenseRepository.getExpense(id)
+    await refuelRepository.deleteRefuel(id)
+    if (refuel) await refuelDeletedEvent(refuel.vehicleId)
+  }
+
   return {
     vehicle,
     readData,
     getRefuel,
     addRefuel,
     updateRefuel,
-    deleteRefuel
+    deleteRefuel,
+    getExpense,
+    addExpense,
+    updateExpense,
+    deleteExpense
   }
 })
