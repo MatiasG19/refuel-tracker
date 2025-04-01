@@ -35,6 +35,7 @@
       />
     </div>
     <template v-else>
+      <button @click="console.log(refuelStore.vehicle)">Test</button>
       <q-virtual-scroll
         ref="virtualListRef"
         :style="areaHeight"
@@ -46,15 +47,25 @@
         v-slot="{ item, index }"
       >
         <refuel-card
+          v-if="item && item.type === 'refuel'"
           :key="index"
-          :refuel="item ? item : new Refuel()"
+          :refuel="item.value"
           :vehicle="refuelStore.vehicle!"
           :fuelConsumption="
             vehicleFuelConsumption(
               toRaw(refuelStore.vehicle!),
-              toRaw(item)
+              toRaw(item.value)
             ).toFixedIfNotZero(2)
           "
+          :loading="loading"
+          class="q-pt-md q-pl-md q-pr-md"
+          @on-options-click="payload => optionsDialog(optionsInDialog, payload)"
+        />
+        <expense-card
+          v-if="item && item.type === 'expense'"
+          :key="index"
+          :expense="item.value"
+          :vehicle="refuelStore.vehicle!"
           :loading="loading"
           class="q-pt-md q-pl-md q-pr-md"
           @on-options-click="payload => optionsDialog(optionsInDialog, payload)"
@@ -100,6 +111,7 @@
 
 <script setup lang="ts">
 import RefuelCard from 'src/pages/refuels/components/RefuelCard.vue'
+import ExpenseCard from 'src/pages/refuels/components/ExpenseCard.vue'
 import {
   computed,
   ref,
@@ -116,7 +128,7 @@ import {
 } from 'src/components/dialogs/optionsDialog'
 import { confirmDialog } from 'src/components/dialogs/confirmDialog'
 import { useSettingsStore } from 'src/pages/settings/stores/settingsStore'
-import { Refuel, Vehicle } from 'src/scripts/libraries/refuel/models'
+import { Vehicle } from 'src/scripts/libraries/refuel/models'
 import { vehicleFuelConsumption } from 'src/scripts/libraries/refuel/functions/vehicle'
 import { QVirtualScroll } from 'quasar'
 import { useRefuelStore, useRefuelFilterStore } from './stores'
@@ -127,6 +139,7 @@ import messages from './i18n'
 import { vehicleRepository } from 'src/scripts/databaseRepositories'
 import { selectDialog } from 'src/components/dialogs/selectDialog'
 import { SelectOption } from 'src/components/inputs/types'
+import { ExpenseViewModel } from './models'
 
 const router = useRouter()
 const route = useRoute()
@@ -172,26 +185,28 @@ const props = defineProps({
   }
 })
 
-const refuels = computed(() => {
+const refuels = computed<ExpenseViewModel[]>(() => {
   let items = []
   if (refuelFilterStore.filter && refuelFilterStore.filter.active) {
-    items = [...(refuelStore.vehicle?.refuels ?? [])]
+    items = [...(refuelStore.vehicle?.allExpenses ?? [])]
       .filter(
         r =>
-          r.date.getTime() >= refuelFilterStore.filter!.dateFrom.getTime() &&
-          r.date.getTime() <= refuelFilterStore.filter!.dateUntil.getTime()
+          r.value.date.getTime() >=
+            refuelFilterStore.filter!.dateFrom.getTime() &&
+          r.value.date.getTime() <=
+            refuelFilterStore.filter!.dateUntil.getTime()
       )
-      .sort((a, b) => b.date.getTime() - a.date.getTime())
+      .sort((a, b) => b.value.date.getTime() - a.value.date.getTime())
   } else
-    items = [...(refuelStore.vehicle?.refuels ?? [])].sort(
-      (a, b) => b.date.getTime() - a.date.getTime()
+    items = [...(refuelStore.vehicle?.allExpenses ?? [])].sort(
+      (a, b) => b.value.date.getTime() - a.value.date.getTime()
     )
 
   return items
 })
 
-function getRefuels(from: number, size: number): Array<Refuel> {
-  const items: Array<Refuel> = []
+function getRefuels(from: number, size: number): Array<ExpenseViewModel> {
+  const items: Array<ExpenseViewModel> = []
   for (let i = 0; i < size; i++) {
     items.push(refuels.value[from + i]!)
   }

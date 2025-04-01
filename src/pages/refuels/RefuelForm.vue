@@ -153,8 +153,8 @@ function updateDate(event: string) {
 function updateTime(event: string) {
   const d = event.split(':')
   const date = new Date(Date.now())
-  date.setHours(parseInt(d[0]))
-  date.setMinutes(parseInt(d[1]))
+  date.setHours(parseInt(d[0]!))
+  date.setMinutes(parseInt(d[1]!))
   refuel.refuelTime = QuasarDate.formatDate(date, 'HH:mm')
 }
 
@@ -167,8 +167,8 @@ async function onSubmit() {
   submitRefuel.distanceDriven = +refuel.distanceDriven
   submitRefuel.refueledAmount = +refuel.refueledAmount
   submitRefuel.date = new Date(refuel.refuelDate)
-  submitRefuel.date.setHours(parseInt(d[0]))
-  submitRefuel.date.setMinutes(parseInt(d[1]))
+  submitRefuel.date.setHours(parseInt(d[0]!))
+  submitRefuel.date.setMinutes(parseInt(d[1]!))
 
   if (routePath.includes('/add')) await refuelStore.addRefuel(submitRefuel)
   else if (routePath.includes('/edit'))

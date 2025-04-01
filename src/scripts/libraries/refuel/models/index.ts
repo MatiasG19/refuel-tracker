@@ -6,6 +6,7 @@ export class Vehicle {
   fuelUnitId!: number
   fuelUnit?: FuelUnit
   refuels?: Refuel[]
+  expenses?: Expense[]
   totalFuelConsumption?: string
 }
 
@@ -35,4 +36,13 @@ export class Expense {
   date!: Date
   vehicleId!: number
   vehicle?: Vehicle
+}
+
+export class RefuelFilter {
+  id?: number
+  name!: string
+  title!: string
+  active!: boolean
+  dateFrom!: Date
+  dateUntil!: Date
 }
