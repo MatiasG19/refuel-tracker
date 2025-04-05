@@ -7,6 +7,7 @@ export default {
     fuelPricing: 'Kraftstoffpreis',
     moneySpent: 'Kosten',
     refuelsMade: 'Betankungen',
+    odometer: 'Tachostand',
     optionsInDialog: {
       move: 'Verschieben',
       chart: 'Diagramm'

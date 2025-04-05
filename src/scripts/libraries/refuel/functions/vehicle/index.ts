@@ -4,6 +4,7 @@ import { vehicleFuelBurnt } from './fuelBurnt'
 import { vehicleFuelPricing } from './fuelPricing'
 import { vehicleMoneySpent } from './moneySpent'
 import { vehicleRefuelsMade } from './refuelsMade'
+import { vehicleOdometer } from './odometer'
 
 export {
   vehicleFuelConsumption,
@@ -11,5 +12,6 @@ export {
   vehicleFuelBurnt,
   vehicleFuelPricing,
   vehicleMoneySpent,
-  vehicleRefuelsMade
+  vehicleRefuelsMade,
+  vehicleOdometer
 }

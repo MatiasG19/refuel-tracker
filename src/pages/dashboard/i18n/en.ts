@@ -7,6 +7,7 @@ export default {
     fuelPricing: 'Pricing',
     moneySpent: 'Spent',
     refuelsMade: 'Refuels',
+    odometer: 'Odometer',
     optionsInDialog: {
       move: 'Move',
       chart: 'Diagram'

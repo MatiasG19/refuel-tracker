@@ -23,7 +23,8 @@ async function addVehicle(vehicle: Vehicle): Promise<number> {
     plateNumber: vehicle.plateNumber,
     currencyUnit: vehicle.currencyUnit,
     fuelUnitId: vehicle.fuelUnitId,
-    totalFuelConsumption: '0.00'
+    totalFuelConsumption: '0.00',
+    odometer: vehicle.odometer
   } as Vehicle)) as number
 }
 

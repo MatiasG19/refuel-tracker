@@ -7,6 +7,7 @@ export class Vehicle {
   fuelUnit?: FuelUnit
   refuels?: Refuel[]
   totalFuelConsumption?: string
+  odometer!: number
 }
 
 export class Refuel {
