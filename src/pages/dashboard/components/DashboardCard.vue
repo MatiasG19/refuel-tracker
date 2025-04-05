@@ -3,15 +3,15 @@
     <q-card class="space-station shadow-none">
       <q-card-section>
         <div class="row items-center no-wrap">
-          <div class="col">
-            <div class="text-h6">{{ t(`${dashboardData.title}`) }}</div>
-            <div class="text-subtitle1">
-              <q-badge
-                color="secondary"
-                class="text-primary"
-                :label="t(`${dashboardData.subtitle}`)"
-              />
+          <div class="col q-pb-xs">
+            <div class="text-h6 text-accent">
+              {{ dashboardData.title }}
             </div>
+            <q-badge
+              color="secondary"
+              class="text-primary"
+              :label="dashboardData.subtitle"
+            />
           </div>
 
           <div class="col-auto space-station">
