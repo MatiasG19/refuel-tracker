@@ -26,7 +26,11 @@
         </div>
 
         <div class="text-h6 accent-space-station">{{ vehicle.name }}</div>
-        <div class="text-subtitle1">{{ vehicle.plateNumber }}</div>
+        <q-badge
+          color="secondary"
+          class="text-primary"
+          :label="vehicle.plateNumber"
+        />
       </q-card-section>
     </q-card>
   </div>
