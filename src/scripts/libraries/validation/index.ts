@@ -11,7 +11,7 @@ export function useFormValidation() {
     +v > 0 ? +v : t('validation.positiveNumbers')
 
   const positiveNumbersAndZeroRule = (v: string) =>
-    +v >= 0 ? +v : t('validation.positiveNumbers')
+    +v >= 0 ? +v : t('validation.positiveNumbersAndZero')
 
   const max50Characters = (v: string) =>
     v.length <= 50 ? 1 : t('validation.max50Characters')

@@ -58,6 +58,7 @@ export default {
     requiredField: 'Pflichtfeld',
     numbersOnly: 'Nur Zahlen',
     positiveNumbers: 'Nur positive Zahlen',
+    positiveNumbersAndZero: 'Nur Zahlen größer oder gleich 0',
     max50Characters: 'Maximal 50 Zeichen',
     nothingSelected: 'Bitte wählen Sie einen Wert'
   }
