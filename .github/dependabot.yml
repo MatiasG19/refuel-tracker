@@ -4,10 +4,6 @@ updates:
     directory: '/'
     schedule:
       interval: 'weekly'
-    ignore:
-      - dependency-name: '*'
-        update-types: ['version-update:semver-major']
-    open-pull-requests-limit: 10
     groups:
       patch-dependencies:
         update-types: 
@@ -19,10 +15,6 @@ updates:
     directory: '/src-capacitor'
     schedule:
       interval: 'weekly'
-    ignore:
-      - dependency-name: '*'
-        update-types: ['version-update:semver-major']
-    open-pull-requests-limit: 10
     groups:
       patch-dependencies:
         update-types: 
