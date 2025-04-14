@@ -24,7 +24,7 @@
   },
   "dependencies": {
     "@quasar/extras": "^1.16.17",
-    "@vueuse/core": "^13.0.0",
+    "@vueuse/core": "^13.1.0",
     "dexie": "^3.2.7",
     "dexie-export-import": "^4.1.4",
     "pinia": "^3.0.1",
