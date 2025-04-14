@@ -36,7 +36,7 @@
     "vue3-smooth-dnd": "^0.0.6"
   },
   "devDependencies": {
-    "@capacitor/app": "^6.0.2",
+    "@capacitor/app": "^7.0.1",
     "@capacitor/device": "^6.0.2",
     "@capacitor/filesystem": "^6.0.3",
     "@capacitor/keyboard": "^6.0.3",
