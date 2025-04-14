@@ -176,7 +176,10 @@ async function onSubmit() {
 
   if (refuel && refuel.id)
     void router.push({
-      path: `/vehicles/${refuel.vehicleId}/refuels/${refuel.id}`
+      path: `/vehicles/${refuel.vehicleId}/refuels/${refuel.id}`,
+      query: {
+        type: 'refuel'
+      }
     })
   else
     void router.push({
@@ -187,7 +190,10 @@ async function onSubmit() {
 function onCancel() {
   if (refuel.id)
     router.push({
-      path: `/vehicles/${refuel.vehicleId}/refuels/${refuel.id}`
+      path: `/vehicles/${refuel.vehicleId}/refuels/${refuel.id}`,
+      query: {
+        type: 'refuel'
+      }
     })
   else router.go(-1)
 }

@@ -218,12 +218,14 @@ onBeforeMount(async () => {
   await refuelStore.readData(parseInt(route.params.vehicleId as string))
 
   // Define to which index to scroll
-  if (props.refuelId) {
+  if (props.refuelId && route.query.type) {
     const id = parseInt(props.refuelId)
     if (id)
       scrollToIndex.value = refuelStore
-        .vehicle!.refuels!.sort((a, b) => b.date.getTime() - a.date.getTime())
-        .findIndex(r => r.id == id)
+        .vehicle!.allExpenses!.sort(
+          (a, b) => b.value.date.getTime() - a.value.date.getTime()
+        )
+        .findIndex(r => r.type === route.query.type && r.value.id == id)
   }
 
   if (scrollToIndex.value < 0) scrollToIndex.value = 0
