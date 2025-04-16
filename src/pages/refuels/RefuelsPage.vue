@@ -35,7 +35,6 @@
       />
     </div>
     <template v-else>
-      <button @click="console.log(refuelStore.vehicle)">Test</button>
       <q-virtual-scroll
         ref="virtualListRef"
         :style="areaHeight"
