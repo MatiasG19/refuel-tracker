@@ -46,6 +46,15 @@ const routes: RouteRecordRaw[] = [
                 props: true
               },
               {
+                path: 'addExpense',
+                component: () => import('src/pages/refuels/ExpenseForm.vue')
+              },
+              {
+                path: 'editExpense',
+                component: () => import('src/pages/refuels/ExpenseForm.vue'),
+                props: true
+              },
+              {
                 path: 'filter',
                 component: () =>
                   import('src/pages/refuels/FilterRefuelsForm.vue')
