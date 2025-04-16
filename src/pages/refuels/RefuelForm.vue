@@ -211,7 +211,6 @@ onMounted(async () => {
     mainLayoutStore.titleText = t('refuelsForm.titleAddRefuel')
   else if (routePath.includes('/edit'))
     mainLayoutStore.titleText = t('refuelsForm.titleEditRefuel')
-  mainLayoutStore.addButton.disabled = true
 
   await refuelStore.readData()
   if (refuelStore.vehicle) refuel.vehicleId = refuelStore.vehicle.id

@@ -12,7 +12,7 @@
       <c-input
         type="tel"
         v-model="expense.description"
-        :label="t('refuelsForm.distanceDriven')"
+        :label="t('refuelsForm.description')"
         :rules="[requiredFieldRule, max50Characters]"
       />
       <c-input
@@ -188,7 +188,6 @@ onMounted(async () => {
     mainLayoutStore.titleText = t('refuelsForm.titleAddExpense')
   else if (routePath.includes('/edit'))
     mainLayoutStore.titleText = t('refuelsForm.titleEditExpense')
-  mainLayoutStore.addButton.disabled = true
 
   await refuelStore.readData()
   if (refuelStore.vehicle) expense.vehicleId = refuelStore.vehicle.id
