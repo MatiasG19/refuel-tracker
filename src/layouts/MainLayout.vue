@@ -8,7 +8,7 @@
           round
           icon="menu"
           aria-label="Menu"
-          @click="toggleLeftDrawer"
+          @click="leftDrawerOpen = !leftDrawerOpen"
         />
 
         <q-toolbar-title>
@@ -165,10 +165,6 @@ async function addKeyboardListeners() {
       calculateAreaHeight()
     })
   }
-}
-
-function toggleLeftDrawer() {
-  leftDrawerOpen.value = !leftDrawerOpen.value
 }
 
 function calculateAreaHeight() {
