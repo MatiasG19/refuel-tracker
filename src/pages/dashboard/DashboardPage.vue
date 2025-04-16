@@ -89,6 +89,7 @@ import { initSettings } from 'src/scripts/initSettings'
 import { SplashScreen } from '@capacitor/splash-screen'
 import { DashboardData } from './scripts/models'
 import { ThemeSetter } from 'src/plugins/capacitor-theme-setter'
+import { getAddExpenseDialogOptions } from '../refuels/models'
 
 const $q = useQuasar()
 $q.dark.set('auto')
@@ -97,6 +98,7 @@ const router = useRouter()
 const dashboardStore = useDashboardStore()
 const settingsStore = useSettingsStore()
 const mainLayoutStore = useMainLayoutStore()
+const { addExpenseDialogOptions } = getAddExpenseDialogOptions()
 const { t } = useI18n({ useScope: 'local', messages })
 
 const showChart = ref(false)
@@ -107,7 +109,7 @@ const dashboardData = computed<DashboardData[]>(
 )
 const areaHeight = computed(() => `height: ${settingsStore.areaHeight}px`)
 const chartVehicleId = ref(0)
-const optionsInDialog = ref<OptionInDialog[]>([
+const optionsInDialog: OptionInDialog[] = [
   {
     text: t('dashboardData.optionsInDialog.move'),
     icon: 'swap_vert',
@@ -121,7 +123,7 @@ const optionsInDialog = ref<OptionInDialog[]>([
       showChart.value = true
     }
   }
-])
+]
 
 function editOrderFun(value = true) {
   editOrder.value = value
@@ -147,9 +149,20 @@ function onDrop(dropResult: DropResult) {
   dashboardStore.moveDashboard(dropResult)
 }
 
+async function init() {
+  await initSettings()
+  mainLayoutStore.addButton.action = () =>
+    optionsDialog(addExpenseDialogOptions)
+  router.beforeEach(() => {
+    mainLayoutStore.addButton.action = () =>
+      optionsDialog(addExpenseDialogOptions)
+  })
+}
+
 onMounted(async () => {
   const timeOut = setTimeout(() => (loading.value = true), 200)
-  await initSettings()
+  await init()
+
   mainLayoutStore.titleText = t('title')
   await dashboardStore.readDashboardData()
   App.removeAllListeners()
