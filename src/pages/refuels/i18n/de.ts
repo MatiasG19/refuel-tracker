@@ -7,6 +7,10 @@ export default {
       delete: 'Löschen',
       deleteRefuel: 'Eintrag löschen?',
       deletingRefuel: 'Eintrag wird gelöscht'
+    },
+    addDialog: {
+      expense: 'Ausgabe',
+      refuel: 'Betankung'
     }
   },
   refuelsForm: {
@@ -18,6 +22,7 @@ export default {
     payedAmount: 'Gezahlter Betrag',
     distanceDriven: 'Gefahrene Distanz',
     refueledAmount: 'Getankte Menge',
+    description: 'Beschreibung',
     refuelDate: 'Datum',
     refuelTime: 'Uhrzeit'
   },

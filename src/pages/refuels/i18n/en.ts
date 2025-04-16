@@ -7,6 +7,10 @@ export default {
       delete: 'Delete',
       deleteRefuel: 'Delete refuel entry?',
       deletingRefuel: 'Deleting refuel entry'
+    },
+    addDialog: {
+      expense: 'Expense',
+      refuel: 'Refuel'
     }
   },
   refuelsForm: {
@@ -16,6 +20,7 @@ export default {
     payedAmount: 'Payed amount',
     distanceDriven: 'Distance driven',
     refueledAmount: 'Refueled amount',
+    description: 'Description',
     refuelDate: 'Refuel date',
     refuelTime: 'Refuel time'
   },
