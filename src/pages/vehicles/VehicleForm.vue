@@ -101,6 +101,9 @@ async function onSubmit() {
   if (!fuelUnit) return
   vehicle.value.fuelUnit = fuelUnit
 
+  // Because javascript stores numbers as strings
+  vehicle.value.odometer = +vehicle.value.odometer
+
   if (routePath.includes('/add'))
     await vehicleStore.addVehicle({ ...vehicle.value })
   else if (routePath.includes('/edit')) {
