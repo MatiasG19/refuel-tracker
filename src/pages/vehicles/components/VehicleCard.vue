@@ -4,13 +4,19 @@
       <q-card-section>
         <div class="row items-center no-wrap">
           <div class="col">
-            <div class="text-subtitle2">
-              {{
-                parseFloat(
-                  vehicle.totalFuelConsumption ?? '0'
-                ).toFixedIfNotZero(2)
-              }}
-              {{ vehicle.fuelUnit?.fuelConsumptionUnit }}
+            <div class="row">
+              <div class="text-subtitle2">
+                {{
+                  parseFloat(
+                    vehicle.totalFuelConsumption ?? '0'
+                  ).toFixedIfNotZero(2)
+                }}
+                {{ vehicle.fuelUnit?.fuelConsumptionUnit }}
+              </div>
+              <div class="text-subtitle2 q-ml-md">
+                {{ vehicleOdometer(vehicle) }}
+                {{ vehicle.fuelUnit?.distanceUnit }}
+              </div>
             </div>
           </div>
 
@@ -39,6 +45,7 @@
 <script setup lang="ts">
 import { PropType } from 'vue'
 import { Vehicle } from 'src/scripts/libraries/refuel/models'
+import { vehicleOdometer } from 'src/scripts/libraries/refuel/functions/vehicle'
 
 defineProps({
   vehicle: {

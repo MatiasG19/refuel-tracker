@@ -13,6 +13,7 @@ export default {
     vehicleName: 'Fahrzeugname',
     licensePlate: 'Kennzeichen',
     fuelUnit: 'Kraftstoffeinheit',
+    odometer: 'Tachostand',
     currencyUnit: 'Währung',
     titleAddVehicle: 'Fahrzeug hinzufügen',
     titleEditVehicle: 'Fahrzeug bearbeiten'

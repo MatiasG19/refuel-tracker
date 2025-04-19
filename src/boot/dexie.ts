@@ -22,9 +22,10 @@ export class RefuelTrackerDexie extends Dexie {
 
   constructor() {
     super('RefuelTrackerDb')
-    this.version(6).stores({
+    this.version(7).stores({
       graphSettings: '++id, uid, sequence, periodId, visible, title',
-      vehicles: '++id, name, plateNumber, fuelUnitId, totalFuelConsumption',
+      vehicles:
+        '++id, name, plateNumber, fuelUnitId, totalFuelConsumption, odometer',
       refuels:
         '++id, date, refuelAmount, payedAmount, distanceDriven, vehicleId',
       settings:
@@ -52,7 +53,8 @@ export class RefuelTrackerDexie extends Dexie {
       const settings: DashboardValueSettings[] = [
         { uid: '7', sequence: 7, visible: true },
         { uid: '8', sequence: 8, visible: true },
-        { uid: '9', sequence: 9, visible: true }
+        { uid: '9', sequence: 9, visible: true },
+        { uid: '10', sequence: 10, visible: true }
       ]
 
       settings.forEach(s => {
@@ -94,7 +96,8 @@ export class RefuelTrackerDexie extends Dexie {
       { uid: '6', sequence: 6, visible: true },
       { uid: '7', sequence: 7, visible: true },
       { uid: '8', sequence: 8, visible: true },
-      { uid: '9', sequence: 9, visible: true }
+      { uid: '9', sequence: 9, visible: true },
+      { uid: '10', sequence: 10, visible: true }
     ]
 
     settings.forEach(s => {

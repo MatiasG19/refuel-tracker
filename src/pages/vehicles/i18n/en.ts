@@ -13,6 +13,7 @@ export default {
     vehicleName: 'Vehicle name',
     licensePlate: 'License plate',
     fuelUnit: 'Fuel unit',
+    odometer: 'Odometer',
     currencyUnit: 'Currency',
     titleAddVehicle: 'Add vehicle',
     titleEditVehicle: 'Edit vehicle'

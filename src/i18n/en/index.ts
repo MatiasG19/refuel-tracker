@@ -58,6 +58,7 @@ export default {
     requiredField: 'Required field',
     numbersOnly: 'Numbers only',
     positiveNumbers: 'Positive numbers only',
+    positiveNumbersAndZero: 'Numbers greater than or equal to 0',
     max50Characters: 'Maximum 50 characters',
     nothingSelected: 'Select a value'
   }

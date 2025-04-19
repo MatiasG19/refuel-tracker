@@ -9,6 +9,7 @@ export default {
     moneySpentOnRefuels: 'Tankkosten',
     moneySpentOnExpenses: 'Ausgaben',
     refuelsMade: 'Betankungen',
+    odometer: 'Tachostand',
     expensesMade: 'Ausgaben',
     count: 'Anzahl',
     optionsInDialog: {

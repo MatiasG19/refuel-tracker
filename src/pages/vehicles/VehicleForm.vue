@@ -21,6 +21,16 @@
       />
       <c-input
         class="q-pb-md"
+        v-model="vehicle.odometer"
+        :label="t('vehicleForm.odometer')"
+        :rules="[
+          requiredFieldRule,
+          numbersOnlyRule,
+          positiveNumbersAndZeroRule
+        ]"
+      />
+      <c-input
+        class="q-pb-md"
         v-model="vehicle.currencyUnit"
         :label="t('vehicleForm.currencyUnit')"
         :rules="[requiredFieldRule]"
@@ -63,8 +73,13 @@ import { SelectOption } from 'src/components/inputs/types'
 import { useFormValidation } from 'src/scripts/libraries/validation'
 
 const router = useRouter()
-const { requiredFieldRule, max50Characters, nothingSelected } =
-  useFormValidation()
+const {
+  requiredFieldRule,
+  max50Characters,
+  nothingSelected,
+  numbersOnlyRule,
+  positiveNumbersAndZeroRule
+} = useFormValidation()
 const vehicleStore = useVehicleStore()
 const mainLayoutStore = useMainLayoutStore()
 const { t } = useI18n({ useScope: 'local', messages })
@@ -85,6 +100,9 @@ async function onSubmit() {
   )
   if (!fuelUnit) return
   vehicle.value.fuelUnit = fuelUnit
+
+  // Because javascript stores numbers as strings
+  vehicle.value.odometer = +vehicle.value.odometer
 
   if (routePath.includes('/add'))
     await vehicleStore.addVehicle({ ...vehicle.value })

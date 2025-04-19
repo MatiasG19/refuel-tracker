@@ -7,7 +7,8 @@ import {
   FuelBurnt,
   MoneySpentOnRefuels,
   MoneySpentOnExpenses,
-  ExpensesMade
+  ExpensesMade,
+  Odometer
 } from './dashboardData'
 import { DashboardDataFactory } from './DashboardDataFactory'
 
@@ -21,4 +22,5 @@ export function registerDashboardData() {
   DashboardDataFactory.register('7', MoneySpentOnRefuels)
   DashboardDataFactory.register('8', MoneySpentOnExpenses)
   DashboardDataFactory.register('9', ExpensesMade)
+  DashboardDataFactory.register('10', Odometer)
 }
