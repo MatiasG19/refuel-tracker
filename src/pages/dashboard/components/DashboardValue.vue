@@ -1,6 +1,6 @@
 <template>
   <div>
-    <div class="text-subtitle2 no-break">{{ title }}</div>
+    <div class="text-subtitle2 text-no-wrap">{{ title }}</div>
     <div class="row">
       <div class="col text-h6 accent-space-station">
         {{ value }}
@@ -26,9 +26,3 @@ defineProps({
   }
 })
 </script>
-
-<style scoped>
-.no-break {
-  white-space: nowrap;
-}
-</style>
