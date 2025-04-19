@@ -21,19 +21,19 @@
           </div>
 
           <div class="row">
-            <div class="col-3">
+            <div class="col-6">
               <div class="text-h6 accent-space-station">
                 {{ expense.description }}
               </div>
-              <div class="text-subtitle1">
-                {{ vehicle.fuelUnit?.distanceUnit }}
+              <div class="text-subtitle3">
+                {{ t('refuelsForm.description') }}
               </div>
             </div>
-            <div class="col-3">
+            <div class="col-6">
               <div class="text-h6 accent-space-station">
                 {{ expense.payedAmount }}
               </div>
-              <div class="text-subtitle1">{{ vehicle.currencyUnit }}</div>
+              <div class="text-subtitle3">{{ vehicle.currencyUnit }}</div>
             </div>
           </div>
         </q-card-section>
@@ -48,7 +48,10 @@ import type { PropType } from 'vue'
 import type { Expense, Vehicle } from 'src/scripts/libraries/refuel/models'
 import { date } from 'quasar'
 import RefuelCardSkeleton from './RefuelCardSkeleton.vue'
+import { useI18n } from 'vue-i18n'
+import messages from '../i18n'
 
+const { t } = useI18n({ useScope: 'local', messages })
 const props = defineProps({
   expense: {
     type: Object as PropType<Expense>,
