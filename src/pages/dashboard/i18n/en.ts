@@ -10,6 +10,7 @@ export default {
     moneySpentOnExpenses: 'Expenses',
     refuelsMade: 'Refuels',
     expensesMade: 'Expenses',
+    count: 'Count',
     optionsInDialog: {
       move: 'Move',
       chart: 'Diagram'

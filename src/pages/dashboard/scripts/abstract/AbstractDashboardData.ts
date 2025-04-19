@@ -1,8 +1,12 @@
 import { Vehicle } from 'src/scripts/libraries/refuel/models'
 import { DashboardValue } from '../models'
+import { WritableComputedRef } from 'vue'
 
 export class AbstractDashboardData extends DashboardValue {
-  constructor(protected vehicle: Vehicle) {
+  constructor(
+    protected vehicle: Vehicle,
+    protected locale: WritableComputedRef<string, string>
+  ) {
     super()
     this.title = this.setTitle()
     this.value = this.calculateValue(this.vehicle)

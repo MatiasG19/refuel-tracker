@@ -1,10 +1,14 @@
 import { vehicleTotalMoneySpent } from 'src/scripts/libraries/refuel/functions/vehicle'
 import { Vehicle } from 'src/scripts/libraries/refuel/models'
 import { AbstractDashboardData } from '../abstract/AbstractDashboardData'
+import { WritableComputedRef } from 'vue'
 
 export class TotalMoneySpent extends AbstractDashboardData {
-  constructor(protected override vehicle: Vehicle) {
-    super(vehicle)
+  constructor(
+    protected override vehicle: Vehicle,
+    protected override locale: WritableComputedRef<string, string>
+  ) {
+    super(vehicle, locale)
   }
 
   protected override setTitle(): string {

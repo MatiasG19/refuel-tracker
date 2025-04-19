@@ -1,6 +1,7 @@
 import { Vehicle } from 'src/scripts/libraries/refuel/models'
 import { AbstractDashboardData } from './abstract/AbstractDashboardData'
 import { DashboardValueSettings, DashboardValue } from './models'
+import { WritableComputedRef } from 'vue'
 
 export class DashboardDataFactory {
   public static dashboardDataClasses = new Map<
@@ -8,7 +9,10 @@ export class DashboardDataFactory {
     typeof AbstractDashboardData
   >()
 
-  constructor(private vehicle: Vehicle) {}
+  constructor(
+    private vehicle: Vehicle,
+    private locale: WritableComputedRef<string, string>
+  ) {}
 
   public static register(
     uid: string,
@@ -48,7 +52,7 @@ export class DashboardDataFactory {
     class_: typeof AbstractDashboardData,
     settings: DashboardValueSettings
   ): DashboardValue {
-    const dashboardData: DashboardValue = new class_(this.vehicle)
+    const dashboardData: DashboardValue = new class_(this.vehicle, this.locale)
     dashboardData.id = settings.id ?? 0
     dashboardData.uid = settings.uid
     dashboardData.sequence = settings.sequence
