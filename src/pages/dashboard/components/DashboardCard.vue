@@ -4,6 +4,16 @@
       <q-card-section>
         <div class="row items-center no-wrap">
           <div class="col q-pb-xs">
+            <div class="row text-subtitle2">
+              <div>
+                {{ fuelConsumption?.value }}
+                {{ fuelConsumption?.unit }}
+              </div>
+              <div class="q-ml-md">
+                {{ odometer?.value }}
+                {{ odometer?.unit }}
+              </div>
+            </div>
             <div class="text-h6 text-accent">
               {{ dashboardData.title }}
             </div>
@@ -26,10 +36,10 @@
           </div>
         </div>
 
-        <template v-if="dashboardData.dashboardValues.length">
+        <template v-if="dashboardValuesInternal.length">
           <div class="row q-mt-xs">
             <dashboard-value
-              v-for="data in [...dashboardData.dashboardValues].splice(0, 3)"
+              v-for="data in [...dashboardValuesInternal].splice(0, 3)"
               :key="data.uid"
               :title="t(data.title)"
               :value="data.value"
@@ -42,7 +52,7 @@
           </div>
           <div class="row q-mt-md">
             <dashboard-value
-              v-for="data in [...dashboardData.dashboardValues].splice(3, 3)"
+              v-for="data in [...dashboardValuesInternal].splice(3, 3)"
               :key="data.uid"
               :title="t(data.title)"
               :value="data.value"
@@ -52,7 +62,10 @@
           </div>
           <div class="row q-mt-md">
             <dashboard-value
-              v-for="data in [...dashboardData.dashboardValues].splice(6, 3)"
+              v-for="data in [
+                ...dashboardValuesInternal,
+                dummyDashBoardValue
+              ].splice(6, 3)"
               :key="data.uid"
               :title="t(data.title)"
               :value="data.value"
@@ -69,13 +82,16 @@
 
 <script setup lang="ts">
 import DashboardValue from './DashboardValue.vue'
-import { type DashboardData } from '../scripts/models'
+import {
+  type DashboardData,
+  type DashboardValue as DashboardValueType
+} from '../scripts/models'
 import { useI18n } from 'vue-i18n'
 import messages from '../i18n'
 import { onLongPress } from '@vueuse/core'
-import { PropType, useTemplateRef } from 'vue'
+import { computed, PropType, useTemplateRef } from 'vue'
 
-defineProps({
+const props = defineProps({
   dashboardData: {
     type: Object as PropType<DashboardData>,
     required: true
@@ -87,12 +103,27 @@ defineProps({
 
 const { t } = useI18n({ useScope: 'local', messages })
 const emit = defineEmits(['onLongPress', 'onOptionsClick'])
+const fuelConsumption = computed<DashboardValueType | undefined>(() =>
+  props.dashboardData.dashboardValues.find(v => v.uid == '1')
+)
+const odometer = computed<DashboardValueType | undefined>(() =>
+  props.dashboardData.dashboardValues.find(v => v.uid == '10')
+)
+const dashboardValuesInternal = computed<DashboardValueType[]>(() =>
+  props.dashboardData.dashboardValues.filter(v => v.uid != '1' && v.uid != '10')
+)
 
 const randomFactor = Math.random() * 0.4 + 0.5
 const randomOffset = (Math.ceil(Math.random()) + 2) * randomFactor * -1 + 'px'
 const randomAnimationDuration =
   (Math.ceil(Math.random()) * 0.3 + 0.3) * randomFactor + 's'
 const htmlRefHook = useTemplateRef<HTMLElement>('htmlRefHook')
+const dummyDashBoardValue = {
+  uid: 'dummy',
+  title: '',
+  value: '',
+  unit: ''
+}
 
 onLongPress(htmlRefHook, () => {
   emit('onLongPress')
