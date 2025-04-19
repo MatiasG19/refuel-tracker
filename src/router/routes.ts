@@ -27,7 +27,7 @@ const routes: RouteRecordRaw[] = [
             props: true
           },
           {
-            path: 'refuels/:refuelId?',
+            path: 'refuels/:id?',
             component: () =>
               import('src/pages/refuels/layouts/RefuelLayout.vue'),
             children: [

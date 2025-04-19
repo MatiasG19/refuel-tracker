@@ -114,7 +114,7 @@ const expense = reactive<ExpenseModel>({
 })
 
 const props = defineProps({
-  expenseId: {
+  id: {
     type: String
   }
 })
@@ -191,8 +191,8 @@ onMounted(async () => {
 
   await refuelStore.readData()
   if (refuelStore.vehicle) expense.vehicleId = refuelStore.vehicle.id
-  if (props.expenseId && parseInt(props.expenseId)) {
-    const r = toRaw(await refuelStore.getExpense(parseInt(props.expenseId)))
+  if (props.id && parseInt(props.id)) {
+    const r = toRaw(await refuelStore.getExpense(parseInt(props.id)))
     if (!r) return
     expense.id = r.id
     expense.date = QuasarDate.formatDate(r.date, 'YYYY/MM/DD')

@@ -58,7 +58,9 @@
           "
           :loading="loading"
           class="q-pt-md q-pl-md q-pr-md"
-          @on-options-click="payload => optionsDialog(optionsInDialog, payload)"
+          @on-options-click="
+            payload => optionsDialog(refuelDialogOptions, payload)
+          "
         />
         <expense-card
           v-if="item && item.type === 'expense'"
@@ -67,7 +69,9 @@
           :vehicle="refuelStore.vehicle!"
           :loading="loading"
           class="q-pt-md q-pl-md q-pr-md"
-          @on-options-click="payload => optionsDialog(optionsInDialog, payload)"
+          @on-options-click="
+            payload => optionsDialog(expenseDialogOptions, payload)
+          "
         />
       </q-virtual-scroll>
 
@@ -154,7 +158,7 @@ const areaHeight = computed(() => `height: ${settingsStore.areaHeight}px`)
 const scrollToIndex = ref(0)
 const vehicles = ref<Vehicle[]>([])
 const vehicleOptions = ref<SelectOption[]>([])
-const optionsInDialog = ref<OptionInDialog[]>([
+const refuelDialogOptions = ref<OptionInDialog[]>([
   {
     text: t('refuels.optionsDialog.edit'),
     icon: 'edit',
@@ -170,6 +174,30 @@ const optionsInDialog = ref<OptionInDialog[]>([
         (data: unknown) => {
           ;(async () => {
             await refuelStore.deleteRefuel(data as number)
+            await refuelStore.readData(refuelStore.vehicle!.id)
+          })()
+        },
+        data
+      )
+  }
+])
+
+const expenseDialogOptions = ref<OptionInDialog[]>([
+  {
+    text: t('refuels.optionsDialog.edit'),
+    icon: 'edit',
+    action: (data: unknown) =>
+      router.push({ path: `/vehicles/refuels/${data}/editExpense` })
+  },
+  {
+    text: t('refuels.optionsDialog.delete'),
+    icon: 'delete',
+    action: (data: unknown) =>
+      confirmDialog(
+        t('refuels.optionsDialog.deleteRefuel'),
+        (data: unknown) => {
+          ;(async () => {
+            await refuelStore.deleteExpense(data as number)
             await refuelStore.readData(refuelStore.vehicle!.id)
           })()
         },

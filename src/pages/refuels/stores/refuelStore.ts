@@ -88,7 +88,7 @@ export const useRefuelStore = defineStore('refuelStore', () => {
 
   async function deleteExpense(id: number) {
     const refuel = await expenseRepository.getExpense(id)
-    await refuelRepository.deleteRefuel(id)
+    await expenseRepository.deleteExpense(id)
     if (refuel) await refuelDeletedEvent(refuel.vehicleId)
   }
 
