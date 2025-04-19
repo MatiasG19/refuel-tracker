@@ -10,6 +10,7 @@ export default {
     moneySpentOnExpenses: 'Ausgaben',
     refuelsMade: 'Betankungen',
     expensesMade: 'Ausgaben',
+    count: 'Anzahl',
     optionsInDialog: {
       move: 'Verschieben',
       chart: 'Diagramm'
