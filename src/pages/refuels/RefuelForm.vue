@@ -86,7 +86,7 @@
 </template>
 
 <script setup lang="ts">
-import { onMounted, onBeforeUnmount, toRaw, reactive, ref } from 'vue'
+import { onMounted, toRaw, reactive, ref } from 'vue'
 import { date as QuasarDate } from 'quasar'
 import { useRouter } from 'vue-router'
 import CInput from 'src/components/inputs/CInput.vue'
@@ -224,9 +224,5 @@ onMounted(async () => {
     refuel.distanceDriven = r.distanceDriven.toString()
     refuel.refueledAmount = r.refueledAmount.toString()
   }
-})
-
-onBeforeUnmount(() => {
-  mainLayoutStore.addButton.disabled = false
 })
 </script>

@@ -256,13 +256,9 @@ onMounted(async () => {
     label: v.name,
     value: v.id
   }))
-
-  if (!refuelStore.vehicle || vehicles.value.length === 0)
-    mainLayoutStore.addButton.disabled = true
 })
 
 onUnmounted(() => {
   mainLayoutStore.hideButton(mainLayoutStore.headerButton)
-  mainLayoutStore.addButton.disabled = false
 })
 </script>
