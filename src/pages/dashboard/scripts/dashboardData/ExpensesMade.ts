@@ -1,21 +1,21 @@
-import { vehicleMoneySpent } from 'src/scripts/libraries/refuel/functions/vehicle'
 import { Vehicle } from 'src/scripts/libraries/refuel/models'
 import { AbstractDashboardData } from '../abstract/AbstractDashboardData'
+import { vehicleExpensesMade } from 'src/scripts/libraries/refuel/functions/vehicle'
 
-export class MoneySpent extends AbstractDashboardData {
+export class ExpensesMade extends AbstractDashboardData {
   constructor(protected override vehicle: Vehicle) {
     super(vehicle)
   }
 
   protected override setTitle(): string {
-    return 'dashboardData.moneySpent'
+    return 'dashboardData.expensesMade'
   }
 
   protected override calculateValue(vehicle: Vehicle): string {
-    return vehicleMoneySpent(vehicle).toFixedIfNotZero(2)
+    return vehicleExpensesMade(vehicle).toString()
   }
 
-  protected override getUnit(vehicle: Vehicle): string {
-    return vehicle.currencyUnit
+  protected override getUnit(): string {
+    return ''
   }
 }

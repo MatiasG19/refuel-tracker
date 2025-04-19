@@ -48,7 +48,7 @@
 </template>
 
 <script setup lang="ts">
-import { ref, onMounted, toRaw, onBeforeUnmount } from 'vue'
+import { ref, onMounted, toRaw } from 'vue'
 import { useRouter } from 'vue-router'
 import CInput from 'src/components/inputs/CInput.vue'
 import CSelect from 'src/components/inputs/CSelect.vue'
@@ -96,7 +96,6 @@ async function onSubmit() {
 
 onMounted(async () => {
   // Get vehicle to edit
-  console.log(props.vehicleId)
   if (props.vehicleId) {
     const v = toRaw(await vehicleStore.getVehicle(parseInt(props.vehicleId)))
     if (v) vehicle.value = { ...v }
@@ -117,11 +116,5 @@ onMounted(async () => {
     mainLayoutStore.titleText = t('vehicleForm.titleAddVehicle')
   else if (routePath.includes('/edit'))
     mainLayoutStore.titleText = t('vehicleForm.titleEditVehicle')
-
-  mainLayoutStore.addButton.disabled = true
-})
-
-onBeforeUnmount(() => {
-  mainLayoutStore.addButton.disabled = false
 })
 </script>

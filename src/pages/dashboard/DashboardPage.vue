@@ -107,7 +107,7 @@ const dashboardData = computed<DashboardData[]>(
 )
 const areaHeight = computed(() => `height: ${settingsStore.areaHeight}px`)
 const chartVehicleId = ref(0)
-const optionsInDialog = ref<OptionInDialog[]>([
+const optionsInDialog: OptionInDialog[] = [
   {
     text: t('dashboardData.optionsInDialog.move'),
     icon: 'swap_vert',
@@ -121,7 +121,7 @@ const optionsInDialog = ref<OptionInDialog[]>([
       showChart.value = true
     }
   }
-])
+]
 
 function editOrderFun(value = true) {
   editOrder.value = value
@@ -150,6 +150,7 @@ function onDrop(dropResult: DropResult) {
 onMounted(async () => {
   const timeOut = setTimeout(() => (loading.value = true), 200)
   await initSettings()
+
   mainLayoutStore.titleText = t('title')
   await dashboardStore.readDashboardData()
   App.removeAllListeners()

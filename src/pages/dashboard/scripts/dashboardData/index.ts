@@ -3,7 +3,10 @@ import { DistanceDriven } from './DistanceDriven'
 import { FuelBurnt } from './FuelBurnt'
 import { RefuelsMade } from './RefuelsMade'
 import { FuelPricing } from './FuelPricing'
-import { MoneySpent } from './MoneySpent'
+import { TotalMoneySpent } from './TotalMoneySpent'
+import { MoneySpentOnRefuels } from './MoneySpentOnRefuels'
+import { MoneySpentOnExpenses } from './MoneySpentOnExpenses'
+import { ExpensesMade } from './ExpensesMade'
 
 export {
   FuelConsumption,
@@ -11,5 +14,8 @@ export {
   FuelBurnt,
   RefuelsMade,
   FuelPricing,
-  MoneySpent
+  TotalMoneySpent,
+  MoneySpentOnRefuels,
+  MoneySpentOnExpenses,
+  ExpensesMade
 }

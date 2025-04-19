@@ -5,8 +5,11 @@ export default {
     fuelBurnt: 'Kraftstoff',
     fuelConsumption: 'Verbrauch',
     fuelPricing: 'Kraftstoffpreis',
-    moneySpent: 'Kosten',
+    totalMoneySpent: 'Gesamtkosten',
+    moneySpentOnRefuels: 'Tankkosten',
+    moneySpentOnExpenses: 'Ausgaben',
     refuelsMade: 'Betankungen',
+    expensesMade: 'Ausgaben',
     optionsInDialog: {
       move: 'Verschieben',
       chart: 'Diagramm'

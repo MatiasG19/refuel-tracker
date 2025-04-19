@@ -6,17 +6,21 @@ export class Vehicle {
   fuelUnitId!: number
   fuelUnit?: FuelUnit
   refuels?: Refuel[]
+  expenses?: Expense[]
   totalFuelConsumption?: string
 }
 
-export class Refuel {
+export class BaseExpense {
   id!: number
   date!: Date
-  refueledAmount!: number
   payedAmount!: number
-  distanceDriven!: number
   vehicleId!: number
   vehicle?: Vehicle
+}
+
+export class Refuel extends BaseExpense {
+  refueledAmount!: number
+  distanceDriven!: number
 }
 
 export class FuelUnit {
@@ -26,4 +30,17 @@ export class FuelUnit {
   fuelConsumptionUnit!: string
   distanceConversion!: number
   fuelUnitConversion!: number
+}
+
+export class Expense extends BaseExpense {
+  description!: string
+}
+
+export class RefuelFilter {
+  id?: number
+  name!: string
+  title!: string
+  active!: boolean
+  dateFrom!: Date
+  dateUntil!: Date
 }

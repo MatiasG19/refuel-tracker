@@ -14,9 +14,9 @@
             no-caps
           >
             <template v-slot:default>
-              <label>{{ option.text }}</label>
-              <q-space />
               <q-icon :name="option.icon" />
+              <label class="q-ml-md">{{ option.text }}</label>
+              <q-space />
             </template>
           </q-btn>
         </q-card-actions>

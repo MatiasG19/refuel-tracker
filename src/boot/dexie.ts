@@ -1,11 +1,15 @@
 import { Dexie, type Table } from 'dexie'
 import { Settings } from '../scripts/models'
-import { Vehicle, Refuel } from 'src/scripts/libraries/refuel/models'
+import {
+  Vehicle,
+  Refuel,
+  Expense,
+  RefuelFilter
+} from 'src/scripts/libraries/refuel/models'
 import {
   Dashboard,
   type DashboardValueSettings
 } from 'src/pages/dashboard/scripts/models'
-import { RefuelFilter } from 'src/pages/refuels/models'
 
 export class RefuelTrackerDexie extends Dexie {
   dashboards!: Table<Dashboard>
@@ -14,17 +18,19 @@ export class RefuelTrackerDexie extends Dexie {
   refuels!: Table<Refuel>
   refuelFilters!: Table<RefuelFilter>
   settings!: Table<Settings>
+  expenses!: Table<Expense>
 
   constructor() {
     super('RefuelTrackerDb')
-    this.version(5).stores({
+    this.version(6).stores({
       graphSettings: '++id, uid, sequence, periodId, visible, title',
       vehicles: '++id, name, plateNumber, fuelUnitId, totalFuelConsumption',
       refuels:
         '++id, date, refuelAmount, payedAmount, distanceDriven, vehicleId',
       settings:
         '++id, colorThemeId, distanceUnitId, vehicleId, plateNumberInTitleActive, autoBackupActive, autoBackupPath, lastUpdateCheck, languageId',
-      dashboards: '++id, vehicleId, sequence, visible'
+      dashboards: '++id, vehicleId, sequence, visible',
+      expenses: '++id, description, payedAmount, date, vehicleId'
     })
     this.version(2)
       .stores({
@@ -41,6 +47,19 @@ export class RefuelTrackerDexie extends Dexie {
       })
     this.version(5).upgrade(async () => {
       await this.insertDashboards()
+    })
+    this.version(6).upgrade(async () => {
+      const settings: DashboardValueSettings[] = [
+        { uid: '7', sequence: 7, visible: true },
+        { uid: '8', sequence: 8, visible: true },
+        { uid: '9', sequence: 9, visible: true }
+      ]
+
+      settings.forEach(s => {
+        ;(async () => {
+          await this.graphSettings.add(s)
+        })()
+      })
     })
 
     // Only called on very first database creation
@@ -72,7 +91,10 @@ export class RefuelTrackerDexie extends Dexie {
       { uid: '3', sequence: 3, visible: true },
       { uid: '4', sequence: 4, visible: true },
       { uid: '5', sequence: 5, visible: true },
-      { uid: '6', sequence: 6, visible: true }
+      { uid: '6', sequence: 6, visible: true },
+      { uid: '7', sequence: 7, visible: true },
+      { uid: '8', sequence: 8, visible: true },
+      { uid: '9', sequence: 9, visible: true }
     ]
 
     settings.forEach(s => {
