@@ -1,9 +1,9 @@
-import { vehicleFuelBurnt } from 'src/scripts/libraries/refuel/functions/vehicle'
+import { vehicleTotalMoneySpent } from 'src/scripts/libraries/refuel/functions/vehicle'
 import { Vehicle } from 'src/scripts/libraries/refuel/models'
 import { AbstractDashboardData } from '../abstract/AbstractDashboardData'
 import { WritableComputedRef } from 'vue'
 
-export class FuelBurnt extends AbstractDashboardData {
+export class TotalMoneySpent extends AbstractDashboardData {
   constructor(
     protected override vehicle: Vehicle,
     protected override locale: WritableComputedRef<string, string>
@@ -12,14 +12,14 @@ export class FuelBurnt extends AbstractDashboardData {
   }
 
   protected override setTitle(): string {
-    return 'dashboardData.fuelBurnt'
+    return 'dashboardData.totalMoneySpent'
   }
 
   protected override calculateValue(vehicle: Vehicle): string {
-    return vehicleFuelBurnt(vehicle).toFixedIfNotZero(1)
+    return vehicleTotalMoneySpent(vehicle).toFixedIfNotZero(2)
   }
 
   protected override getUnit(vehicle: Vehicle): string {
-    return vehicle.fuelUnit?.fuelUnit ?? ''
+    return vehicle.currencyUnit
   }
 }

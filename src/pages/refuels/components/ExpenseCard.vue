@@ -6,7 +6,7 @@
           <div class="row items-center no-wrap">
             <div class="col">
               <div class="text-subtitle2">
-                {{ date.formatDate(props.refuel.date, 'YYYY-MMM-DD HH:mm') }}
+                {{ date.formatDate(props.expense.date, 'YYYY-MMM-DD HH:mm') }}
               </div>
             </div>
             <div class="col-auto space-station">
@@ -15,42 +15,25 @@
                 round
                 flat
                 icon="more_vert"
-                @click="emit('onOptionsClick', refuel.id)"
+                @click="emit('onOptionsClick', expense.id)"
               />
             </div>
           </div>
 
           <div class="row">
-            <div class="col-3">
+            <div class="col-6">
               <div class="text-h6 accent-space-station">
-                {{ fuelConsumption }}
+                {{ expense.description }}
               </div>
               <div class="text-subtitle3">
-                {{ vehicle.fuelUnit?.fuelConsumptionUnit }}
+                {{ t('refuelsForm.description') }}
               </div>
             </div>
-
-            <div class="col-3">
+            <div class="col-6">
               <div class="text-h6 accent-space-station">
-                {{ refuel.distanceDriven }}
-              </div>
-              <div class="text-subtitle3">
-                {{ vehicle.fuelUnit?.distanceUnit }}
-              </div>
-            </div>
-            <div class="col-3">
-              <div class="text-h6 accent-space-station">
-                {{ refuel.payedAmount }}
+                {{ expense.payedAmount }}
               </div>
               <div class="text-subtitle3">{{ vehicle.currencyUnit }}</div>
-            </div>
-            <div class="col-3">
-              <div class="text-h6 accent-space-station">
-                {{ refuel.refueledAmount }}
-              </div>
-              <div class="text-subtitle3">
-                {{ vehicle.fuelUnit?.fuelUnit }}
-              </div>
             </div>
           </div>
         </q-card-section>
@@ -62,21 +45,20 @@
 
 <script setup lang="ts">
 import type { PropType } from 'vue'
-import type { Refuel, Vehicle } from 'src/scripts/libraries/refuel/models'
+import type { Expense, Vehicle } from 'src/scripts/libraries/refuel/models'
 import { date } from 'quasar'
 import RefuelCardSkeleton from './RefuelCardSkeleton.vue'
+import { useI18n } from 'vue-i18n'
+import messages from '../i18n'
 
+const { t } = useI18n({ useScope: 'local', messages })
 const props = defineProps({
-  refuel: {
-    type: Object as PropType<Refuel>,
+  expense: {
+    type: Object as PropType<Expense>,
     required: true
   },
   vehicle: {
     type: Object as PropType<Vehicle>,
-    required: true
-  },
-  fuelConsumption: {
-    type: String,
     required: true
   },
   loading: {

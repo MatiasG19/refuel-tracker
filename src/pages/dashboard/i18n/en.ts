@@ -5,9 +5,13 @@ export default {
     fuelBurnt: 'Fuel',
     fuelConsumption: 'Consumption',
     fuelPricing: 'Pricing',
-    moneySpent: 'Spent',
+    totalMoneySpent: 'Total Cost',
+    moneySpentOnRefuels: 'Refuel Costs',
+    moneySpentOnExpenses: 'Expenses',
     refuelsMade: 'Refuels',
     odometer: 'Odometer',
+    expensesMade: 'Expenses',
+    count: 'Count',
     optionsInDialog: {
       move: 'Move',
       chart: 'Diagram'

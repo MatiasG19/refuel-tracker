@@ -4,16 +4,22 @@
       <c-select
         outlined
         class="q-pb-md"
-        v-model="refuel.vehicleId"
+        v-model="expense.vehicleId"
         :options="vehicleOptions"
         :label="t('refuelsForm.vehicle')"
         :rules="[nothingSelected]"
       />
       <c-input
         type="tel"
-        :value="refuel.payedAmount"
+        v-model="expense.description"
+        :label="t('refuelsForm.description')"
+        :rules="[requiredFieldRule, max50Characters]"
+      />
+      <c-input
+        type="tel"
+        :value="expense.payedAmount"
         @update:modelValue="
-          (evt: string) => (refuel.payedAmount = replaceComma(evt))
+          (evt: string) => (expense.payedAmount = replaceComma(evt))
         "
         :label="t('refuelsForm.payedAmount')"
         :rules="[
@@ -23,42 +29,14 @@
           max50Characters
         ]"
       />
-      <c-input
-        type="tel"
-        :value="refuel.distanceDriven"
-        @update:modelValue="
-          (evt: string) => (refuel.distanceDriven = replaceComma(evt))
-        "
-        :label="t('refuelsForm.distanceDriven')"
-        :rules="[
-          requiredFieldRule,
-          numbersOnlyRule,
-          positiveNumbersRule,
-          max50Characters
-        ]"
-      />
-      <c-input
-        type="tel"
-        :value="refuel.refueledAmount"
-        @update:modelValue="
-          (evt: string) => (refuel.refueledAmount = replaceComma(evt))
-        "
-        :label="t('refuelsForm.refueledAmount')"
-        :rules="[
-          requiredFieldRule,
-          numbersOnlyRule,
-          positiveNumbersRule,
-          max50Characters
-        ]"
-      />
       <c-date
-        :modelValue="refuel.refuelDate"
+        :modelValue="expense.date"
         @update:modelValue="(evt: string) => updateDate(evt)"
         :label="t('refuelsForm.refuelDate')"
         :rules="[requiredFieldRule]"
       />
       <c-time
-        :modelValue="refuel.refuelTime"
+        :modelValue="expense.time"
         @update:modelValue="(evt: string) => updateTime(evt)"
         :label="t('refuelsForm.refuelTime')"
         :rules="[requiredFieldRule]"
@@ -96,7 +74,7 @@ import CTime from 'src/components/inputs/CTime.vue'
 import { useFormValidation } from 'src/scripts/libraries/validation'
 import { useRefuelStore } from './stores'
 import { useMainLayoutStore } from 'src/layouts/stores'
-import { Refuel } from 'src/scripts/libraries/refuel/models'
+import { Expense } from 'src/scripts/libraries/refuel/models'
 import { replaceComma } from 'src/scripts/libraries/utils'
 import { useI18n } from 'vue-i18n'
 import { i18n } from 'src/boot/i18n'
@@ -117,24 +95,22 @@ const refuelStore = useRefuelStore()
 const mainLayoutStore = useMainLayoutStore()
 const { t } = useI18n({ useScope: 'local', messages })
 
-type RefuelModel = {
+type ExpenseModel = {
   id: number
   vehicleId: number | undefined
+  description: string
   payedAmount: string
-  distanceDriven: string
-  refueledAmount: string
-  refuelDate: string
-  refuelTime: string
+  date: string
+  time: string
 }
 
-const refuel = reactive<RefuelModel>({
+const expense = reactive<ExpenseModel>({
   id: 0,
   vehicleId: undefined,
+  description: '',
   payedAmount: '',
-  distanceDriven: '',
-  refueledAmount: '',
-  refuelDate: QuasarDate.formatDate(Date.now(), 'YYYY/MM/DD'),
-  refuelTime: QuasarDate.formatDate(Date.now(), 'HH:mm')
+  date: QuasarDate.formatDate(Date.now(), 'YYYY/MM/DD'),
+  time: QuasarDate.formatDate(Date.now(), 'HH:mm')
 })
 
 const props = defineProps({
@@ -147,7 +123,7 @@ const vehicleOptions = ref<SelectOption[]>([])
 
 function updateDate(event: string) {
   const date = new Date(event)
-  refuel.refuelDate = QuasarDate.formatDate(date, 'YYYY/MM/DD')
+  expense.date = QuasarDate.formatDate(date, 'YYYY/MM/DD')
 }
 
 function updateTime(event: string) {
@@ -155,44 +131,45 @@ function updateTime(event: string) {
   const date = new Date(Date.now())
   date.setHours(parseInt(d[0]!))
   date.setMinutes(parseInt(d[1]!))
-  refuel.refuelTime = QuasarDate.formatDate(date, 'HH:mm')
+  expense.time = QuasarDate.formatDate(date, 'HH:mm')
 }
 
 async function onSubmit() {
-  const d = refuel.refuelTime.split(':')
-  const submitRefuel = new Refuel()
-  submitRefuel.id = refuel.id
-  submitRefuel.vehicleId = refuel.vehicleId!
-  submitRefuel.payedAmount = +refuel.payedAmount
-  submitRefuel.distanceDriven = +refuel.distanceDriven
-  submitRefuel.refueledAmount = +refuel.refueledAmount
-  submitRefuel.date = new Date(refuel.refuelDate)
-  submitRefuel.date.setHours(parseInt(d[0]!))
-  submitRefuel.date.setMinutes(parseInt(d[1]!))
+  const d = expense.time.split(':')
+  const date = new Date(expense.date)
+  date.setHours(parseInt(d[0]!))
+  date.setMinutes(parseInt(d[1]!))
+  const submitExpense: Expense = {
+    id: expense.id,
+    vehicleId: expense.vehicleId!,
+    description: expense.description,
+    payedAmount: +expense.payedAmount,
+    date: date
+  }
 
-  if (routePath.includes('/add')) await refuelStore.addRefuel(submitRefuel)
+  if (routePath.includes('/add')) await refuelStore.addExpense(submitExpense)
   else if (routePath.includes('/edit'))
-    await refuelStore.updateRefuel(submitRefuel)
+    await refuelStore.updateExpense(submitExpense)
 
-  if (refuel && refuel.id)
+  if (expense && expense.id)
     void router.push({
-      path: `/vehicles/${refuel.vehicleId}/refuels/${refuel.id}`,
+      path: `/vehicles/${expense.vehicleId}/refuels/${expense.id}`,
       query: {
-        type: 'refuel'
+        type: 'expense'
       }
     })
   else
     void router.push({
-      path: `/vehicles/${refuel.vehicleId}/refuels`
+      path: `/vehicles/${expense.vehicleId}/refuels`
     })
 }
 
 function onCancel() {
-  if (refuel.id)
+  if (expense.id)
     router.push({
-      path: `/vehicles/${refuel.vehicleId}/refuels/${refuel.id}`,
+      path: `/vehicles/${expense.vehicleId}/refuels/${expense.id}`,
       query: {
-        type: 'refuel'
+        type: 'expense'
       }
     })
   else router.go(-1)
@@ -208,21 +185,20 @@ onMounted(async () => {
 
   routePath = router.currentRoute.value.path.toLocaleLowerCase()
   if (routePath.includes('/add'))
-    mainLayoutStore.titleText = t('refuelsForm.titleAddRefuel')
+    mainLayoutStore.titleText = t('refuelsForm.titleAddExpense')
   else if (routePath.includes('/edit'))
-    mainLayoutStore.titleText = t('refuelsForm.titleEditRefuel')
+    mainLayoutStore.titleText = t('refuelsForm.titleEditExpense')
 
   await refuelStore.readData()
-  if (refuelStore.vehicle) refuel.vehicleId = refuelStore.vehicle.id
+  if (refuelStore.vehicle) expense.vehicleId = refuelStore.vehicle.id
   if (props.id && parseInt(props.id)) {
-    const r = toRaw(await refuelStore.getRefuel(parseInt(props.id)))
+    const r = toRaw(await refuelStore.getExpense(parseInt(props.id)))
     if (!r) return
-    refuel.id = r.id
-    refuel.refuelDate = QuasarDate.formatDate(r.date, 'YYYY/MM/DD')
-    refuel.refuelTime = QuasarDate.formatDate(r.date, 'HH:mm')
-    refuel.payedAmount = r.payedAmount.toString()
-    refuel.distanceDriven = r.distanceDriven.toString()
-    refuel.refueledAmount = r.refueledAmount.toString()
+    expense.id = r.id
+    expense.date = QuasarDate.formatDate(r.date, 'YYYY/MM/DD')
+    expense.time = QuasarDate.formatDate(r.date, 'HH:mm')
+    expense.description = r.description.toString()
+    expense.payedAmount = r.payedAmount.toString()
   }
 })
 </script>

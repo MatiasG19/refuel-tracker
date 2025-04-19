@@ -1,6 +1,6 @@
 import { expect, test } from 'vitest'
-import { vehicleMoneySpent } from './moneySpent'
 import { Refuel, Vehicle } from '../../models'
+import { vehicleMoneySpentOnRefuels } from './moneySpentOnRefuels'
 
 test('Sum up single expense', () => {
   const vehicle = new Vehicle()
@@ -13,7 +13,7 @@ test('Sum up single expense', () => {
     date: new Date(),
     distanceDriven: 0.0
   })
-  expect(vehicleMoneySpent(vehicle)).toBe(100.0)
+  expect(vehicleMoneySpentOnRefuels(vehicle)).toBe(100.0)
 })
 
 test('Sum up two expenses', () => {
@@ -35,5 +35,5 @@ test('Sum up two expenses', () => {
     date: new Date(),
     distanceDriven: 0.0
   })
-  expect(vehicleMoneySpent(vehicle)).toBe(250.0)
+  expect(vehicleMoneySpentOnRefuels(vehicle)).toBe(250.0)
 })

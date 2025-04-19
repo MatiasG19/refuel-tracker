@@ -10,14 +10,15 @@ import type { Period } from 'src/pages/dashboard/scripts/models'
 import {
   dashboardSettingsRepository,
   periodRepository,
-  refuelRepository,
   vehicleRepository
 } from 'src/scripts/databaseRepositories'
 import dashboardRepository from 'src/scripts/databaseRepositories/dashboardRepository'
+import { useI18n } from 'vue-i18n'
 
 export const useDashboardStore = defineStore('dashboardStore', () => {
   const dashboardData = ref<DashboardData[]>([])
   const dashboardValueSettings = ref<DashboardValueSettings[]>([])
+  const { locale } = useI18n()
 
   async function getDashboards() {
     return await dashboardRepository.getDashboards()
@@ -48,16 +49,16 @@ export const useDashboardStore = defineStore('dashboardStore', () => {
     const vehicles = await vehicleRepository.getVehicles()
     if (vehicles.length > 0) {
       vehicles.forEach(async vehicle => {
-        vehicle.refuels = await refuelRepository.getRefuels(vehicle.id)
         const dashboard = dashboardData.value.find(
           d => d.vehicleId === vehicle.id
         )
         dashboard!.title = vehicle.name
         dashboard!.subtitle = vehicle.plateNumber
-        if (vehicle.refuels.length) {
-          dashboard!.dashboardValues = new DashboardDataFactory(vehicle).getAll(
-            dashboardValueSettings.value
-          )
+        if (vehicle.refuels && vehicle.refuels.length) {
+          dashboard!.dashboardValues = new DashboardDataFactory(
+            vehicle,
+            locale
+          ).getAll(dashboardValueSettings.value)
 
           dashboardData.value = dashboardData.value.sort(
             (a, b) => a.sequence - b.sequence

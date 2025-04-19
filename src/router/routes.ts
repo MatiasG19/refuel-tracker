@@ -27,7 +27,7 @@ const routes: RouteRecordRaw[] = [
             props: true
           },
           {
-            path: 'refuels/:refuelId?',
+            path: 'refuels/:id?',
             component: () =>
               import('src/pages/refuels/layouts/RefuelLayout.vue'),
             children: [
@@ -43,6 +43,15 @@ const routes: RouteRecordRaw[] = [
               {
                 path: 'edit',
                 component: () => import('src/pages/refuels/RefuelForm.vue'),
+                props: true
+              },
+              {
+                path: 'addExpense',
+                component: () => import('src/pages/refuels/ExpenseForm.vue')
+              },
+              {
+                path: 'editExpense',
+                component: () => import('src/pages/refuels/ExpenseForm.vue'),
                 props: true
               },
               {

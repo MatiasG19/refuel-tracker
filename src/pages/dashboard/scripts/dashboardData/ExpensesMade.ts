@@ -1,9 +1,10 @@
-import { vehicleFuelBurnt } from 'src/scripts/libraries/refuel/functions/vehicle'
 import { Vehicle } from 'src/scripts/libraries/refuel/models'
 import { AbstractDashboardData } from '../abstract/AbstractDashboardData'
+import { vehicleExpensesMade } from 'src/scripts/libraries/refuel/functions/vehicle'
 import { WritableComputedRef } from 'vue'
+import messages from '../../i18n'
 
-export class FuelBurnt extends AbstractDashboardData {
+export class ExpensesMade extends AbstractDashboardData {
   constructor(
     protected override vehicle: Vehicle,
     protected override locale: WritableComputedRef<string, string>
@@ -12,14 +13,15 @@ export class FuelBurnt extends AbstractDashboardData {
   }
 
   protected override setTitle(): string {
-    return 'dashboardData.fuelBurnt'
+    return 'dashboardData.expensesMade'
   }
 
   protected override calculateValue(vehicle: Vehicle): string {
-    return vehicleFuelBurnt(vehicle).toFixedIfNotZero(1)
+    return vehicleExpensesMade(vehicle).toString()
   }
 
-  protected override getUnit(vehicle: Vehicle): string {
-    return vehicle.fuelUnit?.fuelUnit ?? ''
+  protected override getUnit(): string {
+    // @ts-expect-error i18n not usable here
+    return messages[this.locale.value]['dashboardData']['count']
   }
 }

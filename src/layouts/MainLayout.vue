@@ -8,7 +8,7 @@
           round
           icon="menu"
           aria-label="Menu"
-          @click="toggleLeftDrawer"
+          @click="leftDrawerOpen = !leftDrawerOpen"
         />
 
         <q-toolbar-title>
@@ -110,46 +110,69 @@ import { useMainLayoutStore } from 'src/layouts/stores'
 import { Keyboard } from '@capacitor/keyboard'
 import { Platform } from 'quasar'
 import { useI18n } from 'vue-i18n'
+import messages from './i18n'
+import { optionsDialog } from 'src/components/dialogs/optionsDialog'
+import { useRouter } from 'vue-router'
 
+const router = useRouter()
 const settingsStore = useSettingsStore()
 const mainLayoutStore = useMainLayoutStore()
 const { t } = useI18n()
+const { t: lt } = useI18n({ useScope: 'local', messages })
+
+const footerVisible = ref(true)
+const leftDrawerOpen = ref(false)
 
 const linkList = ref([
   {
-    title: computed(() => `${t('drawer.dashboardPage')}`),
+    title: computed(() => t('drawer.dashboardPage')),
     caption: '',
     icon: 'bar_chart',
     link: '/'
   },
   {
-    title: computed(() => `${t('drawer.vehiclesPage')}`),
+    title: computed(() => t('drawer.vehiclesPage')),
     caption: '',
     icon: 'drive_eta',
     link: '/vehicles'
   },
   {
-    title: computed(() => `${t('drawer.refuelsPage')}`),
+    title: computed(() => t('drawer.refuelsPage')),
     caption: '',
     icon: 'local_gas_station',
     link: '/vehicles/refuels'
   },
   {
-    title: computed(() => `${t('drawer.settingsPage')}`),
+    title: computed(() => t('drawer.settingsPage')),
     caption: '',
     icon: 'settings',
     link: '/settings'
   },
   {
-    title: computed(() => `${t('drawer.supportPage')}`),
+    title: computed(() => t('drawer.supportPage')),
     caption: '',
     icon: 'favorite_outline',
     link: '/support'
   }
 ])
 
-const footerVisible = ref(true)
-const leftDrawerOpen = ref(false)
+const addButtonDialogOptions = ref<OptionInDialog[]>([
+  {
+    text: computed(() => lt('addDialog.vehicle')),
+    icon: 'drive_eta',
+    action: () => router.push({ path: `/vehicles/add` })
+  },
+  {
+    text: computed(() => lt('addDialog.expense')),
+    icon: 'attach_money',
+    action: () => router.push({ path: `/vehicles/refuels/addExpense` })
+  },
+  {
+    text: computed(() => lt('addDialog.refuel')),
+    icon: 'local_gas_station',
+    action: () => router.push({ path: `/vehicles/refuels/add` })
+  }
+])
 
 async function addKeyboardListeners() {
   if (Platform.is.mobile) {
@@ -165,10 +188,6 @@ async function addKeyboardListeners() {
       calculateAreaHeight()
     })
   }
-}
-
-function toggleLeftDrawer() {
-  leftDrawerOpen.value = !leftDrawerOpen.value
 }
 
 function calculateAreaHeight() {
@@ -191,6 +210,9 @@ onMounted(async () => {
   })
   calculateAreaHeight()
   mainLayoutStore.calculateAreaHeight = calculateAreaHeight
+
+  mainLayoutStore.addButton.action = () =>
+    optionsDialog(addButtonDialogOptions.value)
 })
 
 onUnmounted(() => {

@@ -91,6 +91,5 @@ const optionsInDialog = ref<OptionInDialog[]>([
 onMounted(async () => {
   mainLayoutStore.titleText = t('vehicles.title')
   await vehicleStore.readVehicles()
-  mainLayoutStore.addButton.action = () => void router.push('/vehicles/add')
 })
 </script>
