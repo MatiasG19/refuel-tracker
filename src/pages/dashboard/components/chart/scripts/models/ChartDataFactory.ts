@@ -1,4 +1,8 @@
-import type { Refuel, Vehicle } from 'src/scripts/libraries/refuel/models'
+import type {
+  Expense,
+  Refuel,
+  Vehicle
+} from 'src/scripts/libraries/refuel/models'
 import type { DataSource, Group, AbstractChartData, IChartData } from '.'
 
 export class ChartDataFactory {
@@ -18,12 +22,13 @@ export class ChartDataFactory {
     dataSource: DataSource,
     groupBy: Group,
     vehicle: Vehicle,
-    refuels: Refuel[]
+    refuels: Refuel[],
+    expenses: Expense[]
   ): IChartData | null {
     const dashboardDataClass = ChartDataFactory.chartDataClasses.get(dataSource)
     if (dashboardDataClass) {
       const fun = new dashboardDataClass()
-      return fun.getChartData(groupBy, vehicle, refuels)
+      return fun.getChartData(groupBy, vehicle, refuels, expenses)
     }
 
     return null

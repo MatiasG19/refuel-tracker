@@ -6,6 +6,7 @@ import { TotalMoneySpent } from './TotalMoneySpent'
 import { RefuelsMade } from './RefuelsMade'
 import { MoneySpentOnExpenses } from './MoneySpentOnExpenses'
 import { MoneySpentOnRefuels } from './MoneySpentOnRefuels'
+import { ExpensesMade } from './ExpensesMade'
 
 export {
   FuelConsumption,
@@ -15,5 +16,6 @@ export {
   FuelBurnt,
   RefuelsMade,
   MoneySpentOnRefuels,
-  MoneySpentOnExpenses
+  MoneySpentOnExpenses,
+  ExpensesMade
 }

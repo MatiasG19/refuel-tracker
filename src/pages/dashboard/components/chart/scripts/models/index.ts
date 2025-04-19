@@ -18,7 +18,8 @@ export enum DataSource {
   FuelPricing,
   TotalMoneySpent,
   MoneySpentOnRefuels,
-  MoneySpentOnExpenses
+  MoneySpentOnExpenses,
+  ExpensesMade
 }
 
 export class AbstractChartData implements IChartDataFun {

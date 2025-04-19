@@ -51,7 +51,8 @@ export class RefuelTrackerDexie extends Dexie {
     this.version(6).upgrade(async () => {
       const settings: DashboardValueSettings[] = [
         { uid: '7', sequence: 7, visible: true },
-        { uid: '8', sequence: 8, visible: true }
+        { uid: '8', sequence: 8, visible: true },
+        { uid: '9', sequence: 9, visible: true }
       ]
 
       settings.forEach(s => {
@@ -92,7 +93,8 @@ export class RefuelTrackerDexie extends Dexie {
       { uid: '5', sequence: 5, visible: true },
       { uid: '6', sequence: 6, visible: true },
       { uid: '7', sequence: 7, visible: true },
-      { uid: '8', sequence: 8, visible: true }
+      { uid: '8', sequence: 8, visible: true },
+      { uid: '9', sequence: 9, visible: true }
     ]
 
     settings.forEach(s => {

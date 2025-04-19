@@ -6,6 +6,7 @@ import { vehicleTotalMoneySpent } from './totalMoneySpent'
 import { vehicleRefuelsMade } from './refuelsMade'
 import { vehicleMoneySpentOnRefuels } from './moneySpentOnRefuels'
 import { vehicleMoneySpentOnExpenses } from './MoneySpentOnExpenses'
+import { vehicleExpensesMade } from './expensesMade'
 
 export {
   vehicleFuelConsumption,
@@ -15,5 +16,6 @@ export {
   vehicleTotalMoneySpent,
   vehicleRefuelsMade,
   vehicleMoneySpentOnRefuels,
-  vehicleMoneySpentOnExpenses
+  vehicleMoneySpentOnExpenses,
+  vehicleExpensesMade
 }

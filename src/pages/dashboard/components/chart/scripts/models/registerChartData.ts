@@ -8,7 +8,8 @@ import {
   FuelBurnt,
   RefuelsMade,
   MoneySpentOnRefuels,
-  MoneySpentOnExpenses
+  MoneySpentOnExpenses,
+  ExpensesMade
 } from './chartDataFunctions'
 
 export function registerChartData() {
@@ -23,4 +24,5 @@ export function registerChartData() {
     DataSource.MoneySpentOnExpenses,
     MoneySpentOnExpenses
   )
+  ChartDataFactory.register(DataSource.ExpensesMade, ExpensesMade)
 }

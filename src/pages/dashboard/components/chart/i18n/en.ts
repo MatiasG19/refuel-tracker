@@ -16,7 +16,8 @@ export default {
       fuelPricing: 'Fuel pricing',
       totalMoneySpent: 'Total cost',
       moneySpentOnExpenses: 'Expenses',
-      moneySpentOnRefuels: 'Refuel Costs'
+      moneySpentOnRefuels: 'Refuel Costs',
+      expensesMade: 'Expenses made'
     },
     from: 'From',
     until: 'Until'

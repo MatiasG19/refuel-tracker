@@ -54,6 +54,10 @@ export function getDataSourceOptions(): SelectOption[] {
     {
       value: 7,
       label: t('chart.dataSourceOptions.moneySpentOnExpenses')
+    },
+    {
+      value: 8,
+      label: t('chart.dataSourceOptions.expensesMade')
     }
   ]
 }

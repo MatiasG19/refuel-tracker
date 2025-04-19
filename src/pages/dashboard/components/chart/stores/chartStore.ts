@@ -3,7 +3,11 @@ import {
   refuelRepository,
   vehicleRepository
 } from 'src/scripts/databaseRepositories'
-import type { Refuel, Vehicle } from 'src/scripts/libraries/refuel/models'
+import type {
+  Expense,
+  Refuel,
+  Vehicle
+} from 'src/scripts/libraries/refuel/models'
 import { ref } from 'vue'
 import { type IChartData } from '../scripts/models'
 import { ChartDataFactory } from '../scripts/models/ChartDataFactory'
@@ -11,10 +15,12 @@ import {
   updateDateFrom,
   updateDateUntil
 } from 'src/scripts/libraries/utils/date'
+import expenseRepository from 'src/scripts/databaseRepositories/expenseRepository'
 
 export const useChartStore = defineStore('chartStore', () => {
   const vehicle = ref<Vehicle | null>(null)
   const refuels = ref<Refuel[]>([])
+  const expenses = ref<Expense[]>([])
   const fromDate = ref<Date>(
     updateDateFrom(new Date(new Date().setDate(new Date().getDate() - 30)))
   )
@@ -30,6 +36,11 @@ export const useChartStore = defineStore('chartStore', () => {
       fromDate.value,
       untilDate.value
     )
+    expenses.value = await expenseRepository.getFilteredExpenses(
+      vehicleId,
+      fromDate.value,
+      untilDate.value
+    )
   }
 
   function getChartData(): IChartData {
@@ -39,7 +50,8 @@ export const useChartStore = defineStore('chartStore', () => {
       dataSource.value,
       groupBy.value,
       vehicle.value,
-      refuels.value
+      refuels.value,
+      expenses.value
     )
     if (chartData) return chartData
     return { labels: [], data: [] }
