@@ -14,9 +14,9 @@ export default {
       fuelBurnt: 'Fuel burnt',
       refuelsMade: 'Refuels made',
       fuelPricing: 'Fuel pricing',
-      totalMoneySpent: 'Total costs',
+      totalMoneySpent: 'Total cost',
       moneySpentOnExpenses: 'Expenses',
-      moneySpentOnRefuels: 'Refuels costs'
+      moneySpentOnRefuels: 'Refuel Costs'
     },
     from: 'From',
     until: 'Until'

@@ -5,7 +5,7 @@ export default {
     fuelBurnt: 'Fuel',
     fuelConsumption: 'Consumption',
     fuelPricing: 'Pricing',
-    totalMoneySpent: 'Total Costs',
+    totalMoneySpent: 'Total Cost',
     moneySpentOnRefuels: 'Refuel Costs',
     moneySpentOnExpenses: 'Expenses',
     refuelsMade: 'Refuels',
