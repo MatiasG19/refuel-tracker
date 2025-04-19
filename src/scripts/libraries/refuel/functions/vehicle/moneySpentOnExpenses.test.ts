@@ -1,6 +1,6 @@
 import { expect, test } from 'vitest'
 import { Expense, Vehicle } from '../../models'
-import { vehicleMoneySpentOnExpenses } from './WmoneySpentOnExpenses'
+import { vehicleMoneySpentOnExpenses } from './moneySpentOnExpenses'
 
 test('Sum up single expense', () => {
   const vehicle = new Vehicle()
