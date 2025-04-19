@@ -52,10 +52,7 @@
           </div>
           <div class="row q-mt-md">
             <dashboard-value
-              v-for="data in [
-                ...dashboardData.dashboardValues,
-                dummyDashboardValue
-              ].splice(6, 3)"
+              v-for="data in [...dashboardData.dashboardValues].splice(6, 3)"
               :key="data.uid"
               :title="t(data.title)"
               :value="data.value"
@@ -95,17 +92,7 @@ const randomFactor = Math.random() * 0.4 + 0.5
 const randomOffset = (Math.ceil(Math.random()) + 2) * randomFactor * -1 + 'px'
 const randomAnimationDuration =
   (Math.ceil(Math.random()) * 0.3 + 0.3) * randomFactor + 's'
-const htmlRefHook = useTemplateRef<HTMLElement>()
-const dummyDashboardValue: DashboardValue = {
-  id: -1,
-  uid: '-1',
-  title: '',
-  value: '',
-  unit: '',
-  sequence: 99999,
-  periodId: 1,
-  visible: true
-}
+const htmlRefHook = useTemplateRef<HTMLElement>('htmlRefHook')
 
 onLongPress(htmlRefHook, () => {
   emit('onLongPress')
