@@ -89,7 +89,6 @@ import { initSettings } from 'src/scripts/initSettings'
 import { SplashScreen } from '@capacitor/splash-screen'
 import { DashboardData } from './scripts/models'
 import { ThemeSetter } from 'src/plugins/capacitor-theme-setter'
-import { getAddButtonDialogOptions } from '../../layouts/models'
 
 const $q = useQuasar()
 $q.dark.set('auto')
@@ -98,7 +97,6 @@ const router = useRouter()
 const dashboardStore = useDashboardStore()
 const settingsStore = useSettingsStore()
 const mainLayoutStore = useMainLayoutStore()
-const { addExpenseDialogOptions } = getAddButtonDialogOptions()
 const { t } = useI18n({ useScope: 'local', messages })
 
 const showChart = ref(false)
@@ -149,15 +147,9 @@ function onDrop(dropResult: DropResult) {
   dashboardStore.moveDashboard(dropResult)
 }
 
-async function init() {
-  await initSettings()
-  mainLayoutStore.addButton.action = () =>
-    optionsDialog(addExpenseDialogOptions)
-}
-
 onMounted(async () => {
   const timeOut = setTimeout(() => (loading.value = true), 200)
-  await init()
+  await initSettings()
 
   mainLayoutStore.titleText = t('title')
   await dashboardStore.readDashboardData()
