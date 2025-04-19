@@ -6,7 +6,7 @@
         {{ value }}
       </div>
     </div>
-    <div class="text-subtitle1">{{ subtitle }}</div>
+    <div class="text-subtitle3">{{ subtitle }}</div>
   </div>
 </template>
 
