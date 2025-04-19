@@ -1,12 +1,15 @@
-import type { Refuel } from 'src/scripts/libraries/refuel/models'
+import type { BaseExpense } from 'src/scripts/libraries/refuel/models'
 import { Group } from '.'
 import { date as QuasarDate } from 'quasar'
 
 export interface GroupedRefuels {
-  [key: string]: Refuel[]
+  [key: string]: BaseExpense[]
 }
 
-export function groupBy(refuels: Refuel[], groupBy: Group): GroupedRefuels {
+export function groupBy(
+  refuels: BaseExpense[],
+  groupBy: Group
+): GroupedRefuels {
   switch (groupBy) {
     case Group.NoGrouping:
       return groupByNoGrouping(refuels)
@@ -19,7 +22,7 @@ export function groupBy(refuels: Refuel[], groupBy: Group): GroupedRefuels {
   }
 }
 
-function groupByNoGrouping(refuels: Refuel[]): GroupedRefuels {
+function groupByNoGrouping(refuels: BaseExpense[]): GroupedRefuels {
   return refuels
     .sort((a, b) => a.date.getTime() - b.date.getTime())
     .reduce((acc: GroupedRefuels, refuel) => {
@@ -30,7 +33,7 @@ function groupByNoGrouping(refuels: Refuel[]): GroupedRefuels {
     }, {})
 }
 
-function groupByMonth(refuels: Refuel[]): GroupedRefuels {
+function groupByMonth(refuels: BaseExpense[]): GroupedRefuels {
   return refuels
     .sort((a, b) => a.date.getTime() - b.date.getTime())
     .reduce((acc: GroupedRefuels, refuel) => {
@@ -46,7 +49,7 @@ function groupByMonth(refuels: Refuel[]): GroupedRefuels {
     }, {})
 }
 
-function groupByYear(refuels: Refuel[]): GroupedRefuels {
+function groupByYear(refuels: BaseExpense[]): GroupedRefuels {
   return refuels
     .sort((a, b) => a.date.getTime() - b.date.getTime())
     .reduce((acc: GroupedRefuels, refuel) => {

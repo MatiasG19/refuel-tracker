@@ -5,7 +5,9 @@ export default {
     fuelBurnt: 'Fuel',
     fuelConsumption: 'Consumption',
     fuelPricing: 'Pricing',
-    moneySpent: 'Spent',
+    totalMoneySpent: 'Total Costs',
+    moneySpentOnRefuels: 'Refuel Costs',
+    moneySpentOnExpenses: 'Expenses',
     refuelsMade: 'Refuels',
     optionsInDialog: {
       move: 'Move',

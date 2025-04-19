@@ -48,6 +48,18 @@ export class RefuelTrackerDexie extends Dexie {
     this.version(5).upgrade(async () => {
       await this.insertDashboards()
     })
+    this.version(6).upgrade(async () => {
+      const settings: DashboardValueSettings[] = [
+        { uid: '7', sequence: 7, visible: true },
+        { uid: '8', sequence: 8, visible: true }
+      ]
+
+      settings.forEach(s => {
+        ;(async () => {
+          await this.graphSettings.add(s)
+        })()
+      })
+    })
 
     // Only called on very first database creation
     this.on('populate', () => {
@@ -78,7 +90,9 @@ export class RefuelTrackerDexie extends Dexie {
       { uid: '3', sequence: 3, visible: true },
       { uid: '4', sequence: 4, visible: true },
       { uid: '5', sequence: 5, visible: true },
-      { uid: '6', sequence: 6, visible: true }
+      { uid: '6', sequence: 6, visible: true },
+      { uid: '7', sequence: 7, visible: true },
+      { uid: '8', sequence: 8, visible: true }
     ]
 
     settings.forEach(s => {

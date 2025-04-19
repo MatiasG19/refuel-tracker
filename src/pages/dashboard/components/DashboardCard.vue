@@ -26,32 +26,45 @@
           </div>
         </div>
 
-        <div class="row q-mt-xs">
-          <dashboard-value
-            v-for="data in [...dashboardData.dashboardValues].splice(0, 3)"
-            :key="data.uid"
-            :title="t(data.title)"
-            :value="data.value"
-            :subtitle="data.unit"
-            class="col q-pr-xl"
-          />
-          <div class="col-auto cursor-pointer">
-            <q-icon v-if="shakeAnimation" name="drag_indicator" size="md" />
-          </div>
-        </div>
-        <div class="row q-mt-md">
-          <template v-if="dashboardData.dashboardValues.length">
+        <template v-if="dashboardData.dashboardValues.length">
+          <div class="row q-mt-xs">
             <dashboard-value
-              v-for="data in [...dashboardData.dashboardValues].splice(3, 6)"
+              v-for="data in [...dashboardData.dashboardValues].splice(0, 3)"
               :key="data.uid"
               :title="t(data.title)"
               :value="data.value"
               :subtitle="data.unit"
               class="col q-pr-xl"
             />
-          </template>
-          <div v-else>{{ t('placeholders.noData') }}</div>
-        </div>
+            <div class="col-auto cursor-pointer">
+              <q-icon v-if="shakeAnimation" name="drag_indicator" size="md" />
+            </div>
+          </div>
+          <div class="row q-mt-md">
+            <dashboard-value
+              v-for="data in [...dashboardData.dashboardValues].splice(3, 3)"
+              :key="data.uid"
+              :title="t(data.title)"
+              :value="data.value"
+              :subtitle="data.unit"
+              class="col q-pr-xl"
+            />
+          </div>
+          <div class="row q-mt-md">
+            <dashboard-value
+              v-for="data in [
+                ...dashboardData.dashboardValues,
+                dummyDashboardValue
+              ].splice(6, 3)"
+              :key="data.uid"
+              :title="t(data.title)"
+              :value="data.value"
+              :subtitle="data.unit"
+              class="col q-pr-xl"
+            />
+          </div>
+        </template>
+        <div v-else>{{ t('placeholders.noData') }}</div>
       </q-card-section>
     </q-card>
   </div>
@@ -63,7 +76,7 @@ import { type DashboardData } from '../scripts/models'
 import { useI18n } from 'vue-i18n'
 import messages from '../i18n'
 import { onLongPress } from '@vueuse/core'
-import { PropType, ref } from 'vue'
+import { PropType, useTemplateRef } from 'vue'
 
 defineProps({
   dashboardData: {
@@ -82,7 +95,17 @@ const randomFactor = Math.random() * 0.4 + 0.5
 const randomOffset = (Math.ceil(Math.random()) + 2) * randomFactor * -1 + 'px'
 const randomAnimationDuration =
   (Math.ceil(Math.random()) * 0.3 + 0.3) * randomFactor + 's'
-const htmlRefHook = ref<HTMLElement>()
+const htmlRefHook = useTemplateRef<HTMLElement>()
+const dummyDashboardValue: DashboardValue = {
+  id: -1,
+  uid: '-1',
+  title: '',
+  value: '',
+  unit: '',
+  sequence: 99999,
+  periodId: 1,
+  visible: true
+}
 
 onLongPress(htmlRefHook, () => {
   emit('onLongPress')

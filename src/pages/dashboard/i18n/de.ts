@@ -5,7 +5,9 @@ export default {
     fuelBurnt: 'Kraftstoff',
     fuelConsumption: 'Verbrauch',
     fuelPricing: 'Kraftstoffpreis',
-    moneySpent: 'Kosten',
+    totalMoneySpent: 'Gesamtkosten',
+    moneySpentOnRefuels: 'Tankkosten',
+    moneySpentOnExpenses: 'Ausgaben',
     refuelsMade: 'Betankungen',
     optionsInDialog: {
       move: 'Verschieben',

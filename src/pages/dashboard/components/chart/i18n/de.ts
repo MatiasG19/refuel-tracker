@@ -14,7 +14,9 @@ export default {
       fuelBurnt: 'Verbrauchter Kraftstoff',
       refuelsMade: 'Anzahl Betankungen',
       fuelPricing: 'Kraftstoffpreis',
-      moneySpent: 'Ausgegebenes Geld'
+      totalMoneySpent: 'Gesamtkosten',
+      moneySpentOnExpenses: 'Ausgaben',
+      moneySpentOnRefuels: 'Tankkosten'
     },
     from: 'Von',
     until: 'Bis'
