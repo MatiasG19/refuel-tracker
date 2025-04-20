@@ -6,6 +6,10 @@ import {
   type RefuelFilter
 } from 'src/scripts/libraries/refuel/models'
 import { date } from 'quasar'
+import {
+  updateDateFrom,
+  updateDateUntil
+} from 'src/scripts/libraries/utils/date'
 
 export const useRefuelFilterStore = defineStore('refuelFilterStore', () => {
   const filter = ref<RefuelFilter | null>(null)
@@ -43,16 +47,10 @@ export const useRefuelFilterStore = defineStore('refuelFilterStore', () => {
       date.formatDate(filter.value.dateUntil, 'YYYY/MM/DD')
     let d = new Date()
     d.setDate(d.getDate() - 30) // Start 30 days in the past
-    d.setHours(0)
-    d.setMinutes(0)
-    d.setSeconds(0)
-    d.setMilliseconds(0)
+    updateDateFrom(d)
     filter.value.dateFrom = d
     d = new Date()
-    d.setHours(23)
-    d.setMinutes(59)
-    d.setSeconds(59)
-    d.setMilliseconds(999)
+    updateDateUntil(d)
     filter.value.dateUntil = d
   }
 
