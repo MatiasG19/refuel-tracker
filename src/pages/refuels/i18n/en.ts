@@ -27,6 +27,9 @@ export default {
   filterRefuelsForm: {
     title: 'Filter refuels',
     filterFrom: 'Filter from',
-    filterUntil: 'Filter until'
+    filterUntil: 'Filter until',
+    all: 'All',
+    refuels: 'Refuels',
+    expenses: 'Expenses'
   }
 }

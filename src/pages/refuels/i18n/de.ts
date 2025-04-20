@@ -29,6 +29,9 @@ export default {
   filterRefuelsForm: {
     title: 'Betankungen filtern',
     filterFrom: 'Filtern von',
-    filterUntil: 'Filtern bis'
+    filterUntil: 'Filtern bis',
+    all: 'Alle',
+    refuels: 'Betankungen',
+    expenses: 'Ausgaben'
   }
 }
