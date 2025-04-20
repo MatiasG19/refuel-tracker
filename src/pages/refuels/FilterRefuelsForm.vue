@@ -1,18 +1,22 @@
 <template>
   <div>
     <q-form @submit="onSubmit" class="q-px-md q-gutter-md">
-      <c-date
-        :modelValue="filterDateFrom"
-        @update:modelValue="updateDateFromInStore($event)"
-        :label="t('filterRefuelsForm.filterFrom')"
-        :rules="[requiredFieldRule]"
-      />
-      <c-date
-        :modelValue="filterDateUntil"
-        @update:modelValue="updateDateUntilInStore($event)"
-        :label="t('filterRefuelsForm.filterUntil')"
-        :rules="[requiredFieldRule]"
-      />
+      <div class="row">
+        <c-date
+          class="col"
+          :modelValue="filterDateFrom"
+          @update:modelValue="updateDateFromInStore($event)"
+          :label="t('filterRefuelsForm.filterFrom')"
+          :rules="[requiredFieldRule]"
+        />
+        <c-date
+          class="col q-pl-md"
+          :modelValue="filterDateUntil"
+          @update:modelValue="updateDateUntilInStore($event)"
+          :label="t('filterRefuelsForm.filterUntil')"
+          :rules="[requiredFieldRule]"
+        />
+      </div>
 
       <div class="row">
         <q-btn
