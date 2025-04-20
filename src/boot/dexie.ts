@@ -22,7 +22,7 @@ export class RefuelTrackerDexie extends Dexie {
 
   constructor() {
     super('RefuelTrackerDb')
-    this.version(7).stores({
+    this.version(8).stores({
       graphSettings: '++id, uid, sequence, periodId, visible, title',
       vehicles:
         '++id, name, plateNumber, fuelUnitId, totalFuelConsumption, odometer',
@@ -31,21 +31,18 @@ export class RefuelTrackerDexie extends Dexie {
       settings:
         '++id, colorThemeId, distanceUnitId, vehicleId, plateNumberInTitleActive, autoBackupActive, autoBackupPath, lastUpdateCheck, languageId',
       dashboards: '++id, vehicleId, sequence, visible',
-      expenses: '++id, description, payedAmount, date, vehicleId'
+      expenses: '++id, description, payedAmount, date, vehicleId',
+      refuelFilters: '++id, name, active, dateFrom, dateUntil, title, type'
     })
-    this.version(2)
-      .stores({
-        refuelFilters: '++id, name, active, dateFrom, dateUntil, title'
-      })
-      .upgrade(tx => {
-        this.insertRefuelFilter()
-        return tx
-          .table('settings')
-          .toCollection()
-          .modify(setting => {
-            delete setting.refuelFilterActive
-          })
-      })
+    this.version(2).upgrade(tx => {
+      this.insertRefuelFilter()
+      return tx
+        .table('settings')
+        .toCollection()
+        .modify(setting => {
+          delete setting.refuelFilterActive
+        })
+    })
     this.version(5).upgrade(async () => {
       await this.insertDashboards()
     })

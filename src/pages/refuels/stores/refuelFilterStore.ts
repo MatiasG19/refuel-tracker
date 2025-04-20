@@ -1,7 +1,10 @@
 import { defineStore } from 'pinia'
 import { ref, toRaw } from 'vue'
 import { refuelFilterRepository } from 'src/scripts/databaseRepositories'
-import { type RefuelFilter } from '../models'
+import {
+  FilterType,
+  type RefuelFilter
+} from 'src/scripts/libraries/refuel/models'
 import { date } from 'quasar'
 
 export const useRefuelFilterStore = defineStore('refuelFilterStore', () => {
@@ -18,10 +21,16 @@ export const useRefuelFilterStore = defineStore('refuelFilterStore', () => {
     await refuelFilterRepository.setFilter(toRaw(filter.value))
   }
 
-  async function removeFilter() {
+  async function removeDateFilter() {
     if (!filter.value) return
     filter.value.active = false
-    await refuelFilterRepository.removeFilter(filterId)
+    await refuelFilterRepository.removeDateFilter(filterId)
+  }
+
+  async function removeTypeFilter() {
+    if (!filter.value) return
+    filter.value.type = FilterType.All
+    await refuelFilterRepository.changeTypeFilter(filterId, filter.value.type)
   }
 
   async function readFilter() {
@@ -50,7 +59,8 @@ export const useRefuelFilterStore = defineStore('refuelFilterStore', () => {
   return {
     filter,
     setFilter,
-    removeFilter,
+    removeDateFilter,
+    removeTypeFilter,
     readFilter
   }
 })

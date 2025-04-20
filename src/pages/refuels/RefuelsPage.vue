@@ -83,8 +83,25 @@
           <q-badge
             color="negative"
             dense
-            @click="refuelFilterStore.removeFilter()"
+            @click="refuelFilterStore.removeDateFilter()"
             >{{ refuelFilterStore.filter.title }}
+            <q-icon name="cancel" class="q-ml-xs" />
+          </q-badge>
+        </div>
+        <div
+          v-if="refuelFilterStore.filter?.type > 1"
+          class="q-pl-md cursor-pointer"
+        >
+          <q-badge
+            color="negative"
+            dense
+            @click="refuelFilterStore.removeTypeFilter()"
+          >
+            {{
+              filterTypeOptions.find(
+                o => o.value == refuelFilterStore.filter?.type
+              )?.label
+            }}
             <q-icon name="cancel" class="q-ml-xs" />
           </q-badge>
         </div>
@@ -131,7 +148,7 @@ import {
 } from 'src/components/dialogs/optionsDialog'
 import { confirmDialog } from 'src/components/dialogs/confirmDialog'
 import { useSettingsStore } from 'src/pages/settings/stores/settingsStore'
-import { Vehicle } from 'src/scripts/libraries/refuel/models'
+import { FilterType, Vehicle } from 'src/scripts/libraries/refuel/models'
 import { vehicleFuelConsumption } from 'src/scripts/libraries/refuel/functions/vehicle'
 import { QVirtualScroll } from 'quasar'
 import { useRefuelStore, useRefuelFilterStore } from './stores'
@@ -205,6 +222,21 @@ const expenseDialogOptions = ref<OptionInDialog[]>([
       )
   }
 ])
+
+const filterTypeOptions: SelectOption[] = [
+  {
+    label: t('filterRefuelsForm.all'),
+    value: FilterType.All
+  },
+  {
+    label: t('filterRefuelsForm.refuels'),
+    value: FilterType.Refuels
+  },
+  {
+    label: t('filterRefuelsForm.expenses'),
+    value: FilterType.Expenses
+  }
+]
 
 const props = defineProps({
   refuelId: {

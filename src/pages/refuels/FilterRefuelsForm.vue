@@ -42,7 +42,7 @@
 </template>
 
 <script setup lang="ts">
-import { onMounted, computed, onBeforeMount, ref } from 'vue'
+import { onMounted, computed, onBeforeMount } from 'vue'
 import { date } from 'quasar'
 import { useRouter } from 'vue-router'
 import { useFormValidation } from 'src/scripts/libraries/validation'
@@ -58,6 +58,7 @@ import {
   updateDateUntil
 } from 'src/scripts/libraries/utils/date'
 import { SelectOption } from 'src/components/inputs/types'
+import { FilterType } from 'src/scripts/libraries/refuel/models'
 
 const router = useRouter()
 const { requiredFieldRule } = useFormValidation()
@@ -71,24 +72,28 @@ const filterDateFrom = computed(() => {
 const filterDateUntil = computed(() => {
   return date.formatDate(refuelFilterStore.filter?.dateUntil, 'YYYY/MM/DD')
 })
-const filterType = ref<SelectOption>({
-  label: 'All',
-  value: 1
-})
+
 const filterTypeOptions: SelectOption[] = [
   {
     label: t('filterRefuelsForm.all'),
-    value: 1
+    value: FilterType.All
   },
   {
     label: t('filterRefuelsForm.refuels'),
-    value: 2
+    value: FilterType.Refuels
   },
   {
     label: t('filterRefuelsForm.expenses'),
-    value: 3
+    value: FilterType.Expenses
   }
 ]
+
+const filterType = computed<SelectOption>(() => {
+  return (
+    filterTypeOptions.find(o => o.value == refuelFilterStore.filter?.type) ??
+    filterTypeOptions[0]
+  )
+})
 
 function updateDateFromInStore(event: string) {
   if (refuelFilterStore.filter)
@@ -101,6 +106,8 @@ function updateDateUntilInStore(event: string) {
 }
 
 function onSubmit() {
+  if (refuelFilterStore.filter)
+    refuelFilterStore.filter.type = filterType.value.value
   refuelFilterStore.setFilter()
   void router.go(-1)
 }
