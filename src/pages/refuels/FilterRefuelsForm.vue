@@ -42,7 +42,7 @@
 </template>
 
 <script setup lang="ts">
-import { onMounted, computed, onBeforeMount } from 'vue'
+import { onMounted, computed, onBeforeMount, ref } from 'vue'
 import { date } from 'quasar'
 import { useRouter } from 'vue-router'
 import { useFormValidation } from 'src/scripts/libraries/validation'
@@ -88,12 +88,7 @@ const filterTypeOptions: SelectOption[] = [
   }
 ]
 
-const filterType = computed<SelectOption>(() => {
-  return (
-    filterTypeOptions.find(o => o.value == refuelFilterStore.filter?.type) ??
-    filterTypeOptions[0]
-  )
-})
+const filterType = ref<SelectOption>(filterTypeOptions[0]!)
 
 function updateDateFromInStore(event: string) {
   if (refuelFilterStore.filter)
@@ -114,6 +109,10 @@ function onSubmit() {
 
 onBeforeMount(async () => {
   await refuelFilterStore.readFilter()
+  const type = filterTypeOptions.find(
+    o => o.value == refuelFilterStore.filter?.type
+  )
+  if (type) filterType.value = type
 })
 
 onMounted(() => {
