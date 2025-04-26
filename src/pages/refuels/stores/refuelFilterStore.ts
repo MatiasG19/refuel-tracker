@@ -1,5 +1,5 @@
 import { defineStore } from 'pinia'
-import { ref, toRaw } from 'vue'
+import { computed, ref, toRaw } from 'vue'
 import { refuelFilterRepository } from 'src/scripts/databaseRepositories'
 import {
   FilterType,
@@ -10,18 +10,27 @@ import {
   updateDateFrom,
   updateDateUntil
 } from 'src/scripts/libraries/utils/date'
+import { SelectOption } from 'src/components/inputs/types'
+import messages from '../i18n'
+import { ct } from 'src/scripts/libraries/translate'
+import { useSettingsStore } from 'src/pages/settings/stores'
 
 export const useRefuelFilterStore = defineStore('refuelFilterStore', () => {
-  const filter = ref<RefuelFilter | null>(null)
+  const settingsStore = useSettingsStore()
+
+  const filter = ref<RefuelFilter>({
+    id: 1,
+    name: '',
+    title: '',
+    active: false,
+    dateFrom: new Date(),
+    dateUntil: new Date(),
+    type: FilterType.All
+  })
   const filterId = 1
 
   async function setFilter() {
     if (!filter.value) return
-    filter.value.active = true
-    filter.value.title =
-      date.formatDate(filter.value.dateFrom, 'YYYY/MM/DD') +
-      ' - ' +
-      date.formatDate(filter.value.dateUntil, 'YYYY/MM/DD')
     await refuelFilterRepository.setFilter(toRaw(filter.value))
   }
 
@@ -38,13 +47,13 @@ export const useRefuelFilterStore = defineStore('refuelFilterStore', () => {
   }
 
   async function readFilter() {
-    filter.value = await refuelFilterRepository.readFilter(filterId)
+    const filterFromDb = await refuelFilterRepository.readFilter(filterId)
+
+    if (!filterFromDb) return
+    filter.value = filterFromDb
 
     if (!filter.value || filter.value.active) return
-    filter.value.title =
-      date.formatDate(filter.value.dateFrom, 'YYYY/MM/DD') +
-      ' - ' +
-      date.formatDate(filter.value.dateUntil, 'YYYY/MM/DD')
+
     let d = new Date()
     d.setDate(d.getDate() - 30) // Start 30 days in the past
     updateDateFrom(d)
@@ -54,11 +63,37 @@ export const useRefuelFilterStore = defineStore('refuelFilterStore', () => {
     filter.value.dateUntil = d
   }
 
+  const dateFilterName = computed<string | null>(() => {
+    if (!filter.value.active) return null
+    return (
+      date.formatDate(filter.value.dateFrom, 'YYYY/MM/DD') +
+      ' - ' +
+      date.formatDate(filter.value.dateUntil, 'YYYY/MM/DD')
+    )
+  })
+
+  const filterTypeOptions = computed<SelectOption[]>(() => [
+    {
+      label: ct('filterRefuelsForm.all', settingsStore.locale, messages),
+      value: FilterType.All
+    },
+    {
+      label: ct('filterRefuelsForm.refuels', settingsStore.locale, messages),
+      value: FilterType.Refuels
+    },
+    {
+      label: ct('filterRefuelsForm.expenses', settingsStore.locale, messages),
+      value: FilterType.Expenses
+    }
+  ])
+
   return {
     filter,
     setFilter,
     removeDateFilter,
     removeTypeFilter,
-    readFilter
+    readFilter,
+    dateFilterName,
+    filterTypeOptions
   }
 })

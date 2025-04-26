@@ -4,21 +4,33 @@
       <div class="row">
         <c-date
           class="col"
-          :modelValue="filterDateFrom"
+          :modelValue="filter.dateFrom"
           @update:modelValue="updateDateFromInStore($event)"
           :label="t('filterRefuelsForm.filterFrom')"
           :rules="[requiredFieldRule]"
+          :disable="!refuelFilterStore.filter.active"
         />
         <c-date
           class="col q-pl-md"
-          :modelValue="filterDateUntil"
+          :modelValue="filter.dateUntil"
           @update:modelValue="updateDateUntilInStore($event)"
           :label="t('filterRefuelsForm.filterUntil')"
           :rules="[requiredFieldRule]"
+          :disable="!refuelFilterStore.filter.active"
+        />
+        <c-checkbox
+          class="col-auto"
+          v-model="refuelFilterStore.filter.active"
         />
       </div>
 
-      <c-multi-toggle v-model="filterType" :options="filterTypeOptions" />
+      <c-multi-toggle
+        v-model="filterType"
+        @update:model-value="
+          (e: SelectOption) => (refuelFilterStore.filter.type = e.value)
+        "
+        :options="refuelFilterStore.filterTypeOptions"
+      />
 
       <div class="row">
         <q-btn
@@ -50,6 +62,7 @@ import { useRefuelFilterStore } from './stores'
 import { useMainLayoutStore } from 'src/layouts/stores'
 import CDate from 'src/components/inputs/CDate.vue'
 import CMultiToggle from 'src/components/inputs/CMultiToggle.vue'
+import CCheckbox from 'src/components/inputs/CCheckbox.vue'
 import { useI18n } from 'vue-i18n'
 import { i18n } from 'src/boot/i18n'
 import messages from './i18n'
@@ -58,7 +71,6 @@ import {
   updateDateUntil
 } from 'src/scripts/libraries/utils/date'
 import { SelectOption } from 'src/components/inputs/types'
-import { FilterType } from 'src/scripts/libraries/refuel/models'
 
 const router = useRouter()
 const { requiredFieldRule } = useFormValidation()
@@ -66,29 +78,17 @@ const refuelFilterStore = useRefuelFilterStore()
 const mainLayoutStore = useMainLayoutStore()
 const { t } = useI18n({ useScope: 'local', messages })
 
-const filterDateFrom = computed(() => {
-  return date.formatDate(refuelFilterStore.filter?.dateFrom, 'YYYY/MM/DD')
-})
-const filterDateUntil = computed(() => {
-  return date.formatDate(refuelFilterStore.filter?.dateUntil, 'YYYY/MM/DD')
-})
+type LocalFilter = {
+  dateFrom: string
+  dateUntil: string
+}
 
-const filterTypeOptions: SelectOption[] = [
-  {
-    label: t('filterRefuelsForm.all'),
-    value: FilterType.All
-  },
-  {
-    label: t('filterRefuelsForm.refuels'),
-    value: FilterType.Refuels
-  },
-  {
-    label: t('filterRefuelsForm.expenses'),
-    value: FilterType.Expenses
+const filter = computed<LocalFilter>(() => {
+  return {
+    dateFrom: date.formatDate(refuelFilterStore.filter.dateFrom, 'YYYY/MM/DD'),
+    dateUntil: date.formatDate(refuelFilterStore.filter.dateUntil, 'YYYY/MM/DD')
   }
-]
-
-const filterType = ref<SelectOption>(filterTypeOptions[0]!)
+})
 
 function updateDateFromInStore(event: string) {
   if (refuelFilterStore.filter)
@@ -100,17 +100,17 @@ function updateDateUntilInStore(event: string) {
     refuelFilterStore.filter.dateUntil = updateDateUntil(event)
 }
 
+const filterType = ref<SelectOption>(refuelFilterStore.filterTypeOptions[0]!)
+
 function onSubmit() {
-  if (refuelFilterStore.filter)
-    refuelFilterStore.filter.type = filterType.value.value
   refuelFilterStore.setFilter()
   void router.go(-1)
 }
 
 onBeforeMount(async () => {
   await refuelFilterStore.readFilter()
-  const type = filterTypeOptions.find(
-    o => o.value == refuelFilterStore.filter?.type
+  const type = refuelFilterStore.filterTypeOptions.find(
+    o => o.value == refuelFilterStore.filter.type
   )
   if (type) filterType.value = type
 })
