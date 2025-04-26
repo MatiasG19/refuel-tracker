@@ -1,6 +1,7 @@
-import { LanguageId, SelectOption } from '../../models'
+import { LanguageId } from '../../models'
 import { Device } from '@capacitor/device'
 import { i18n } from 'src/boot/i18n'
+import { SelectOption } from 'src/components/inputs/types'
 import { getLanguages } from 'src/scripts/staticData/languages'
 
 export function getLanguageOptions(): SelectOption[] {
