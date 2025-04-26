@@ -28,7 +28,9 @@ const props = defineProps<{
   options: SelectOption[]
 }>()
 
-const emits = defineEmits(['update:modelValue'])
+const emits = defineEmits<{
+  (e: 'update:modelValue', modelValue: SelectOption): void
+}>()
 
 const settingsStore = useSettingsStore()
 
