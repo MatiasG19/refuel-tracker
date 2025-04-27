@@ -161,6 +161,12 @@ import { selectDialog } from 'src/components/dialogs/selectDialog'
 import { SelectOption } from 'src/components/inputs/types'
 import { ExpenseViewModel } from './models'
 
+const props = defineProps({
+  refuelId: {
+    type: String
+  }
+})
+
 const router = useRouter()
 const route = useRoute()
 const settingsStore = useSettingsStore()
@@ -223,12 +229,6 @@ const expenseDialogOptions = ref<OptionInDialog[]>([
   }
 ])
 
-const props = defineProps({
-  refuelId: {
-    type: String
-  }
-})
-
 const refuels = computed<ExpenseViewModel[]>(() => {
   let items = []
   if (refuelFilterStore.filter && refuelFilterStore.filter.active) {
@@ -279,13 +279,6 @@ onBeforeMount(async () => {
   if (virtualListRef.value)
     (virtualListRef.value as QVirtualScroll).scrollTo(scrollToIndex.value)
 })
-
-watch(
-  () => refuelFilterStore.filter?.active,
-  () => {
-    setTimeout(() => mainLayoutStore.calculateAreaHeight(), 10)
-  }
-)
 
 onMounted(async () => {
   mainLayoutStore.showButton(
