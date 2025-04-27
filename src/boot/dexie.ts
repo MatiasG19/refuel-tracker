@@ -22,16 +22,14 @@ export class RefuelTrackerDexie extends Dexie {
 
   constructor() {
     super('RefuelTrackerDb')
-    this.version(8).stores({
+    this.version(5).stores({
       graphSettings: '++id, uid, sequence, periodId, visible, title',
-      vehicles:
-        '++id, name, plateNumber, fuelUnitId, totalFuelConsumption, odometer',
+      vehicles: '++id, name, plateNumber, fuelUnitId, totalFuelConsumption',
       refuels:
         '++id, date, refuelAmount, payedAmount, distanceDriven, vehicleId',
       settings:
         '++id, colorThemeId, distanceUnitId, vehicleId, plateNumberInTitleActive, autoBackupActive, autoBackupPath, lastUpdateCheck, languageId',
-      dashboards: '++id, vehicleId, sequence, visible',
-      expenses: '++id, description, payedAmount, date, vehicleId'
+      dashboards: '++id, vehicleId, sequence, visible'
     })
     this.version(2)
       .stores({
@@ -49,24 +47,39 @@ export class RefuelTrackerDexie extends Dexie {
     this.version(5).upgrade(async tx => {
       await this.insertDashboards(tx)
     })
-    this.version(6).upgrade(async tx => {
-      const settings: DashboardValueSettings[] = [
-        { uid: '7', sequence: 7, visible: true },
-        { uid: '8', sequence: 8, visible: true },
-        { uid: '9', sequence: 9, visible: true }
-      ]
+    this.version(6)
+      .stores({
+        expenses: '++id, description, payedAmount, date, vehicleId'
+      })
+      .upgrade(async tx => {
+        const settings: DashboardValueSettings[] = [
+          { uid: '7', sequence: 7, visible: true },
+          { uid: '8', sequence: 8, visible: true },
+          { uid: '9', sequence: 9, visible: true }
+        ]
 
-      await tx.table('graphSettings').bulkAdd(settings)
-    })
-    this.version(7).upgrade(async tx => {
-      const settings: DashboardValueSettings = {
-        uid: '10',
-        sequence: 10,
-        visible: true
-      }
+        await tx.table('graphSettings').bulkAdd(settings)
+      })
+    this.version(7)
+      .stores({
+        vehicles:
+          '++id, name, plateNumber, fuelUnitId, totalFuelConsumption, odometer'
+      })
+      .upgrade(async tx => {
+        await tx
+          .table('vehicles')
+          .toCollection()
+          .modify(vehicle => {
+            vehicle.odometer = 0
+          })
+        const settings: DashboardValueSettings = {
+          uid: '10',
+          sequence: 10,
+          visible: true
+        }
 
-      await tx.table('graphSettings').add(settings)
-    })
+        await tx.table('graphSettings').add(settings)
+      })
     this.version(8).stores({
       refuelFilters: '++id, name, active, dateFrom, dateUntil, title, type'
     })
