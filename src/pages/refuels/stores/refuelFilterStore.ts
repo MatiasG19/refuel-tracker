@@ -19,7 +19,7 @@ export const useRefuelFilterStore = defineStore('refuelFilterStore', () => {
   const settingsStore = useSettingsStore()
 
   const filter = ref<RefuelFilter>({
-    id: 1,
+    id: 0,
     name: '',
     title: '',
     active: false,
@@ -30,37 +30,35 @@ export const useRefuelFilterStore = defineStore('refuelFilterStore', () => {
   const filterId = 1
 
   async function setFilter() {
-    if (!filter.value) return
     await refuelFilterRepository.setFilter(toRaw(filter.value))
   }
 
   async function removeDateFilter() {
-    if (!filter.value) return
     filter.value.active = false
     await refuelFilterRepository.removeDateFilter(filterId)
   }
 
   async function removeTypeFilter() {
-    if (!filter.value) return
     filter.value.type = FilterType.All
     await refuelFilterRepository.changeTypeFilter(filterId, filter.value.type)
   }
 
   async function readFilter() {
+    if (filter.value.id && filter.value.id > 0) return
+
     const filterFromDb = await refuelFilterRepository.readFilter(filterId)
 
     if (!filterFromDb) return
     filter.value = filterFromDb
 
-    if (!filter.value || filter.value.active) return
-
     let d = new Date()
-    d.setDate(d.getDate() - 30) // Start 30 days in the past
+    d.setDate(d.getDate() - 90) // Start 90 days in the past
     updateDateFrom(d)
     filter.value.dateFrom = d
     d = new Date()
     updateDateUntil(d)
     filter.value.dateUntil = d
+    filter.value.type = FilterType.All
   }
 
   const dateFilterName = computed<string | null>(() => {
