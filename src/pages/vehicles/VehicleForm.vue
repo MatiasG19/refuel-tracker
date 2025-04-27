@@ -22,9 +22,10 @@
         :rules="[nothingSelected]"
       />
       <c-input
+        type="tel"
         class="q-pb-md"
-        :value="vehicle.odometer + ''"
-        @update:modelValue="vehicle.odometer = +$event"
+        :value="odometer"
+        @update:modelValue="odometer = replaceComma($event)"
         :label="t('vehicleForm.odometer')"
         :rules="[
           requiredFieldRule,
@@ -75,6 +76,7 @@ import messages from './i18n'
 import { fuelUnitRepository } from 'src/scripts/databaseRepositories'
 import { SelectOption } from 'src/components/inputs/types'
 import { useFormValidation } from 'src/scripts/libraries/validation'
+import { replaceComma } from 'src/scripts/libraries/utils'
 
 const router = useRouter()
 const {
@@ -89,6 +91,7 @@ const mainLayoutStore = useMainLayoutStore()
 const { t } = useI18n({ useScope: 'local', messages })
 
 const vehicle = ref<Vehicle>(new Vehicle())
+const odometer = ref<string>('0')
 const fuelUnits = ref<SelectOption[]>([])
 let routePath = ''
 
@@ -105,6 +108,8 @@ async function onSubmit() {
   if (!fuelUnit) return
   vehicle.value.fuelUnit = fuelUnit
 
+  vehicle.value.odometer = +odometer.value
+
   if (routePath.includes('/add'))
     await vehicleStore.addVehicle({ ...vehicle.value })
   else if (routePath.includes('/edit')) {
@@ -117,7 +122,10 @@ onMounted(async () => {
   // Get vehicle to edit
   if (props.vehicleId) {
     const v = toRaw(await vehicleStore.getVehicle(parseInt(props.vehicleId)))
-    if (v) vehicle.value = { ...v }
+    if (v) {
+      vehicle.value = { ...v }
+      odometer.value = v.odometer.toString()
+    }
   }
 
   // Get fuel units
