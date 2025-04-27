@@ -4,7 +4,8 @@
       v-if="
         refuelStore.vehicle &&
         !refuels.length &&
-        !refuelFilterStore.filter?.active
+        !refuelFilterStore.filter.active &&
+        refuelFilterStore.filter.type == FilterType.All
       "
       class="column items-center absolute-center"
     >

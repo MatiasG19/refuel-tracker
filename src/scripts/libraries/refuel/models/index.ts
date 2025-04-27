@@ -8,7 +8,7 @@ export class Vehicle {
   refuels?: Refuel[]
   expenses?: Expense[]
   totalFuelConsumption?: string
-  odometer = 0
+  odometer!: number
 }
 
 export class BaseExpense {

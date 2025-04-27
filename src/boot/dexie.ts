@@ -1,4 +1,4 @@
-import { Dexie, type Table } from 'dexie'
+import { Dexie, Transaction, type Table } from 'dexie'
 import { Settings } from '../scripts/models'
 import {
   Vehicle,
@@ -22,68 +22,89 @@ export class RefuelTrackerDexie extends Dexie {
 
   constructor() {
     super('RefuelTrackerDb')
-    this.version(8).stores({
+    this.version(5).stores({
       graphSettings: '++id, uid, sequence, periodId, visible, title',
-      vehicles:
-        '++id, name, plateNumber, fuelUnitId, totalFuelConsumption, odometer',
+      vehicles: '++id, name, plateNumber, fuelUnitId, totalFuelConsumption',
       refuels:
         '++id, date, refuelAmount, payedAmount, distanceDriven, vehicleId',
       settings:
         '++id, colorThemeId, distanceUnitId, vehicleId, plateNumberInTitleActive, autoBackupActive, autoBackupPath, lastUpdateCheck, languageId',
-      dashboards: '++id, vehicleId, sequence, visible',
-      expenses: '++id, description, payedAmount, date, vehicleId',
-      refuelFilters: '++id, name, active, dateFrom, dateUntil, title, type'
+      dashboards: '++id, vehicleId, sequence, visible'
     })
-    this.version(2).upgrade(tx => {
-      this.insertRefuelFilter()
-      return tx
-        .table('settings')
-        .toCollection()
-        .modify(setting => {
-          delete setting.refuelFilterActive
-        })
-    })
-    this.version(5).upgrade(async () => {
-      await this.insertDashboards()
-    })
-    this.version(6).upgrade(async () => {
-      const settings: DashboardValueSettings[] = [
-        { uid: '7', sequence: 7, visible: true },
-        { uid: '8', sequence: 8, visible: true },
-        { uid: '9', sequence: 9, visible: true },
-        { uid: '10', sequence: 10, visible: true }
-      ]
-
-      settings.forEach(s => {
-        ;(async () => {
-          await this.graphSettings.add(s)
-        })()
+    this.version(2)
+      .stores({
+        refuelFilters: '++id, name, active, dateFrom, dateUntil, title'
       })
+      .upgrade(async tx => {
+        await this.insertRefuelFilter(tx)
+        return tx
+          .table('settings')
+          .toCollection()
+          .modify(setting => {
+            delete setting.refuelFilterActive
+          })
+      })
+    this.version(5).upgrade(async tx => {
+      await this.insertDashboards(tx)
+    })
+    this.version(6)
+      .stores({
+        expenses: '++id, description, payedAmount, date, vehicleId'
+      })
+      .upgrade(async tx => {
+        const settings: DashboardValueSettings[] = [
+          { uid: '7', sequence: 7, visible: true },
+          { uid: '8', sequence: 8, visible: true },
+          { uid: '9', sequence: 9, visible: true }
+        ]
+
+        await tx.table('graphSettings').bulkAdd(settings)
+      })
+    this.version(7)
+      .stores({
+        vehicles:
+          '++id, name, plateNumber, fuelUnitId, totalFuelConsumption, odometer'
+      })
+      .upgrade(async tx => {
+        await tx
+          .table('vehicles')
+          .toCollection()
+          .modify(vehicle => {
+            vehicle.odometer = 0
+          })
+        const settings: DashboardValueSettings = {
+          uid: '10',
+          sequence: 10,
+          visible: true
+        }
+
+        await tx.table('graphSettings').add(settings)
+      })
+    this.version(8).stores({
+      refuelFilters: '++id, name, active, dateFrom, dateUntil, title, type'
     })
 
     // Only called on very first database creation
-    this.on('populate', () => {
-      this.insertDashboardSettings()
-      this.insertDemoData()
-      this.insertSettings()
-      this.insertRefuelFilter()
-      this.insertDashboards()
+    this.on('populate', async tx => {
+      await this.insertDashboardSettings(tx)
+      await this.insertDemoData(tx)
+      await this.insertSettings(tx)
+      await this.insertRefuelFilter(tx)
+      await this.insertDashboards(tx)
     })
   }
 
-  insertDashboards() {
-    ;(async () => {
-      ;(await this.vehicles.toArray()).forEach((v, i) => {
-        this.dashboards.add({
-          vehicleId: v.id,
-          sequence: i + 1,
-          visible: true
-        })
+  async insertDashboards(tx: Transaction) {
+    ;(await tx.table('vehicles').toArray()).forEach(async (v, i) => {
+      await tx.table('dashboards').add({
+        vehicleId: v.id,
+        sequence: i + 1,
+        visible: true
       })
-    })()
+    })
   }
 
-  insertDashboardSettings() {
+  async insertDashboardSettings(tx: Transaction) {
     const settings: DashboardValueSettings[] = [
       { uid: '1', sequence: 1, visible: true },
       { uid: '2', sequence: 2, visible: true },
@@ -97,50 +118,45 @@ export class RefuelTrackerDexie extends Dexie {
       { uid: '10', sequence: 10, visible: true }
     ]
 
-    settings.forEach(s => {
-      ;(async () => {
-        await this.graphSettings.put(s)
-      })()
-    })
+    await tx.table('graphSettings').bulkAdd(settings)
   }
 
-  insertDemoData() {
+  async insertDemoData(tx: Transaction) {
     const vehicle = new Vehicle()
     vehicle.name = 'My Vehicle'
     vehicle.plateNumber = 'MYNUMBERPLATE'
     vehicle.currencyUnit = '€'
     vehicle.fuelUnitId = 1
-    ;(async () => {
-      vehicle.id = (await this.vehicles.put(vehicle)) as number
-      const refuels = []
-      let refuel = new Refuel()
-      refuel.date = new Date()
-      refuel.refueledAmount = 33
-      refuel.payedAmount = 55
-      refuel.distanceDriven = 650
-      refuel.vehicleId = vehicle.id
-      refuels.push(refuel)
 
-      refuel = new Refuel()
-      refuel.date = new Date()
-      refuel.refueledAmount = 44
-      refuel.payedAmount = 80
-      refuel.distanceDriven = 900
-      refuel.vehicleId = vehicle.id
-      refuels.push(refuel)
+    vehicle.id = (await tx.table('vehicles').put(vehicle)) as number
+    const refuels = []
+    let refuel = new Refuel()
+    refuel.date = new Date()
+    refuel.refueledAmount = 33
+    refuel.payedAmount = 55
+    refuel.distanceDriven = 650
+    refuel.vehicleId = vehicle.id
+    refuels.push(refuel)
 
-      refuel = new Refuel()
-      refuel.date = new Date()
-      refuel.refueledAmount = 50
-      refuel.payedAmount = 90
-      refuel.distanceDriven = 850
-      refuel.vehicleId = vehicle.id
-      refuels.push(refuel)
-      await this.refuels.bulkPut(refuels)
-    })()
+    refuel = new Refuel()
+    refuel.date = new Date()
+    refuel.refueledAmount = 44
+    refuel.payedAmount = 80
+    refuel.distanceDriven = 900
+    refuel.vehicleId = vehicle.id
+    refuels.push(refuel)
+
+    refuel = new Refuel()
+    refuel.date = new Date()
+    refuel.refueledAmount = 50
+    refuel.payedAmount = 90
+    refuel.distanceDriven = 850
+    refuel.vehicleId = vehicle.id
+    refuels.push(refuel)
+    await tx.table('refuels').bulkPut(refuels)
   }
 
-  insertSettings() {
+  async insertSettings(tx: Transaction) {
     const settings = new Settings()
     settings.vehicleId = 1
     settings.colorThemeId = 1
@@ -150,16 +166,16 @@ export class RefuelTrackerDexie extends Dexie {
     settings.autoBackupPath = ''
     const date = new Date()
     settings.lastUpdateCheck = new Date(date.setDate(date.getDate() - 365))
-    ;(async () => await this.settings.put(settings))()
+    await tx.table('settings').put(settings)
   }
 
-  insertRefuelFilter() {
+  async insertRefuelFilter(tx: Transaction) {
     const refuelFilter = new RefuelFilter()
     refuelFilter.name = ''
     refuelFilter.active = false
     refuelFilter.dateFrom = new Date()
     refuelFilter.dateUntil = new Date()
-    ;(async () => await this.refuelFilters.put(refuelFilter))()
+    await tx.table('refuelFilters').put(refuelFilter)
   }
 }
 
