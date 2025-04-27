@@ -70,8 +70,8 @@ export class RefuelTrackerDexie extends Dexie {
   }
 
   async insertDashboards() {
-    ;(await this.vehicles.toArray()).forEach((v, i) => {
-      this.dashboards.add({
+    ;(await this.vehicles.toArray()).forEach(async (v, i) => {
+      await this.dashboards.add({
         vehicleId: v.id,
         sequence: i + 1,
         visible: true
