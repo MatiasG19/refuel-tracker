@@ -53,11 +53,19 @@ export class RefuelTrackerDexie extends Dexie {
       const settings: DashboardValueSettings[] = [
         { uid: '7', sequence: 7, visible: true },
         { uid: '8', sequence: 8, visible: true },
-        { uid: '9', sequence: 9, visible: true },
-        { uid: '10', sequence: 10, visible: true }
+        { uid: '9', sequence: 9, visible: true }
       ]
 
       await tx.table('graphSettings').bulkAdd(settings)
+    })
+    this.version(7).upgrade(async tx => {
+      const settings: DashboardValueSettings = {
+        uid: '10',
+        sequence: 10,
+        visible: true
+      }
+
+      await tx.table('graphSettings').add(settings)
     })
 
     // Only called on very first database creation
