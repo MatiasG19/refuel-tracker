@@ -1,56 +1,97 @@
 import { defineStore } from 'pinia'
-import { ref, toRaw } from 'vue'
+import { computed, ref, toRaw } from 'vue'
 import { refuelFilterRepository } from 'src/scripts/databaseRepositories'
-import { type RefuelFilter } from '../models'
+import {
+  FilterType,
+  type RefuelFilter
+} from 'src/scripts/libraries/refuel/models'
 import { date } from 'quasar'
+import {
+  updateDateFrom,
+  updateDateUntil
+} from 'src/scripts/libraries/utils/date'
+import { SelectOption } from 'src/components/inputs/types'
+import messages from '../i18n'
+import { ct } from 'src/scripts/libraries/translate'
+import { useSettingsStore } from 'src/pages/settings/stores'
 
 export const useRefuelFilterStore = defineStore('refuelFilterStore', () => {
-  const filter = ref<RefuelFilter | null>(null)
+  const settingsStore = useSettingsStore()
+
+  const filter = ref<RefuelFilter>({
+    id: 0,
+    name: '',
+    title: '',
+    active: false,
+    dateFrom: new Date(),
+    dateUntil: new Date(),
+    type: FilterType.All
+  })
   const filterId = 1
 
   async function setFilter() {
-    if (!filter.value) return
-    filter.value.active = true
-    filter.value.title =
-      date.formatDate(filter.value.dateFrom, 'YYYY/MM/DD') +
-      ' - ' +
-      date.formatDate(filter.value.dateUntil, 'YYYY/MM/DD')
     await refuelFilterRepository.setFilter(toRaw(filter.value))
   }
 
-  async function removeFilter() {
-    if (!filter.value) return
+  async function removeDateFilter() {
     filter.value.active = false
-    await refuelFilterRepository.removeFilter(filterId)
+    await refuelFilterRepository.removeDateFilter(filterId)
+  }
+
+  async function removeTypeFilter() {
+    filter.value.type = FilterType.All
+    await refuelFilterRepository.changeTypeFilter(filterId, filter.value.type)
   }
 
   async function readFilter() {
-    filter.value = await refuelFilterRepository.readFilter(filterId)
+    if (filter.value.id && filter.value.id > 0) return
 
-    if (!filter.value || filter.value.active) return
-    filter.value.title =
+    const filterFromDb = await refuelFilterRepository.readFilter(filterId)
+
+    if (!filterFromDb) return
+    filter.value = filterFromDb
+
+    let d = new Date()
+    d.setDate(d.getDate() - 90) // Start 90 days in the past
+    updateDateFrom(d)
+    filter.value.dateFrom = d
+    d = new Date()
+    updateDateUntil(d)
+    filter.value.dateUntil = d
+    filter.value.type = FilterType.All
+  }
+
+  const dateFilterName = computed<string | null>(() => {
+    if (!filter.value.active) return null
+    return (
       date.formatDate(filter.value.dateFrom, 'YYYY/MM/DD') +
       ' - ' +
       date.formatDate(filter.value.dateUntil, 'YYYY/MM/DD')
-    let d = new Date()
-    d.setDate(d.getDate() - 30) // Start 30 days in the past
-    d.setHours(0)
-    d.setMinutes(0)
-    d.setSeconds(0)
-    d.setMilliseconds(0)
-    filter.value.dateFrom = d
-    d = new Date()
-    d.setHours(23)
-    d.setMinutes(59)
-    d.setSeconds(59)
-    d.setMilliseconds(999)
-    filter.value.dateUntil = d
-  }
+    )
+  })
+
+  const filterTypeOptions = computed<SelectOption[]>(() => [
+    {
+      label: ct('filterRefuelsForm.all', settingsStore.locale, messages),
+      value: FilterType.All
+    },
+    {
+      label: ct('filterRefuelsForm.refuels', settingsStore.locale, messages),
+      value: FilterType.Refuels
+    },
+    {
+      label: ct('filterRefuelsForm.expenses', settingsStore.locale, messages),
+      value: FilterType.Expenses
+    }
+  ])
 
   return {
     filter,
     setFilter,
-    removeFilter,
-    readFilter
+    removeDateFilter,
+    removeTypeFilter,
+    readFilter,
+    dateFilterName,
+    filterTypeOptions
   }
 })

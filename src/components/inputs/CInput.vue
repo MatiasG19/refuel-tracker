@@ -22,7 +22,7 @@ import { computed } from 'vue'
 
 const settingsStore = useSettingsStore()
 const dark = computed(
-  () => getColorThemes()[settingsStore.selectedColorThemeId].dark
+  () => getColorThemes()[settingsStore.selectedColorThemeId]?.dark ?? false
 )
 
 defineProps({
@@ -32,7 +32,7 @@ defineProps({
   },
   value: {
     type: String,
-    reqired: true
+    required: true
   },
   label: {
     type: String,

@@ -1,9 +1,10 @@
 import { defineStore } from 'pinia'
-import { ref } from 'vue'
+import { computed, ref } from 'vue'
 import { settingsRepository } from 'src/scripts/databaseRepositories'
 import { getColorThemes } from 'src/scripts/staticData/colorThemes'
 import { ThemeSetter } from 'src/plugins/capacitor-theme-setter'
 import { Platform } from 'quasar'
+import { getLanguages } from 'src/scripts/staticData/languages'
 
 export const useSettingsStore = defineStore('settingsStore', () => {
   const selectedDistanceUnitId = ref<number>(0)
@@ -14,6 +15,12 @@ export const useSettingsStore = defineStore('settingsStore', () => {
   const areaHeight = ref(0)
   const settingsId = 1
   const initialized = ref(false)
+  const locale = computed(() => {
+    return (
+      getLanguages().find(l => l.id == selectedLanguageId.value)?.codeString ??
+      'en'
+    )
+  })
 
   async function initSettings() {
     if (initialized.value) return
@@ -77,6 +84,7 @@ export const useSettingsStore = defineStore('settingsStore', () => {
     selectedLanguageId,
     areaHeight,
     initialized,
+    locale,
     initSettings,
     changeDistanceUnit,
     toggleAutoBackup,
