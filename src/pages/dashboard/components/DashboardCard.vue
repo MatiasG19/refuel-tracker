@@ -3,7 +3,7 @@
     <q-card class="space-station shadow-none">
       <q-card-section>
         <div class="row items-center no-wrap">
-          <div class="col q-pb-xs">
+          <div class="col">
             <div class="row text-subtitle2">
               <div>
                 {{ fuelConsumption?.value }}
@@ -14,16 +14,7 @@
                 {{ odometer?.unit }}
               </div>
             </div>
-            <div class="text-h6 text-accent">
-              {{ dashboardData.title }}
-            </div>
-            <q-badge
-              color="secondary"
-              class="text-primary"
-              :label="dashboardData.subtitle"
-            />
           </div>
-
           <div class="col-auto space-station">
             <q-btn
               :disable="shakeAnimation"
@@ -34,6 +25,17 @@
               @click="emit('onOptionsClick', dashboardData)"
             />
           </div>
+        </div>
+
+        <div class="q-pb-xs q-mt-[10]">
+          <div class="text-h6 text-accent">
+            {{ dashboardData.title }}
+          </div>
+          <q-badge
+            color="secondary"
+            class="text-primary"
+            :label="dashboardData.subtitle"
+          />
         </div>
 
         <template v-if="dashboardValuesInternal.length">
