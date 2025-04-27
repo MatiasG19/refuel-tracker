@@ -67,6 +67,9 @@ export class RefuelTrackerDexie extends Dexie {
 
       await tx.table('graphSettings').add(settings)
     })
+    this.version(8).stores({
+      refuelFilters: '++id, name, active, dateFrom, dateUntil, title, type'
+    })
 
     // Only called on very first database creation
     this.on('populate', async tx => {
