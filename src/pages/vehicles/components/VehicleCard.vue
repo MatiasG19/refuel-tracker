@@ -14,7 +14,7 @@
                 {{ vehicle.fuelUnit?.fuelConsumptionUnit }}
               </div>
               <div class="text-subtitle2 q-ml-md">
-                {{ vehicleOdometer(vehicle) }}
+                {{ vehicleOdometer(vehicle).toFixedIfNotZero(1) }}
                 {{ vehicle.fuelUnit?.distanceUnit }}
               </div>
             </div>
