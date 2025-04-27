@@ -89,7 +89,7 @@
           </q-badge>
         </div>
         <div
-          v-if="refuelFilterStore.filter.type > 1"
+          v-if="refuelFilterStore.filter.type > FilterType.All"
           class="q-pl-md cursor-pointer"
         >
           <q-badge
@@ -138,8 +138,7 @@ import {
   onUnmounted,
   onBeforeMount,
   toRaw,
-  onMounted,
-  watch
+  onMounted
 } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
 import {
@@ -160,6 +159,7 @@ import { vehicleRepository } from 'src/scripts/databaseRepositories'
 import { selectDialog } from 'src/components/dialogs/selectDialog'
 import { SelectOption } from 'src/components/inputs/types'
 import { ExpenseViewModel } from './models'
+import { FilterType } from 'src/scripts/libraries/refuel/models'
 
 const props = defineProps({
   refuelId: {
@@ -230,23 +230,26 @@ const expenseDialogOptions = ref<OptionInDialog[]>([
 ])
 
 const refuels = computed<ExpenseViewModel[]>(() => {
-  let items = []
-  if (refuelFilterStore.filter && refuelFilterStore.filter.active) {
-    items = [...(refuelStore.vehicle?.allExpenses ?? [])]
-      .filter(
-        r =>
-          r.value.date.getTime() >=
-            refuelFilterStore.filter!.dateFrom.getTime() &&
-          r.value.date.getTime() <=
-            refuelFilterStore.filter!.dateUntil.getTime()
-      )
-      .sort((a, b) => b.value.date.getTime() - a.value.date.getTime())
-  } else
-    items = [...(refuelStore.vehicle?.allExpenses ?? [])].sort(
-      (a, b) => b.value.date.getTime() - a.value.date.getTime()
+  let items = [...(refuelStore.vehicle?.allExpenses ?? [])]
+  if (refuelFilterStore.filter.type > FilterType.All) {
+    switch (refuelFilterStore.filter.type) {
+      case FilterType.Refuels:
+        items = items.filter(r => r.type == 'refuel')
+        break
+      case FilterType.Expenses:
+        items = items.filter(r => r.type == 'expense')
+        break
+    }
+  }
+  if (refuelFilterStore.filter.active) {
+    items = items.filter(
+      r =>
+        r.value.date.getTime() >= refuelFilterStore.filter.dateFrom.getTime() &&
+        r.value.date.getTime() <= refuelFilterStore.filter.dateUntil.getTime()
     )
+  }
 
-  return items
+  return items.sort((a, b) => b.value.date.getTime() - a.value.date.getTime())
 })
 
 function getRefuels(from: number, size: number): Array<ExpenseViewModel> {
