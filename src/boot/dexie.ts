@@ -31,18 +31,21 @@ export class RefuelTrackerDexie extends Dexie {
       settings:
         '++id, colorThemeId, distanceUnitId, vehicleId, plateNumberInTitleActive, autoBackupActive, autoBackupPath, lastUpdateCheck, languageId',
       dashboards: '++id, vehicleId, sequence, visible',
-      expenses: '++id, description, payedAmount, date, vehicleId',
-      refuelFilters: '++id, name, active, dateFrom, dateUntil, title, type'
+      expenses: '++id, description, payedAmount, date, vehicleId'
     })
-    this.version(2).upgrade(async tx => {
-      await this.insertRefuelFilter(tx)
-      return tx
-        .table('settings')
-        .toCollection()
-        .modify(setting => {
-          delete setting.refuelFilterActive
-        })
-    })
+    this.version(2)
+      .stores({
+        refuelFilters: '++id, name, active, dateFrom, dateUntil, title'
+      })
+      .upgrade(async tx => {
+        await this.insertRefuelFilter(tx)
+        return tx
+          .table('settings')
+          .toCollection()
+          .modify(setting => {
+            delete setting.refuelFilterActive
+          })
+      })
     this.version(5).upgrade(async tx => {
       await this.insertDashboards(tx)
     })
