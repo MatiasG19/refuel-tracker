@@ -35,7 +35,7 @@ const { t } = useI18n()
 defineProps({
   modelValue: {
     type: String,
-    reqired: false
+    required: true
   },
   label: {
     type: String,

@@ -2,12 +2,14 @@
   <div>
     <q-form @submit="onSubmit" class="q-pa-md q-gutter-md">
       <c-input
-        v-model="vehicle.name"
+        :value="vehicle.name"
+        @update:modelValue="vehicle.name = $event"
         :label="t('vehicleForm.vehicleName')"
         :rules="[requiredFieldRule, max50Characters]"
       />
       <c-input
-        v-model="vehicle.plateNumber"
+        :value="vehicle.plateNumber"
+        @update:modelValue="vehicle.plateNumber = $event"
         :label="t('vehicleForm.licensePlate')"
         :rules="[requiredFieldRule]"
       />
@@ -21,7 +23,8 @@
       />
       <c-input
         class="q-pb-md"
-        v-model="vehicle.odometer"
+        :value="vehicle.odometer + ''"
+        @update:modelValue="vehicle.odometer = +$event"
         :label="t('vehicleForm.odometer')"
         :rules="[
           requiredFieldRule,
@@ -31,7 +34,8 @@
       />
       <c-input
         class="q-pb-md"
-        v-model="vehicle.currencyUnit"
+        :value="vehicle.currencyUnit"
+        @update:modelValue="vehicle.currencyUnit = $event"
         :label="t('vehicleForm.currencyUnit')"
         :rules="[requiredFieldRule]"
       />
@@ -100,9 +104,6 @@ async function onSubmit() {
   )
   if (!fuelUnit) return
   vehicle.value.fuelUnit = fuelUnit
-
-  // Because javascript stores numbers as strings
-  vehicle.value.odometer = +vehicle.value.odometer
 
   if (routePath.includes('/add'))
     await vehicleStore.addVehicle({ ...vehicle.value })
