@@ -54,9 +54,7 @@ export class RefuelTrackerDexie extends Dexie {
         { uid: '10', sequence: 10, visible: true }
       ]
 
-      settings.forEach(async s => {
-        await tx.table('graphSettings').add(s)
-      })
+      await tx.table('graphSettings').bulkAdd(settings)
     })
 
     // Only called on very first database creation
@@ -93,9 +91,7 @@ export class RefuelTrackerDexie extends Dexie {
       { uid: '10', sequence: 10, visible: true }
     ]
 
-    settings.forEach(async s => {
-      await tx.table('graphSettings').put(s)
-    })
+    await tx.table('graphSettings').bulkAdd(settings)
   }
 
   async insertDemoData(tx: Transaction) {
