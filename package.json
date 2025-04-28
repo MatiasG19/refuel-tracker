@@ -36,12 +36,12 @@
     "vue3-smooth-dnd": "^0.0.6"
   },
   "devDependencies": {
-    "@capacitor/app": "^6.0.2",
-    "@capacitor/device": "^6.0.2",
-    "@capacitor/filesystem": "^6.0.3",
-    "@capacitor/keyboard": "^6.0.3",
-    "@capacitor/screen-orientation": "^6.0.3",
-    "@capacitor/splash-screen": "^6.0.3",
+    "@capacitor/app": "^7.0.1",
+    "@capacitor/device": "^7.0.1",
+    "@capacitor/filesystem": "^7.0.1",
+    "@capacitor/keyboard": "^7.0.1",
+    "@capacitor/screen-orientation": "^7.0.1",
+    "@capacitor/splash-screen": "^7.0.1",
     "@eslint/js": "9.24",
     "@intlify/unplugin-vue-i18n": "^6.0.8",
     "@quasar/app-vite": "^2.2.0",
