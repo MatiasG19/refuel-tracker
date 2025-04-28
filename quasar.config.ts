@@ -41,10 +41,10 @@ export default defineConfig(ctx => {
       typescript: {
         strict: true, // (recommended) enables strict settings for TypeScript
         vueShim: true // required when using ESLint with type-checked rules, will generate a shim file for `*.vue` files
-        //extendTsConfig() {
+        // extendTsConfig() {
         // You can use this hook to extend tsConfig dynamically
         // For basic use cases, you can still update the usual tsconfig.json file to override some settings
-        //}
+        // }
       },
 
       vueRouterMode: 'hash', // available values: 'hash', 'history'
@@ -96,7 +96,51 @@ export default defineConfig(ctx => {
           },
           { server: false }
         ]
-      ]
+      ],
+      alias: {
+        '@capacitor/app': fileURLToPath(
+          new URL(
+            './src-capacitor/node_modules/@capacitor/app',
+            import.meta.url
+          )
+        ),
+        '@capacitor/splash-screen': fileURLToPath(
+          new URL(
+            './src-capacitor/node_modules/@capacitor/splash-screen',
+            import.meta.url
+          )
+        ),
+        '@capacitor/device': fileURLToPath(
+          new URL(
+            './src-capacitor/node_modules/@capacitor/device',
+            import.meta.url
+          )
+        ),
+        '@capacitor/core': fileURLToPath(
+          new URL(
+            './src-capacitor/node_modules/@capacitor/core',
+            import.meta.url
+          )
+        ),
+        '@capacitor/screen-orientation': fileURLToPath(
+          new URL(
+            './src-capacitor/node_modules/@capacitor/screen-orientation',
+            import.meta.url
+          )
+        ),
+        '@capacitor/keyboard': fileURLToPath(
+          new URL(
+            './src-capacitor/node_modules/@capacitor/keyboard',
+            import.meta.url
+          )
+        ),
+        '@capacitor/filesystem': fileURLToPath(
+          new URL(
+            './src-capacitor/node_modules/@capacitor/filesystem',
+            import.meta.url
+          )
+        )
+      }
     },
 
     // Full list of options: https://v2.quasar.dev/quasar-cli-vite/quasar-config-js#devServer
