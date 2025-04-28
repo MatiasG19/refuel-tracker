@@ -38,7 +38,7 @@
   "devDependencies": {
     "@capacitor/app": "^6.0.2",
     "@capacitor/device": "^6.0.2",
-    "@capacitor/filesystem": "^6.0.3",
+    "@capacitor/filesystem": "^7.0.1",
     "@capacitor/keyboard": "^6.0.3",
     "@capacitor/screen-orientation": "^6.0.3",
     "@capacitor/splash-screen": "^6.0.3",
