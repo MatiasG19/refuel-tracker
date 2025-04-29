@@ -12,11 +12,15 @@
 		},
 		"SplashScreen": {
 			"launchAutoHide": false
+		},
+		"EdgeToEdge": {
+			"backgroundColor": "#ffffff"
 		}
 	},
 	"server": {
 		"androidScheme": "http",
-		"url": "http://192.168.0.20:9500"
+		"url": "http://192.168.0.20:9500",
+		"cleartext": true
 	},
 	"packageClassList": [
 		"AppPlugin",

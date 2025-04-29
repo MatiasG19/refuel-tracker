@@ -111,7 +111,10 @@ import { Keyboard } from '@capacitor/keyboard'
 import { Platform } from 'quasar'
 import { useI18n } from 'vue-i18n'
 import messages from './i18n'
-import { optionsDialog } from 'src/components/dialogs/optionsDialog'
+import {
+  OptionInDialog,
+  optionsDialog
+} from 'src/components/dialogs/optionsDialog'
 import { useRouter } from 'vue-router'
 
 const router = useRouter()
@@ -158,17 +161,17 @@ const linkList = ref([
 
 const addButtonDialogOptions = ref<OptionInDialog[]>([
   {
-    text: computed(() => lt('addDialog.vehicle')),
+    text: computed(() => lt('addDialog.vehicle')).value,
     icon: 'drive_eta',
     action: () => router.push({ path: `/vehicles/add` })
   },
   {
-    text: computed(() => lt('addDialog.expense')),
+    text: computed(() => lt('addDialog.expense')).value,
     icon: 'attach_money',
     action: () => router.push({ path: `/vehicles/refuels/addExpense` })
   },
   {
-    text: computed(() => lt('addDialog.refuel')),
+    text: computed(() => lt('addDialog.refuel')).value,
     icon: 'local_gas_station',
     action: () => router.push({ path: `/vehicles/refuels/add` })
   }

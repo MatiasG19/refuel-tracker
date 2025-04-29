@@ -12,6 +12,9 @@
 		},
 		"SplashScreen": {
 			"launchAutoHide": false
+		},
+		"EdgeToEdge": {
+			"backgroundColor": "#ffffff"
 		}
 	},
 	"server": {
