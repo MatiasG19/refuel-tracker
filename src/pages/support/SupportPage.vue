@@ -115,7 +115,7 @@ import packageJson from '../../../package.json'
 import { openURL } from 'quasar'
 import { useI18n } from 'vue-i18n'
 import messages from './i18n'
-import { useMainLayoutStore } from 'src/layouts/stores'
+import { useMainLayoutStore } from 'src/layouts/stores/mainLayoutStore'
 
 const mainLayoutStore = useMainLayoutStore()
 const { t } = useI18n({ useScope: 'local', messages })

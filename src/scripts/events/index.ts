@@ -1,6 +1,6 @@
 import { useDashboardStore } from 'src/pages/dashboard/stores/dashboardStore'
-import { useRefuelStore } from 'src/pages/refuels/stores'
-import { useVehicleStore } from 'src/pages/vehicles/stores'
+import { useRefuelStore } from 'src/pages/refuels/stores/refuelStore'
+import { useVehicleStore } from 'src/pages/vehicles/stores/vehicleStore'
 import { Vehicle } from '../libraries/refuel/models'
 
 async function refuelAddedEvent(vehicleId: number): Promise<void> {

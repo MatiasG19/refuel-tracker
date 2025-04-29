@@ -105,8 +105,8 @@
 <script setup lang="ts">
 import EssentialLink from 'components/EssentialLink.vue'
 import { ref, computed, onMounted, onUnmounted } from 'vue'
-import { useSettingsStore } from 'src/pages/settings/stores'
-import { useMainLayoutStore } from 'src/layouts/stores'
+import { useSettingsStore } from 'src/pages/settings/stores/settingsStore'
+import { useMainLayoutStore } from 'src/layouts/stores/mainLayoutStore'
 import { Keyboard } from '@capacitor/keyboard'
 import { Platform } from 'quasar'
 import { useI18n } from 'vue-i18n'

@@ -11,7 +11,8 @@
       />
       <c-input
         type="tel"
-        v-model="expense.description"
+        :value="expense.description"
+        @update:modelValue="(evt: string) => (expense.description = evt)"
         :label="t('refuelsForm.description')"
         :rules="[requiredFieldRule, max50Characters]"
       />
@@ -72,8 +73,8 @@ import CSelect from 'src/components/inputs/CSelect.vue'
 import CDate from 'src/components/inputs/CDate.vue'
 import CTime from 'src/components/inputs/CTime.vue'
 import { useFormValidation } from 'src/scripts/libraries/validation'
-import { useRefuelStore } from './stores'
-import { useMainLayoutStore } from 'src/layouts/stores'
+import { useRefuelStore } from './stores/refuelStore'
+import { useMainLayoutStore } from 'src/layouts/stores/mainLayoutStore'
 import { Expense } from 'src/scripts/libraries/refuel/models'
 import { replaceComma } from 'src/scripts/libraries/utils'
 import { useI18n } from 'vue-i18n'

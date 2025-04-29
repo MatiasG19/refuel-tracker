@@ -13,7 +13,7 @@ import {
 import { SelectOption } from 'src/components/inputs/types'
 import messages from '../i18n'
 import { ct } from 'src/scripts/libraries/translate'
-import { useSettingsStore } from 'src/pages/settings/stores'
+import { useSettingsStore } from 'src/pages/settings/stores/settingsStore'
 
 export const useRefuelFilterStore = defineStore('refuelFilterStore', () => {
   const settingsStore = useSettingsStore()

@@ -115,7 +115,7 @@ import {
   setI18nLanguage
 } from 'src/scripts/libraries/utils/language'
 import { LanguageId } from '../../scripts/models'
-import { useMainLayoutStore } from 'src/layouts/stores'
+import { useMainLayoutStore } from 'src/layouts/stores/mainLayoutStore'
 import { getColorThemes } from 'src/scripts/staticData/colorThemes'
 import { SelectOption } from 'src/components/inputs/types'
 
