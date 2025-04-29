@@ -139,6 +139,12 @@ export default defineConfig(ctx => {
             './src-capacitor/node_modules/@capacitor/filesystem',
             import.meta.url
           )
+        ),
+        '@capawesome/capacitor-android-edge-to-edge-support': fileURLToPath(
+          new URL(
+            './src-capacitor/node_modules/@capawesome/capacitor-android-edge-to-edge-support',
+            import.meta.url
+          )
         )
       }
     },

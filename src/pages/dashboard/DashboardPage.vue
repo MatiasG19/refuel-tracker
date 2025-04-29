@@ -78,7 +78,7 @@ import {
   OptionInDialog,
   optionsDialog
 } from 'src/components/dialogs/optionsDialog'
-import { Platform, useQuasar } from 'quasar'
+import { Platform, useQuasar, colors } from 'quasar'
 import { useRouter } from 'vue-router'
 import { useI18n } from 'vue-i18n'
 import { i18n } from 'src/boot/i18n'
@@ -89,6 +89,7 @@ import { initSettings } from 'src/scripts/initSettings'
 import { SplashScreen } from '@capacitor/splash-screen'
 import { DashboardData } from './scripts/models'
 import { ThemeSetter } from 'src/plugins/capacitor-theme-setter'
+import { EdgeToEdge } from '@capawesome/capacitor-android-edge-to-edge-support'
 
 const $q = useQuasar()
 $q.dark.set('auto')
@@ -98,6 +99,7 @@ const dashboardStore = useDashboardStore()
 const settingsStore = useSettingsStore()
 const mainLayoutStore = useMainLayoutStore()
 const { t } = useI18n({ useScope: 'local', messages })
+const { getPaletteColor } = colors
 
 const showChart = ref(false)
 const loading = ref(false)
@@ -164,10 +166,14 @@ onMounted(async () => {
   SplashScreen.hide()
   // Workaround for native theme not working on first load
   setTimeout(async () => {
-    if (Platform.is.android || Platform.is.mobile)
+    if (Platform.is.android || Platform.is.mobile) {
+      await EdgeToEdge.setBackgroundColor({
+        color: getPaletteColor('dark')
+      })
       await ThemeSetter.setTheme({
         themeId: settingsStore.selectedColorThemeId
       })
+    }
   }, 300)
 })
 
