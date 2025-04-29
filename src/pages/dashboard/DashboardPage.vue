@@ -71,9 +71,9 @@
 import DashboardCard from 'src/pages/dashboard/components/DashboardCard.vue'
 import ChartPage from 'src/pages/dashboard/components/chart/ChartPage.vue'
 import { ref, computed, onMounted, onUnmounted } from 'vue'
-import { useSettingsStore } from 'src/pages/settings/stores'
+import { useSettingsStore } from 'src/pages/settings/stores/settingsStore'
 import { useDashboardStore } from './stores/dashboardStore'
-import { useMainLayoutStore } from 'src/layouts/stores'
+import { useMainLayoutStore } from 'src/layouts/stores/mainLayoutStore'
 import {
   OptionInDialog,
   optionsDialog

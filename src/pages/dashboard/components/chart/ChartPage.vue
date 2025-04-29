@@ -53,7 +53,7 @@
 
 <script setup lang="ts">
 import { computed, onMounted, onUnmounted, ref } from 'vue'
-import { useChartStore } from './stores'
+import { useChartStore } from './stores/chartStore'
 import { useI18n } from 'vue-i18n'
 import messages from './i18n'
 import { Bar } from 'vue-chartjs'

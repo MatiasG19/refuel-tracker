@@ -41,7 +41,7 @@ import { useQuasar } from 'quasar'
 import { useI18n } from 'vue-i18n'
 import { i18n } from 'src/boot/i18n'
 import messages from './i18n'
-import { useMainLayoutStore } from 'src/layouts/stores'
+import { useMainLayoutStore } from 'src/layouts/stores/mainLayoutStore'
 
 const router = useRouter()
 const vehicleStore = useVehicleStore()
