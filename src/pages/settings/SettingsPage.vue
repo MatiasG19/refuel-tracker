@@ -3,7 +3,7 @@
     <q-list>
       <q-item-label header
         ><span class="bg-space-station">{{
-          t('sections.settings.title')
+          t[settingsStore.locale]['sections']['settings']['title']
         }}</span></q-item-label
       >
       <q-list class="q-pb-md">
@@ -11,32 +11,41 @@
           v-model="currentLanguage"
           @update:model-value="changeLanguage"
           :options="[
-            { label: t('systemLanguage'), value: LanguageId.System },
+            {
+              label: gt[settingsStore.locale]['systemLanguage'],
+              value: LanguageId.System
+            },
             ...languageOptions
           ]"
           class="q-pb-md"
-          :label="t('sections.settings.language')"
+          :label="t[settingsStore.locale]['sections']['settings']['language']"
         />
 
         <c-select
           class="q-pb-md"
           v-model="colorTheme"
           @update:model-value="changeColorTheme"
-          :options="colorThemeOptions"
-          :label="t('sections.settings.colorTheme.label')"
+          :options="settingsStore.getColorThemes"
+          :label="
+            t[settingsStore.locale]['sections']['settings']['colorTheme'][
+              'label'
+            ]
+          "
         />
       </q-list>
 
       <q-item-label header
         ><span class="bg-space-station">{{
-          t('sections.backup.title')
+          t[settingsStore.locale]['sections']['backup']['title']
         }}</span></q-item-label
       >
       <q-list class="q-pb-md">
         <template v-if="false">
           <q-item tag="label">
             <q-item-section>
-              <q-item-label>{{ t('sections.backup.autoBackup') }}</q-item-label>
+              <q-item-label>{{
+                t[settingsStore.locale]['sections']['backup']['autoBackup']
+              }}</q-item-label>
             </q-item-section>
             <q-item-section avatar>
               <q-toggle
@@ -51,12 +60,14 @@
           <q-item tag="label">
             <q-item-section>
               <q-item-label>{{
-                t('sections.backup.autoBackupFolder')
+                t[settingsStore.locale]['sections']['backup'][
+                  'autoBackupFolder'
+                ]
               }}</q-item-label>
             </q-item-section>
             <q-item-section avatar>
               <q-btn
-                :label="t('sections.backup.change')"
+                :label="t[settingsStore.locale]['sections']['backup']['change']"
                 color="primary"
                 class="text-default"
                 :disable="!autoBackup"
@@ -68,12 +79,12 @@
         <q-item tag="label">
           <q-item-section>
             <q-item-label class="bg-space-station">{{
-              t('sections.backup.export')
+              t[settingsStore.locale]['sections']['backup']['export']
             }}</q-item-label>
           </q-item-section>
           <q-item-section avatar>
             <q-btn
-              :label="t('sections.backup.export')"
+              :label="t[settingsStore.locale]['sections']['backup']['export']"
               color="primary"
               class="text-default"
               @click="exportBackup"
@@ -84,12 +95,12 @@
         <q-item tag="label">
           <q-item-section>
             <q-item-label class="bg-space-station">{{
-              t('sections.backup.import')
+              t[settingsStore.locale]['sections']['backup']['import']
             }}</q-item-label>
           </q-item-section>
           <q-item-section avatar>
             <q-btn
-              :label="t('sections.backup.import')"
+              :label="t[settingsStore.locale]['sections']['backup']['import']"
               color="primary"
               class="text-default"
               @click="importBackup"
@@ -102,24 +113,19 @@
 </template>
 
 <script setup lang="ts">
-import { ref, onMounted, onUnmounted, computed } from 'vue'
+import { ref, onMounted, onUnmounted } from 'vue'
 import CSelect from 'src/components/inputs/CSelect.vue'
 import { useSettingsStore } from 'src/pages/settings/stores/settingsStore'
 import { exportDB, importDB } from 'src/scripts/libraries/backup/backup'
 import { FilePicker } from 'src/plugins/capacitor-file-picker'
 import { Notify, Platform } from 'quasar'
-import { useI18n } from 'vue-i18n'
-import messages from './i18n'
-import {
-  getLanguageOptions,
-  setI18nLanguage
-} from 'src/scripts/libraries/utils/language'
+import gt from '../../i18n'
+import t from './i18n'
+import { getLanguageOptions } from 'src/scripts/libraries/utils/language'
 import { LanguageId } from '../../scripts/models'
 import { useMainLayoutStore } from 'src/layouts/stores/mainLayoutStore'
-import { getColorThemes } from 'src/scripts/staticData/colorThemes'
 import { SelectOption } from 'src/components/inputs/types'
 
-const { t } = useI18n({ useScope: 'global', messages })
 const settingsStore = useSettingsStore()
 const mainLayoutStore = useMainLayoutStore()
 
@@ -131,7 +137,6 @@ let openDocumentTreeResultAction: OpenDocumentTreeResultAction
 
 const currentLanguage = ref(1)
 const languageOptions = ref<SelectOption[]>(getLanguageOptions())
-const colorThemeOptions = computed(() => getColorThemes())
 const colorTheme = ref(settingsStore.selectedColorThemeId)
 const autoBackup = ref(settingsStore.autoBackupActive)
 
@@ -141,8 +146,7 @@ async function changeColorTheme(value: number) {
 
 async function changeLanguage(languageId: number) {
   settingsStore.changeLanguage(languageId)
-  await setI18nLanguage(languageId)
-  mainLayoutStore.titleText = t('title')
+  mainLayoutStore.titleText = t[settingsStore.locale]['title']
 }
 
 async function toggleAutoBackup(value: boolean) {
@@ -186,7 +190,7 @@ async function importBackup() {
 }
 
 onMounted(async () => {
-  mainLayoutStore.titleText = t('title')
+  mainLayoutStore.titleText = t[settingsStore.locale]['title']
   currentLanguage.value = settingsStore.selectedLanguageId
   if (Platform.is.mobile) {
     await FilePicker.addListener('getContentResult', res => {

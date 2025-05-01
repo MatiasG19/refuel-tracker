@@ -1,11 +1,13 @@
 import { defineStore } from 'pinia'
 import { computed, ref } from 'vue'
 import { settingsRepository } from 'src/scripts/databaseRepositories'
-import { getColorThemes } from 'src/scripts/staticData/colorThemes'
 import { ThemeSetter } from 'src/plugins/capacitor-theme-setter'
 import { Platform, colors } from 'quasar'
 import { getLanguages } from 'src/scripts/staticData/languages'
 import { EdgeToEdge } from '@capawesome/capacitor-android-edge-to-edge-support'
+import { ColorTheme, LanguageCode, LanguageId } from 'src/scripts/models'
+import t from '../i18n'
+import { Device } from '@capacitor/device'
 
 export const useSettingsStore = defineStore('settingsStore', () => {
   const selectedDistanceUnitId = ref<number>(0)
@@ -15,12 +17,20 @@ export const useSettingsStore = defineStore('settingsStore', () => {
   const selectedLanguageId = ref<number>(1)
   const areaHeight = ref(0)
   const settingsId = 1
+  let deviceLanguageCode: string = 'en'
   const initialized = ref(false)
-  const locale = computed(() => {
-    return (
-      getLanguages().find(l => l.id == selectedLanguageId.value)?.codeString ??
-      'en'
-    )
+  const locale = computed<LanguageCode>(() => {
+    if (selectedLanguageId.value === LanguageId.System) {
+      return (
+        getLanguages().filter(l => deviceLanguageCode === l.codeString)[0]
+          ?.code ?? 'en'
+      )
+    } else {
+      return (
+        getLanguages().filter(l => l.id === selectedLanguageId.value)[0]
+          ?.code ?? 'en'
+      )
+    }
   })
   const { getPaletteColor } = colors
 
@@ -32,6 +42,7 @@ export const useSettingsStore = defineStore('settingsStore', () => {
     changeColorTheme(settings.colorThemeId)
     changeLanguage(settings.languageId ?? 1)
     changeDistanceUnit(settings.distanceUnitId)
+    deviceLanguageCode = (await Device.getLanguageCode()).value
     initialized.value = true
   }
 
@@ -61,7 +72,7 @@ export const useSettingsStore = defineStore('settingsStore', () => {
 
   async function changeColorTheme(themeId: number) {
     document.documentElement.className =
-      getColorThemes()[themeId]?.className ?? ''
+      getColorThemes.value[themeId]?.className ?? ''
     selectedColorThemeId.value = themeId
     const settings = await settingsRepository.getSettings(settingsId)
     if (!settings) return Promise.resolve()
@@ -83,6 +94,38 @@ export const useSettingsStore = defineStore('settingsStore', () => {
     await settingsRepository.updateSettings(settings)
   }
 
+  const getColorThemes = computed<ColorTheme[]>(() => [
+    {
+      label:
+        t[locale.value]['sections']['settings']['colorTheme']['themes'][
+          'spaceStation'
+        ],
+      value: 0,
+      dark: true,
+      className: 'theme-space-station'
+    },
+    {
+      label:
+        t[locale.value]['sections']['settings']['colorTheme']['themes'][
+          'light'
+        ],
+      value: 1,
+      dark: false,
+      className: 'theme-light'
+    },
+    {
+      label:
+        t[locale.value]['sections']['settings']['colorTheme']['themes']['dark'],
+      value: 2,
+      dark: true,
+      className: 'theme-dark'
+    }
+  ])
+
+  const dark = computed(
+    () => getColorThemes.value[selectedColorThemeId.value]?.dark ?? false
+  )
+
   return {
     selectedDistanceUnitId,
     autoBackupActive,
@@ -92,6 +135,8 @@ export const useSettingsStore = defineStore('settingsStore', () => {
     areaHeight,
     initialized,
     locale,
+    getColorThemes,
+    dark,
     initSettings,
     changeDistanceUnit,
     toggleAutoBackup,

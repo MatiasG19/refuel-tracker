@@ -10,10 +10,12 @@ export class Settings {
   languageId = 1
 }
 
+export type LanguageCode = 'en' | 'de'
+
 export class Language {
   id?: number
   text!: string
-  code!: 'en' | 'de'
+  code!: LanguageCode
   codeString!: string
 }
 

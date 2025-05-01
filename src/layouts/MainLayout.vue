@@ -109,8 +109,8 @@ import { useSettingsStore } from 'src/pages/settings/stores/settingsStore'
 import { useMainLayoutStore } from 'src/layouts/stores/mainLayoutStore'
 import { Keyboard } from '@capacitor/keyboard'
 import { Platform } from 'quasar'
-import { useI18n } from 'vue-i18n'
-import messages from './i18n'
+import gt from '../i18n'
+import lt from './i18n'
 import {
   OptionInDialog,
   optionsDialog
@@ -120,58 +120,56 @@ import { useRouter } from 'vue-router'
 const router = useRouter()
 const settingsStore = useSettingsStore()
 const mainLayoutStore = useMainLayoutStore()
-const { t } = useI18n()
-const { t: lt } = useI18n({ useScope: 'local', messages })
 
 const footerVisible = ref(true)
 const leftDrawerOpen = ref(false)
 
-const linkList = ref([
+const linkList = computed(() => [
   {
-    title: computed(() => t('drawer.dashboardPage')),
+    title: gt[settingsStore.locale]['drawer']['dashboardPage'],
     caption: '',
     icon: 'bar_chart',
     link: '/'
   },
   {
-    title: computed(() => t('drawer.vehiclesPage')),
+    title: gt[settingsStore.locale]['drawer']['vehiclesPage'],
     caption: '',
     icon: 'drive_eta',
     link: '/vehicles'
   },
   {
-    title: computed(() => t('drawer.refuelsPage')),
+    title: gt[settingsStore.locale]['drawer']['refuelsPage'],
     caption: '',
     icon: 'local_gas_station',
     link: '/vehicles/refuels'
   },
   {
-    title: computed(() => t('drawer.settingsPage')),
+    title: gt[settingsStore.locale]['drawer']['settingsPage'],
     caption: '',
     icon: 'settings',
     link: '/settings'
   },
   {
-    title: computed(() => t('drawer.supportPage')),
+    title: gt[settingsStore.locale]['drawer']['supportPage'],
     caption: '',
     icon: 'favorite_outline',
     link: '/support'
   }
 ])
 
-const addButtonDialogOptions = ref<OptionInDialog[]>([
+const addButtonDialogOptions = computed<OptionInDialog[]>(() => [
   {
-    text: computed(() => lt('addDialog.vehicle')).value,
+    text: lt[settingsStore.locale]['addDialog']['vehicle'],
     icon: 'drive_eta',
     action: () => router.push({ path: `/vehicles/add` })
   },
   {
-    text: computed(() => lt('addDialog.expense')).value,
+    text: lt[settingsStore.locale]['addDialog']['expense'],
     icon: 'attach_money',
     action: () => router.push({ path: `/vehicles/refuels/addExpense` })
   },
   {
-    text: computed(() => lt('addDialog.refuel')).value,
+    text: lt[settingsStore.locale]['addDialog']['refuel'],
     icon: 'local_gas_station',
     action: () => router.push({ path: `/vehicles/refuels/add` })
   }

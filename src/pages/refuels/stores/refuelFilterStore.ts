@@ -11,8 +11,7 @@ import {
   updateDateUntil
 } from 'src/scripts/libraries/utils/date'
 import { SelectOption } from 'src/components/inputs/types'
-import messages from '../i18n'
-import { ct } from 'src/scripts/libraries/translate'
+import t from '../i18n'
 import { useSettingsStore } from 'src/pages/settings/stores/settingsStore'
 
 export const useRefuelFilterStore = defineStore('refuelFilterStore', () => {
@@ -72,15 +71,15 @@ export const useRefuelFilterStore = defineStore('refuelFilterStore', () => {
 
   const filterTypeOptions = computed<SelectOption[]>(() => [
     {
-      label: ct('filterRefuelsForm.all', settingsStore.locale, messages),
+      label: t[settingsStore.locale]['filterRefuelsForm']['all'],
       value: FilterType.All
     },
     {
-      label: ct('filterRefuelsForm.refuels', settingsStore.locale, messages),
+      label: t[settingsStore.locale]['filterRefuelsForm']['refuels'],
       value: FilterType.Refuels
     },
     {
-      label: ct('filterRefuelsForm.expenses', settingsStore.locale, messages),
+      label: t[settingsStore.locale]['filterRefuelsForm']['expenses'],
       value: FilterType.Expenses
     }
   ])
