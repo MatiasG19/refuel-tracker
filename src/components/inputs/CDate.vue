@@ -18,7 +18,7 @@
             v-close-popup
             color="secondary"
             flat
-            :label="t('components.inputs.ok')"
+            :label="t[settingsStore.locale]['components']['inputs']['ok']"
           />
         </div>
       </q-date>
@@ -28,9 +28,10 @@
 
 <script setup lang="ts">
 import CInput from 'src/components/inputs/CInput.vue'
-import { useI18n } from 'vue-i18n'
+import t from 'src/i18n'
+import { useSettingsStore } from 'src/pages/settings/stores/settingsStore'
 
-const { t } = useI18n()
+const settingsStore = useSettingsStore()
 
 defineProps({
   modelValue: {

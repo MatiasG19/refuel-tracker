@@ -1,12 +1,12 @@
 import { vehicleDistanceDriven } from 'src/scripts/libraries/refuel/functions/vehicle'
 import { Vehicle } from 'src/scripts/libraries/refuel/models'
 import { AbstractDashboardData } from '../abstract/AbstractDashboardData'
-import { WritableComputedRef } from 'vue'
+import { LanguageCode } from 'src/scripts/models'
 
 export class DistanceDriven extends AbstractDashboardData {
   constructor(
     protected override vehicle: Vehicle,
-    protected override locale: WritableComputedRef<string, string>
+    protected override locale: LanguageCode
   ) {
     super(vehicle, locale)
   }

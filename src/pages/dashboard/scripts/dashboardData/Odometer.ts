@@ -1,10 +1,14 @@
 import { Vehicle } from 'src/scripts/libraries/refuel/models'
 import { AbstractDashboardData } from '../abstract/AbstractDashboardData'
 import { vehicleOdometer } from 'src/scripts/libraries/refuel/functions/vehicle/odometer'
+import { LanguageCode } from 'src/scripts/models'
 
 export class Odometer extends AbstractDashboardData {
-  constructor(protected override vehicle: Vehicle) {
-    super(vehicle)
+  constructor(
+    protected override vehicle: Vehicle,
+    protected override locale: LanguageCode
+  ) {
+    super(vehicle, locale)
   }
 
   protected override setTitle(): string {

@@ -19,7 +19,7 @@
       <q-btn
         class="row"
         color="accent"
-        :label="i18n.global.t('placeholders.addVehicle')"
+        :label="gt[settingsStore.locale]['placeholders']['addVehicle']"
         icon-right="add"
         unelevated
         no-caps
@@ -80,9 +80,8 @@ import {
 } from 'src/components/dialogs/optionsDialog'
 import { Platform, useQuasar, colors } from 'quasar'
 import { useRouter } from 'vue-router'
-import { useI18n } from 'vue-i18n'
-import { i18n } from 'src/boot/i18n'
-import messages from './i18n'
+import gt from 'src/i18n'
+import t from './i18n'
 import { Container, Draggable, type DropResult } from 'vue3-smooth-dnd'
 import { App } from '@capacitor/app'
 import { initSettings } from 'src/scripts/initSettings'
@@ -98,7 +97,6 @@ const router = useRouter()
 const dashboardStore = useDashboardStore()
 const settingsStore = useSettingsStore()
 const mainLayoutStore = useMainLayoutStore()
-const { t } = useI18n({ useScope: 'local', messages })
 const { getPaletteColor } = colors
 
 const showChart = ref(false)
@@ -111,12 +109,12 @@ const areaHeight = computed(() => `height: ${settingsStore.areaHeight}px`)
 const chartVehicleId = ref(0)
 const optionsInDialog: OptionInDialog[] = [
   {
-    text: t('dashboardData.optionsInDialog.move'),
+    text: t[settingsStore.locale]['dashboardData']['optionsInDialog']['move'],
     icon: 'swap_vert',
     action: () => editOrderFun()
   },
   {
-    text: t('dashboardData.optionsInDialog.chart'),
+    text: t[settingsStore.locale]['dashboardData']['optionsInDialog']['chart'],
     icon: 'bar_chart',
     action: (data: unknown) => {
       chartVehicleId.value = (data as DashboardData).vehicleId
@@ -153,7 +151,7 @@ onMounted(async () => {
   const timeOut = setTimeout(() => (loading.value = true), 200)
   await initSettings()
 
-  mainLayoutStore.titleText = t('title')
+  mainLayoutStore.titleText = t[settingsStore.locale]['title']
   await dashboardStore.readDashboardData()
   App.removeAllListeners()
   await App.addListener('backButton', () => {

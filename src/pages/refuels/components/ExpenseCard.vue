@@ -26,7 +26,7 @@
                 {{ expense.description }}
               </div>
               <div class="text-subtitle3">
-                {{ t('refuelsForm.description') }}
+                {{ t[settingsStore.locale]['refuelsForm']['description'] }}
               </div>
             </div>
             <div class="col-6">
@@ -48,10 +48,10 @@ import type { PropType } from 'vue'
 import type { Expense, Vehicle } from 'src/scripts/libraries/refuel/models'
 import { date } from 'quasar'
 import RefuelCardSkeleton from './RefuelCardSkeleton.vue'
-import { useI18n } from 'vue-i18n'
-import messages from '../i18n'
+import t from '../i18n'
+import { useSettingsStore } from 'src/pages/settings/stores/settingsStore'
 
-const { t } = useI18n({ useScope: 'local', messages })
+const settingsStore = useSettingsStore()
 const props = defineProps({
   expense: {
     type: Object as PropType<Expense>,

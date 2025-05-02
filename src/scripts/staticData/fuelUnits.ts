@@ -1,54 +1,61 @@
-import { i18n } from 'src/boot/i18n'
+import { useSettingsStore } from 'src/pages/settings/stores/settingsStore'
 import { FuelUnit } from '../libraries/refuel/models'
+import t from 'src/i18n'
 
 export function getFuelUnits(): FuelUnit[] {
-  const { t } = i18n.global
+  const settingsStore = useSettingsStore()
   return [
     {
       id: 1,
-      distanceUnit: t('distanceUnits.kilometersShort'),
-      fuelUnit: t('fuelUnits.litre'),
-      fuelConsumptionUnit: t('fuelConsumptionsUnits.litresPer100km'),
+      distanceUnit: t[settingsStore.locale]['distanceUnits']['kilometersShort'],
+      fuelUnit: t[settingsStore.locale]['fuelUnits']['litre'],
+      fuelConsumptionUnit:
+        t[settingsStore.locale]['fuelConsumptionsUnits']['litresPer100km'],
       distanceConversion: 1.0,
       fuelUnitConversion: 1.0
     },
     {
       id: 2,
-      distanceUnit: t('distanceUnits.milesShort'),
-      fuelUnit: t('fuelUnits.gallon'),
-      fuelConsumptionUnit: t('fuelConsumptionsUnits.mpgUs'),
+      distanceUnit: t[settingsStore.locale]['distanceUnits']['milesShort'],
+      fuelUnit: t[settingsStore.locale]['fuelUnits']['gallon'],
+      fuelConsumptionUnit:
+        t[settingsStore.locale]['fuelConsumptionsUnits']['mpgUs'],
       distanceConversion: 1.0,
       fuelUnitConversion: 1.0
     },
     {
       id: 3,
-      distanceUnit: 'Miles',
-      fuelUnit: t('fuelUnits.gallon'),
-      fuelConsumptionUnit: t('fuelConsumptionsUnits.mpgImperial'),
+      distanceUnit: t[settingsStore.locale]['distanceUnits']['milesShort'],
+      fuelUnit: t[settingsStore.locale]['fuelUnits']['gallon'],
+      fuelConsumptionUnit:
+        t[settingsStore.locale]['fuelConsumptionsUnits']['mpgImperial'],
       distanceConversion: 1.0,
       fuelUnitConversion: 1.0
     },
     {
       id: 4,
-      distanceUnit: t('distanceUnits.kilometersShort'),
-      fuelUnit: t('fuelUnits.kWh'),
-      fuelConsumptionUnit: t('fuelConsumptionsUnits.kWhPer100km'),
+      distanceUnit: t[settingsStore.locale]['distanceUnits']['kilometersShort'],
+      fuelUnit: t[settingsStore.locale]['fuelUnits']['kWh'],
+      fuelConsumptionUnit:
+        t[settingsStore.locale]['fuelConsumptionsUnits']['kWhPer100km'],
       distanceConversion: 1.0,
       fuelUnitConversion: 1.0
     },
     {
       id: 5,
-      distanceUnit: t('distanceUnits.kilometersShort'),
-      fuelUnit: t('fuelUnits.wh'),
-      fuelConsumptionUnit: t('fuelConsumptionsUnits.whPer100km'),
+      distanceUnit: t[settingsStore.locale]['distanceUnits']['kilometersShort'],
+      fuelUnit: t[settingsStore.locale]['fuelUnits']['wh'],
+      fuelConsumptionUnit:
+        t[settingsStore.locale]['fuelConsumptionsUnits']['whPer100km'],
       distanceConversion: 1.0,
       fuelUnitConversion: 1.0
     },
     {
       id: 6,
-      distanceUnit: t('distanceUnits.milesShort'),
-      fuelUnit: t('fuelUnits.wh'),
-      fuelConsumptionUnit: t('fuelConsumptionsUnits.whPerMile'),
+      distanceUnit: t[settingsStore.locale]['distanceUnits']['milesShort'],
+      fuelUnit: t[settingsStore.locale]['fuelUnits']['wh'],
+      fuelConsumptionUnit:
+        t[settingsStore.locale]['fuelConsumptionsUnits']['whPerMile'],
       distanceConversion: 1.0,
       fuelUnitConversion: 1.0
     }

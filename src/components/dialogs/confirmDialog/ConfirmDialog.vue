@@ -8,7 +8,11 @@
           class="column form-btn text-default"
           no-caps
           color="primary"
-          :label="t('components.dialogs.confirmDialog.cancel')"
+          :label="
+            t[settingsStore.locale]['components']['dialogs']['confirmDialog'][
+              'cancel'
+            ]
+          "
         />
         <q-space />
         <q-btn
@@ -16,7 +20,11 @@
           class="column form-btn text-default"
           no-caps
           color="primary"
-          :label="t('components.dialogs.confirmDialog.confirm')"
+          :label="
+            t[settingsStore.locale]['components']['dialogs']['confirmDialog'][
+              'confirm'
+            ]
+          "
         />
       </q-card-actions>
     </q-card>
@@ -25,11 +33,12 @@
 
 <script setup lang="ts">
 import { useDialogPluginComponent } from 'quasar'
-import { useI18n } from 'vue-i18n'
-
-const { t } = useI18n()
+import { useSettingsStore } from 'src/pages/settings/stores/settingsStore'
+import t from 'src/i18n'
 
 const { dialogRef, onDialogOK, onDialogCancel } = useDialogPluginComponent()
+
+const settingsStore = useSettingsStore()
 
 const props = defineProps({
   promptMessage: {

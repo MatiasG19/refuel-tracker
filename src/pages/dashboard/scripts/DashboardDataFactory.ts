@@ -1,7 +1,7 @@
 import { Vehicle } from 'src/scripts/libraries/refuel/models'
 import { AbstractDashboardData } from './abstract/AbstractDashboardData'
 import { DashboardValueSettings, DashboardValue } from './models'
-import { WritableComputedRef } from 'vue'
+import { LanguageCode } from 'src/scripts/models'
 
 export class DashboardDataFactory {
   public static dashboardDataClasses = new Map<
@@ -11,7 +11,7 @@ export class DashboardDataFactory {
 
   constructor(
     private vehicle: Vehicle,
-    private locale: WritableComputedRef<string, string>
+    private locale: LanguageCode
   ) {}
 
   public static register(
