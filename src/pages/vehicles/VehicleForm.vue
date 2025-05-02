@@ -4,13 +4,13 @@
       <c-input
         :value="vehicle.name"
         @update:modelValue="vehicle.name = $event"
-        :label="t('vehicleForm.vehicleName')"
+        :label="t[settingsStore.locale]['vehicleForm']['vehicleName']"
         :rules="[requiredFieldRule, max50Characters]"
       />
       <c-input
         :value="vehicle.plateNumber"
         @update:modelValue="vehicle.plateNumber = $event"
-        :label="t('vehicleForm.licensePlate')"
+        :label="t[settingsStore.locale]['vehicleForm']['licensePlate']"
         :rules="[requiredFieldRule]"
       />
       <c-select
@@ -18,7 +18,7 @@
         class="q-pb-md"
         v-model="vehicle.fuelUnitId"
         :options="fuelUnits"
-        :label="t('vehicleForm.fuelUnit')"
+        :label="t[settingsStore.locale]['vehicleForm']['fuelUnit']"
         :rules="[nothingSelected]"
       />
       <c-input
@@ -26,7 +26,7 @@
         class="q-pb-md"
         :value="odometer"
         @update:modelValue="odometer = replaceComma($event)"
-        :label="t('vehicleForm.odometer')"
+        :label="t[settingsStore.locale]['vehicleForm']['odometer']"
         :rules="[
           requiredFieldRule,
           numbersOnlyRule,
@@ -37,7 +37,7 @@
         class="q-pb-md"
         :value="vehicle.currencyUnit"
         @update:modelValue="vehicle.currencyUnit = $event"
-        :label="t('vehicleForm.currencyUnit')"
+        :label="t[settingsStore.locale]['vehicleForm']['currencyUnit']"
         :rules="[requiredFieldRule]"
       />
 
@@ -45,7 +45,7 @@
         <q-btn
           color="primary"
           class="form-btn text-default"
-          :label="i18n.global.t('form.cancel')"
+          :label="gt[settingsStore.locale]['form']['cancel']"
           no-caps
           @click="$router.go(-1)"
         />
@@ -53,7 +53,7 @@
         <q-btn
           color="primary"
           class="form-btn text-default"
-          :label="i18n.global.t('form.confirm')"
+          :label="gt[settingsStore.locale]['form']['confirm']"
           type="submit"
           no-caps
         />
@@ -70,13 +70,13 @@ import CSelect from 'src/components/inputs/CSelect.vue'
 import { useVehicleStore } from './stores/vehicleStore'
 import { useMainLayoutStore } from 'src/layouts/stores/mainLayoutStore'
 import { Vehicle } from 'src/scripts/libraries/refuel/models'
-import { useI18n } from 'vue-i18n'
-import { i18n } from 'src/boot/i18n'
-import messages from './i18n'
+import gt from 'src/i18n'
+import t from './i18n'
 import { fuelUnitRepository } from 'src/scripts/databaseRepositories'
 import { SelectOption } from 'src/components/inputs/types'
 import { useFormValidation } from 'src/scripts/libraries/validation'
 import { replaceComma } from 'src/scripts/libraries/utils'
+import { useSettingsStore } from '../settings/stores/settingsStore'
 
 const router = useRouter()
 const {
@@ -88,7 +88,7 @@ const {
 } = useFormValidation()
 const vehicleStore = useVehicleStore()
 const mainLayoutStore = useMainLayoutStore()
-const { t } = useI18n({ useScope: 'local', messages })
+const settingsStore = useSettingsStore()
 
 const vehicle = ref<Vehicle>(new Vehicle())
 const odometer = ref<string>('0')
@@ -140,8 +140,10 @@ onMounted(async () => {
   // Update title
   routePath = router.currentRoute.value.path.toLocaleLowerCase()
   if (routePath.includes('/add'))
-    mainLayoutStore.titleText = t('vehicleForm.titleAddVehicle')
+    mainLayoutStore.titleText =
+      t[settingsStore.locale]['vehicleForm']['titleAddVehicle']
   else if (routePath.includes('/edit'))
-    mainLayoutStore.titleText = t('vehicleForm.titleEditVehicle')
+    mainLayoutStore.titleText =
+      t[settingsStore.locale]['vehicleForm']['titleEditVehicle']
 })
 </script>

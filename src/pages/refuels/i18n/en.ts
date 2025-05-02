@@ -5,8 +5,8 @@ export default {
     optionsDialog: {
       edit: 'Edit',
       delete: 'Delete',
-      deleteRefuel: 'Delete refuel entry?',
-      deletingRefuel: 'Deleting refuel entry'
+      deleteRefuel: 'Delete refuel?',
+      deleteExpense: 'Delete expense?'
     },
     addDialog: {
       expense: 'Expense',
@@ -14,6 +14,8 @@ export default {
     }
   },
   refuelsForm: {
+    titleAddExpense: 'Add expense',
+    titleEditExpense: 'Edit expense',
     titleAddRefuel: 'Add refuel',
     titleEditRefuel: 'Edit refuel',
     vehicle: 'Vehicle',

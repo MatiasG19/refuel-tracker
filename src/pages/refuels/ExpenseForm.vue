@@ -6,14 +6,14 @@
         class="q-pb-md"
         v-model="expense.vehicleId"
         :options="vehicleOptions"
-        :label="t('refuelsForm.vehicle')"
+        :label="t[settingsStore.locale]['refuelsForm']['vehicle']"
         :rules="[nothingSelected]"
       />
       <c-input
         type="tel"
         :value="expense.description"
         @update:modelValue="(evt: string) => (expense.description = evt)"
-        :label="t('refuelsForm.description')"
+        :label="t[settingsStore.locale]['refuelsForm']['description']"
         :rules="[requiredFieldRule, max50Characters]"
       />
       <c-input
@@ -22,7 +22,7 @@
         @update:modelValue="
           (evt: string) => (expense.payedAmount = replaceComma(evt))
         "
-        :label="t('refuelsForm.payedAmount')"
+        :label="t[settingsStore.locale]['refuelsForm']['payedAmount']"
         :rules="[
           requiredFieldRule,
           numbersOnlyRule,
@@ -33,13 +33,13 @@
       <c-date
         :modelValue="expense.date"
         @update:modelValue="(evt: string) => updateDate(evt)"
-        :label="t('refuelsForm.refuelDate')"
+        :label="t[settingsStore.locale]['refuelsForm']['refuelDate']"
         :rules="[requiredFieldRule]"
       />
       <c-time
         :modelValue="expense.time"
         @update:modelValue="(evt: string) => updateTime(evt)"
-        :label="t('refuelsForm.refuelTime')"
+        :label="t[settingsStore.locale]['refuelsForm']['refuelTime']"
         :rules="[requiredFieldRule]"
         format24h
       />
@@ -47,7 +47,7 @@
         <q-btn
           color="primary"
           class="form-btn text-default"
-          :label="i18n.global.t('form.cancel')"
+          :label="gt[settingsStore.locale]['form']['cancel']"
           no-caps
           @click="onCancel"
         />
@@ -55,7 +55,7 @@
         <q-btn
           color="primary"
           class="form-btn text-default"
-          :label="i18n.global.t('form.confirm')"
+          :label="gt[settingsStore.locale]['form']['confirm']"
           type="submit"
           no-caps
         />
@@ -77,11 +77,11 @@ import { useRefuelStore } from './stores/refuelStore'
 import { useMainLayoutStore } from 'src/layouts/stores/mainLayoutStore'
 import { Expense } from 'src/scripts/libraries/refuel/models'
 import { replaceComma } from 'src/scripts/libraries/utils'
-import { useI18n } from 'vue-i18n'
-import { i18n } from 'src/boot/i18n'
-import messages from './i18n'
+import t from './i18n'
+import gt from 'src/i18n'
 import { vehicleRepository } from 'src/scripts/databaseRepositories'
 import { SelectOption } from 'src/components/inputs/types'
+import { useSettingsStore } from '../settings/stores/settingsStore'
 
 const router = useRouter()
 const {
@@ -94,7 +94,7 @@ const {
 let routePath = ''
 const refuelStore = useRefuelStore()
 const mainLayoutStore = useMainLayoutStore()
-const { t } = useI18n({ useScope: 'local', messages })
+const settingsStore = useSettingsStore()
 
 type ExpenseModel = {
   id: number
@@ -186,9 +186,11 @@ onMounted(async () => {
 
   routePath = router.currentRoute.value.path.toLocaleLowerCase()
   if (routePath.includes('/add'))
-    mainLayoutStore.titleText = t('refuelsForm.titleAddExpense')
+    mainLayoutStore.titleText =
+      t[settingsStore.locale]['refuelsForm']['titleAddExpense']
   else if (routePath.includes('/edit'))
-    mainLayoutStore.titleText = t('refuelsForm.titleEditExpense')
+    mainLayoutStore.titleText =
+      t[settingsStore.locale]['refuelsForm']['titleEditExpense']
 
   await refuelStore.readData()
   if (refuelStore.vehicle) expense.vehicleId = refuelStore.vehicle.id

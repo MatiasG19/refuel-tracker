@@ -5,8 +5,8 @@ export default {
     optionsDialog: {
       edit: 'Bearbeiten',
       delete: 'Löschen',
-      deleteRefuel: 'Eintrag löschen?',
-      deletingRefuel: 'Eintrag wird gelöscht'
+      deleteRefuel: 'Betankung löschen?',
+      deleteExpense: 'Ausgabe löschen?'
     },
     addDialog: {
       expense: 'Ausgabe',

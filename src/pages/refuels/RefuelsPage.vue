@@ -12,7 +12,7 @@
       <q-icon name="local_gas_station" size="100px" color="accent" />
       <q-btn
         color="accent"
-        :label="i18n.global.t('placeholders.addRefuel')"
+        :label="gt[settingsStore.locale]['placeholders']['addRefuel']"
         icon-right="add"
         unelevated
         no-caps
@@ -27,7 +27,7 @@
       <q-icon name="local_gas_station" size="100px" color="accent" />
       <q-btn
         color="accent"
-        :label="i18n.global.t('placeholders.addVehicle')"
+        :label="gt[settingsStore.locale]['placeholders']['addVehicle']"
         icon-right="add"
         unelevated
         no-caps
@@ -115,7 +115,7 @@
           @click="
             selectDialog(
               refuelStore.vehicle!.id,
-              t('refuels.selectVehicle'),
+              t[settingsStore.locale]['refuels']['selectVehicle'],
               vehicleOptions,
               (id: number) => {
                 refuelStore.readData(id)
@@ -154,9 +154,8 @@ import { QVirtualScroll } from 'quasar'
 import { useRefuelFilterStore } from './stores/refuelFilterStore'
 import { useRefuelStore } from './stores/refuelStore'
 import { useMainLayoutStore } from 'src/layouts/stores/mainLayoutStore'
-import { useI18n } from 'vue-i18n'
-import { i18n } from 'src/boot/i18n'
-import messages from './i18n'
+import gt from 'src/i18n'
+import t from './i18n'
 import { vehicleRepository } from 'src/scripts/databaseRepositories'
 import { selectDialog } from 'src/components/dialogs/selectDialog'
 import { SelectOption } from 'src/components/inputs/types'
@@ -175,7 +174,6 @@ const settingsStore = useSettingsStore()
 const refuelStore = useRefuelStore()
 const refuelFilterStore = useRefuelFilterStore()
 const mainLayoutStore = useMainLayoutStore()
-const { t } = useI18n({ useScope: 'local', messages })
 
 const loading = ref(true)
 const virtualListRef = ref(null)
@@ -185,17 +183,17 @@ const vehicles = ref<Vehicle[]>([])
 const vehicleOptions = ref<SelectOption[]>([])
 const refuelDialogOptions = ref<OptionInDialog[]>([
   {
-    text: t('refuels.optionsDialog.edit'),
+    text: t[settingsStore.locale]['refuels']['optionsDialog']['edit'],
     icon: 'edit',
     action: (data: unknown) =>
       router.push({ path: `/vehicles/refuels/${data}/edit` })
   },
   {
-    text: t('refuels.optionsDialog.delete'),
+    text: t[settingsStore.locale]['refuels']['optionsDialog']['delete'],
     icon: 'delete',
     action: (data: unknown) =>
       confirmDialog(
-        t('refuels.optionsDialog.deleteRefuel'),
+        t[settingsStore.locale]['refuels']['optionsDialog']['deleteRefuel'],
         (data: unknown) => {
           ;(async () => {
             await refuelStore.deleteRefuel(data as number)
@@ -209,17 +207,17 @@ const refuelDialogOptions = ref<OptionInDialog[]>([
 
 const expenseDialogOptions = ref<OptionInDialog[]>([
   {
-    text: t('refuels.optionsDialog.edit'),
+    text: t[settingsStore.locale]['refuels']['optionsDialog']['edit'],
     icon: 'edit',
     action: (data: unknown) =>
       router.push({ path: `/vehicles/refuels/${data}/editExpense` })
   },
   {
-    text: t('refuels.optionsDialog.delete'),
+    text: t[settingsStore.locale]['refuels']['optionsDialog']['delete'],
     icon: 'delete',
     action: (data: unknown) =>
       confirmDialog(
-        t('refuels.optionsDialog.deleteRefuel'),
+        t[settingsStore.locale]['refuels']['optionsDialog']['deleteExpense'],
         (data: unknown) => {
           ;(async () => {
             await refuelStore.deleteExpense(data as number)
@@ -263,7 +261,7 @@ function getRefuels(from: number, size: number): Array<ExpenseViewModel> {
 }
 
 onBeforeMount(async () => {
-  mainLayoutStore.titleText = t('refuels.title')
+  mainLayoutStore.titleText = t[settingsStore.locale]['refuels']['title']
   await refuelStore.readData(parseInt(route.params.vehicleId as string))
 
   // Define to which index to scroll

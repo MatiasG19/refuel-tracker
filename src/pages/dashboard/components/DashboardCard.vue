@@ -43,7 +43,7 @@
             <dashboard-value
               v-for="data in [...dashboardValuesInternal].splice(0, 3)"
               :key="data.uid"
-              :title="t(data.title)"
+              :title="ct(data.title, settingsStore.locale, t)"
               :value="data.value"
               :subtitle="data.unit"
               class="col q-pr-xl"
@@ -56,7 +56,7 @@
             <dashboard-value
               v-for="data in [...dashboardValuesInternal].splice(3, 3)"
               :key="data.uid"
-              :title="t(data.title)"
+              :title="ct(data.title, settingsStore.locale, t)"
               :value="data.value"
               :subtitle="data.unit"
               class="col q-pr-xl"
@@ -69,14 +69,16 @@
                 dummyDashBoardValue
               ].splice(6, 3)"
               :key="data.uid"
-              :title="t(data.title)"
+              :title="ct(data.title, settingsStore.locale, t)"
               :value="data.value"
               :subtitle="data.unit"
               class="col q-pr-xl"
             />
           </div>
         </template>
-        <div v-else>{{ t('placeholders.noData') }}</div>
+        <div v-else>
+          {{ gt[settingsStore.locale]['placeholders']['noData'] }}
+        </div>
       </q-card-section>
     </q-card>
   </div>
@@ -88,10 +90,12 @@ import {
   type DashboardData,
   type DashboardValue as DashboardValueType
 } from '../scripts/models'
-import { useI18n } from 'vue-i18n'
-import messages from '../i18n'
+import t from '../i18n'
+import gt from 'src/i18n'
 import { onLongPress } from '@vueuse/core'
 import { computed, PropType, useTemplateRef } from 'vue'
+import { useSettingsStore } from 'src/pages/settings/stores/settingsStore'
+import { ct } from 'src/scripts/libraries/translate'
 
 const props = defineProps({
   dashboardData: {
@@ -103,7 +107,7 @@ const props = defineProps({
   }
 })
 
-const { t } = useI18n({ useScope: 'local', messages })
+const settingsStore = useSettingsStore()
 const emit = defineEmits(['onLongPress', 'onOptionsClick'])
 const fuelConsumption = computed<DashboardValueType | undefined>(() =>
   props.dashboardData.dashboardValues.find(v => v.uid == '1')

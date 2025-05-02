@@ -4,7 +4,7 @@
       <div class="col q-px-xs">
         <c-select
           v-model="chartStore.dataSource"
-          :label="t('chart.dataSource')"
+          :label="t[settingsStore.locale]['chart']['dataSource']"
           :options="getDataSourceOptions()"
           @update:modelValue="updateChart()"
           class="q-pb-md"
@@ -14,8 +14,8 @@
       <div class="col q-px-xs">
         <c-select
           v-model="chartStore.groupBy"
-          :label="t('chart.groupBy')"
-          :options="getGrouByOptions()"
+          :label="t[settingsStore.locale]['chart']['groupBy']"
+          :options="getGroupByOptions()"
           @update:modelValue="updateChart()"
           class="q-pb-md"
           dense
@@ -26,7 +26,7 @@
         <c-date
           :modelValue="dateFromString"
           @update:modelValue="_updateDateFrom($event)"
-          :label="t('chart.from')"
+          :label="t[settingsStore.locale]['chart']['from']"
           dense
         />
       </div>
@@ -34,7 +34,7 @@
         <c-date
           :modelValue="dateUntilString"
           @update:modelValue="_updateDateUntil($event)"
-          :label="t('chart.until')"
+          :label="t[settingsStore.locale]['chart']['until']"
           dense
         />
       </div>
@@ -54,8 +54,8 @@
 <script setup lang="ts">
 import { computed, onMounted, onUnmounted, ref } from 'vue'
 import { useChartStore } from './stores/chartStore'
-import { useI18n } from 'vue-i18n'
-import messages from './i18n'
+import { useSettingsStore } from 'src/pages/settings/stores/settingsStore'
+import t from './i18n'
 import { Bar } from 'vue-chartjs'
 import {
   Chart as ChartJS,
@@ -72,7 +72,7 @@ import {
   updateDateUntil
 } from 'src/scripts/libraries/utils/date'
 import { ScreenOrientation } from '@capacitor/screen-orientation'
-import { getGrouByOptions, getDataSourceOptions } from './scripts/staticData'
+import { getGroupByOptions, getDataSourceOptions } from './scripts/staticData'
 
 ChartJS.register(Title, BarElement, CategoryScale, LinearScale)
 
@@ -85,7 +85,7 @@ const props = defineProps({
 
 const { getPaletteColor } = colors
 const chartStore = useChartStore()
-const { t } = useI18n({ useScope: 'local', messages })
+const settingsStore = useSettingsStore()
 const updated = ref(true)
 const chartData = ref({
   labels: chartStore.getChartData().labels,

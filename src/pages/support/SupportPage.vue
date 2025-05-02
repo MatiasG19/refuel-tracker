@@ -1,10 +1,12 @@
 <template>
   <q-page class="q-pa-md">
     <h5 class="q-mt-md text-center">
-      <span class="text-negative">{{ t('greetingPart1') }}</span>
-      {{ t('greetingPart2') }}
+      <span class="text-negative">{{
+        t[settingsStore.locale]['greetingPart1']
+      }}</span>
+      {{ t[settingsStore.locale]['greetingPart2'] }}
       <span class="text-positive">{{ packageJson.productName }}</span
-      >{{ t('greetingPart3') }}
+      >{{ t[settingsStore.locale]['greetingPart3'] }}
       <q-icon name="rocket_launch" color="accent"></q-icon>
     </h5>
 
@@ -28,7 +30,7 @@
         <div class="q-mt-md text-center">
           <div class="column items-center">
             <div class="q-mb-md text-center space-station">
-              {{ t('slide4') }}
+              {{ t[settingsStore.locale]['slide4'] }}
             </div>
             <q-rating
               v-model="ratingModel"
@@ -44,7 +46,7 @@
       <q-carousel-slide name="code" class="column no-wrap flex-center">
         <div class="q-mt-md text-center">
           <div class="q-mb-md text-center space-station">
-            {{ packageJson.productName }}{{ t('slide1') }}
+            {{ packageJson.productName }}{{ t[settingsStore.locale]['slide1'] }}
           </div>
           <q-btn
             color="accent"
@@ -60,7 +62,7 @@
         <div class="q-mt-md text-center">
           <div class="column items-center">
             <div class="q-mb-md text-center space-station">
-              {{ t('slide2') }}
+              {{ t[settingsStore.locale]['slide2'] }}
             </div>
             <q-btn
               color="accent"
@@ -77,7 +79,7 @@
         <div class="q-mt-md text-center">
           <div class="column items-center">
             <div class="q-mb-md text-center space-station">
-              {{ t('slide3') }}
+              {{ t[settingsStore.locale]['slide3'] }}
             </div>
             <q-btn
               color="accent"
@@ -93,14 +95,14 @@
     </q-carousel>
 
     <div class="q-mt-md full-width text-center">
-      {{ packageJson.productName }} {{ t('version') }}
+      {{ packageJson.productName }} {{ t[settingsStore.locale]['version'] }}
       {{ packageJson.version }}
     </div>
     <div class="q-mt-md full-width text-center">
       <q-btn
         size="sm"
         color="accent"
-        :label="t('btnLicense')"
+        :label="t[settingsStore.locale]['btnLicense']"
         @click="openURL(licenseLink)"
         no-caps
         outline
@@ -113,12 +115,12 @@
 import { onMounted, ref } from 'vue'
 import packageJson from '../../../package.json'
 import { openURL } from 'quasar'
-import { useI18n } from 'vue-i18n'
-import messages from './i18n'
+import t from './i18n'
 import { useMainLayoutStore } from 'src/layouts/stores/mainLayoutStore'
+import { useSettingsStore } from '../settings/stores/settingsStore'
 
 const mainLayoutStore = useMainLayoutStore()
-const { t } = useI18n({ useScope: 'local', messages })
+const settingsStore = useSettingsStore()
 const ratingModel = ref(3)
 const slide = ref('rate')
 const repositoryLink = 'https://github.com/MatiasG19/refuel-tracker'
@@ -129,6 +131,6 @@ const playStoreLink =
   'https://play.google.com/store/apps/details?id=capacitor.quasar.refueltracker'
 
 onMounted(() => {
-  mainLayoutStore.titleText = t('title')
+  mainLayoutStore.titleText = t[settingsStore.locale]['title']
 })
 </script>

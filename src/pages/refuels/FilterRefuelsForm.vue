@@ -6,7 +6,7 @@
           class="col"
           :modelValue="filter.dateFrom"
           @update:modelValue="updateDateFromInStore($event)"
-          :label="t('filterRefuelsForm.filterFrom')"
+          :label="t[settingsStore.locale]['filterRefuelsForm']['filterFrom']"
           :rules="[requiredFieldRule]"
           :disable="!refuelFilterStore.filter.active"
         />
@@ -14,7 +14,7 @@
           class="col q-pl-md"
           :modelValue="filter.dateUntil"
           @update:modelValue="updateDateUntilInStore($event)"
-          :label="t('filterRefuelsForm.filterUntil')"
+          :label="t[settingsStore.locale]['filterRefuelsForm']['filterUntil']"
           :rules="[requiredFieldRule]"
           :disable="!refuelFilterStore.filter.active"
         />
@@ -36,7 +36,7 @@
         <q-btn
           color="primary"
           class="form-btn text-default"
-          :label="i18n.global.t('form.cancel')"
+          :label="gt[settingsStore.locale]['form']['cancel']"
           no-caps
           @click="router.go(-1)"
         />
@@ -44,7 +44,7 @@
         <q-btn
           color="primary"
           class="form-btn text-default"
-          :label="i18n.global.t('form.filter')"
+          :label="gt[settingsStore.locale]['form']['filter']"
           type="submit"
           no-caps
         />
@@ -63,20 +63,20 @@ import { useMainLayoutStore } from 'src/layouts/stores/mainLayoutStore'
 import CDate from 'src/components/inputs/CDate.vue'
 import CMultiToggle from 'src/components/inputs/CMultiToggle.vue'
 import CCheckbox from 'src/components/inputs/CCheckbox.vue'
-import { useI18n } from 'vue-i18n'
-import { i18n } from 'src/boot/i18n'
-import messages from './i18n'
+import t from './i18n'
+import gt from 'src/i18n'
 import {
   updateDateFrom,
   updateDateUntil
 } from 'src/scripts/libraries/utils/date'
 import { SelectOption } from 'src/components/inputs/types'
+import { useSettingsStore } from '../settings/stores/settingsStore'
 
 const router = useRouter()
 const { requiredFieldRule } = useFormValidation()
 const refuelFilterStore = useRefuelFilterStore()
 const mainLayoutStore = useMainLayoutStore()
-const { t } = useI18n({ useScope: 'local', messages })
+const settingsStore = useSettingsStore()
 
 type LocalFilter = {
   dateFrom: string
@@ -116,6 +116,7 @@ onBeforeMount(async () => {
 })
 
 onMounted(() => {
-  mainLayoutStore.titleText = t('filterRefuelsForm.title')
+  mainLayoutStore.titleText =
+    t[settingsStore.locale]['filterRefuelsForm']['title']
 })
 </script>

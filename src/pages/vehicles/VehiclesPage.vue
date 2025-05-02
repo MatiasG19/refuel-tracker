@@ -7,7 +7,7 @@
       <q-icon name="drive_eta" size="100px" color="accent" />
       <q-btn
         color="accent"
-        :label="i18n.global.t('placeholders.addVehicle')"
+        :label="gt[settingsStore.locale]['placeholders']['addVehicle']"
         icon-right="add"
         unelevated
         no-caps
@@ -38,19 +38,20 @@ import { useRouter } from 'vue-router'
 import { onMounted, ref } from 'vue'
 import { useVehicleStore } from './stores/vehicleStore'
 import { useQuasar } from 'quasar'
-import { useI18n } from 'vue-i18n'
-import { i18n } from 'src/boot/i18n'
-import messages from './i18n'
+
+import gt from 'src/i18n'
+import t from './i18n'
 import { useMainLayoutStore } from 'src/layouts/stores/mainLayoutStore'
+import { useSettingsStore } from '../settings/stores/settingsStore'
 
 const router = useRouter()
 const vehicleStore = useVehicleStore()
 const mainLayoutStore = useMainLayoutStore()
 const $q = useQuasar()
-const { t } = useI18n({ useScope: 'local', messages })
+const settingsStore = useSettingsStore()
 const optionsInDialog = ref<OptionInDialog[]>([
   {
-    text: t('vehicles.optionsDialog.showRefuels'),
+    text: t[settingsStore.locale]['vehicles']['optionsDialog']['showRefuels'],
     icon: 'local_gas_station',
     action: (data: unknown) => {
       ;(async () => {
@@ -61,24 +62,27 @@ const optionsInDialog = ref<OptionInDialog[]>([
     }
   },
   {
-    text: t('vehicles.optionsDialog.edit'),
+    text: t[settingsStore.locale]['vehicles']['optionsDialog']['edit'],
     icon: 'edit',
     action: (data: unknown) => {
       router.push({ path: `/vehicles/${data}/edit` })
     }
   },
   {
-    text: t('vehicles.optionsDialog.delete'),
+    text: t[settingsStore.locale]['vehicles']['optionsDialog']['delete'],
     icon: 'delete',
     action: (data: unknown) =>
       confirmDialog(
-        t('vehicles.optionsDialog.deleteVehicle'),
+        t[settingsStore.locale]['vehicles']['optionsDialog']['deleteVehicle'],
         (data: unknown) => {
           $q.loading.show({
             delay: 400,
             spinnerColor: 'accent',
             messageColor: 'accent',
-            message: t('vehicles.optionsDialog.deletingVehicle')
+            message:
+              t[settingsStore.locale]['vehicles']['optionsDialog'][
+                'deletingVehicle'
+              ]
           })
           ;(async () => await vehicleStore.deleteVehicle(data as number))()
           $q.loading.hide()
@@ -89,7 +93,7 @@ const optionsInDialog = ref<OptionInDialog[]>([
 ])
 
 onMounted(async () => {
-  mainLayoutStore.titleText = t('vehicles.title')
+  mainLayoutStore.titleText = t[settingsStore.locale]['vehicles']['title']
   await vehicleStore.readVehicles()
 })
 </script>
