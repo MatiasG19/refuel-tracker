@@ -4,7 +4,8 @@ import { useSettingsStore } from 'src/pages/settings/stores/settingsStore'
 export function useFormValidation() {
   const settingsStore = useSettingsStore()
 
-  const requiredFieldRule = (v: string) => !!v || t('validation.requiredField')
+  const requiredFieldRule = (v: string) =>
+    !!v || t[settingsStore.locale]['validation']['requiredField']
 
   const numbersOnlyRule = (v: string) =>
     0 === +v || +v || t[settingsStore.locale]['validation']['numbersOnly']
