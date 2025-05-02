@@ -43,7 +43,7 @@
             <dashboard-value
               v-for="data in [...dashboardValuesInternal].splice(0, 3)"
               :key="data.uid"
-              :title="ct(data.title, settingsStore.locale, t)"
+              :title="ct(data.title, settingsStore.locale, t) ?? ''"
               :value="data.value"
               :subtitle="data.unit"
               class="col q-pr-xl"
@@ -56,7 +56,7 @@
             <dashboard-value
               v-for="data in [...dashboardValuesInternal].splice(3, 3)"
               :key="data.uid"
-              :title="ct(data.title, settingsStore.locale, t)"
+              :title="ct(data.title, settingsStore.locale, t) ?? ''"
               :value="data.value"
               :subtitle="data.unit"
               class="col q-pr-xl"
@@ -69,7 +69,7 @@
                 dummyDashBoardValue
               ].splice(6, 3)"
               :key="data.uid"
-              :title="ct(data.title, settingsStore.locale, t)"
+              :title="ct(data.title, settingsStore.locale, t) ?? ''"
               :value="data.value"
               :subtitle="data.unit"
               class="col q-pr-xl"
