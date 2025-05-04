@@ -63,7 +63,7 @@
 
 ## Getting started
 
-### Prerequisits
+### Prerequisites
 
 - NodeJS
 - Android Studio

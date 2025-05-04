@@ -126,52 +126,52 @@ const { t: lt } = useI18n({ useScope: 'local', messages })
 const footerVisible = ref(true)
 const leftDrawerOpen = ref(false)
 
-const linkList = ref([
+const linkList = computed(() => [
   {
-    title: computed(() => t('drawer.dashboardPage')),
+    title: t('drawer.dashboardPage'),
     caption: '',
     icon: 'bar_chart',
     link: '/'
   },
   {
-    title: computed(() => t('drawer.vehiclesPage')),
+    title: t('drawer.vehiclesPage'),
     caption: '',
     icon: 'drive_eta',
     link: '/vehicles'
   },
   {
-    title: computed(() => t('drawer.refuelsPage')),
+    title: t('drawer.refuelsPage'),
     caption: '',
     icon: 'local_gas_station',
     link: '/vehicles/refuels'
   },
   {
-    title: computed(() => t('drawer.settingsPage')),
+    title: t('drawer.settingsPage'),
     caption: '',
     icon: 'settings',
     link: '/settings'
   },
   {
-    title: computed(() => t('drawer.supportPage')),
+    title: t('drawer.supportPage'),
     caption: '',
     icon: 'favorite_outline',
     link: '/support'
   }
 ])
 
-const addButtonDialogOptions = ref<OptionInDialog[]>([
+const addButtonDialogOptions = computed<OptionInDialog[]>(() => [
   {
-    text: computed(() => lt('addDialog.vehicle')).value,
+    text: lt('addDialog.vehicle'),
     icon: 'drive_eta',
     action: () => router.push({ path: `/vehicles/add` })
   },
   {
-    text: computed(() => lt('addDialog.expense')).value,
+    text: lt('addDialog.expense'),
     icon: 'attach_money',
     action: () => router.push({ path: `/vehicles/refuels/addExpense` })
   },
   {
-    text: computed(() => lt('addDialog.refuel')).value,
+    text: lt('addDialog.refuel'),
     icon: 'local_gas_station',
     action: () => router.push({ path: `/vehicles/refuels/add` })
   }

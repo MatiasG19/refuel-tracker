@@ -19,8 +19,6 @@
 
 <script setup lang="ts">
 import { useSettingsStore } from 'src/pages/settings/stores/settingsStore'
-import { getColorThemes } from 'src/scripts/staticData/colorThemes'
-import { computed } from 'vue'
 import { SelectOption } from './types'
 
 const props = defineProps<{
@@ -34,13 +32,9 @@ const emits = defineEmits<{
 
 const settingsStore = useSettingsStore()
 
-const dark = computed(
-  () => getColorThemes()[settingsStore.selectedColorThemeId]?.dark ?? false
-)
-
 function getButtonColor(value: number, text?: boolean) {
   let color = props.modelValue.value == value ? 'primary' : 'secondary'
-  if (dark.value) {
+  if (settingsStore.dark) {
     if (color == 'primary') color = 'secondary'
     else if (color == 'secondary') color = 'primary'
   }

@@ -23,6 +23,9 @@ export const useSettingsStore = defineStore('settingsStore', () => {
     )
   })
   const { getPaletteColor } = colors
+  const dark = computed(
+    () => getColorThemes()[selectedColorThemeId.value]?.dark ?? false
+  )
 
   async function initSettings() {
     if (initialized.value) return
@@ -92,6 +95,7 @@ export const useSettingsStore = defineStore('settingsStore', () => {
     areaHeight,
     initialized,
     locale,
+    dark,
     initSettings,
     changeDistanceUnit,
     toggleAutoBackup,

@@ -7,7 +7,7 @@
     :label="label"
     :rules="rules"
     :type="type"
-    :dark="dark"
+    :dark="settingsStore.dark"
     popup-content-class="bg-space-station"
     label-color="secondary"
   >
@@ -17,13 +17,8 @@
 
 <script setup lang="ts">
 import { useSettingsStore } from 'src/pages/settings/stores/settingsStore'
-import { getColorThemes } from 'src/scripts/staticData/colorThemes'
-import { computed } from 'vue'
 
 const settingsStore = useSettingsStore()
-const dark = computed(
-  () => getColorThemes()[settingsStore.selectedColorThemeId]?.dark ?? false
-)
 
 defineProps({
   type: {
