@@ -22,7 +22,7 @@ export function getFuelUnits(): FuelUnit[] {
     },
     {
       id: 3,
-      distanceUnit: 'Miles',
+      distanceUnit: t('distanceUnits.milesShort'),
       fuelUnit: t('fuelUnits.gallon'),
       fuelConsumptionUnit: t('fuelConsumptionsUnits.mpgImperial'),
       distanceConversion: 1.0,
