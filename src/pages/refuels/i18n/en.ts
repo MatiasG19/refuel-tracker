@@ -14,6 +14,8 @@ export default {
     }
   },
   refuelsForm: {
+    titleAddExpense: 'Add expense',
+    titleEditExpense: 'Edit expense',
     titleAddRefuel: 'Add refuel',
     titleEditRefuel: 'Edit refuel',
     vehicle: 'Vehicle',

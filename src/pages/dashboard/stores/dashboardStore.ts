@@ -52,10 +52,11 @@ export const useDashboardStore = defineStore('dashboardStore', () => {
         const dashboard = dashboardData.value.find(
           d => d.vehicleId === vehicle.id
         )
-        dashboard!.title = vehicle.name
-        dashboard!.subtitle = vehicle.plateNumber
+        if (!dashboard) return
+        dashboard.title = vehicle.name
+        dashboard.subtitle = vehicle.plateNumber
         if (vehicle.refuels && vehicle.refuels.length) {
-          dashboard!.dashboardValues = new DashboardDataFactory(
+          dashboard.dashboardValues = new DashboardDataFactory(
             vehicle,
             locale
           ).getAll(dashboardValueSettings.value)
