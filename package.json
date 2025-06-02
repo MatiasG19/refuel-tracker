@@ -36,7 +36,7 @@
     "vue3-smooth-dnd": "^0.0.6"
   },
   "devDependencies": {
-    "@eslint/js": "9.27",
+    "@eslint/js": "9.28",
     "@intlify/unplugin-vue-i18n": "^6.0.8",
     "@quasar/app-vite": "^2.2.0",
     "@types/node": "^22.15.21",
