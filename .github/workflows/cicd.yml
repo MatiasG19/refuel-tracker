@@ -41,7 +41,7 @@ jobs:
         run: npm run lint
 
   Build-Test-Release:
-    runs-on: ubuntu-22.04
+    runs-on: ubuntu-24.04
     steps:
       - name: Set tag name
         run: if ${{ github.event_name == 'release' }}; then
