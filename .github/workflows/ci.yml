@@ -78,22 +78,18 @@ jobs:
         run: npm run test
 
       - name: Set version in package.json
-        if: ${{ github.event_name == 'release' || github.event_name == 'workflow_dispatch' }}
         run: node ./modifyPackageJson.mjs $TAG
 
       - name: Set version in build.gradle
-        if: ${{ github.event_name == 'release' || github.event_name == 'workflow_dispatch' }}
         run: node ./modifyBuildGradle.mjs $TAG
 
       - name: Build apk and aab
         run: npm run appbuild
 
       - name: Move AAB to APK release folder
-        if: ${{ github.event_name == 'release' || github.event_name == 'workflow_dispatch' }}
         run: mv ${{ env.AAB_RELEASE_PATH }}/*.aab ${{ env.APK_RELEASE_PATH }}
 
       - name: Sign apk and aab
-        if: ${{ github.event_name == 'release' || github.event_name == 'workflow_dispatch' }}
         uses: MatiasG19/android-sign@2.1.0
         with:
           releaseDirectory: ${{ env.APK_RELEASE_PATH }}
@@ -106,7 +102,6 @@ jobs:
           BUILD_TOOLS_VERSION: '36.0.0'
 
       - name: Rename apk and aab
-        if: ${{ github.event_name == 'release' || github.event_name == 'workflow_dispatch' }}
         run: cd ${{ env.RELEASE_PATH_SIGNED }} &&
           mv *.apk $(echo ${{ env.REPO_NAME }}-${{ env.TAG }}.apk;) &&
           mv *.aab $(echo ${{ env.REPO_NAME }}-${{ env.TAG }}.aab;)
