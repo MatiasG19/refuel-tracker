@@ -61,6 +61,13 @@ jobs:
           java-version: '21'
           cache: 'gradle'
 
+      - name: Setup build tool version variable
+        shell: bash
+        run: |
+          BUILD_TOOL_VERSION=$(ls /usr/local/lib/android/sdk/build-tools/ | tail -n 1)
+          echo "BUILD_TOOL_VERSION=$BUILD_TOOL_VERSION" >> $GITHUB_ENV
+          echo Last build tool version is: $BUILD_TOOL_VERSION
+
       - name: Setup Node
         uses: actions/setup-node@v4
         with:
@@ -101,7 +108,7 @@ jobs:
           keyStorePassword: ${{ secrets.KEY_STORE_PASSWORD }}
           keyPassword: ${{ secrets.KEY_PASSWORD }}
         env:
-          BUILD_TOOLS_VERSION: '33.0.2'
+          BUILD_TOOLS_VERSION: ${{ env.BUILD_TOOL_VERSION }}
 
       - name: Rename apk and aab
         if: ${{ github.event_name == 'release' || github.event_name == 'workflow_dispatch' }}
