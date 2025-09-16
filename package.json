@@ -27,6 +27,7 @@
     "@vueuse/core": "^13.9.0",
     "dexie": "^3.2.7",
     "dexie-export-import": "^4.1.4",
+    "jeep-sqlite": "^2.8.0",
     "pinia": "^3.0.3",
     "quasar": "^2.18.2",
     "typeorm": "^0.3.26",
