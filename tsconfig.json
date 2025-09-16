@@ -1,3 +1,7 @@
 {
-  "extends": "./.quasar/tsconfig.json"
+  "extends": "./.quasar/tsconfig.json",
+  "compilerOptions": {
+    "emitDecoratorMetadata": true, // enables experimental support for emitting type metadata for decorators
+    "experimentalDecorators": true, // enables experimental support for decorators
+  }
 }
