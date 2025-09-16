@@ -140,6 +140,12 @@ export default defineConfig(ctx => {
             import.meta.url
           )
         ),
+        '@capacitor-community/sqlite': fileURLToPath(
+          new URL(
+            './src-capacitor/node_modules/@capacitor-community/sqlite',
+            import.meta.url
+          )
+        ),
         '@capawesome/capacitor-android-edge-to-edge-support': fileURLToPath(
           new URL(
             './src-capacitor/node_modules/@capawesome/capacitor-android-edge-to-edge-support',

@@ -23,6 +23,7 @@
 		"cleartext": true
 	},
 	"packageClassList": [
+		"CapacitorSQLitePlugin",
 		"AppPlugin",
 		"DevicePlugin",
 		"FilesystemPlugin",
