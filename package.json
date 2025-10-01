@@ -28,10 +28,10 @@
     "dexie": "^3.2.7",
     "dexie-export-import": "^4.1.4",
     "pinia": "^3.0.3",
-    "quasar": "^2.18.2",
-    "vue": "^3.5.20",
+    "quasar": "^2.18.5",
+    "vue": "^3.5.22",
     "vue-chartjs": "^5.3.2",
-    "vue-i18n": "^11.1.11",
+    "vue-i18n": "^11.1.12",
     "vue-router": "^4.5.1",
     "vue3-smooth-dnd": "^0.0.6"
   },
@@ -47,12 +47,12 @@
     "eslint-plugin-vue": "^10.4.0",
     "globals": "^16.3.0",
     "prettier": "^3.6.2",
-    "typescript": "^5.9.2",
+    "typescript": "^5.9.3",
     "vite-plugin-checker": "^0.11.0",
     "vitest": "^3.2.4"
   },
   "optionalDependencies": {
-    "@esbuild/linux-x64": "^0.25.9",
+    "@esbuild/linux-x64": "^0.25.10",
     "@rollup/rollup-linux-x64-gnu": "4.52.3",
     "sass-embedded-linux-x64": "^1.93.2"
   },
