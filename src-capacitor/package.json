@@ -10,7 +10,7 @@
     "@capacitor/cli": "^7.4.4",
     "@capacitor/core": "^7.4.4",
     "@capacitor/device": "^7.0.2",
-    "@capacitor/filesystem": "^7.1.4",
+    "@capacitor/filesystem": "^7.1.5",
     "@capacitor/keyboard": "^7.0.3",
     "@capacitor/screen-orientation": "^7.0.2",
     "@capacitor/splash-screen": "^7.0.3",
