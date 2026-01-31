@@ -1,9 +1,17 @@
 import { CapacitorSQLite, SQLiteConnection } from '@capacitor-community/sqlite'
 import { DataSource } from 'typeorm'
 
+// const refuelTrackerDataSource = new DataSource({
+//   type: 'capacitor',
+//   driver: new SQLiteConnection(CapacitorSQLite),
+//   database: 'refuel_tracker_db',
+//   synchronize: false,
+//   logging: ['error', 'query', 'schema']
+// })
+
 const refuelTrackerDataSource = new DataSource({
-  type: 'capacitor',
-  driver: new SQLiteConnection(CapacitorSQLite),
+  type: 'sqlite',
+  driver: new SQLiteConnection(),
   database: 'refuel_tracker_db',
   synchronize: false,
   logging: ['error', 'query', 'schema']

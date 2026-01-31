@@ -90,6 +90,8 @@ import { SplashScreen } from '@capacitor/splash-screen'
 import { DashboardData } from './scripts/models'
 import { ThemeSetter } from 'src/plugins/capacitor-theme-setter'
 import { EdgeToEdge } from '@capawesome/capacitor-android-edge-to-edge-support'
+import refuelTrackerDataSource from 'src/boot/database'
+import { Dashboard } from 'src/database/entities/dashboard'
 
 const $q = useQuasar()
 $q.dark.set('auto')
@@ -175,6 +177,10 @@ onMounted(async () => {
       })
     }
   }, 300)
+
+  const repo = refuelTrackerDataSource.getRepository(Dashboard)
+  const one = await repo.findOne({ where: { id: 1 } })
+  console.log(one)
 })
 
 onUnmounted(() => {
