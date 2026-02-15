@@ -10,7 +10,7 @@
         :rules="[nothingSelected]"
       />
       <c-input
-        type="tel"
+        type="number"
         :value="refuel.payedAmount"
         @update:modelValue="
           (evt: string) => (refuel.payedAmount = replaceComma(evt))
@@ -24,7 +24,7 @@
         ]"
       />
       <c-input
-        type="tel"
+        type="number"
         :value="refuel.distanceDriven"
         @update:modelValue="
           (evt: string) => (refuel.distanceDriven = replaceComma(evt))
@@ -38,7 +38,7 @@
         ]"
       />
       <c-input
-        type="tel"
+        type="number"
         :value="refuel.refueledAmount"
         @update:modelValue="
           (evt: string) => (refuel.refueledAmount = replaceComma(evt))

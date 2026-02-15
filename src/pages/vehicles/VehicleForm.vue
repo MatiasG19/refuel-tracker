@@ -22,7 +22,7 @@
         :rules="[nothingSelected]"
       />
       <c-input
-        type="tel"
+        type="number"
         class="q-pb-md"
         :value="odometer"
         @update:modelValue="odometer = replaceComma($event)"
