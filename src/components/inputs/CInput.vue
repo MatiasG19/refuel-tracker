@@ -40,3 +40,17 @@ defineProps({
 
 defineEmits(['value'])
 </script>
+
+<style>
+/* Remove spinners in webkit browsers (Chrome, Safari) */
+input[type='number']::-webkit-inner-spin-button,
+input[type='number']::-webkit-outer-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+/* Remove spinners in Firefox */
+input[type='number'] {
+  -moz-appearance: textfield;
+}
+</style>
