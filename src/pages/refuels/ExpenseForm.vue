@@ -10,14 +10,14 @@
         :rules="[nothingSelected]"
       />
       <c-input
-        type="tel"
+        type="text"
         :value="expense.description"
         @update:modelValue="(evt: string) => (expense.description = evt)"
         :label="t('refuelsForm.description')"
         :rules="[requiredFieldRule, max50Characters]"
       />
       <c-input
-        type="tel"
+        type="number"
         :value="expense.payedAmount"
         @update:modelValue="
           (evt: string) => (expense.payedAmount = replaceComma(evt))
