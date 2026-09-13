@@ -113,6 +113,7 @@ const optionsInDialog: OptionInDialog[] = [
   {
     text: t('dashboardData.optionsInDialog.move'),
     icon: 'swap_vert',
+    // eslint-disable-next-line @typescript-eslint/no-misused-promises
     action: () => editOrderFun()
   },
   {
@@ -125,7 +126,7 @@ const optionsInDialog: OptionInDialog[] = [
   }
 ]
 
-function editOrderFun(value = true) {
+async function editOrderFun(value = true) {
   editOrder.value = value
   mainLayoutStore.headerButton.visible = value
   if (value)
@@ -136,7 +137,7 @@ function editOrderFun(value = true) {
       false,
       'accent'
     )
-  else dashboardStore.readDashboardData()
+  else await dashboardStore.readDashboardData()
 }
 
 function saveOrder() {
@@ -155,16 +156,18 @@ onMounted(async () => {
 
   mainLayoutStore.titleText = t('title')
   await dashboardStore.readDashboardData()
-  App.removeAllListeners()
-  await App.addListener('backButton', () => {
+  await App.removeAllListeners()
+  // eslint-disable-next-line @typescript-eslint/no-misused-promises
+  await App.addListener('backButton', async () => {
     if (showChart.value) showChart.value = false
-    else if (!editOrder.value) App.exitApp()
-    else editOrderFun(false)
+    else if (!editOrder.value) await App.exitApp()
+    else await editOrderFun(false)
   })
   clearTimeout(timeOut)
   loading.value = false
-  SplashScreen.hide()
+  await SplashScreen.hide()
   // Workaround for native theme not working on first load
+  // eslint-disable-next-line @typescript-eslint/no-misused-promises
   setTimeout(async () => {
     if (Platform.is.android || Platform.is.mobile) {
       await EdgeToEdge.setBackgroundColor({
@@ -177,8 +180,8 @@ onMounted(async () => {
   }, 300)
 })
 
-onUnmounted(() => {
+onUnmounted(async () => {
   mainLayoutStore.hideButton(mainLayoutStore.headerButton)
-  App.removeAllListeners()
+  await App.removeAllListeners()
 })
 </script>

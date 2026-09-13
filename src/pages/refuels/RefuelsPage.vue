@@ -271,7 +271,7 @@ onBeforeMount(async () => {
     const id = parseInt(props.refuelId)
     if (id)
       scrollToIndex.value = refuelStore
-        .vehicle!.allExpenses!.sort(
+        .vehicle!.allExpenses.sort(
           (a, b) => b.value.date.getTime() - a.value.date.getTime()
         )
         .findIndex(r => r.type === route.query.type && r.value.id == id)

@@ -102,8 +102,8 @@ function updateDateUntilInStore(event: string) {
 
 const filterType = ref<SelectOption>(refuelFilterStore.filterTypeOptions[0]!)
 
-function onSubmit() {
-  refuelFilterStore.setFilter()
+async function onSubmit() {
+  await refuelFilterStore.setFilter()
   void router.go(-1)
 }
 
