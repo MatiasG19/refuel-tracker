@@ -10,6 +10,8 @@ export const Group = {
   Year: 2
 } as const
 
+export type Group = (typeof Group)[keyof typeof Group]
+
 export const DataSource = {
   FuelConsumption: 0,
   DistanceDriven: 1,
@@ -21,6 +23,8 @@ export const DataSource = {
   MoneySpentOnExpenses: 7,
   ExpensesMade: 8
 } as const
+
+export type DataSource = (typeof DataSource)[keyof typeof DataSource]
 
 export class AbstractChartData implements IChartDataFun {
   constructor() {}
