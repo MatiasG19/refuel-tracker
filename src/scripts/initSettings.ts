@@ -12,7 +12,7 @@ export async function initSettings() {
   await setI18nLanguage(settingsStore.selectedLanguageId)
 
   const refuelFilterStore = useRefuelFilterStore()
-  refuelFilterStore.readFilter()
+  await refuelFilterStore.readFilter()
 
   registerDashboardData()
   registerFuelConsumption()

@@ -52,7 +52,7 @@ async function deleteVehicle(id: number) {
     async () => {
       const refuels = await db.refuels.where('vehicleId').equals(id).toArray()
       refuels.forEach(r => {
-        ;(async () => {
+        void (async () => {
           await db.refuels.delete(r.id)
         })()
       })

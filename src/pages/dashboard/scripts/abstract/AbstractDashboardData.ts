@@ -18,12 +18,12 @@ export class AbstractDashboardData extends DashboardValue {
   }
 
   // eslint-disable-next-line
-  protected calculateValue(vehicle: Vehicle): string {
+  protected calculateValue(_: Vehicle): string {
     return ''
   }
 
   // eslint-disable-next-line
-  protected getUnit(vehicle: Vehicle): string {
+  protected getUnit(_: Vehicle): string {
     return ''
   }
 }

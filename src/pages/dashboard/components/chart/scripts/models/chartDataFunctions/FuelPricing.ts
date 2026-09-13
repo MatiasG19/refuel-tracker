@@ -5,7 +5,7 @@ import { vehicleFuelPricing } from 'src/scripts/libraries/refuel/functions/vehic
 
 export class FuelPricing extends AbstractChartData {
   override getChartData(
-    groupBy: Group,
+    groupBy: (typeof Group)[keyof typeof Group],
     vehicle: Vehicle,
     refuels: Refuel[]
   ): IChartData {
@@ -14,7 +14,7 @@ export class FuelPricing extends AbstractChartData {
     for (const key in groupedData) {
       chartData.labels.push(key)
       const v = { ...vehicle }
-      v.refuels = groupedData[key]!
+      v.refuels = groupedData[key]! as Refuel[]
       chartData.data.push(vehicleFuelPricing(v).toFixedIfNotZero(2))
     }
 

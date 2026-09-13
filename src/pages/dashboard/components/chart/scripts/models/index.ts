@@ -4,30 +4,30 @@ import type {
   Vehicle
 } from 'src/scripts/libraries/refuel/models'
 
-export enum Group {
-  NoGrouping,
-  Month,
-  Year
-}
+export const Group = {
+  NoGrouping: 0,
+  Month: 1,
+  Year: 2
+} as const
 
-export enum DataSource {
-  FuelConsumption,
-  DistanceDriven,
-  FuelBurnt,
-  RefuelsMade,
-  FuelPricing,
-  TotalMoneySpent,
-  MoneySpentOnRefuels,
-  MoneySpentOnExpenses,
-  ExpensesMade
-}
+export const DataSource = {
+  FuelConsumption: 0,
+  DistanceDriven: 1,
+  FuelBurnt: 2,
+  RefuelsMade: 3,
+  FuelPricing: 4,
+  TotalMoneySpent: 5,
+  MoneySpentOnRefuels: 6,
+  MoneySpentOnExpenses: 7,
+  ExpensesMade: 8
+} as const
 
 export class AbstractChartData implements IChartDataFun {
   constructor() {}
 
   getChartData(
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
-    groupBy: Group,
+    groupBy: (typeof Group)[keyof typeof Group],
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
     vehicle: Vehicle,
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
@@ -46,7 +46,7 @@ export interface IChartData {
 
 export interface IChartDataFun {
   getChartData(
-    groupBy: Group,
+    groupBy: (typeof Group)[keyof typeof Group],
     vehicle: Vehicle,
     refuels: Refuel[],
     expenses: Expense[]

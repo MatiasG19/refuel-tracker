@@ -187,9 +187,9 @@ async function onSubmit() {
     })
 }
 
-function onCancel() {
+async function onCancel() {
   if (refuel.id)
-    router.push({
+    await router.push({
       path: `/vehicles/${refuel.vehicleId}/refuels/${refuel.id}`,
       query: {
         type: 'refuel'
@@ -199,7 +199,7 @@ function onCancel() {
 }
 
 onMounted(async () => {
-  ;(await vehicleRepository.getVehicles()).forEach(v => {
+  void (await vehicleRepository.getVehicles()).forEach(v => {
     vehicleOptions.value.push({
       label: v.name,
       value: v.id

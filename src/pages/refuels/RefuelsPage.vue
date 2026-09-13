@@ -187,8 +187,9 @@ const refuelDialogOptions = ref<OptionInDialog[]>([
   {
     text: t('refuels.optionsDialog.edit'),
     icon: 'edit',
+    // eslint-disable-next-line @typescript-eslint/no-misused-promises
     action: (data: unknown) =>
-      router.push({ path: `/vehicles/refuels/${data}/edit` })
+      router.push({ path: `/vehicles/refuels/${data as string}/edit` })
   },
   {
     text: t('refuels.optionsDialog.delete'),
@@ -197,7 +198,7 @@ const refuelDialogOptions = ref<OptionInDialog[]>([
       confirmDialog(
         t('refuels.optionsDialog.deleteRefuel'),
         (data: unknown) => {
-          ;(async () => {
+          void (async () => {
             await refuelStore.deleteRefuel(data as number)
             await refuelStore.readData(refuelStore.vehicle!.id)
           })()
@@ -211,8 +212,9 @@ const expenseDialogOptions = ref<OptionInDialog[]>([
   {
     text: t('refuels.optionsDialog.edit'),
     icon: 'edit',
+    // eslint-disable-next-line @typescript-eslint/no-misused-promises
     action: (data: unknown) =>
-      router.push({ path: `/vehicles/refuels/${data}/editExpense` })
+      router.push({ path: `/vehicles/refuels/${data as string}/editExpense` })
   },
   {
     text: t('refuels.optionsDialog.delete'),
@@ -221,7 +223,7 @@ const expenseDialogOptions = ref<OptionInDialog[]>([
       confirmDialog(
         t('refuels.optionsDialog.deleteRefuel'),
         (data: unknown) => {
-          ;(async () => {
+          void (async () => {
             await refuelStore.deleteExpense(data as number)
             await refuelStore.readData(refuelStore.vehicle!.id)
           })()
@@ -271,7 +273,7 @@ onBeforeMount(async () => {
     const id = parseInt(props.refuelId)
     if (id)
       scrollToIndex.value = refuelStore
-        .vehicle!.allExpenses!.sort(
+        .vehicle!.allExpenses.sort(
           (a, b) => b.value.date.getTime() - a.value.date.getTime()
         )
         .findIndex(r => r.type === route.query.type && r.value.id == id)

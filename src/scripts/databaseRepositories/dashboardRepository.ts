@@ -17,7 +17,7 @@ async function createDashboard(vehicleId: number) {
 }
 
 async function deleteDashboardByVehicleId(vehicleId: number) {
-  db.dashboards.where('vehicleId').equals(vehicleId).delete()
+  await db.dashboards.where('vehicleId').equals(vehicleId).delete()
 }
 
 async function toggleDashboardVisibility(id: number) {

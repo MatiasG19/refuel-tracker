@@ -5,8 +5,8 @@ export class Vehicle {
   currencyUnit!: string
   fuelUnitId!: number
   fuelUnit?: FuelUnit
-  refuels?: Refuel[]
-  expenses?: Expense[]
+  refuels: Refuel[] = []
+  expenses: Expense[] = []
   totalFuelConsumption?: string
   odometer!: number
 }
@@ -37,11 +37,11 @@ export class Expense extends BaseExpense {
   description!: string
 }
 
-export enum FilterType {
-  All = 1,
-  Refuels = 2,
-  Expenses = 3
-}
+export const FilterType = {
+  All: 1,
+  Refuels: 2,
+  Expenses: 3
+} as const
 
 export class RefuelFilter {
   id?: number
@@ -50,5 +50,5 @@ export class RefuelFilter {
   active!: boolean
   dateFrom!: Date
   dateUntil!: Date
-  type = 1
+  type = FilterType.All
 }

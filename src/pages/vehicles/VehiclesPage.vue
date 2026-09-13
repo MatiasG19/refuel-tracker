@@ -53,9 +53,9 @@ const optionsInDialog = ref<OptionInDialog[]>([
     text: t('vehicles.optionsDialog.showRefuels'),
     icon: 'local_gas_station',
     action: (data: unknown) => {
-      ;(async () => {
-        router.push({
-          path: `/vehicles/${data}/refuels`
+      void (async () => {
+        await router.push({
+          path: `/vehicles/${data as string}/refuels`
         })
       })()
     }
@@ -64,7 +64,9 @@ const optionsInDialog = ref<OptionInDialog[]>([
     text: t('vehicles.optionsDialog.edit'),
     icon: 'edit',
     action: (data: unknown) => {
-      router.push({ path: `/vehicles/${data}/edit` })
+      void (async () => {
+        await router.push({ path: `/vehicles/${data as string}/edit` })
+      })()
     }
   },
   {
@@ -80,7 +82,7 @@ const optionsInDialog = ref<OptionInDialog[]>([
             messageColor: 'accent',
             message: t('vehicles.optionsDialog.deletingVehicle')
           })
-          ;(async () => await vehicleStore.deleteVehicle(data as number))()
+          void (async () => await vehicleStore.deleteVehicle(data as number))()
           $q.loading.hide()
         },
         data

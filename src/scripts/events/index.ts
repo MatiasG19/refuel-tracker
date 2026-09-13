@@ -24,7 +24,7 @@ async function refuelDeletedEvent(vehicleId: number): Promise<void> {
 async function vehicleAddedEvent(vehicle: Vehicle): Promise<void> {
   const dashboardStore = useDashboardStore()
 
-  dashboardStore.createDashboard(vehicle.id)
+  await dashboardStore.createDashboard(vehicle.id)
 }
 
 async function vehicleUpdatedEvent(): Promise<void> {
@@ -38,7 +38,7 @@ async function vehicleDeletedEvent(id: number): Promise<void> {
   const dashboardStore = useDashboardStore()
   const refuelStore = useRefuelStore()
 
-  dashboardStore.deleteDashboardByVehicleId(id)
+  await dashboardStore.deleteDashboardByVehicleId(id)
   refuelStore.vehicle = null
 }
 

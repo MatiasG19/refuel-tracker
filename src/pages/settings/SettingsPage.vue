@@ -140,7 +140,7 @@ async function changeColorTheme(value: number) {
 }
 
 async function changeLanguage(languageId: number) {
-  settingsStore.changeLanguage(languageId)
+  await settingsStore.changeLanguage(languageId)
   await setI18nLanguage(languageId)
   mainLayoutStore.titleText = t('title')
 }
@@ -151,7 +151,7 @@ async function toggleAutoBackup(value: boolean) {
       await FilePicker.openDocumentTree() // Pick directory when activating auto backup
     }
   }
-  settingsStore.toggleAutoBackup(value)
+  await settingsStore.toggleAutoBackup(value)
 }
 
 async function chooseAutoBackupFolder() {
@@ -162,8 +162,8 @@ async function chooseAutoBackupFolder() {
 
 async function exportBackup() {
   openDocumentTreeResultAction = result => {
-    ;(async () => {
-      settingsStore.setAutoBackupPath(result.path)
+    void (async () => {
+      await settingsStore.setAutoBackupPath(result.path)
       await exportDB(result.path)
       Notify.create('Backup exported')
     })()
@@ -175,7 +175,7 @@ async function exportBackup() {
 
 async function importBackup() {
   getContentResultAction = result => {
-    ;(async () => {
+    void (async () => {
       await importDB(result.path)
       Notify.create('Backup imported')
     })()

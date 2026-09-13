@@ -165,9 +165,9 @@ async function onSubmit() {
     })
 }
 
-function onCancel() {
+async function onCancel() {
   if (expense.id)
-    router.push({
+    await router.push({
       path: `/vehicles/${expense.vehicleId}/refuels/${expense.id}`,
       query: {
         type: 'expense'
@@ -177,7 +177,7 @@ function onCancel() {
 }
 
 onMounted(async () => {
-  ;(await vehicleRepository.getVehicles()).forEach(v => {
+  void (await vehicleRepository.getVehicles()).forEach(v => {
     vehicleOptions.value.push({
       label: v.name,
       value: v.id

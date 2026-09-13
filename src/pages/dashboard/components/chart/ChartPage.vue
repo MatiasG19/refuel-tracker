@@ -149,8 +149,9 @@ onMounted(async () => {
   if (Platform.is.mobile)
     await ScreenOrientation.lock({ orientation: 'landscape' })
 
-  setTimeout(() => {
-    updateChart()
+  // eslint-disable-next-line @typescript-eslint/no-misused-promises
+  setTimeout(async () => {
+    await updateChart()
   }, 200)
 })
 

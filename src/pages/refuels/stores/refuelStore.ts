@@ -1,10 +1,6 @@
 import { defineStore } from 'pinia'
 import { ref, toRaw } from 'vue'
-import {
-  type Vehicle,
-  type Refuel,
-  Expense
-} from 'src/scripts/libraries/refuel/models'
+import { Vehicle, Refuel, Expense } from 'src/scripts/libraries/refuel/models'
 import {
   refuelRepository,
   vehicleRepository
@@ -37,11 +33,14 @@ export const useRefuelStore = defineStore('refuelStore', () => {
       fuelUnitId: v.fuelUnitId,
       fuelUnit: v.fuelUnit!,
       totalFuelConsumption: v.totalFuelConsumption ?? '',
+      odometer: v.odometer ?? 0,
       allExpenses: [
-        ...v.expenses!.map(e => {
+        ...(v.expenses ?? []).map(e => {
+          // eslint-disable-next-line @typescript-eslint/no-unnecessary-type-assertion
           return { type: 'expense', value: e } as ExpenseViewModel
         }),
-        ...v.refuels!.map(r => {
+        ...(v.refuels ?? []).map(r => {
+          // eslint-disable-next-line @typescript-eslint/no-unnecessary-type-assertion
           return { type: 'refuel', value: r } as ExpenseViewModel
         })
       ]

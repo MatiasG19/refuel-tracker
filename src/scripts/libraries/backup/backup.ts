@@ -7,7 +7,7 @@ import { Platform } from 'quasar'
 
 export async function exportDB(path: string) {
   const blob = await db.export()
-  writeBlob(blob, path)
+  await writeBlob(blob, path)
 }
 
 export async function importDB(path: string) {
@@ -22,7 +22,7 @@ export async function importDB(path: string) {
 async function writeBlob(blob: Blob, path: string) {
   const dataAsString = await blob.text()
   if (Platform.is.mobile) {
-    FilePicker.createFile({
+    await FilePicker.createFile({
       path: path,
       fileName: `RefuelTrackerBackup_${getDateForFileName()}.json`,
       mimeType: '*/*',

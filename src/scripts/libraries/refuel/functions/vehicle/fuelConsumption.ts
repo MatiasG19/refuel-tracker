@@ -9,13 +9,13 @@ export function vehicleFuelConsumption(
     const func = FuelConsumptionFactory.get(vehicle.fuelUnitId.toString())
 
     if (refuel === null) {
-      let fuel = vehicle
-        .refuels!.map(re => re.refueledAmount)
+      let fuel = vehicle.refuels
+        .map(re => re.refueledAmount)
         .reduce((total, current) => total + current)
       fuel = fuel ? fuel : 0
 
-      let distance = vehicle
-        .refuels!.map(re => re.distanceDriven)
+      let distance = vehicle.refuels
+        .map(re => re.distanceDriven)
         .reduce((total, current) => total + current)
       distance = distance ? distance : 0
       if (func) return func(fuel, distance)

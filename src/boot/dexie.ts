@@ -95,13 +95,17 @@ export class RefuelTrackerDexie extends Dexie {
   }
 
   async insertDashboards(tx: Transaction) {
-    ;(await tx.table('vehicles').toArray()).forEach(async (v, i) => {
+    const vehicles = await tx.table('vehicles').toArray()
+
+    let i = 0
+    for (const v of vehicles) {
       await tx.table('dashboards').add({
         vehicleId: v.id,
         sequence: i + 1,
         visible: true
       })
-    })
+      i++
+    }
   }
 
   async insertDashboardSettings(tx: Transaction) {
@@ -127,6 +131,7 @@ export class RefuelTrackerDexie extends Dexie {
     vehicle.plateNumber = 'MYNUMBERPLATE'
     vehicle.currencyUnit = '€'
     vehicle.fuelUnitId = 1
+    vehicle.odometer = 0
 
     vehicle.id = (await tx.table('vehicles').put(vehicle)) as number
     const refuels = []
