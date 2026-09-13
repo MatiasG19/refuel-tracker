@@ -173,7 +173,10 @@ onMounted(async () => {
       await EdgeToEdge.setStatusBarColor({
         color: getPaletteColor('dark')
       })
-      await ThemeSetter.setTheme({
+      await EdgeToEdge.setNavigationBarColor({
+        color: getPaletteColor('dark')
+      })
+      ThemeSetter.setTheme({
         themeId: settingsStore.selectedColorThemeId
       })
     }
