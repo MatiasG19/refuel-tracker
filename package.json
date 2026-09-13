@@ -57,7 +57,7 @@
     "sass-embedded-linux-x64": "^1.99.0"
   },
   "engines": {
-    "node": "^22",
+    "node": "^24",
     "npm": ">= 11"
   }
 }
