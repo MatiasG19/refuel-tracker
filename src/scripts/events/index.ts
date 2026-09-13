@@ -21,6 +21,7 @@ async function refuelDeletedEvent(vehicleId: number): Promise<void> {
   await vehicleStore.updateTotalFuelConsumption(vehicleId)
 }
 
+// eslint-disable-next-line @typescript-eslint/require-await
 async function vehicleAddedEvent(vehicle: Vehicle): Promise<void> {
   const dashboardStore = useDashboardStore()
 
@@ -34,6 +35,7 @@ async function vehicleUpdatedEvent(): Promise<void> {
   await Promise.resolve()
 }
 
+// eslint-disable-next-line @typescript-eslint/require-await
 async function vehicleDeletedEvent(id: number): Promise<void> {
   const dashboardStore = useDashboardStore()
   const refuelStore = useRefuelStore()

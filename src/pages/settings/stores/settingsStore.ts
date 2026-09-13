@@ -32,9 +32,9 @@ export const useSettingsStore = defineStore('settingsStore', () => {
     const settings = await settingsRepository.getSettings(settingsId)
     if (!settings) return Promise.resolve()
 
-    changeColorTheme(settings.colorThemeId)
-    changeLanguage(settings.languageId ?? 1)
-    changeDistanceUnit(settings.distanceUnitId)
+    await changeColorTheme(settings.colorThemeId)
+    await changeLanguage(settings.languageId ?? 1)
+    await changeDistanceUnit(settings.distanceUnitId)
     initialized.value = true
   }
 

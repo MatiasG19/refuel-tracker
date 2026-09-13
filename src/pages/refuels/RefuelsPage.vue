@@ -188,7 +188,7 @@ const refuelDialogOptions = ref<OptionInDialog[]>([
     text: t('refuels.optionsDialog.edit'),
     icon: 'edit',
     action: (data: unknown) =>
-      router.push({ path: `/vehicles/refuels/${data}/edit` })
+      router.push({ path: `/vehicles/refuels/${data as string}/edit` })
   },
   {
     text: t('refuels.optionsDialog.delete'),
@@ -212,7 +212,7 @@ const expenseDialogOptions = ref<OptionInDialog[]>([
     text: t('refuels.optionsDialog.edit'),
     icon: 'edit',
     action: (data: unknown) =>
-      router.push({ path: `/vehicles/refuels/${data}/editExpense` })
+      router.push({ path: `/vehicles/refuels/${data as string}/editExpense` })
   },
   {
     text: t('refuels.optionsDialog.delete'),

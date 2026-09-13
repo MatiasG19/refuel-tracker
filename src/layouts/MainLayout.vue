@@ -163,16 +163,20 @@ const addButtonDialogOptions = computed<OptionInDialog[]>(() => [
   {
     text: lt('addDialog.vehicle'),
     icon: 'drive_eta',
+    // eslint-disable-next-line @typescript-eslint/no-misused-promises
     action: () => router.push({ path: `/vehicles/add` })
   },
   {
     text: lt('addDialog.expense'),
     icon: 'attach_money',
-    action: () => router.push({ path: `/vehicles/refuels/addExpense` })
+    // eslint-disable-next-line @typescript-eslint/no-misused-promises
+    action: async () =>
+      await router.push({ path: `/vehicles/refuels/addExpense` })
   },
   {
     text: lt('addDialog.refuel'),
     icon: 'local_gas_station',
+    // eslint-disable-next-line @typescript-eslint/no-misused-promises
     action: () => router.push({ path: `/vehicles/refuels/add` })
   }
 ])

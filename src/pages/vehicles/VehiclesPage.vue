@@ -53,9 +53,10 @@ const optionsInDialog = ref<OptionInDialog[]>([
     text: t('vehicles.optionsDialog.showRefuels'),
     icon: 'local_gas_station',
     action: (data: unknown) => {
+      // eslint-disable-next-line @typescript-eslint/no-floating-promises
       ;(async () => {
-        router.push({
-          path: `/vehicles/${data}/refuels`
+        await router.push({
+          path: `/vehicles/${data as string}/refuels`
         })
       })()
     }
@@ -64,7 +65,10 @@ const optionsInDialog = ref<OptionInDialog[]>([
     text: t('vehicles.optionsDialog.edit'),
     icon: 'edit',
     action: (data: unknown) => {
-      router.push({ path: `/vehicles/${data}/edit` })
+      // eslint-disable-next-line @typescript-eslint/no-floating-promises
+      ;(async () => {
+        await router.push({ path: `/vehicles/${data as string}/edit` })
+      })()
     }
   },
   {
@@ -80,6 +84,7 @@ const optionsInDialog = ref<OptionInDialog[]>([
             messageColor: 'accent',
             message: t('vehicles.optionsDialog.deletingVehicle')
           })
+          // eslint-disable-next-line @typescript-eslint/no-floating-promises
           ;(async () => await vehicleStore.deleteVehicle(data as number))()
           $q.loading.hide()
         },

@@ -165,9 +165,9 @@ async function onSubmit() {
     })
 }
 
-function onCancel() {
+async function onCancel() {
   if (expense.id)
-    router.push({
+    await router.push({
       path: `/vehicles/${expense.vehicleId}/refuels/${expense.id}`,
       query: {
         type: 'expense'
