@@ -3,6 +3,7 @@ import { ref } from 'vue'
 import { DashboardDataFactory } from 'src/pages/dashboard/scripts/DashboardDataFactory'
 import type {
   DashboardData,
+  DashboardValue,
   DashboardValueSettings
 } from 'src/pages/dashboard/scripts/models'
 import type { DropResult } from 'vue3-smooth-dnd'
@@ -34,40 +35,32 @@ export const useDashboardStore = defineStore('dashboardStore', () => {
 
     dashboardData.value = []
     const dashboards = await getDashboards()
+    const vehicles = await vehicleRepository.getVehicles()
     dashboards.forEach(dashboard => {
+      const vehicle = vehicles.find(v => v.id === dashboard.vehicleId)
+      if (!vehicle) return
+
+      let dataValues: DashboardValue[] = []
+      if (vehicle.refuels && vehicle.refuels.length) {
+        dataValues = new DashboardDataFactory(vehicle, locale).getAll(
+          dashboardValueSettings.value
+        )
+      }
+
       dashboardData.value.push({
-        id: dashboard.id ?? 0,
+        id: dashboard.id!,
         vehicleId: dashboard.vehicleId,
         sequence: dashboard.sequence,
         visible: dashboard.visible,
-        title: '',
-        subtitle: '',
-        dashboardValues: []
+        title: vehicle.name,
+        subtitle: vehicle.plateNumber,
+        dashboardValues: dataValues
       })
     })
 
-    const vehicles = await vehicleRepository.getVehicles()
-    if (vehicles.length > 0) {
-      for (const vehicle of vehicles) {
-        const dashboard = dashboardData.value.find(
-          d => d.vehicleId === vehicle.id
-        )
-        if (!dashboard) return
-        dashboard.title = vehicle.name
-        dashboard.subtitle = vehicle.plateNumber
-        if (vehicle.refuels && vehicle.refuels.length) {
-          dashboard.dashboardValues = new DashboardDataFactory(
-            vehicle,
-            locale
-          ).getAll(dashboardValueSettings.value)
-
-          dashboardData.value = dashboardData.value.sort(
-            (a, b) => a.sequence - b.sequence
-          )
-          return Promise.resolve()
-        }
-      }
-    }
+    dashboardData.value = dashboardData.value.sort(
+      (a, b) => a.sequence - b.sequence
+    )
   }
 
   async function getPeriods(): Promise<Period[]> {

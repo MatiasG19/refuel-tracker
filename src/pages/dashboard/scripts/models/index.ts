@@ -13,7 +13,7 @@ export class DashboardValue {
   unit!: string
   sequence!: number
   periodId!: number
-  perdiod?: Period
+  period?: Period
   visible!: boolean
 }
 
@@ -30,7 +30,7 @@ export class DashboardValueSettings {
   uid!: string
   sequence!: number
   periodId?: number
-  perdiod?: Period
+  period?: Period
   visible!: boolean
   title?: string
 }

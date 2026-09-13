@@ -131,6 +131,7 @@ export class RefuelTrackerDexie extends Dexie {
     vehicle.plateNumber = 'MYNUMBERPLATE'
     vehicle.currencyUnit = '€'
     vehicle.fuelUnitId = 1
+    vehicle.odometer = 0
 
     vehicle.id = (await tx.table('vehicles').put(vehicle)) as number
     const refuels = []

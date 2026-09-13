@@ -5,8 +5,8 @@ export class Vehicle {
   currencyUnit!: string
   fuelUnitId!: number
   fuelUnit?: FuelUnit
-  refuels?: Refuel[]
-  expenses?: Expense[]
+  refuels: Refuel[] = []
+  expenses: Expense[] = []
   totalFuelConsumption?: string
   odometer!: number
 }
@@ -50,5 +50,5 @@ export class RefuelFilter {
   active!: boolean
   dateFrom!: Date
   dateUntil!: Date
-  type = 1
+  type = FilterType.All
 }
