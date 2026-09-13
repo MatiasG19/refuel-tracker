@@ -74,16 +74,16 @@ export const useDashboardStore = defineStore('dashboardStore', () => {
     return await Promise.resolve(periodRepository.getPeriods())
   }
 
-  function createDashboard(vehicleId: number) {
-    dashboardRepository.createDashboard(vehicleId)
+  async function createDashboard(vehicleId: number) {
+    await dashboardRepository.createDashboard(vehicleId)
   }
 
-  function deleteDashboardByVehicleId(vehicleId: number) {
-    dashboardRepository.deleteDashboardByVehicleId(vehicleId)
+  async function deleteDashboardByVehicleId(vehicleId: number) {
+    await dashboardRepository.deleteDashboardByVehicleId(vehicleId)
   }
 
-  function toggleDashboardVisibility(id: number) {
-    dashboardRepository.toggleDashboardVisibility(id)
+  async function toggleDashboardVisibility(id: number) {
+    await dashboardRepository.toggleDashboardVisibility(id)
   }
 
   function moveDashboard(dropResult: DropResult) {
