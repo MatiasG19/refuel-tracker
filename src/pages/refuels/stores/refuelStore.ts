@@ -36,9 +36,11 @@ export const useRefuelStore = defineStore('refuelStore', () => {
       odometer: v.odometer ?? 0,
       allExpenses: [
         ...(v.expenses ?? []).map(e => {
+          // eslint-disable-next-line @typescript-eslint/no-unnecessary-type-assertion
           return { type: 'expense', value: e } as ExpenseViewModel
         }),
         ...(v.refuels ?? []).map(r => {
+          // eslint-disable-next-line @typescript-eslint/no-unnecessary-type-assertion
           return { type: 'refuel', value: r } as ExpenseViewModel
         })
       ]

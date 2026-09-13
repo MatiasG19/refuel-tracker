@@ -20,7 +20,7 @@ export class TotalMoneySpent extends AbstractChartData {
             payedAmount: r.payedAmount,
             description: '',
             vehicleId: r.vehicleId
-          } as Expense
+          }
         }),
         ...expenses
       ],
