@@ -27,8 +27,8 @@
 
 <div align="center" style="display: flex; justify-content: center; align-items: center;">
   <p>
-    <a href="https://play.google.com/store/apps/details?id=capacitor.quasar.refueltracker&pcampaignid=pcampaignidMKT-Other-global-all-co-prtnr-py-PartBadge-Mar2515-1"><img width="141" height="41" alt="Get it on Google Play" src=".icons/google-play-badge.png"/></a>
-    <a href="https://github.com/ImranR98/Obtainium"><img width="141" height="42" alt="Get it on Obtainium" src="https://raw.githubusercontent.com/ImranR98/Obtainium/main/assets/graphics/badge_obtainium.png"/></a>
+    <a href="https://play.google.com/store/apps/details?id=capacitor.quasar.refueltracker&pcampaignid=pcampaignidMKT-Other-global-all-co-prtnr-py-PartBadge-Mar2515-1"><img width="161" height="63" alt="Get it on Google Play" src=".icons/google-play-badge.png"/></a>
+    <a href="https://github.com/ImranR98/Obtainium"><img width="161" height="63" alt="Get it on Obtainium" src="https://raw.githubusercontent.com/ImranR98/Obtainium/main/assets/graphics/badge_obtainium.png"/></a>
   </p>
 </div>
 
