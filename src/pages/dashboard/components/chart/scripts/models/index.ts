@@ -27,7 +27,7 @@ export class AbstractChartData implements IChartDataFun {
 
   getChartData(
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
-    groupBy: typeof Group,
+    groupBy: (typeof Group)[keyof typeof Group],
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
     vehicle: Vehicle,
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
@@ -46,7 +46,7 @@ export interface IChartData {
 
 export interface IChartDataFun {
   getChartData(
-    groupBy: typeof Group,
+    groupBy: (typeof Group)[keyof typeof Group],
     vehicle: Vehicle,
     refuels: Refuel[],
     expenses: Expense[]
