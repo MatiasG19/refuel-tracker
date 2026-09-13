@@ -39,50 +39,50 @@ export interface FilePickerPlugin {
    * @param eventName
    * @param listener
    */
-  // eslint-disable-next-line @typescript-eslint/no-redundant-type-constituents
   addListener(
     eventName: 'getContentResult',
     listener: (res: { path: string }) => void
+     
   ): Promise<PluginListenerHandle> & PluginListenerHandle
   /**
    * Listen for multiple content results from activity result.
    * @param eventName
    * @param listener
    */
-  // eslint-disable-next-line @typescript-eslint/no-redundant-type-constituents
   addListener(
     eventName: 'getMultipleContentsResult',
     listener: (res: { paths: string }) => void
+     
   ): Promise<PluginListenerHandle> & PluginListenerHandle
   /**
    * Listen for open document tree result from activity result.
    * @param eventName
    * @param listener
    */
-  // eslint-disable-next-line @typescript-eslint/no-redundant-type-constituents
   addListener(
     eventName: 'openDocumentTreeResult',
     listener: (res: { path: string }) => void
+     
   ): Promise<PluginListenerHandle> & PluginListenerHandle
   /**
    * Listen for open document result from activity result.
    * @param eventName
    * @param listener
    */
-  // eslint-disable-next-line @typescript-eslint/no-redundant-type-constituents
   addListener(
     eventName: 'openDocumentResult',
     listener: (res: { path: string }) => void
+     
   ): Promise<PluginListenerHandle> & PluginListenerHandle
   /**
    * Listen for create document result from activity result.
    * @param eventName
    * @param listener
    */
-  // eslint-disable-next-line @typescript-eslint/no-redundant-type-constituents
   addListener(
     eventName: 'createDocumentResult',
     listener: (res: { path: string }) => void
+     
   ): Promise<PluginListenerHandle> & PluginListenerHandle
   /**
    * Remove all listeners.
