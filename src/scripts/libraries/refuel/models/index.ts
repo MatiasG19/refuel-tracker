@@ -52,3 +52,5 @@ export class RefuelFilter {
   dateUntil!: Date
   type = FilterType.All
 }
+
+export type FilterType = (typeof FilterType)[keyof typeof FilterType]
