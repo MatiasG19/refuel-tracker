@@ -14,7 +14,7 @@ export class FuelBurnt extends AbstractChartData {
     for (const key in groupedData) {
       chartData.labels.push(key)
       const v = { ...vehicle }
-      v.refuels = groupedData[key]!
+      v.refuels = groupedData[key]! as Refuel[]
       chartData.data.push(vehicleFuelBurnt(v).toFixedIfNotZero(2))
     }
 
