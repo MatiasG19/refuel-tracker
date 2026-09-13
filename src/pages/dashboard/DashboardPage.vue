@@ -170,7 +170,7 @@ onMounted(async () => {
   // eslint-disable-next-line @typescript-eslint/no-misused-promises
   setTimeout(async () => {
     if (Platform.is.android || Platform.is.mobile) {
-      await EdgeToEdge.setBackgroundColor({
+      await EdgeToEdge.setStatusBarColor({
         color: getPaletteColor('dark')
       })
       await ThemeSetter.setTheme({
