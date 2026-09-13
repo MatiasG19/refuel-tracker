@@ -33,11 +33,12 @@ export const useRefuelStore = defineStore('refuelStore', () => {
       fuelUnitId: v.fuelUnitId,
       fuelUnit: v.fuelUnit!,
       totalFuelConsumption: v.totalFuelConsumption ?? '',
+      odometer: v.odometer ?? 0,
       allExpenses: [
-        ...v.expenses!.map(e => {
+        ...(v.expenses ?? []).map(e => {
           return { type: 'expense', value: e } as ExpenseViewModel
         }),
-        ...v.refuels!.map(r => {
+        ...(v.refuels ?? []).map(r => {
           return { type: 'refuel', value: r } as ExpenseViewModel
         })
       ]
