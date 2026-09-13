@@ -1,10 +1,6 @@
 import { defineStore } from 'pinia'
 import { ref, toRaw } from 'vue'
-import {
-  type Vehicle,
-  type Refuel,
-  Expense
-} from 'src/scripts/libraries/refuel/models'
+import { Vehicle, Refuel, Expense } from 'src/scripts/libraries/refuel/models'
 import {
   refuelRepository,
   vehicleRepository

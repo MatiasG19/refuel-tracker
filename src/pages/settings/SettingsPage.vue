@@ -162,8 +162,7 @@ async function chooseAutoBackupFolder() {
 
 async function exportBackup() {
   openDocumentTreeResultAction = result => {
-    // eslint-disable-next-line @typescript-eslint/no-floating-promises
-    ;(async () => {
+    void (async () => {
       await settingsStore.setAutoBackupPath(result.path)
       await exportDB(result.path)
       Notify.create('Backup exported')
@@ -176,8 +175,7 @@ async function exportBackup() {
 
 async function importBackup() {
   getContentResultAction = result => {
-    // eslint-disable-next-line @typescript-eslint/no-floating-promises
-    ;(async () => {
+    void (async () => {
       await importDB(result.path)
       Notify.create('Backup imported')
     })()

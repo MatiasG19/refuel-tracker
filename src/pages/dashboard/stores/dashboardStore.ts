@@ -48,7 +48,7 @@ export const useDashboardStore = defineStore('dashboardStore', () => {
 
     const vehicles = await vehicleRepository.getVehicles()
     if (vehicles.length > 0) {
-      vehicles.forEach(async vehicle => {
+      for (const vehicle of vehicles) {
         const dashboard = dashboardData.value.find(
           d => d.vehicleId === vehicle.id
         )
@@ -66,7 +66,7 @@ export const useDashboardStore = defineStore('dashboardStore', () => {
           )
           return Promise.resolve()
         }
-      })
+      }
     }
   }
 
@@ -133,8 +133,7 @@ export const useDashboardStore = defineStore('dashboardStore', () => {
   }
 
   function saveDashboardOrder() {
-    // eslint-disable-next-line @typescript-eslint/no-floating-promises
-    ;(async () => {
+    void (async () => {
       await dashboardRepository.saveDashboardOrder(dashboardData.value)
     })()
   }

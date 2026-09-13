@@ -187,6 +187,7 @@ const refuelDialogOptions = ref<OptionInDialog[]>([
   {
     text: t('refuels.optionsDialog.edit'),
     icon: 'edit',
+    // eslint-disable-next-line @typescript-eslint/no-misused-promises
     action: (data: unknown) =>
       router.push({ path: `/vehicles/refuels/${data as string}/edit` })
   },
@@ -197,7 +198,7 @@ const refuelDialogOptions = ref<OptionInDialog[]>([
       confirmDialog(
         t('refuels.optionsDialog.deleteRefuel'),
         (data: unknown) => {
-          ;(async () => {
+          void (async () => {
             await refuelStore.deleteRefuel(data as number)
             await refuelStore.readData(refuelStore.vehicle!.id)
           })()
@@ -211,6 +212,7 @@ const expenseDialogOptions = ref<OptionInDialog[]>([
   {
     text: t('refuels.optionsDialog.edit'),
     icon: 'edit',
+    // eslint-disable-next-line @typescript-eslint/no-misused-promises
     action: (data: unknown) =>
       router.push({ path: `/vehicles/refuels/${data as string}/editExpense` })
   },
@@ -221,7 +223,7 @@ const expenseDialogOptions = ref<OptionInDialog[]>([
       confirmDialog(
         t('refuels.optionsDialog.deleteRefuel'),
         (data: unknown) => {
-          ;(async () => {
+          void (async () => {
             await refuelStore.deleteExpense(data as number)
             await refuelStore.readData(refuelStore.vehicle!.id)
           })()

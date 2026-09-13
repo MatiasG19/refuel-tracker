@@ -52,8 +52,7 @@ async function deleteVehicle(id: number) {
     async () => {
       const refuels = await db.refuels.where('vehicleId').equals(id).toArray()
       refuels.forEach(r => {
-        // eslint-disable-next-line @typescript-eslint/no-floating-promises
-        ;(async () => {
+        void (async () => {
           await db.refuels.delete(r.id)
         })()
       })

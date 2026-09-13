@@ -199,7 +199,7 @@ async function onCancel() {
 }
 
 onMounted(async () => {
-  ;(await vehicleRepository.getVehicles()).forEach(v => {
+  void (await vehicleRepository.getVehicles()).forEach(v => {
     vehicleOptions.value.push({
       label: v.name,
       value: v.id
