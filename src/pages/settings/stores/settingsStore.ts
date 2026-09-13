@@ -71,10 +71,13 @@ export const useSettingsStore = defineStore('settingsStore', () => {
     settings.colorThemeId = themeId
     await settingsRepository.updateSettings(settings)
     if (Platform.is.android || Platform.is.mobile) {
-      await EdgeToEdge.setBackgroundColor({
+      await EdgeToEdge.setStatusBarColor({
         color: getPaletteColor('dark')
       })
-      await ThemeSetter.setTheme({ themeId })
+      await EdgeToEdge.setNavigationBarColor({
+        color: getPaletteColor('dark')
+      })
+      ThemeSetter.setTheme({ themeId })
     }
   }
 
