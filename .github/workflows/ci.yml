@@ -79,7 +79,10 @@ jobs:
 
       - name: Set version in package.json
         if: ${{ github.event_name == 'release' || github.event_name == 'workflow_dispatch' }}
-        run: node ./modifyPackageJson.mjs $TAG
+        run: |
+          node ./modifyPackageJson.mjs $TAG
+          cd src-capacitor 
+          node ../modifyPackageJson.mjs $TAG
 
       - name: Set version in build.gradle
         if: ${{ github.event_name == 'release' || github.event_name == 'workflow_dispatch' }}
