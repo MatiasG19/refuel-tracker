@@ -5,7 +5,7 @@ import { vehicleFuelPricing } from '@/scripts/libraries/refuel/functions/vehicle
 
 export class FuelPricing extends AbstractChartData {
   override getChartData(
-    groupBy: (typeof Group)[keyof typeof Group],
+    groupBy: Group,
     vehicle: Vehicle,
     refuels: Refuel[]
   ): IChartData {

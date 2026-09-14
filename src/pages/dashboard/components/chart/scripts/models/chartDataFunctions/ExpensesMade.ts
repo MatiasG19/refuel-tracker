@@ -9,7 +9,7 @@ import { vehicleExpensesMade } from '@/scripts/libraries/refuel/functions/vehicl
 
 export class ExpensesMade extends AbstractChartData {
   override getChartData(
-    groupBy: (typeof Group)[keyof typeof Group],
+    groupBy: Group,
     vehicle: Vehicle,
     _: Refuel[],
     expenses: Expense[]

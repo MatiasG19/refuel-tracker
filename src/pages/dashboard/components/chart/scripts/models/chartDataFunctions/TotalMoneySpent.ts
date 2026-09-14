@@ -5,7 +5,7 @@ import { vehicleTotalMoneySpent } from '@/scripts/libraries/refuel/functions/veh
 
 export class TotalMoneySpent extends AbstractChartData {
   override getChartData(
-    groupBy: (typeof Group)[keyof typeof Group],
+    groupBy: Group,
     vehicle: Vehicle,
     refuels: Refuel[],
     expenses: Expense[]

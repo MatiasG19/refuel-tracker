@@ -10,6 +10,8 @@ export const Group = {
   Year: 2
 } as const
 
+export type Group = (typeof Group)[keyof typeof Group]
+
 export const DataSource = {
   FuelConsumption: 0,
   DistanceDriven: 1,
@@ -22,12 +24,14 @@ export const DataSource = {
   ExpensesMade: 8
 } as const
 
+export type DataSource = (typeof DataSource)[keyof typeof DataSource]
+
 export class AbstractChartData implements IChartDataFun {
   constructor() {}
 
   getChartData(
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
-    groupBy: (typeof Group)[keyof typeof Group],
+    groupBy: Group,
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
     vehicle: Vehicle,
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
@@ -46,7 +50,7 @@ export interface IChartData {
 
 export interface IChartDataFun {
   getChartData(
-    groupBy: (typeof Group)[keyof typeof Group],
+    groupBy: Group,
     vehicle: Vehicle,
     refuels: Refuel[],
     expenses: Expense[]

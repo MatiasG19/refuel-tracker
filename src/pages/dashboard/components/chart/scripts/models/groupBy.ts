@@ -8,7 +8,7 @@ export interface GroupedRefuels {
 
 export function groupBy(
   refuels: BaseExpense[],
-  groupBy: (typeof Group)[keyof typeof Group]
+  groupBy: Group
 ): GroupedRefuels {
   switch (groupBy) {
     case Group.NoGrouping:
