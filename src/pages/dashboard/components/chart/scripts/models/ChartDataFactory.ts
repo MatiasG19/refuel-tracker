@@ -7,20 +7,20 @@ import type { DataSource, Group, AbstractChartData, IChartData } from '.'
 
 export class ChartDataFactory {
   public static chartDataClasses = new Map<
-    DataSource,
+    typeof DataSource,
     typeof AbstractChartData
   >()
 
   public static register(
-    dataSource: DataSource,
+    dataSource: typeof DataSource,
     chartDataFun: typeof AbstractChartData
   ) {
     ChartDataFactory.chartDataClasses.set(dataSource, chartDataFun)
   }
 
   public static get(
-    dataSource: DataSource,
-    groupBy: Group,
+    dataSource: typeof DataSource,
+    groupBy: (typeof Group)[keyof typeof Group],
     vehicle: Vehicle,
     refuels: Refuel[],
     expenses: Expense[]

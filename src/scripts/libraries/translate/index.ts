@@ -1,13 +1,27 @@
-type Messages = {
-  [key: string]: string
-}
+type MessageValue =
+  | string
+  | {
+      [key: string]: MessageValue
+    }
+
+type Messages = Record<string, MessageValue>
 
 export function ct(key: string, locale: string, messages: Messages): string {
-  return (locale + '.' + key).split('.').reduce((acc, _key) => {
-    return acc && acc[_key]
-  }, messages)
+  const path = `${locale}.${key}`.split('.')
+
+  let value: MessageValue | undefined = messages
+
+  for (const segment of path) {
+    if (typeof value !== 'object' || value === null) {
+      return ''
+    }
+
+    value = value[segment]
+  }
+
+  return typeof value === 'string' ? value : ''
 }
 
 export function ctNext(key: string, messages: Messages): string {
-  return messages[key] || key
+  return (messages[key] || key) as string
 }
