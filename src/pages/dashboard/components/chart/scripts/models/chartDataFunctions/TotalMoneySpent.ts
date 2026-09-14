@@ -1,11 +1,11 @@
-import { Vehicle, Refuel, Expense } from 'src/scripts/libraries/refuel/models'
+import { Vehicle, Refuel, Expense } from '@/scripts/libraries/refuel/models'
 import { AbstractChartData, Group, type IChartData } from '../index.js'
 import { groupBy as groupByFun } from '../groupBy.js'
-import { vehicleTotalMoneySpent } from 'src/scripts/libraries/refuel/functions/vehicle'
+import { vehicleTotalMoneySpent } from '@/scripts/libraries/refuel/functions/vehicle'
 
 export class TotalMoneySpent extends AbstractChartData {
   override getChartData(
-    groupBy: (typeof Group)[keyof typeof Group],
+    groupBy: Group,
     vehicle: Vehicle,
     refuels: Refuel[],
     expenses: Expense[]
@@ -29,7 +29,7 @@ export class TotalMoneySpent extends AbstractChartData {
     const chartData: IChartData = { labels: [], data: [] }
     for (const key in groupedData) {
       chartData.labels.push(key)
-      const v = { ...vehicle }
+      const v = Object.assign(vehicle)
       v.refuels = []
       v.expenses = groupedData[key]! as Expense[]
       chartData.data.push(vehicleTotalMoneySpent(v).toFixedIfNotZero(2))

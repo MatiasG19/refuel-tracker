@@ -1,5 +1,5 @@
 import { type ColorTheme } from '../models'
-import { i18n } from 'src/boot/i18n'
+import { i18n } from '@/boot/i18n'
 
 export function getColorThemes(): ColorTheme[] {
   const { t } = i18n.global

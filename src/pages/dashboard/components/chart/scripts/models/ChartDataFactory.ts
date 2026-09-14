@@ -2,7 +2,7 @@ import type {
   Expense,
   Refuel,
   Vehicle
-} from 'src/scripts/libraries/refuel/models'
+} from '@/scripts/libraries/refuel/models'
 import type { DataSource, Group, AbstractChartData, IChartData } from '.'
 
 export class ChartDataFactory {

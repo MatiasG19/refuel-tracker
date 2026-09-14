@@ -103,10 +103,10 @@
 </template>
 
 <script setup lang="ts">
-import EssentialLink from 'components/EssentialLink.vue'
+import EssentialLink from '@/components/EssentialLink.vue'
 import { ref, computed, onMounted, onUnmounted } from 'vue'
-import { useSettingsStore } from 'src/pages/settings/stores/settingsStore'
-import { useMainLayoutStore } from 'src/layouts/stores/mainLayoutStore'
+import { useSettingsStore } from '@/pages/settings/stores/settingsStore'
+import { useMainLayoutStore } from '@/layouts/stores/mainLayoutStore'
 import { Keyboard } from '@capacitor/keyboard'
 import { Platform } from 'quasar'
 import { useI18n } from 'vue-i18n'
@@ -114,7 +114,7 @@ import messages from './i18n'
 import {
   OptionInDialog,
   optionsDialog
-} from 'src/components/dialogs/optionsDialog'
+} from '@/components/dialogs/optionsDialog'
 import { useRouter } from 'vue-router'
 
 const router = useRouter()

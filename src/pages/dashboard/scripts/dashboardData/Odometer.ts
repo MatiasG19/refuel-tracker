@@ -1,6 +1,6 @@
-import { Vehicle } from 'src/scripts/libraries/refuel/models'
+import { Vehicle } from '@/scripts/libraries/refuel/models'
 import { AbstractDashboardData } from '../abstract/AbstractDashboardData'
-import { vehicleOdometer } from 'src/scripts/libraries/refuel/functions/vehicle/odometer'
+import { vehicleOdometer } from '@/scripts/libraries/refuel/functions/vehicle/odometer'
 import { WritableComputedRef } from 'vue'
 
 export class Odometer extends AbstractDashboardData {

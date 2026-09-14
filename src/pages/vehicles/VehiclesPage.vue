@@ -28,20 +28,20 @@
 </template>
 
 <script setup lang="ts">
-import VehicleCard from 'src/pages/vehicles/components/VehicleCard.vue'
+import VehicleCard from '@/pages/vehicles/components/VehicleCard.vue'
 import {
   OptionInDialog,
   optionsDialog
-} from 'src/components/dialogs/optionsDialog'
-import { confirmDialog } from 'src/components/dialogs/confirmDialog'
+} from '@/components/dialogs/optionsDialog'
+import { confirmDialog } from '@/components/dialogs/confirmDialog'
 import { useRouter } from 'vue-router'
 import { onMounted, ref } from 'vue'
 import { useVehicleStore } from './stores/vehicleStore'
 import { useQuasar } from 'quasar'
 import { useI18n } from 'vue-i18n'
-import { i18n } from 'src/boot/i18n'
+import { i18n } from '@/boot/i18n'
 import messages from './i18n'
-import { useMainLayoutStore } from 'src/layouts/stores/mainLayoutStore'
+import { useMainLayoutStore } from '@/layouts/stores/mainLayoutStore'
 
 const router = useRouter()
 const vehicleStore = useVehicleStore()

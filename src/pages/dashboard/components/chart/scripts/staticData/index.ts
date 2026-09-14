@@ -1,4 +1,4 @@
-import type { SelectOption } from 'src/components/inputs/types'
+import type { SelectOption } from '@/components/inputs/types'
 import { useI18n } from 'vue-i18n'
 import messages from '../../i18n'
 

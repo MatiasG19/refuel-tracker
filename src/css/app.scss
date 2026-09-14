@@ -15,7 +15,7 @@
   font-family: var(--font-family);
   color: var(--dark-color);
   background-color: var(--light-color);
-  opacity: 1.0;
+  opacity: 1;
 }
 
 .accent-space-station {
@@ -25,15 +25,15 @@
 }
 
 .text-default {
-  color: var(--text-color) !important
+  color: var(--text-color) !important;
 }
 
 .text-positive {
-  color: var(--positive-color)
+  color: var(--positive-color);
 }
 
 .text-negative {
-  color: var(--negative-color)
+  color: var(--negative-color);
 }
 
 .form-btn {

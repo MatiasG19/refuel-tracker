@@ -1,4 +1,4 @@
-import { Expense, Refuel, Vehicle } from 'src/scripts/libraries/refuel/models'
+import { Expense, Refuel, Vehicle } from '@/scripts/libraries/refuel/models'
 
 export type VehicleViewModel = Omit<Vehicle, 'refuels | expenses'> & {
   allExpenses: ExpenseViewModel[]

@@ -2,20 +2,17 @@ import { defineStore } from 'pinia'
 import {
   refuelRepository,
   vehicleRepository
-} from 'src/scripts/databaseRepositories'
+} from '@/scripts/databaseRepositories'
 import type {
   Expense,
   Refuel,
   Vehicle
-} from 'src/scripts/libraries/refuel/models'
+} from '@/scripts/libraries/refuel/models'
 import { ref } from 'vue'
-import { type IChartData } from '../scripts/models'
+import { DataSource, Group, type IChartData } from '../scripts/models'
 import { ChartDataFactory } from '../scripts/models/ChartDataFactory'
-import {
-  updateDateFrom,
-  updateDateUntil
-} from 'src/scripts/libraries/utils/date'
-import expenseRepository from 'src/scripts/databaseRepositories/expenseRepository'
+import { updateDateFrom, updateDateUntil } from '@/scripts/libraries/utils/date'
+import expenseRepository from '@/scripts/databaseRepositories/expenseRepository'
 
 export const useChartStore = defineStore('chartStore', () => {
   const vehicle = ref<Vehicle | null>(null)
@@ -25,8 +22,8 @@ export const useChartStore = defineStore('chartStore', () => {
     updateDateFrom(new Date(new Date().setDate(new Date().getDate() - 30)))
   )
   const untilDate = ref<Date>(updateDateUntil(new Date()))
-  const groupBy = ref(0)
-  const dataSource = ref(0)
+  const groupBy = ref<Group>(Group.NoGrouping)
+  const dataSource = ref<DataSource>(DataSource.FuelConsumption)
 
   async function readData(vehicleId: number) {
     const v = await vehicleRepository.getVehicle(vehicleId)

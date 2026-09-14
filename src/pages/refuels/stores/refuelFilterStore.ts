@@ -1,19 +1,16 @@
 import { defineStore } from 'pinia'
 import { computed, ref, toRaw } from 'vue'
-import { refuelFilterRepository } from 'src/scripts/databaseRepositories'
+import { refuelFilterRepository } from '@/scripts/databaseRepositories'
 import {
   FilterType,
   type RefuelFilter
-} from 'src/scripts/libraries/refuel/models'
+} from '@/scripts/libraries/refuel/models'
 import { date } from 'quasar'
-import {
-  updateDateFrom,
-  updateDateUntil
-} from 'src/scripts/libraries/utils/date'
-import { SelectOption } from 'src/components/inputs/types'
+import { updateDateFrom, updateDateUntil } from '@/scripts/libraries/utils/date'
+import { SelectOption } from '@/components/inputs/types'
 import messages from '../i18n'
-import { ct } from 'src/scripts/libraries/translate'
-import { useSettingsStore } from 'src/pages/settings/stores/settingsStore'
+import { ct } from '@/scripts/libraries/translate'
+import { useSettingsStore } from '@/pages/settings/stores/settingsStore'
 
 export const useRefuelFilterStore = defineStore('refuelFilterStore', () => {
   const settingsStore = useSettingsStore()

@@ -1,5 +1,5 @@
-import { db } from 'src/boot/dexie'
-import type { DashboardValueSettings } from 'src/pages/dashboard/scripts/models'
+import { db } from '@/boot/dexie'
+import type { DashboardValueSettings } from '@/pages/dashboard/scripts/models'
 
 async function getDashboardSettings() {
   return await db.graphSettings.toArray()

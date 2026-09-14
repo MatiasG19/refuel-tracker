@@ -1,17 +1,17 @@
 import { defineStore } from 'pinia'
 import { ref, toRaw } from 'vue'
-import { Vehicle, Refuel, Expense } from 'src/scripts/libraries/refuel/models'
+import { Vehicle, Refuel, Expense } from '@/scripts/libraries/refuel/models'
 import {
   refuelRepository,
   vehicleRepository
-} from 'src/scripts/databaseRepositories'
+} from '@/scripts/databaseRepositories'
 import {
   refuelAddedEvent,
   refuelDeletedEvent,
   refuelUpdatedEvent
-} from 'src/scripts/events'
+} from '@/scripts/events'
 import { ExpenseViewModel, VehicleViewModel } from '../models'
-import expenseRepository from 'src/scripts/databaseRepositories/expenseRepository'
+import expenseRepository from '@/scripts/databaseRepositories/expenseRepository'
 
 export const useRefuelStore = defineStore('refuelStore', () => {
   const vehicle = ref<VehicleViewModel | null>(null)
@@ -34,14 +34,14 @@ export const useRefuelStore = defineStore('refuelStore', () => {
       fuelUnit: v.fuelUnit!,
       totalFuelConsumption: v.totalFuelConsumption ?? '',
       odometer: v.odometer ?? 0,
+      refuels: [],
+      expenses: [],
       allExpenses: [
         ...(v.expenses ?? []).map(e => {
-          // eslint-disable-next-line @typescript-eslint/no-unnecessary-type-assertion
-          return { type: 'expense', value: e } as ExpenseViewModel
+          return { type: 'expense', value: e as Expense } as ExpenseViewModel
         }),
         ...(v.refuels ?? []).map(r => {
-          // eslint-disable-next-line @typescript-eslint/no-unnecessary-type-assertion
-          return { type: 'refuel', value: r } as ExpenseViewModel
+          return { type: 'refuel', value: r as Refuel } as ExpenseViewModel
         })
       ]
     }
