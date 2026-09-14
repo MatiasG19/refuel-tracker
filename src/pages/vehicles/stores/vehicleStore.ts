@@ -38,7 +38,7 @@ export const useVehicleStore = defineStore('vehicleStore', () => {
     if (!vehicle) return
     vehicle.refuels = await refuelRepository.getRefuels(id)
     vehicle.totalFuelConsumption = vehicleFuelConsumption({
-      ...toRaw(vehicle)
+      ...Object.assign(toRaw(vehicle))
     }).toFixed(2)
     await vehicleRepository.updateTotalFuelConsumption(
       id,
@@ -47,7 +47,7 @@ export const useVehicleStore = defineStore('vehicleStore', () => {
   }
 
   async function updateVehicle(vehicle: Vehicle) {
-    await vehicleRepository.updateVehicle({ ...toRaw(vehicle) })
+    await vehicleRepository.updateVehicle({ ...Object.assign(toRaw(vehicle)) })
     await vehicleUpdatedEvent()
   }
 
