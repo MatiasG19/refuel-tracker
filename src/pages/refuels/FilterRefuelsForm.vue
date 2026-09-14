@@ -27,7 +27,8 @@
       <c-multi-toggle
         v-model="filterType"
         @update:model-value="
-          (e: SelectOption) => (refuelFilterStore.filter.type = e.value)
+          (e: SelectOption) =>
+            (refuelFilterStore.filter.type = e.value as FilterType)
         "
         :options="refuelFilterStore.filterTypeOptions"
       />
@@ -68,6 +69,7 @@ import { i18n } from '@/boot/i18n'
 import messages from './i18n'
 import { updateDateFrom, updateDateUntil } from '@/scripts/libraries/utils/date'
 import { SelectOption } from '@/components/inputs/types'
+import { FilterType } from '@/scripts/libraries/refuel/models'
 
 const router = useRouter()
 const { requiredFieldRule } = useFormValidation()

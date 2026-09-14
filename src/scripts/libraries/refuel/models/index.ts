@@ -43,6 +43,8 @@ export const FilterType = {
   Expenses: 3
 } as const
 
+export type FilterType = (typeof FilterType)[keyof typeof FilterType]
+
 export class RefuelFilter {
   id?: number
   name!: string
@@ -50,5 +52,5 @@ export class RefuelFilter {
   active!: boolean
   dateFrom!: Date
   dateUntil!: Date
-  type = FilterType.All
+  type: FilterType = FilterType.All
 }
