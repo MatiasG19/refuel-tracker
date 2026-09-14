@@ -2,7 +2,7 @@ import type {
   Expense,
   Refuel,
   Vehicle
-} from 'src/scripts/libraries/refuel/models'
+} from '@/scripts/libraries/refuel/models'
 
 export const Group = {
   NoGrouping: 0,

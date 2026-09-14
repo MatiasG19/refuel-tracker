@@ -1,7 +1,7 @@
-import type { Vehicle, Refuel } from 'src/scripts/libraries/refuel/models'
+import type { Vehicle, Refuel } from '@/scripts/libraries/refuel/models'
 import { AbstractChartData, type Group, type IChartData } from '..'
 import { groupBy as groupByFun } from '../groupBy'
-import { vehicleFuelPricing } from 'src/scripts/libraries/refuel/functions/vehicle'
+import { vehicleFuelPricing } from '@/scripts/libraries/refuel/functions/vehicle'
 
 export class FuelPricing extends AbstractChartData {
   override getChartData(

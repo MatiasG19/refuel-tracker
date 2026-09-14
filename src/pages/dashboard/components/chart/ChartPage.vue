@@ -64,13 +64,10 @@ import {
   CategoryScale,
   LinearScale
 } from 'chart.js'
-import CSelect from 'src/components/inputs/CSelect.vue'
-import CDate from 'src/components/inputs/CDate.vue'
+import CSelect from '@/components/inputs/CSelect.vue'
+import CDate from '@/components/inputs/CDate.vue'
 import { date, Platform, colors } from 'quasar'
-import {
-  updateDateFrom,
-  updateDateUntil
-} from 'src/scripts/libraries/utils/date'
+import { updateDateFrom, updateDateUntil } from '@/scripts/libraries/utils/date'
 import { ScreenOrientation } from '@capacitor/screen-orientation'
 import { getGrouByOptions, getDataSourceOptions } from './scripts/staticData'
 

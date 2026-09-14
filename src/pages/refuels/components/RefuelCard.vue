@@ -62,7 +62,7 @@
 
 <script setup lang="ts">
 import type { PropType } from 'vue'
-import type { Refuel, Vehicle } from 'src/scripts/libraries/refuel/models'
+import type { Refuel, Vehicle } from '@/scripts/libraries/refuel/models'
 import { date } from 'quasar'
 import RefuelCardSkeleton from './RefuelCardSkeleton.vue'
 

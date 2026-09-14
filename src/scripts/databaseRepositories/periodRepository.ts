@@ -1,5 +1,5 @@
-import type { Period } from 'src/pages/dashboard/scripts/models'
-import { getPeriods as returnPeriods } from 'src/scripts/staticData/periods'
+import type { Period } from '@/pages/dashboard/scripts/models'
+import { getPeriods as returnPeriods } from '@/scripts/staticData/periods'
 
 async function getPeriods(): Promise<Period[]> {
   return await Promise.resolve(returnPeriods())

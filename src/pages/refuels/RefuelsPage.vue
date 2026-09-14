@@ -131,8 +131,8 @@
 </template>
 
 <script setup lang="ts">
-import RefuelCard from 'src/pages/refuels/components/RefuelCard.vue'
-import ExpenseCard from 'src/pages/refuels/components/ExpenseCard.vue'
+import RefuelCard from '@/pages/refuels/components/RefuelCard.vue'
+import ExpenseCard from '@/pages/refuels/components/ExpenseCard.vue'
 import {
   computed,
   ref,
@@ -145,23 +145,23 @@ import { useRoute, useRouter } from 'vue-router'
 import {
   OptionInDialog,
   optionsDialog
-} from 'src/components/dialogs/optionsDialog'
-import { confirmDialog } from 'src/components/dialogs/confirmDialog'
-import { useSettingsStore } from 'src/pages/settings/stores/settingsStore'
-import { Vehicle } from 'src/scripts/libraries/refuel/models'
-import { vehicleFuelConsumption } from 'src/scripts/libraries/refuel/functions/vehicle'
+} from '@/components/dialogs/optionsDialog'
+import { confirmDialog } from '@/components/dialogs/confirmDialog'
+import { useSettingsStore } from '@/pages/settings/stores/settingsStore'
+import { Vehicle } from '@/scripts/libraries/refuel/models'
+import { vehicleFuelConsumption } from '@/scripts/libraries/refuel/functions/vehicle'
 import { QVirtualScroll } from 'quasar'
 import { useRefuelFilterStore } from './stores/refuelFilterStore'
 import { useRefuelStore } from './stores/refuelStore'
-import { useMainLayoutStore } from 'src/layouts/stores/mainLayoutStore'
+import { useMainLayoutStore } from '@/layouts/stores/mainLayoutStore'
 import { useI18n } from 'vue-i18n'
-import { i18n } from 'src/boot/i18n'
+import { i18n } from '@/boot/i18n'
 import messages from './i18n'
-import { vehicleRepository } from 'src/scripts/databaseRepositories'
-import { selectDialog } from 'src/components/dialogs/selectDialog'
-import { SelectOption } from 'src/components/inputs/types'
+import { vehicleRepository } from '@/scripts/databaseRepositories'
+import { selectDialog } from '@/components/dialogs/selectDialog'
+import { SelectOption } from '@/components/inputs/types'
 import { ExpenseViewModel } from './models'
-import { FilterType } from 'src/scripts/libraries/refuel/models'
+import { FilterType } from '@/scripts/libraries/refuel/models'
 
 const props = defineProps({
   refuelId: {

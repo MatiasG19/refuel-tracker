@@ -1,21 +1,19 @@
 {
   "name": "refuel-tracker",
   "version": "0.0.1",
-  "description": "Tracks your refuels.",
-  "productName": "Refuel Tracker",
-  "author": "MatiasG19",
-  "type": "module",
   "private": true,
+  "description": "Tracks your refuels.",
+  "author": "MatiasG19 <m.galusek@gmail.com>",
+  "type": "module",
   "scripts": {
-    "lint": "eslint -c ./eslint.config.js \"./src*/**/*.{ts,js,cjs,mjs,vue}\"",
-    "check-format": "prettier --check ./src",
-    "write-format": "prettier --write ./src",
-    "test": "vitest run",
+    "lint": "oxfmt && oxlint --fix",
+    "lint:check": "oxlint",
+    "fmt:check": "oxfmt --check",
     "dev": "quasar dev",
-    "conf": "quasar clean --conf",
     "build": "quasar build",
-    "postinstall": "quasar prepare",
-    "mode": "quasar mode add capacitor",
+    "test": "vitest run",
+    "typecheck": "vue-tsc --noEmit",
+    "postinstall": "quasar prepare --silent",
     "appdev": "quasar dev -m capacitor -T android",
     "appbuild": "quasar build -m capacitor -T android -- bundleRelease",
     "favicons": "icongenie generate --theme-color 8488ff --icon ./.icons/icon.png",
@@ -23,12 +21,12 @@
     "splashicons": "icongenie generate --mode capacitor --filter splashscreen --splashscreen-icon-ratio 30 --theme-color 8488ff --skip-trim --icon ./.icons/icon.png"
   },
   "dependencies": {
-    "@quasar/extras": "^2.0.4",
+    "@quasar/extras": "^2.1.0",
     "@vueuse/core": "^14.4.0",
-    "dexie": "^3.2.7",
-    "dexie-export-import": "^4.1.4",
-    "pinia": "^3.0.4",
-    "quasar": "^2.32.2",
+    "dexie": "3.2.7",
+    "dexie-export-import": "4.1.4",
+    "pinia": "^4.0.2",
+    "quasar": "^2.32.3",
     "vue": "^3.5.42",
     "vue-chartjs": "^5.3.4",
     "vue-i18n": "^11.4.10",
@@ -36,20 +34,17 @@
     "vue3-smooth-dnd": "^1.0.0"
   },
   "devDependencies": {
-    "@eslint/js": "^10.0.1",
     "@intlify/unplugin-vue-i18n": "^11.2.5",
-    "@quasar/app-vite": "^3.8.3",
-    "@types/node": "^26.4.0",
-    "@vue/eslint-config-prettier": "^10.2.0",
-    "@vue/eslint-config-typescript": "^14.9.0",
-    "autoprefixer": "^10.6.0",
-    "eslint": "^10.10.0",
-    "eslint-plugin-vue": "^10.11.0",
-    "globals": "^17.12.0",
-    "prettier": "^3.7.4",
-    "typescript": "^5.9.3",
-    "vite-plugin-checker": "^0.14.5",
-    "vitest": "^5.0.0"
+    "@quasar/app-vite": "^3.8.4",
+    "@types/node": "^22.19.11",
+    "autoprefixer": "^10.4.27",
+    "oxfmt": "^0.x",
+    "oxlint": "^1.x",
+    "oxlint-tsgolint": "^7.0.2001",
+    "postcss": "^8.5.8",
+    "typescript": "^6.0.0",
+    "vitest": "^5.0.0",
+    "vue-tsc": "^3.3.3"
   },
   "optionalDependencies": {
     "@esbuild/linux-x64": "^0.28.2",
@@ -57,7 +52,7 @@
     "sass-embedded-linux-x64": "^1.104.1"
   },
   "engines": {
-    "node": "^24",
-    "npm": ">= 11"
-  }
+    "node": ">= 26 || ^24 || ^22.12"
+  },
+  "productName": "Refuel Tracker"
 }

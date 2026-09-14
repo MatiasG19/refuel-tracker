@@ -1,4 +1,4 @@
-import { Vehicle } from 'src/scripts/libraries/refuel/models'
+import { Vehicle } from '@/scripts/libraries/refuel/models'
 import { AbstractDashboardData } from './abstract/AbstractDashboardData'
 import { DashboardValueSettings, DashboardValue } from './models'
 import { WritableComputedRef } from 'vue'

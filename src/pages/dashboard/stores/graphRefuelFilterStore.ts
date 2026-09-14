@@ -1,7 +1,7 @@
 import { defineStore } from 'pinia'
 import { ref } from 'vue'
 import { date } from 'quasar'
-import { refuelFilterRepository } from 'src/scripts/databaseRepositories'
+import { refuelFilterRepository } from '@/scripts/databaseRepositories'
 
 export const useDasboardRefuelFilterStore = defineStore(
   'dashboardRefuelFilterStore',

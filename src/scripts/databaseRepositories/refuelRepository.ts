@@ -1,4 +1,4 @@
-import { db } from 'src/boot/dexie'
+import { db } from '@/boot/dexie'
 import type { Refuel } from '../libraries/refuel/models'
 
 async function getRefuel(id: number): Promise<Refuel | null> {

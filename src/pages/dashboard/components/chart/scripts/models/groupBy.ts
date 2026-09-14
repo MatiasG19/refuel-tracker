@@ -1,4 +1,4 @@
-import type { BaseExpense } from 'src/scripts/libraries/refuel/models'
+import type { BaseExpense } from '@/scripts/libraries/refuel/models'
 import { Group } from '.'
 import { date as QuasarDate } from 'quasar'
 

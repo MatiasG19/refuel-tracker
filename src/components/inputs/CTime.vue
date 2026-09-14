@@ -18,15 +18,14 @@
             v-close-popup
             color="secondary"
             flat
-            :label="t('components.inputs.ok')"
-          /></div
+            :label="t('components.inputs.ok')" /></div
       ></q-time>
     </q-popup-proxy>
   </c-input>
 </template>
 
 <script setup lang="ts">
-import CInput from 'src/components/inputs/CInput.vue'
+import CInput from '@/components/inputs/CInput.vue'
 import { useI18n } from 'vue-i18n'
 
 const { t } = useI18n()

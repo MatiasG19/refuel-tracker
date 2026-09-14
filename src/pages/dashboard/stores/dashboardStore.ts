@@ -1,19 +1,19 @@
 import { defineStore } from 'pinia'
 import { ref } from 'vue'
-import { DashboardDataFactory } from 'src/pages/dashboard/scripts/DashboardDataFactory'
+import { DashboardDataFactory } from '@/pages/dashboard/scripts/DashboardDataFactory'
 import type {
   DashboardData,
   DashboardValue,
   DashboardValueSettings
-} from 'src/pages/dashboard/scripts/models'
+} from '@/pages/dashboard/scripts/models'
 import type { DropResult } from 'vue3-smooth-dnd'
-import type { Period } from 'src/pages/dashboard/scripts/models'
+import type { Period } from '@/pages/dashboard/scripts/models'
 import {
   dashboardSettingsRepository,
   periodRepository,
   vehicleRepository
-} from 'src/scripts/databaseRepositories'
-import dashboardRepository from 'src/scripts/databaseRepositories/dashboardRepository'
+} from '@/scripts/databaseRepositories'
+import dashboardRepository from '@/scripts/databaseRepositories/dashboardRepository'
 import { useI18n } from 'vue-i18n'
 
 export const useDashboardStore = defineStore('dashboardStore', () => {

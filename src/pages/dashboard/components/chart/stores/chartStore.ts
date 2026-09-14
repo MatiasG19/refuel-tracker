@@ -2,20 +2,17 @@ import { defineStore } from 'pinia'
 import {
   refuelRepository,
   vehicleRepository
-} from 'src/scripts/databaseRepositories'
+} from '@/scripts/databaseRepositories'
 import type {
   Expense,
   Refuel,
   Vehicle
-} from 'src/scripts/libraries/refuel/models'
+} from '@/scripts/libraries/refuel/models'
 import { ref } from 'vue'
 import { type IChartData } from '../scripts/models'
 import { ChartDataFactory } from '../scripts/models/ChartDataFactory'
-import {
-  updateDateFrom,
-  updateDateUntil
-} from 'src/scripts/libraries/utils/date'
-import expenseRepository from 'src/scripts/databaseRepositories/expenseRepository'
+import { updateDateFrom, updateDateUntil } from '@/scripts/libraries/utils/date'
+import expenseRepository from '@/scripts/databaseRepositories/expenseRepository'
 
 export const useChartStore = defineStore('chartStore', () => {
   const vehicle = ref<Vehicle | null>(null)

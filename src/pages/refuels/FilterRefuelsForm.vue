@@ -57,20 +57,17 @@
 import { onMounted, computed, onBeforeMount, ref } from 'vue'
 import { date } from 'quasar'
 import { useRouter } from 'vue-router'
-import { useFormValidation } from 'src/scripts/libraries/validation'
+import { useFormValidation } from '@/scripts/libraries/validation'
 import { useRefuelFilterStore } from './stores/refuelFilterStore'
-import { useMainLayoutStore } from 'src/layouts/stores/mainLayoutStore'
-import CDate from 'src/components/inputs/CDate.vue'
-import CMultiToggle from 'src/components/inputs/CMultiToggle.vue'
-import CCheckbox from 'src/components/inputs/CCheckbox.vue'
+import { useMainLayoutStore } from '@/layouts/stores/mainLayoutStore'
+import CDate from '@/components/inputs/CDate.vue'
+import CMultiToggle from '@/components/inputs/CMultiToggle.vue'
+import CCheckbox from '@/components/inputs/CCheckbox.vue'
 import { useI18n } from 'vue-i18n'
-import { i18n } from 'src/boot/i18n'
+import { i18n } from '@/boot/i18n'
 import messages from './i18n'
-import {
-  updateDateFrom,
-  updateDateUntil
-} from 'src/scripts/libraries/utils/date'
-import { SelectOption } from 'src/components/inputs/types'
+import { updateDateFrom, updateDateUntil } from '@/scripts/libraries/utils/date'
+import { SelectOption } from '@/components/inputs/types'
 
 const router = useRouter()
 const { requiredFieldRule } = useFormValidation()

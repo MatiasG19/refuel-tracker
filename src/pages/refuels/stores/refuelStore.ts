@@ -1,17 +1,17 @@
 import { defineStore } from 'pinia'
 import { ref, toRaw } from 'vue'
-import { Vehicle, Refuel, Expense } from 'src/scripts/libraries/refuel/models'
+import { Vehicle, Refuel, Expense } from '@/scripts/libraries/refuel/models'
 import {
   refuelRepository,
   vehicleRepository
-} from 'src/scripts/databaseRepositories'
+} from '@/scripts/databaseRepositories'
 import {
   refuelAddedEvent,
   refuelDeletedEvent,
   refuelUpdatedEvent
-} from 'src/scripts/events'
+} from '@/scripts/events'
 import { ExpenseViewModel, VehicleViewModel } from '../models'
-import expenseRepository from 'src/scripts/databaseRepositories/expenseRepository'
+import expenseRepository from '@/scripts/databaseRepositories/expenseRepository'
 
 export const useRefuelStore = defineStore('refuelStore', () => {
   const vehicle = ref<VehicleViewModel | null>(null)
