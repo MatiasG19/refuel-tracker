@@ -15,7 +15,7 @@ export function getLanguageOptions(): SelectOption[] {
 }
 
 export async function setI18nLanguage(languageId: number) {
-  const locale = i18n.global.locale
+  const locale = i18n.global.locale as unknown as { value: string }
   if (languageId) {
     if (languageId === LanguageId.System) {
       const code = await Device.getLanguageCode()
