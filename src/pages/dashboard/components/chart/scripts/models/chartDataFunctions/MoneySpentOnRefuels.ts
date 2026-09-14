@@ -13,7 +13,7 @@ export class MoneySpentOnRefuels extends AbstractChartData {
     const chartData: IChartData = { labels: [], data: [] }
     for (const key in groupedData) {
       chartData.labels.push(key)
-      const v = { ...vehicle }
+      const v = Object.assign(vehicle)
       v.refuels = groupedData[key]! as Refuel[]
       chartData.data.push(vehicleMoneySpentOnRefuels(v).toFixedIfNotZero(2))
     }

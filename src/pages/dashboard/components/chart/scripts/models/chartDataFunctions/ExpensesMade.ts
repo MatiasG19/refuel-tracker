@@ -18,7 +18,7 @@ export class ExpensesMade extends AbstractChartData {
     const chartData: IChartData = { labels: [], data: [] }
     for (const key in groupedData) {
       chartData.labels.push(key)
-      const v = { ...vehicle }
+      const v = Object.assign(vehicle)
       v.expenses = groupedData[key]! as Expense[]
       chartData.data.push(vehicleExpensesMade(v).toString())
     }
