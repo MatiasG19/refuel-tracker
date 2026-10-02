@@ -35,7 +35,13 @@ async function addRefuel(refuel: Refuel): Promise<number> {
 }
 
 async function updateRefuel(refuel: Refuel) {
-  await db.refuels.update(refuel.id, refuel)
+  await db.refuels.update(refuel.id, {
+    date: refuel.date,
+    refueledAmount: refuel.refueledAmount,
+    payedAmount: refuel.payedAmount,
+    distanceDriven: refuel.distanceDriven,
+    vehicleId: refuel.vehicleId
+  })
 }
 
 async function deleteRefuel(id: number) {

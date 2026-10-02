@@ -34,7 +34,12 @@ async function addExpense(expense: Expense): Promise<number> {
 }
 
 async function updateExpense(expense: Expense) {
-  await db.expenses.update(expense.id, expense)
+  await db.expenses.update(expense.id, {
+    date: expense.date,
+    description: expense.description,
+    payedAmount: expense.payedAmount,
+    vehicleId: expense.vehicleId
+  })
 }
 
 async function deleteExpense(id: number) {

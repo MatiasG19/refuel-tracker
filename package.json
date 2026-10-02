@@ -8,6 +8,7 @@
   "scripts": {
     "lint": "oxfmt && oxlint --fix",
     "lint:check": "oxlint",
+    "fmt": "oxfmt",
     "fmt:check": "oxfmt --check",
     "dev": "quasar dev",
     "build": "quasar build",
@@ -23,8 +24,8 @@
   "dependencies": {
     "@quasar/extras": "^2.1.0",
     "@vueuse/core": "^15.0.0",
-    "dexie": "3.2.7",
-    "dexie-export-import": "4.1.4",
+    "dexie": "^4.4.6",
+    "dexie-export-import": "^4.4.1",
     "pinia": "^4.0.2",
     "quasar": "^2.34.0",
     "vue": "^3.5.43",
