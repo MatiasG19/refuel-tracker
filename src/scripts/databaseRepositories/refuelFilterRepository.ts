@@ -1,5 +1,8 @@
 import { db } from '@/boot/dexie'
-import type { RefuelFilter } from '@/scripts/libraries/refuel/models'
+import type {
+  FilterType,
+  RefuelFilter
+} from '@/scripts/libraries/refuel/models'
 
 async function readFilter(id: number): Promise<RefuelFilter | null> {
   return (await db.refuelFilters.filter(f => f.id === id).first()) ?? null
@@ -13,7 +16,7 @@ async function removeDateFilter(id: number) {
   await db.refuelFilters.update(id, { active: false })
 }
 
-async function changeTypeFilter(id: number, type: number) {
+async function changeTypeFilter(id: number, type: FilterType) {
   await db.refuelFilters.update(id, { type })
 }
 

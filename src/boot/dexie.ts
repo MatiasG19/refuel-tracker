@@ -11,14 +11,21 @@ import {
   type DashboardValueSettings
 } from '@/pages/dashboard/scripts/models'
 
+type PersistedRefuel = Omit<Refuel, 'vehicle'>
+type PersistedExpense = Omit<Expense, 'vehicle'>
+export type PersistedVehicle = Omit<
+  Vehicle,
+  'fuelUnit' | 'refuels' | 'expenses'
+>
+
 export class RefuelTrackerDexie extends Dexie {
   dashboards!: Table<Dashboard>
   graphSettings!: Table<DashboardValueSettings>
-  vehicles!: Table<Vehicle>
-  refuels!: Table<Refuel>
+  vehicles!: Table<PersistedVehicle>
+  refuels!: Table<PersistedRefuel>
   refuelFilters!: Table<RefuelFilter>
   settings!: Table<Settings>
-  expenses!: Table<Expense>
+  expenses!: Table<PersistedExpense>
 
   constructor() {
     super('RefuelTrackerDb')
