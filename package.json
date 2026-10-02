@@ -27,9 +27,9 @@
     "dexie-export-import": "4.1.4",
     "pinia": "^4.0.2",
     "quasar": "^2.34.0",
-    "vue": "^3.5.42",
+    "vue": "^3.5.43",
     "vue-chartjs": "^5.3.4",
-    "vue-i18n": "^11.4.10",
+    "vue-i18n": "^11.4.12",
     "vue-router": "^5.3.1",
     "vue3-smooth-dnd": "^1.0.0"
   },
@@ -40,15 +40,15 @@
     "autoprefixer": "^10.6.1",
     "oxfmt": "^0.x",
     "oxlint": "^1.x",
-    "oxlint-tsgolint": "^7.0.2001",
+    "oxlint-tsgolint": "^7.0.2003",
     "postcss": "^8.5.8",
     "typescript": "^6.0.0",
-    "vitest": "^5.0.0",
+    "vitest": "^5.0.2",
     "vue-tsc": "^3.3.3"
   },
   "optionalDependencies": {
     "@esbuild/linux-x64": "^0.28.2",
-    "@rollup/rollup-linux-x64-gnu": "^4.63.2",
+    "@rollup/rollup-linux-x64-gnu": "^4.63.5",
     "sass-embedded-linux-x64": "^1.104.1"
   },
   "engines": {
