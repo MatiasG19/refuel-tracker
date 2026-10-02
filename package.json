@@ -8,6 +8,7 @@
   "scripts": {
     "lint": "oxfmt && oxlint --fix",
     "lint:check": "oxlint",
+    "fmt": "oxfmt",
     "fmt:check": "oxfmt --check",
     "dev": "quasar dev",
     "build": "quasar build",
