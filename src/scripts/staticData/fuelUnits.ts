@@ -1,4 +1,4 @@
-import { i18n } from 'src/boot/i18n'
+import { i18n } from '@/boot/i18n'
 import { FuelUnit } from '../libraries/refuel/models'
 
 export function getFuelUnits(): FuelUnit[] {

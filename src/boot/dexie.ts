@@ -5,11 +5,11 @@ import {
   Refuel,
   Expense,
   RefuelFilter
-} from 'src/scripts/libraries/refuel/models'
+} from '@/scripts/libraries/refuel/models'
 import {
   Dashboard,
   type DashboardValueSettings
-} from 'src/pages/dashboard/scripts/models'
+} from '@/pages/dashboard/scripts/models'
 
 export class RefuelTrackerDexie extends Dexie {
   dashboards!: Table<Dashboard>

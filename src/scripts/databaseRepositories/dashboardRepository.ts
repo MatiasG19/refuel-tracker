@@ -1,5 +1,5 @@
-import { db } from 'src/boot/dexie'
-import type { Dashboard } from 'src/pages/dashboard/scripts/models'
+import { db } from '@/boot/dexie'
+import type { Dashboard } from '@/pages/dashboard/scripts/models'
 
 async function getDashboards() {
   return await db.dashboards.toArray()

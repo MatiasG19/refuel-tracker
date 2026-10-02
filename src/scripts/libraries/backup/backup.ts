@@ -1,8 +1,8 @@
 import 'dexie-export-import'
-import { db } from 'src/boot/dexie'
+import { db } from '@/boot/dexie'
 import { Filesystem, Encoding } from '@capacitor/filesystem'
 import { getDateForFileName } from '../utils'
-import { FilePicker } from 'src/plugins/capacitor-file-picker'
+import { FilePicker } from '@/plugins/capacitor-file-picker'
 import { Platform } from 'quasar'
 
 export async function exportDB(path: string) {

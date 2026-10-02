@@ -1,4 +1,4 @@
-import { db } from 'src/boot/dexie'
+import { db } from '@/boot/dexie'
 import type { Vehicle } from '../libraries/refuel/models'
 import fuelUnitRepository from './fuelUnitRepository'
 import refuelRepository from './refuelRepository'

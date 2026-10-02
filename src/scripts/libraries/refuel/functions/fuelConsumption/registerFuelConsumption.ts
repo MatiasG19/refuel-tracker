@@ -1,4 +1,4 @@
-import { FuelConsumptionFactory } from 'src/scripts/libraries/refuel/functions/fuelConsumption/FuelConsumptionFactory'
+import { FuelConsumptionFactory } from '@/scripts/libraries/refuel/functions/fuelConsumption/FuelConsumptionFactory'
 import {
   kWhPer100km,
   litresPer100km,
@@ -6,7 +6,7 @@ import {
   milesPerGallonUs,
   whPer100km,
   whPerMile
-} from 'src/scripts/libraries/refuel/functions/fuelConsumption'
+} from '@/scripts/libraries/refuel/functions/fuelConsumption'
 
 export function registerFuelConsumption() {
   FuelConsumptionFactory.register('1', litresPer100km)

@@ -1,4 +1,4 @@
-import { db } from 'src/boot/dexie'
+import { db } from '@/boot/dexie'
 import type { Settings } from '../models'
 
 async function getSettings(id: number): Promise<Settings | null> {

@@ -6,8 +6,8 @@ updates:
       interval: 'monthly'
     groups:
       patch-dependencies:
-        update-types: 
-          - "patch"
+        update-types:
+          - 'patch'
     labels:
       - 'dependencies'
 
@@ -17,18 +17,18 @@ updates:
       interval: 'monthly'
     groups:
       patch-dependencies:
-        update-types: 
-          - "patch"
+        update-types:
+          - 'patch'
     labels:
       - 'dependencies'
 
-  - package-ecosystem: "github-actions"
-    directory: "/"
+  - package-ecosystem: 'github-actions'
+    directory: '/'
     schedule:
-      interval: "monthly"
+      interval: 'monthly'
     groups:
       patch-dependencies:
-        update-types: 
-          - "patch"
+        update-types:
+          - 'patch'
     labels:
       - 'dependencies'

@@ -26,7 +26,7 @@
 </template>
 
 <script setup lang="ts">
-import { OptionInDialog } from 'src/components/dialogs/optionsDialog'
+import { OptionInDialog } from '@/components/dialogs/optionsDialog'
 import { useDialogPluginComponent } from 'quasar'
 
 const { dialogRef, onDialogOK } = useDialogPluginComponent()

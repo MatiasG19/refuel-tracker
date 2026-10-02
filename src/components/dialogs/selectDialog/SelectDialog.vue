@@ -19,8 +19,8 @@
 
 <script setup lang="ts">
 import { useDialogPluginComponent } from 'quasar'
-import { SelectOption } from 'src/components/inputs/types'
-import CSelect from 'src/components/inputs/CSelect.vue'
+import { SelectOption } from '@/components/inputs/types'
+import CSelect from '@/components/inputs/CSelect.vue'
 import { onMounted, ref } from 'vue'
 
 const { dialogRef, onDialogOK } = useDialogPluginComponent()

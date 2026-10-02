@@ -68,27 +68,27 @@
 </template>
 
 <script setup lang="ts">
-import DashboardCard from 'src/pages/dashboard/components/DashboardCard.vue'
-import ChartPage from 'src/pages/dashboard/components/chart/ChartPage.vue'
+import DashboardCard from '@/pages/dashboard/components/DashboardCard.vue'
+import ChartPage from '@/pages/dashboard/components/chart/ChartPage.vue'
 import { ref, computed, onMounted, onUnmounted } from 'vue'
-import { useSettingsStore } from 'src/pages/settings/stores/settingsStore'
+import { useSettingsStore } from '@/pages/settings/stores/settingsStore'
 import { useDashboardStore } from './stores/dashboardStore'
-import { useMainLayoutStore } from 'src/layouts/stores/mainLayoutStore'
+import { useMainLayoutStore } from '@/layouts/stores/mainLayoutStore'
 import {
   OptionInDialog,
   optionsDialog
-} from 'src/components/dialogs/optionsDialog'
+} from '@/components/dialogs/optionsDialog'
 import { Platform, useQuasar, colors } from 'quasar'
 import { useRouter } from 'vue-router'
 import { useI18n } from 'vue-i18n'
-import { i18n } from 'src/boot/i18n'
+import { i18n } from '@/boot/i18n'
 import messages from './i18n'
 import { Container, Draggable, type DropResult } from 'vue3-smooth-dnd'
 import { App } from '@capacitor/app'
-import { initSettings } from 'src/scripts/initSettings'
+import { initSettings } from '@/scripts/initSettings'
 import { SplashScreen } from '@capacitor/splash-screen'
 import { DashboardData } from './scripts/models'
-import { ThemeSetter } from 'src/plugins/capacitor-theme-setter'
+import { ThemeSetter } from '@/plugins/capacitor-theme-setter'
 import { EdgeToEdge } from '@capawesome/capacitor-android-edge-to-edge-support'
 
 const $q = useQuasar()

@@ -1,7 +1,7 @@
-import { defineBoot } from '#q-app/wrappers'
+import { defineBoot } from '#q-app'
 import { createI18n } from 'vue-i18n'
 
-import messages from 'src/i18n'
+import messages from '@/i18n'
 
 export type MessageLanguages = keyof typeof messages
 // Type-define 'en-US' as the master schema for the resource
@@ -29,12 +29,11 @@ export const i18n = createI18n<{ message: MessageSchema }, MessageLanguages>({
 })
 
 export default defineBoot(({ app }) => {
-  // i18n = createI18n<{ message: MessageSchema }, MessageLanguages>({
-  //   locale: 'en',
-  //   fallbackLocale: 'en',
+  // const i18n = createI18n<{ message: MessageSchema }, MessageLanguages>({
+  //   locale: "en-US",
   //   legacy: false,
   //   messages
-  // })
+  // });
 
   // Set i18n instance on app
   app.use(i18n)

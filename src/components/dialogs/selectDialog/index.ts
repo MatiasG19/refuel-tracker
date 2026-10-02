@@ -1,5 +1,5 @@
 import { Dialog } from 'quasar'
-import { SelectOption } from 'src/components/inputs/types'
+import { SelectOption } from '@/components/inputs/types'
 import SelectDialog from './SelectDialog.vue'
 
 export function selectDialog(

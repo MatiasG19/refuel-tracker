@@ -65,18 +65,18 @@
 <script setup lang="ts">
 import { ref, onMounted, toRaw } from 'vue'
 import { useRouter } from 'vue-router'
-import CInput from 'src/components/inputs/CInput.vue'
-import CSelect from 'src/components/inputs/CSelect.vue'
+import CInput from '@/components/inputs/CInput.vue'
+import CSelect from '@/components/inputs/CSelect.vue'
 import { useVehicleStore } from './stores/vehicleStore'
-import { useMainLayoutStore } from 'src/layouts/stores/mainLayoutStore'
-import { Vehicle } from 'src/scripts/libraries/refuel/models'
+import { useMainLayoutStore } from '@/layouts/stores/mainLayoutStore'
+import { Vehicle } from '@/scripts/libraries/refuel/models'
 import { useI18n } from 'vue-i18n'
-import { i18n } from 'src/boot/i18n'
+import { i18n } from '@/boot/i18n'
 import messages from './i18n'
-import { fuelUnitRepository } from 'src/scripts/databaseRepositories'
-import { SelectOption } from 'src/components/inputs/types'
-import { useFormValidation } from 'src/scripts/libraries/validation'
-import { replaceComma } from 'src/scripts/libraries/utils'
+import { fuelUnitRepository } from '@/scripts/databaseRepositories'
+import { SelectOption } from '@/components/inputs/types'
+import { useFormValidation } from '@/scripts/libraries/validation'
+import { replaceComma } from '@/scripts/libraries/utils'
 
 const router = useRouter()
 const {

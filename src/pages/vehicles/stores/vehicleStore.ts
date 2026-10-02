@@ -1,17 +1,17 @@
 import { defineStore } from 'pinia'
 import { ref, toRaw } from 'vue'
-import { FuelUnit, Vehicle } from 'src/scripts/libraries/refuel/models'
+import { FuelUnit, Vehicle } from '@/scripts/libraries/refuel/models'
 import {
   vehicleRepository,
   fuelUnitRepository,
   refuelRepository
-} from 'src/scripts/databaseRepositories'
-import { vehicleFuelConsumption } from 'src/scripts/libraries/refuel/functions/vehicle'
+} from '@/scripts/databaseRepositories'
+import { vehicleFuelConsumption } from '@/scripts/libraries/refuel/functions/vehicle'
 import {
   vehicleAddedEvent,
   vehicleDeletedEvent,
   vehicleUpdatedEvent
-} from 'src/scripts/events'
+} from '@/scripts/events'
 
 export const useVehicleStore = defineStore('vehicleStore', () => {
   const vehicles = ref<Vehicle[]>([])
@@ -38,7 +38,7 @@ export const useVehicleStore = defineStore('vehicleStore', () => {
     if (!vehicle) return
     vehicle.refuels = await refuelRepository.getRefuels(id)
     vehicle.totalFuelConsumption = vehicleFuelConsumption({
-      ...toRaw(vehicle)
+      ...Object.assign(toRaw(vehicle))
     }).toFixed(2)
     await vehicleRepository.updateTotalFuelConsumption(
       id,
@@ -47,7 +47,7 @@ export const useVehicleStore = defineStore('vehicleStore', () => {
   }
 
   async function updateVehicle(vehicle: Vehicle) {
-    await vehicleRepository.updateVehicle({ ...toRaw(vehicle) })
+    await vehicleRepository.updateVehicle({ ...Object.assign(toRaw(vehicle)) })
     await vehicleUpdatedEvent()
   }
 

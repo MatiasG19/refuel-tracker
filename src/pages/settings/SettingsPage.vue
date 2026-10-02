@@ -103,21 +103,21 @@
 
 <script setup lang="ts">
 import { ref, onMounted, onUnmounted, computed } from 'vue'
-import CSelect from 'src/components/inputs/CSelect.vue'
-import { useSettingsStore } from 'src/pages/settings/stores/settingsStore'
-import { exportDB, importDB } from 'src/scripts/libraries/backup/backup'
-import { FilePicker } from 'src/plugins/capacitor-file-picker'
+import CSelect from '@/components/inputs/CSelect.vue'
+import { useSettingsStore } from '@/pages/settings/stores/settingsStore'
+import { exportDB, importDB } from '@/scripts/libraries/backup/backup'
+import { FilePicker } from '@/plugins/capacitor-file-picker'
 import { Notify, Platform } from 'quasar'
 import { useI18n } from 'vue-i18n'
 import messages from './i18n'
 import {
   getLanguageOptions,
   setI18nLanguage
-} from 'src/scripts/libraries/utils/language'
+} from '@/scripts/libraries/utils/language'
 import { LanguageId } from '../../scripts/models'
-import { useMainLayoutStore } from 'src/layouts/stores/mainLayoutStore'
-import { getColorThemes } from 'src/scripts/staticData/colorThemes'
-import { SelectOption } from 'src/components/inputs/types'
+import { useMainLayoutStore } from '@/layouts/stores/mainLayoutStore'
+import { getColorThemes } from '@/scripts/staticData/colorThemes'
+import { SelectOption } from '@/components/inputs/types'
 
 const { t } = useI18n({ useScope: 'global', messages })
 const settingsStore = useSettingsStore()

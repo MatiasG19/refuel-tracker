@@ -1,11 +1,11 @@
-import type { Vehicle, Refuel } from 'src/scripts/libraries/refuel/models'
+import type { Vehicle, Refuel } from '@/scripts/libraries/refuel/models'
 import { AbstractChartData, type Group, type IChartData } from '..'
 import { groupBy as groupByFun } from '../groupBy'
-import { vehicleDistanceDriven } from 'src/scripts/libraries/refuel/functions/vehicle'
+import { vehicleDistanceDriven } from '@/scripts/libraries/refuel/functions/vehicle'
 
 export class DistanceDriven extends AbstractChartData {
   override getChartData(
-    groupBy: (typeof Group)[keyof typeof Group],
+    groupBy: Group,
     vehicle: Vehicle,
     refuels: Refuel[]
   ): IChartData {
@@ -13,7 +13,7 @@ export class DistanceDriven extends AbstractChartData {
     const chartData: IChartData = { labels: [], data: [] }
     for (const key in groupedData) {
       chartData.labels.push(key)
-      const v = { ...vehicle }
+      const v = Object.assign(vehicle)
       v.refuels = groupedData[key]! as Refuel[]
       chartData.data.push(vehicleDistanceDriven(v).toFixedIfNotZero(1))
     }

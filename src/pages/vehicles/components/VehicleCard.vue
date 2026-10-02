@@ -44,8 +44,8 @@
 
 <script setup lang="ts">
 import { PropType } from 'vue'
-import { Vehicle } from 'src/scripts/libraries/refuel/models'
-import { vehicleOdometer } from 'src/scripts/libraries/refuel/functions/vehicle'
+import { Vehicle } from '@/scripts/libraries/refuel/models'
+import { vehicleOdometer } from '@/scripts/libraries/refuel/functions/vehicle'
 
 defineProps({
   vehicle: {

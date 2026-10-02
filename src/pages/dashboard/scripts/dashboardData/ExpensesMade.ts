@@ -1,6 +1,6 @@
-import { Vehicle } from 'src/scripts/libraries/refuel/models'
+import { Vehicle } from '@/scripts/libraries/refuel/models'
 import { AbstractDashboardData } from '../abstract/AbstractDashboardData'
-import { vehicleExpensesMade } from 'src/scripts/libraries/refuel/functions/vehicle'
+import { vehicleExpensesMade } from '@/scripts/libraries/refuel/functions/vehicle'
 import { WritableComputedRef } from 'vue'
 import messages from '../../i18n'
 

@@ -1,10 +1,10 @@
 import { defineStore } from 'pinia'
 import { computed, ref } from 'vue'
-import { settingsRepository } from 'src/scripts/databaseRepositories'
-import { getColorThemes } from 'src/scripts/staticData/colorThemes'
-import { ThemeSetter } from 'src/plugins/capacitor-theme-setter'
+import { settingsRepository } from '@/scripts/databaseRepositories'
+import { getColorThemes } from '@/scripts/staticData/colorThemes'
+import { ThemeSetter } from '@/plugins/capacitor-theme-setter'
 import { Platform, colors } from 'quasar'
-import { getLanguages } from 'src/scripts/staticData/languages'
+import { getLanguages } from '@/scripts/staticData/languages'
 import { EdgeToEdge } from '@capawesome/capacitor-android-edge-to-edge-support'
 
 export const useSettingsStore = defineStore('settingsStore', () => {

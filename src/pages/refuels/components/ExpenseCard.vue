@@ -45,7 +45,7 @@
 
 <script setup lang="ts">
 import type { PropType } from 'vue'
-import type { Expense, Vehicle } from 'src/scripts/libraries/refuel/models'
+import type { Expense, Vehicle } from '@/scripts/libraries/refuel/models'
 import { date } from 'quasar'
 import RefuelCardSkeleton from './RefuelCardSkeleton.vue'
 import { useI18n } from 'vue-i18n'

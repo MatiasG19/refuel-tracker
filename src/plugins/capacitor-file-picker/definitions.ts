@@ -10,7 +10,7 @@ export interface FilePickerPlugin {
    * Get multiple contents
    * @param mimeType MIME type
    */
-  getMultipleConents(options: { mimeType: string }): Promise<void>
+  getMultipleContents(options: { mimeType: string }): Promise<void>
   /**
    * Open document tree
    */

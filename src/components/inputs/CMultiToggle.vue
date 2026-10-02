@@ -18,7 +18,7 @@
 </template>
 
 <script setup lang="ts">
-import { useSettingsStore } from 'src/pages/settings/stores/settingsStore'
+import { useSettingsStore } from '@/pages/settings/stores/settingsStore'
 import { SelectOption } from './types'
 
 const props = defineProps<{
