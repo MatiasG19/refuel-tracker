@@ -5,7 +5,7 @@
   "author": "MatiasG19",
   "private": true,
   "dependencies": {
-    "@capacitor/android": "^8.0.0",
+    "@capacitor/android": "^8.6.0",
     "@capacitor/app": "^8.1.2",
     "@capacitor/core": "^8.0.0",
     "@capacitor/device": "^8.0.0",
