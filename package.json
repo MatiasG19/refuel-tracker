@@ -24,28 +24,28 @@
   "dependencies": {
     "@quasar/extras": "^2.1.0",
     "@vueuse/core": "^15.0.0",
-    "dexie": "^4.4.6",
-    "dexie-export-import": "^4.4.1",
+    "dexie": "^4.4.7",
+    "dexie-export-import": "^4.4.2",
     "pinia": "^4.0.2",
     "quasar": "^2.34.0",
-    "vue": "^3.5.43",
+    "vue": "^3.5.44",
     "vue-chartjs": "^5.3.4",
-    "vue-i18n": "^11.4.12",
+    "vue-i18n": "^11.4.16",
     "vue-router": "^5.3.1",
-    "vue3-smooth-dnd": "^1.0.0"
+    "vue3-smooth-dnd": "^1.0.1"
   },
   "devDependencies": {
-    "@intlify/unplugin-vue-i18n": "^11.2.5",
-    "@quasar/app-vite": "^3.10.1",
-    "@types/node": "^26.6.4",
-    "autoprefixer": "^10.6.1",
+    "@intlify/unplugin-vue-i18n": "^11.2.8",
+    "@quasar/app-vite": "^3.10.3",
+    "@types/node": "^26.6.6",
+    "autoprefixer": "^10.6.2",
     "oxfmt": "^0.x",
     "oxlint": "^1.x",
-    "oxlint-tsgolint": "^7.0.2003",
+    "oxlint-tsgolint": "^7.0.2005",
     "postcss": "^8.5.8",
     "typescript": "^6.0.0",
-    "vitest": "^5.0.2",
-    "vue-tsc": "^3.3.3"
+    "vitest": "^5.0.5",
+    "vue-tsc": "^3.3.13"
   },
   "optionalDependencies": {
     "@esbuild/linux-x64": "^0.28.2",
