@@ -16,6 +16,6 @@
     "@capawesome/capacitor-android-edge-to-edge-support": "^8.0.8"
   },
   "devDependencies": {
-    "@capacitor/cli": "^8.0.0"
+    "@capacitor/cli": "^8.6.0"
   }
 }
