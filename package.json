@@ -50,7 +50,7 @@
   "optionalDependencies": {
     "@esbuild/linux-x64": "^0.28.2",
     "@rollup/rollup-linux-x64-gnu": "^4.63.5",
-    "sass-embedded-linux-x64": "^1.104.1"
+    "sass-embedded-linux-x64": "^1.107.0"
   },
   "engines": {
     "node": ">= 26 || ^24 || ^22.12"
